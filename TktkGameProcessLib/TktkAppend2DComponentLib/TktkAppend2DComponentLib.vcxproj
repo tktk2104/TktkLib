@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{47077D68-BC4F-4A84-840B-C9869D2FC898}</ProjectGuid>
+    <RootNamespace>TktkAppend2DComponentLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)TktkSelfMadePtrLib\inc;$(SolutionDir)TktkTemplateMetaFuncLib\inc;$(SolutionDir)TktkClassFuncProcessLib\inc;$(SolutionDir)TktkComponentFrameworkLib\inc;$(SolutionDir)TktkGameLoopLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <TargetName>$(ProjectName)_mtd</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)TktkSelfMadePtrLib\inc;$(SolutionDir)TktkTemplateMetaFuncLib\inc;$(SolutionDir)TktkClassFuncProcessLib\inc;$(SolutionDir)TktkComponentFrameworkLib\inc;$(SolutionDir)TktkGameLoopLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <TargetName>$(ProjectName)_mt</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\TktkAppend2DComponent.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\CircleCollider.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\CircleColliderMaker.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\InertialMovement2D.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\InertialRotatement2D.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\InertialRotatement2DMaker.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\Polygon2dCollider.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\Polygon2dColliderMaker.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\RectCollider.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\RectColliderExtrusion.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\RectColliderExtrusionMaker.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\RectColliderMaker.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\TraceParentType.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\Transform2D.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\Transform2DMaker.h" />
+    <ClInclude Include="inc\TktkAppend2DComponent\InertialMovement2DMaker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\TktkAppend2DComponent\CircleCollider.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\CircleColliderMaker.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\InertialMovement2D.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\InertialMovement2DMaker.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\InertialRotatement2D.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\InertialRotatement2DMaker.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\Polygon2dCollider.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\Polygon2dColliderMaker.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\RectCollider.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\RectColliderExtrusion.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\RectColliderExtrusionMaker.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\RectColliderMaker.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\Transform2D.cpp" />
+    <ClCompile Include="src\TktkAppend2DComponent\Transform2DMaker.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

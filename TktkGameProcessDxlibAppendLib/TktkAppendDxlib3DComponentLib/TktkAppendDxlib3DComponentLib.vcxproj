@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{B5AB2788-95FE-4924-AC38-BED5585744F4}</ProjectGuid>
+    <RootNamespace>TktkAppendDxlib3DComponentLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <TargetName>$(ProjectName)_mtd</TargetName>
+    <IncludePath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk3dCollisionLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend3DComponentLib\inc;$(SolutionDir)TktkAppendDxlib2DComponentLib\inc;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <TargetName>$(ProjectName)_mt</TargetName>
+    <IncludePath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk3dCollisionLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend3DComponentLib\inc;$(SolutionDir)TktkAppendDxlib2DComponentLib\inc;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\TktkAppendDxlib3DComponents.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Billboard\QuadrilateralBillboardDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Billboard\QuadrilateralBillboardDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Billboard\RectBillboardAnimator.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Billboard\RectBillboardAnimatorMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Billboard\RectBillboardDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Billboard\RectBillboardDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Camera\CameraModule\FirstPersonModule.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Camera\CameraModule\FirstPersonModuleMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Camera\CameraModule\ThirdPersonModule.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Camera\CameraModule\ThirdPersonModuleMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ColliderWireFrameDrawer3D\ColliderWireFrameDrawer3D.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ColliderWireFrameDrawer3D\ColliderWireFrameDrawer3DMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Figure\BoxDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Figure\BoxDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Figure\SphereDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Figure\SphereDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Light\AppendDirectionalLight.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Light\AppendDirectionalLightMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Light\AppendPointLight.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Light\AppendPointLightMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Light\AppendSpotLight.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Light\AppendSpotLightMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Light\BasicDirectionalLight.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Light\BasicDirectionalLightMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshMaterial.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShaderConstantBuffer\ShaderConstantBufferUpdater.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShaderConstantBuffer\ShaderConstantBufferUpdaterMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShadowMap\BoxShadowCreator.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShadowMap\MeshShadowCreator.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapDisabler.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapEnabler.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapCreateFinisher.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapCreateStarter.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\ShadowMap\SphereShadowCreator.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Sound3D\Sound3DPlayer\Sound3DPlayer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Sound3D\Sound3DPlayer\Sound3DPlayerMaker.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\Assets3DLoader.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\Assets3DManager.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\LightAssets\LightAssets.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\MeshAssets\MeshAssets.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\MeshAssets\MeshHandles.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\MeshTextureAssets\MeshTextureAssets.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\ShaderConstantBufferAssets\ShaderConstantBufferData.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\ShadowMapAssets\ShadowMapAssets.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\ShaderConstantBufferAssets\ShaderConstantBufferAssets.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Assets\VertexShaderAssets\VertexShaderAssets.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Dxlib3DLibDefinition.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Camera\BasicCamera.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\Camera\BasicCameraMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshAnimator.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshAnimatorMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshDrawerMaker.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Graphics\DxLibDraw3DParam.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Graphics\DxLibShader3DParam.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Graphics\ShaderType.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Graphics\ShaderUseConstantBuffer.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Graphics\ShaderUseGraphHandle.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Graphics\ShaderUseTextureAddressType.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Sound3D\Sound3D.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\Sound3D\Sound3DManager.h" />
+    <ClInclude Include="inc\TktkDxlib3DWrapper\_Policy\Dxlib3DPolicy.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Billboard\QuadrilateralBillboardDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Billboard\QuadrilateralBillboardDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Billboard\RectBillboardAnimator.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Billboard\RectBillboardAnimatorMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Billboard\RectBillboardDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Billboard\RectBillboardDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Camera\CameraModule\FirstPersonModule.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Camera\CameraModule\FirstPersonModuleMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Camera\CameraModule\ThirdPersonModule.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Camera\CameraModule\ThirdPersonModuleMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ColliderWireFrameDrawer3D\ColliderWireFrameDrawer3D.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ColliderWireFrameDrawer3D\ColliderWireFrameDrawer3DMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Figure\BoxDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Figure\BoxDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Figure\SphereDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Figure\SphereDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Light\AppendDirectionalLight.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Light\AppendDirectionalLightMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Light\AppendPointLight.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Light\AppendPointLightMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Light\AppendSpotLight.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Light\AppendSpotLightMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Light\BasicDirectionalLight.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Light\BasicDirectionalLightMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshMaterial.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShaderConstantBuffer\ShaderConstantBufferUpdater.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShaderConstantBuffer\ShaderConstantBufferUpdaterMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShadowMap\BoxShadowCreator.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShadowMap\MeshShadowCreator.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapDisabler.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapEnabler.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapCreateFinisher.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShadowMap\ShadowMapDrawer\ShadowMapCreateStarter.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\ShadowMap\SphereShadowCreator.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Sound3D\Sound3DPlayer\Sound3DPlayer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Sound3D\Sound3DPlayer\Sound3DPlayerMaker.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\Assets3DLoader.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\Assets3DManager.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\LightAssets\LightAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\MeshAssets\MeshAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\MeshAssets\MeshHandles.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\MeshTextureAssets\MeshTextureAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\ShaderConstantBufferAssets\ShaderConstantBufferData.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\ShadowMapAssets\ShadowMapAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\ShaderConstantBufferAssets\ShaderConstantBufferAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Assets\VertexShaderAssets\VertexShaderAssets.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Camera\BasicCamera.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\Camera\BasicCameraMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshAnimator.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshAnimatorMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib3DComponent\Graphics\MeshDrawer\MeshDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Graphics\DxLibDraw3DParam.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Graphics\DxLibShader3DParam.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Sound3D\Sound3D.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\Sound3D\Sound3DManager.cpp" />
+    <ClCompile Include="src\TktkDxlib3DWrapper\_Policy\Dxlib3DPolicy.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

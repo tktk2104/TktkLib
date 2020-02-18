@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{D0643B28-0931-4642-A8EE-9EEE686E632A}</ProjectGuid>
+    <RootNamespace>TktkLibTestProject</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk3dCollisionLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend3DComponentLib\inc;$(SolutionDir)TktkAppendDxlib2DComponentLib\inc;$(SolutionDir)TktkAppendDxlib3DComponentLib\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\lib;$(SolutionDir)..\TktkGameProcessLib\lib;$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk3dCollisionLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend3DComponentLib\inc;$(SolutionDir)TktkAppendDxlib2DComponentLib\inc;$(SolutionDir)TktkAppendDxlib3DComponentLib\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\lib;$(SolutionDir)..\TktkGameProcessLib\lib;$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\GameObject\CameraTest\CameraTestScript.cpp" />
+    <ClCompile Include="src\GameObject\MeshTest\MeshTestChild\MeshTestChildScript.cpp" />
+    <ClCompile Include="src\GameObject\MeshTest\MeshTestScript.cpp" />
+    <ClCompile Include="src\GameObject\MeshTest\MeshTestState\MoveState\SelfMover.cpp" />
+    <ClCompile Include="src\GameObject\MeshTest\MeshTestState\RotateState\SelfRotater.cpp" />
+    <ClCompile Include="src\GameObject\MeshTest\MeshTestState\ScaleState\SelfScaler.cpp" />
+    <ClCompile Include="src\GameObject\SpriteTest\RunState\RunStateScript.cpp" />
+    <ClCompile Include="src\GameObject\SpriteTest\SpriteTestScript.cpp" />
+    <ClCompile Include="src\GameObject\SpriteTest\StopState\StopStateScript.cpp" />
+    <ClCompile Include="src\GameObject\SpriteTest\WalkState\WalkStateScript.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Scene\LoadingScene\LoadingScene.cpp" />
+    <ClCompile Include="src\Scene\TitleScene\TitleScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CommonIncludePaths.h" />
+    <ClInclude Include="src\GameObject\BloomTest\BloomTest.h" />
+    <ClInclude Include="src\GameObject\CameraTest\CameraTest.h" />
+    <ClInclude Include="src\GameObject\CameraTest\CameraTestScript.h" />
+    <ClInclude Include="src\GameObject\CameraTest\SkyTest\SkyTest.h" />
+    <ClInclude Include="src\GameObject\Collide3DTest\Collide3DTest.h" />
+    <ClInclude Include="src\GameObject\LightTest\LightTest.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTest.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestChild\MeshTestChild.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestChild\MeshTestChildScript.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestScript.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestState\MeshTestState.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestState\MoveState\MeshTestMoveState.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestState\MoveState\SelfMover.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestState\RotateState\MeshTestRotateState.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestState\RotateState\SelfRotater.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestState\ScaleState\MeshTestScaleState.h" />
+    <ClInclude Include="src\GameObject\MeshTest\MeshTestState\ScaleState\SelfScaler.h" />
+    <ClInclude Include="src\GameObject\Pistol\Pistol.h" />
+    <ClInclude Include="src\GameObject\RenderTargetTest\RenderTargetTest.h" />
+    <ClInclude Include="src\GameObject\SpriteTest\RunState\RunState.h" />
+    <ClInclude Include="src\GameObject\SpriteTest\RunState\RunStateScript.h" />
+    <ClInclude Include="src\GameObject\SpriteTest\SpriteTest.h" />
+    <ClInclude Include="src\GameObject\SpriteTest\SpriteTestScript.h" />
+    <ClInclude Include="src\GameObject\SpriteTest\SpriteTestState.h" />
+    <ClInclude Include="src\GameObject\SpriteTest\StopState\StopState.h" />
+    <ClInclude Include="src\GameObject\SpriteTest\StopState\StopStateScript.h" />
+    <ClInclude Include="src\GameObject\SpriteTest\WalkState\WalkState.h" />
+    <ClInclude Include="src\GameObject\SpriteTest\WalkState\WalkStateScript.h" />
+    <ClInclude Include="src\GameObject\StageTest\StageTest.h" />
+    <ClInclude Include="src\Scene\LoadingScene\LoadingScene.h" />
+    <ClInclude Include="src\Scene\TitleScene\TitleScene.h" />
+    <ClInclude Include="src\Utility\Enum\CollisionGroup.h" />
+    <ClInclude Include="src\Utility\Enum\MeshId.h" />
+    <ClInclude Include="src\Utility\Enum\PixelShaderId.h" />
+    <ClInclude Include="src\Utility\Enum\RenderTargetId.h" />
+    <ClInclude Include="src\Utility\Enum\ShadowMapId.h" />
+    <ClInclude Include="src\Utility\Enum\SoundId.h" />
+    <ClInclude Include="src\Utility\Enum\TextureId.h" />
+    <ClInclude Include="src\Utility\Param\DrawPriority.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="res\Shader\BloomConbine.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.1</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.1</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="res\Shader\BrightPass.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.1</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="res\Shader\GaussianBlurH.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.1</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="res\Shader\GaussianBlurV.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.1</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.1</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="res\Shader\Simple.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.1</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.1</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)res\Shader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

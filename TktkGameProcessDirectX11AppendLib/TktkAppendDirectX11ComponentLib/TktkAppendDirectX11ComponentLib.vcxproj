@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{86221541-87B3-4CB7-AB7A-6938D9FD832D}</ProjectGuid>
+    <RootNamespace>TktkAppendDirectX11ComponentLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>$(ProjectName)_mtd</TargetName>
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <IncludePath>$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkBinaryProcessingLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk3dCollisionLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend3DComponentLib\inc;$(SolutionDir)inc\FbxSdk;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>$(ProjectName)_mt</TargetName>
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <IncludePath>$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkBinaryProcessingLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk3dCollisionLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend3DComponentLib\inc;$(SolutionDir)inc\FbxSdk;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;K_PLUGIN;K_FBXSDK;K_NODLL;_CRT_SECURE_NO_DEPRECATE;KARCH_ENV_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;K_PLUGIN;K_FBXSDK;K_NODLL;_CRT_SECURE_NO_DEPRECATE;KARCH_ENV_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModule.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\SimpleCamera.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Light\PointLight.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimator.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawer.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\Animation.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\AnimationLoader.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\AnimationManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\Asset\AnimationAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\Asset\AnimationData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Camera\Asset\CameraAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Camera\Asset\CameraData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Camera\Camera.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Camera\CameraManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\ConstantBufferAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\ConstantBufferData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBuffer.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBufferManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\DepthStencil.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\DepthStencilManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Light\Asset\LightAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Light\Asset\LightData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Light\Light.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Light\LightManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Light\LightUpdater.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Material\Material.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Material\MaterialManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Assets\IndexBuffer\IndexBuffer.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Assets\MeshAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Assets\MeshData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Assets\VertexBuffer\VertexBuffer.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoader.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxMeshLoader.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Mesh.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\MeshDrawerSetupper.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\MeshLoader.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\MeshManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\PixelShaderAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\PixelShaderData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\PixelShader\PixelShader.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\PixelShader\PixelShaderManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\RenderTargetAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\RenderTargetData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RenderTarget\RenderTarget.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RenderTarget\RenderTargetManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Screen\Screen.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Screen\ScreenManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Screen\ScreenUpdater.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Skeleton\Asset\SkeletonAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Skeleton\Asset\SkeletonData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Skeleton\Skeleton.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Skeleton\SkeletonLoader.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Skeleton\SkeletonManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Sprite\SpriteDrawerSetupper.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2D.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2DManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\VertexShaderAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\VertexShaderData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\VertexShader\VertexShader.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\VertexShader\VertexShaderManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ViewPort\Asset\ViewPortAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ViewPort\Asset\ViewPortData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ViewPort\ViewPort.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ViewPort\ViewPortManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Window\Window.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Window\WindowManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Window\WindowUpdater.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Input\Keyboard\Keyboard.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Input\Keyboard\KeyboardManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Input\Keyboard\KeyboardUpdater.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Sound\Asset\CSoundCallback.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Sound\Asset\SoundAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Sound\Asset\SoundData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Sound\Sound.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Sound\SoundManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Sound\SoundUpdater.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Utility\lodedds.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Utility\lodepng.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\_Policy\DirectX11Policy.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader\IblMeshShader\IblMeshPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\IblMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\IblMeshShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\IblMeshShader\IblMeshVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\IblMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\IblMeshShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\MeshShader\MeshPixelShader.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\MeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\MeshShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\MeshShader\MeshVertexShader.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\MeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\MeshShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\PbrIblMeshShader\PbrIblMeshPixelShader.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </HeaderFileOutput>
+      <HeaderFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </HeaderFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\PbrIblMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\PbrIblMeshShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\PbrIblMeshShader\PbrIblMeshVertexShader.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\PbrIblMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\PbrIblMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="shader\PbrMeshShader\PbrMeshPixelShader.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\PbrMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\PbrMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="shader\PbrMeshShader\PbrMeshVertexShader.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\PbrMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\PbrMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="shader\SpriteShader\SpritePixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\SpriteShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\SpriteShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\SpriteShader\SpriteVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\SpriteShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\SpriteShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModule.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\SimpleCamera.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Light\PointLight.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimator.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawer.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\DirectX11LibDefinition.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Animation.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\AnimationLoader.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\AnimationManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Asset\AnimationAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Asset\AnimationData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Asset\KeyFrame.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Camera\Asset\CameraAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Camera\Asset\CameraData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Camera\Camera.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Camera\CameraManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\ConstantBufferAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\ConstantBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\SystemConstantBufferId.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\SystemConstantBufferParamLocationType.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBuffer.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBufferManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\SystemDepthStencilId.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\DepthStencil.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\DepthStencilManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Light\Asset\LightAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Light\Asset\LightData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Light\Light.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Light\LightManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Light\LightUpdater.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Material.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\MaterialManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\IndexBuffer\IndexBuffer.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\MeshAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\MeshData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\SystemMeshId.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\VertexBuffer\VertexBuffer.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\_MeshInitParams\IndexBufferInitParams.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\_MeshInitParams\VertexBufferInitParams.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxLoadDataParam.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoader.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxMaterialDataParam.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxMeshLoader.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxSubsetDataParam.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxVertexDataParam.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Mesh.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\MeshConstantBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\MeshDrawerSetupper.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\MeshLoader.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\MeshManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\PbrMeshConstantBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\PixelShaderAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\PixelShaderData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\SystemPixelShaderId.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\PixelShader.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\PixelShaderManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\RenderTargetAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\RenderTargetData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\SystemRenderTargetId.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RenderTarget\RenderTarget.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RenderTarget\RenderTargetManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Screen\Screen.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Screen\ScreenManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Screen\ScreenUpdater.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Skeleton\Asset\Bone.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Skeleton\Asset\SkeletonAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Skeleton\Asset\SkeletonData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Skeleton\Skeleton.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Skeleton\SkeletonLoader.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Skeleton\SkeletonManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Sprite\SpriteConstantBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Sprite\SpriteDrawerSetupper.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Sprite\SpriteVertexBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2D.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2DManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\SystemVertexShaderId.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\VertexShaderAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\VertexShaderData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\VertexShader\VertexShader.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\VertexShader\VertexShaderManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ViewPort\Asset\SystemViewPortId.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ViewPort\Asset\ViewPortAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ViewPort\Asset\ViewPortData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ViewPort\ViewPort.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ViewPort\ViewPortManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Window\Window.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Window\WindowManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Window\WindowUpdater.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Keyboard\Keyboard.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Keyboard\KeyboardManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Keyboard\KeyboardUpdater.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Keyboard\KeybordKeyType.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\Asset\CSoundCallback.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\Asset\SoundAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\Asset\SoundData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\Asset\SoundPlayState.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\Sound.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\SoundManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\SoundUpdater.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Utility\lodedds.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Utility\lodepng.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Utility\WindownsHeaderIncluder.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\_Policy\DirectX11Policy.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{ABCB27BE-5B6C-43A7-8D9B-1683FE9A75C2}</ProjectGuid>
+    <RootNamespace>TktkAppendDxlib2DComponentLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <TargetName>$(ProjectName)_mtd</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
+    <TargetName>$(ProjectName)_mt</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\TktkAppendDxlib2DComponents.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Movie\MoviePlayer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Movie\MoviePlayerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\PostEffect\PostEffectDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\PostEffect\PostEffectDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\PostEffect\PostEffectDrawParameter.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\RenderTarget\RenderTargetDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\RenderTarget\RenderTargetDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Sprite\SpriteAnimator.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Sprite\SpriteAnimatorMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Sound2D\Sound2DPlayer\Sound2DPlayer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Sound2D\Sound2DPlayer\Sound2DPlayerMaker.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Assets\Assets2DLoader.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Assets\Assets2DManager.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Assets\MovieAssets\MovieAssets.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Assets\PixelShaderAssets\PixelShaderAssets.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Assets\RenderTargetAssets\RenderTargetAssets.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Assets\RenderTargetAssets\RenderTargetHandle.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Assets\SoundAssets\SoundAssets.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Assets\TextureAssets\TextureAssets.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Assets\TextureAssets\TextureHandles.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Dxlib2DLibDefinition.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\DxlibStructWrapper\Vertex2dShaderData.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\DxlibStructWrapper\XInputStateData.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\BlendMode.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\CircleDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\CircleDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\LineDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\LineDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\OvalDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\OvalDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\Polygon2DDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\Polygon2DDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\RectDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\RectDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\TriangleDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Figure\TriangleDrawerMaker.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\PostEffect\PostEffect.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\PostEffect\PostEffectManager.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\PostEffect\PostEffectUpdater.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\RenderTarget\RenderTarget.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\RenderTarget\RenderTargetManager.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\RenderTarget\RenderTargetUpdater.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\Screen\Screen.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\Screen\ScreenManager.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Graphics\Screen\ScreenUpdater.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Sprite\ReverseFlag.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Sprite\SpriteDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDxlib2DComponent\Graphics\Sprite\SpriteDrawerMaker.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\GamePad\GamePad.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\GamePad\GamePadButtonType.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\GamePad\GamePadManager.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\GamePad\GamePadNumber.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\GamePad\GamePadUpdater.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\InputType.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\Keyboard\Keyboard.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\Keyboard\KeyboardKeyType.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\Keyboard\KeyboardManager.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\Keyboard\KeyboardUpdater.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\Mouse\Mouse.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\Mouse\MouseButtonType.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\Mouse\MouseManager.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Input\Mouse\MouseUpdater.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Sound2D\Sound2D.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Sound2D\Sound2DManager.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Sound2D\SoundPlayType.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\Utility\DXConverter.h" />
+    <ClInclude Include="inc\TktkDxlib2DWrapper\_Policy\Dxlib2DPolicy.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Movie\MoviePlayer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Movie\MoviePlayerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\PostEffect\PostEffectDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\PostEffect\PostEffectDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\PostEffect\PostEffectDrawParameter.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\RenderTarget\RenderTargetDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\RenderTarget\RenderTargetDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Sprite\SpriteAnimator.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Sprite\SpriteAnimatorMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Sound2D\Sound2DPlayer\Sound2DPlayer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Sound2D\Sound2DPlayer\Sound2DPlayerMaker.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Assets\Assets2DLoader.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Assets\Assets2DManager.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Assets\MovieAssets\MovieAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Assets\PixelShaderAssets\PixelShaderAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Assets\RenderTargetAssets\RenderTargetAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Assets\SoundAssets\SoundAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Assets\TextureAssets\TextureAssets.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Assets\TextureAssets\TextureHandles.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\CircleDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\CircleDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\LineDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\LineDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\OvalDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\OvalDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\Polygon2DDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\Polygon2DDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\RectDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\RectDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\TriangleDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Figure\TriangleDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Graphics\PostEffect\PostEffect.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Graphics\PostEffect\PostEffectManager.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Graphics\PostEffect\PostEffectUpdater.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Graphics\RenderTarget\RenderTarget.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Graphics\RenderTarget\RenderTargetManager.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Graphics\RenderTarget\RenderTargetUpdater.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Graphics\Screen\Screen.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Graphics\Screen\ScreenManager.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Graphics\Screen\ScreenUpdater.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Sprite\SpriteDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDxlib2DComponent\Graphics\Sprite\SpriteDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Input\GamePad\GamePad.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Input\GamePad\GamePadManager.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Input\GamePad\GamePadUpdater.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Input\Keyboard\Keyboard.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Input\Keyboard\KeyboardManager.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Input\Keyboard\KeyboardUpdater.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Input\Mouse\Mouse.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Input\Mouse\MouseManager.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Input\Mouse\MouseUpdater.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Sound2D\Sound2D.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Sound2D\Sound2DManager.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\Utility\DXConverter.cpp" />
+    <ClCompile Include="src\TktkDxlib2DWrapper\_Policy\Dxlib2DPolicy.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
