@@ -129,14 +129,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\MMD\string_convertor.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\MMD\MMDMath.h" />
-    <ClInclude Include="src\MMD\MMDTypes.h" />
-    <ClInclude Include="src\MMD\PMXFileReader.h" />
-    <ClInclude Include="src\MMD\string_convertor.h" />
-    <ClInclude Include="src\MMD\VMDFileReader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
