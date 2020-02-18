@@ -2,6 +2,7 @@ Debug/
 Release/
 res/
 FbxSdk/
+プロジェクトに追加すべきファイル_VC用/
 .vs/
 .sass-cache/
 .DS_Store
