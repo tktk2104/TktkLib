@@ -21,7 +21,7 @@ struct IBLTest
 			0.0f,
 			CAMERA_BASIC,
 			MESH_PISTOL,
-			-1,
+			-10,
 			std::vector<int>({ MATERIAL_IBL_PISTOL })
 			);
 	}

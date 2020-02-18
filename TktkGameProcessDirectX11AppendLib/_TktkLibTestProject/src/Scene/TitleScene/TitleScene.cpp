@@ -11,7 +11,7 @@
 void TitleScene::sceneStart()
 {
 	//SpriteTest::create();
-	SoundTest::create();
+	//SoundTest::create();
 
 	//CameraTest::create();
 	//LightTest::create();
