@@ -24,6 +24,7 @@
 #include <TktkMetaFunc/HasFuncCheck/CreatedStruct/HasGetDrawPriorityChecker.h>
 
 #include "GameObject/GameObjectList.h"
+#include "Component/ComponentUpdatePrioritySetter.h"
 
 namespace tktk
 {
@@ -64,6 +65,10 @@ namespace tktk
 
 		// GameObjectを生成する
 		static CfpPtr<GameObject> createGameObject(bool isStatic);
+
+		// 指定した型のコンポーネントの更新優先度を設定
+		template <class T>
+		static void addComponentUpdatePriority(float priority);
 
 		// 衝突判定のグループを追加
 		static void addCollisionGroupPair(int first, int second);
@@ -120,6 +125,13 @@ namespace tktk
 	inline CfpPtr<T> ComponentFrameworkProcessor::createClass(bool isStatic, const Args & ...constructorValue)
 	{
 		return addClass<T>(isStatic, new T(constructorValue...));
+	}
+
+	// 指定した型のコンポーネントの更新優先度を設定
+	template<class T>
+	inline void ComponentFrameworkProcessor::addComponentUpdatePriority(float priority)
+	{
+		ComponentUpdatePrioritySetter::addUpdatePriority<T>(priority);
 	}
 
 	// 指定した関数実行コンテナの関数実行フラグを設定する

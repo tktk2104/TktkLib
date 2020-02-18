@@ -114,5 +114,8 @@
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasSetIsRunFuncChecker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasSetUpdatePriorityChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

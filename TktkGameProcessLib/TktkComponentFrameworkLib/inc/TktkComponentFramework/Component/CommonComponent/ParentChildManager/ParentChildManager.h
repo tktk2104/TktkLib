@@ -17,11 +17,6 @@ namespace tktk
 
 		ParentChildManager() = default;
 
-		~ParentChildManager()
-		{
-
-		}
-
 	public:
 
 		void updateContainer();

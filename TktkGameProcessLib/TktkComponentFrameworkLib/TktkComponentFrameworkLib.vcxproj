@@ -142,6 +142,7 @@
     <ClInclude Include="inc\TktkComponentFramework\Component\CommonComponent\ParentChildManager\ParentChildManager.h" />
     <ClInclude Include="inc\TktkComponentFramework\Component\ComponentBase.h" />
     <ClInclude Include="inc\TktkComponentFramework\Component\ComponentList.h" />
+    <ClInclude Include="inc\TktkComponentFramework\Component\ComponentUpdatePrioritySetter.h" />
     <ClInclude Include="inc\TktkComponentFramework\GameObject\GameObject.h" />
     <ClInclude Include="inc\TktkComponentFramework\GameObject\GameObjectList.h" />
     <ClInclude Include="inc\TktkComponentFramework\GameObject\GameObjectManager.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="src\TktkComponentFramework\Component\CommonComponent\ParentChildManager\ParentChildManager.cpp" />
     <ClCompile Include="src\TktkComponentFramework\Component\ComponentBase.cpp" />
     <ClCompile Include="src\TktkComponentFramework\Component\ComponentList.cpp" />
+    <ClCompile Include="src\TktkComponentFramework\Component\ComponentUpdatePrioritySetter.cpp" />
     <ClCompile Include="src\TktkComponentFramework\GameObject\GameObject.cpp" />
     <ClCompile Include="src\TktkComponentFramework\GameObject\GameObjectList.cpp" />
     <ClCompile Include="src\TktkComponentFramework\GameObject\GameObjectManager.cpp" />

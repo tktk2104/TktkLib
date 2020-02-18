@@ -58,8 +58,11 @@ namespace tktk
 		// GameObjectを取得
 		CfpPtr<GameObject> getGameObject() const;
 
-		// 自身の所持者となるGameObjectを再設定（非推奨）
+		// 自身の所持者となるGameObjectを再設定（マネージャー用関数）
 		void setGameObject(CfpPtr<GameObject> user);
+
+		// 自身の更新優先度を設定（マネージャー用関数）
+		void setUpdatePriority(float updatePriority);
 
 	public:
 

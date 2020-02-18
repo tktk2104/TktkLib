@@ -57,4 +57,9 @@ namespace tktk
 	{
 		m_user = user;
 	}
+
+	void ComponentBase::setUpdatePriority(float updatePriority)
+	{
+		m_updatePriority = updatePriority;
+	}
 }

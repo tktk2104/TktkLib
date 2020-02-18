@@ -153,6 +153,7 @@
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasStartChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasUpdateChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasUpdateContainerChecker.h" />
+    <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasSetUpdatePriorityChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasFuncCheckMacro.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasReturnBoolFuncCheckMacro.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasReturnFloatFuncCheckMacro.h" />
