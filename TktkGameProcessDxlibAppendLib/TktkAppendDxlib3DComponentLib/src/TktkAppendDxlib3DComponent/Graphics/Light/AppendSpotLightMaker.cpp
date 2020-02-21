@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<AppendSpotLight> AppendSpotLightMaker::create()
+	AppendSpotLight* AppendSpotLightMaker::create()
 	{
-		return std::make_shared<AppendSpotLight>(
+		return new AppendSpotLight(
 			m_lightId,
 			m_outAngleDegree,
 			m_inAngleDegree,

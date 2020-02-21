@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<AppendDirectionalLight> AppendDirectionalLightMaker::create()
+	AppendDirectionalLight* AppendDirectionalLightMaker::create()
 	{
-		return std::make_shared<AppendDirectionalLight>(
+		return new AppendDirectionalLight(
 			m_lightId,
 			m_difColor,
 			m_spcColor,

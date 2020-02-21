@@ -1,10 +1,10 @@
 #ifndef COLLIDER_WIRE_FRAME_DRAWER_3D_H_
 #define COLLIDER_WIRE_FRAME_DRAWER_3D_H_
 
-#include <memory>
 #include <TktkMath/Color.h>
-#include <TktkClassFuncProcessor/RunFuncClass/RunFuncClassList.h>
-#include <TktkClassFuncProcessor/RunFuncClass/HasFuncClass/HasSetActiveClass.h>
+#include <TktkClassFuncProcessor/RunFuncClass/RunFuncSimpleContainer.h>
+#include <TktkClassFuncProcessor/RunFuncClass/HasFuncClass/HasOneArgFuncClass.h>
+#include <TktkMetaFunc/HasFuncCheck/CreatedStruct/HasSetActiveChecker.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend3DComponent/BoxCollider.h>
 #include <TktkAppend3DComponent/SphereCollider.h>
@@ -30,8 +30,8 @@ namespace tktk
 
 	private:
 
-		void createBoxDrawer(std::weak_ptr<BoxCollider> boxCollider);
-		void createSphereDrawer(std::weak_ptr<SphereCollider> sphereCollider);
+		void createBoxDrawer(CfpPtr<BoxCollider> boxCollider);
+		void createSphereDrawer(CfpPtr<SphereCollider> sphereCollider);
 
 	private:
 
@@ -39,7 +39,7 @@ namespace tktk
 		Color m_wireFrameColor;
 
 		// アクティブ状態を切り替えるためのコンテナのラッパー
-		RunFuncClassList<HasSetActiveClass> m_hasSetActiveClassList;
+		RunFuncSimpleContainer<HasOneArgFuncClass<has_setActive_checker<bool>, setActive_runner<bool>, bool>> m_hasSetActiveClassList;
 	};
 }
 #endif // !COLLIDER_WIRE_FRAME_DRAWER_3D_H_

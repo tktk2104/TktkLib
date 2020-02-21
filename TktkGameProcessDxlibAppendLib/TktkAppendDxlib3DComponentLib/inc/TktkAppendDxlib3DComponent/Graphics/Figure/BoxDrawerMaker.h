@@ -14,7 +14,7 @@ namespace tktk
 
 	public:
 
-		std::shared_ptr<BoxDrawer> create();
+		BoxDrawer* create();
 
 		// •`‰æ—Dæ“x‚ğİ’è‚·‚é
 		BoxDrawerMaker& drawPriority(float value);

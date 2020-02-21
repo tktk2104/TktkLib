@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<MeshAnimator> MeshAnimatorMaker::create()
+	MeshAnimator* MeshAnimatorMaker::create()
 	{
-		return std::make_shared<MeshAnimator>(
+		return new MeshAnimator(
 			m_motionID,
 			m_isLoop,
 			m_motionSpeedRate,

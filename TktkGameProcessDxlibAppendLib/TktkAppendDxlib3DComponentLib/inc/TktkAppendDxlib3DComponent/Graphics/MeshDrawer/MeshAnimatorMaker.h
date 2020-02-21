@@ -1,7 +1,6 @@
 #ifndef MESH_ANIMATOR_MAKER_H_
 #define MESH_ANIMATOR_MAKER_H_
 
-#include <memory>
 #include "MeshAnimator.h"
 
 namespace tktk
@@ -15,7 +14,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<MeshAnimator> create();
+		MeshAnimator* create();
 
 		// Ä¶‚·‚éƒ‚[ƒVƒ‡ƒ“‚ÌID
 		MeshAnimatorMaker& motionID(int value);

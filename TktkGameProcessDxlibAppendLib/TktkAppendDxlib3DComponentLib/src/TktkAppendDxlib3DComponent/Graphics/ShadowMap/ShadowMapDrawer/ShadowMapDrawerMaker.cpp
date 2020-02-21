@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<ShadowMapDrawer> ShadowMapDrawerMaker::create()
+	ShadowMapDrawer* ShadowMapDrawerMaker::create()
 	{
-		return std::make_shared<ShadowMapDrawer>(
+		return new ShadowMapDrawer(
 			m_shadowMapCreateStarterDrawPriority,
 			m_shadowMapCreateFinisherDrawPriority,
 			m_shadowMapEnablerDrawPriority,

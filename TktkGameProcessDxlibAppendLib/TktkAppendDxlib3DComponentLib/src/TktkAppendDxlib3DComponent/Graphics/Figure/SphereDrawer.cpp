@@ -31,15 +31,15 @@ namespace tktk
 	{
 		if (m_dxLibDraw3DParam.createShadow)
 		{
-			getGameObject().lock()->addComponent(std::make_shared<SphereShadowCreator>(
+			getGameObject()->addComponent(new SphereShadowCreator(
 				m_dxLibDraw3DParam.shadowCreatorPriority,
-				std::dynamic_pointer_cast<SphereDrawer>(shared_from_this())
+				getThisPtr<SphereDrawer>()
 				));
 		}
 
 		auto transform3D = getComponent<Transform3D>();
 
-		if (transform3D.expired())
+		if (transform3D.isNull())
 		{
 			throw std::runtime_error("SphereDrawer not found Transform3D");
 		}
@@ -50,11 +50,11 @@ namespace tktk
 	{
 		if (m_dxLibDraw3DParam.renderTargetId != -1) RenderTargetManager::setRenderTarget(m_dxLibDraw3DParam.renderTargetId);
 
-		Matrix4 selfPose = m_transform3D.lock()->calculateWorldMatrix();
+		Matrix4 selfPose = m_transform3D->calculateWorldMatrix();
 
 		Vector3 centerPos = m_dxLibDraw3DParam.localMat.calculateTranslation() * selfPose;
 
-		float radius = m_radius * m_transform3D.lock()->getWorldScaleRate().x;
+		float radius = m_radius * m_transform3D->getWorldScaleRate().x;
 
 		DxLib::SetDrawBlendMode(m_dxLibDraw3DParam.blendMode, static_cast<int>(m_dxLibDraw3DParam.blendParam));
 		DxLib::SetUseLighting((m_dxLibDraw3DParam.useLight) ? TRUE : FALSE);

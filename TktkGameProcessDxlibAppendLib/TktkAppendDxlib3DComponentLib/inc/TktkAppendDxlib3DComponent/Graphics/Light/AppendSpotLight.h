@@ -1,7 +1,6 @@
 #ifndef APPEND_SPOT_LIGHT_H_
 #define APPEND_SPOT_LIGHT_H_
 
-#include <memory>
 #include <array>
 #include <TktkMath/Color.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
@@ -75,7 +74,7 @@ namespace tktk
 
 	private:
 
-		std::weak_ptr<Transform3D> m_transform3D;
+		CfpPtr<Transform3D> m_transform3D;
 
 		int m_lightId{ -1 };
 		float m_outAngleDegree{ 90.0f };

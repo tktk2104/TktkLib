@@ -39,7 +39,7 @@ namespace tktk
 
 	void ColliderWireFrameDrawer3D::update()
 	{
-		m_hasSetActiveClassList.update();
+		m_hasSetActiveClassList.updateContainer();
 	}
 
 	void ColliderWireFrameDrawer3D::onEnable()
@@ -52,11 +52,11 @@ namespace tktk
 		m_hasSetActiveClassList.runFunc(false);
 	}
 
-	void ColliderWireFrameDrawer3D::createBoxDrawer(std::weak_ptr<BoxCollider> boxCollider)
+	void ColliderWireFrameDrawer3D::createBoxDrawer(CfpPtr<BoxCollider> boxCollider)
 	{
-		if (boxCollider.expired()) return;
+		if (boxCollider.isNull()) return;
 
-		const auto& aabb = dynamic_cast<const AxisAlignedBoundingBox&>(boxCollider.lock()->getBodyBase());
+		const auto& aabb = dynamic_cast<const AxisAlignedBoundingBox&>(boxCollider->getBodyBase());
 
 		auto boxDrawer = BoxDrawerMaker::makeStart()
 			.drawPriority(m_drawPriority)
@@ -67,15 +67,15 @@ namespace tktk
 			.useLight(false)
 			.create();
 
-		auto processingClassPtr = getGameObject().lock()->addComponent(boxDrawer);
-		m_hasSetActiveClassList.checkAndAdd<BoxDrawer>(processingClassPtr);
+		auto cfpPtr = getGameObject()->addComponent(boxDrawer);
+		m_hasSetActiveClassList.checkAndAdd<BoxDrawer>(getGameObject()->isStatic(), cfpPtr.processingClassPtr());
 	}
 
-	void ColliderWireFrameDrawer3D::createSphereDrawer(std::weak_ptr<SphereCollider> sphereCollider)
+	void ColliderWireFrameDrawer3D::createSphereDrawer(CfpPtr<SphereCollider> sphereCollider)
 	{
-		if (sphereCollider.expired()) return;
+		if (sphereCollider.isNull()) return;
 
-		const auto& boundingSphere = dynamic_cast<const BoundingSphere&>(sphereCollider.lock()->getBodyBase());
+		const auto& boundingSphere = dynamic_cast<const BoundingSphere&>(sphereCollider->getBodyBase());
 
 		auto sphereDrawer = SphereDrawerMaker::makeStart()
 			.drawPriority(m_drawPriority)
@@ -86,7 +86,7 @@ namespace tktk
 			.useLight(false)
 			.create();
 
-		auto processingClassPtr = getGameObject().lock()->addComponent(sphereDrawer);
-		m_hasSetActiveClassList.checkAndAdd<SphereDrawer>(processingClassPtr);
+		auto cfpPtr = getGameObject()->addComponent(sphereDrawer);
+		m_hasSetActiveClassList.checkAndAdd<SphereDrawer>(getGameObject()->isStatic(), cfpPtr.processingClassPtr());
 	}
 }

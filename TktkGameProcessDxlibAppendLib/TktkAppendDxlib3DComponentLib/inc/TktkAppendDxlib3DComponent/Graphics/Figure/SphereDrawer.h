@@ -1,7 +1,6 @@
 #ifndef SPHERE_DRAWER_H_
 #define SPHERE_DRAWER_H_
 
-#include <memory>
 #include <TktkMath/Color.h>
 #include <TktkMath/Vector3.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
@@ -75,7 +74,7 @@ namespace tktk
 	private:
 
 		// 自身の３次元座標コンポーネント
-		std::weak_ptr<Transform3D> m_transform3D;
+		CfpPtr<Transform3D> m_transform3D;
 
 		// DxLibを使った3D描画で使用するパラメータ
 		DxLibDraw3DParam m_dxLibDraw3DParam;

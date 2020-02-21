@@ -28,7 +28,7 @@ namespace tktk
 	{
 		auto transform3D = getComponent<tktk::Transform3D>();
 
-		if (transform3D.expired())
+		if (transform3D.isNull())
 		{
 			throw std::runtime_error("CameraTestScript not found Transform3D");
 		}
@@ -58,7 +58,7 @@ namespace tktk
 
 		Mouse::setCursorPoint(curMousePos);
 
-		Vector3 rotationEuler = m_selfTransform.lock()->calculateWorldEulerAngles();
+		Vector3 rotationEuler = m_selfTransform->calculateWorldEulerAngles();
 
 		rotationEuler += Vector3(
 			 (mousePosDist.y * m_rotationDegPerPixelOnMouseMove),
@@ -69,7 +69,7 @@ namespace tktk
 		if (rotationEuler.x > 89.0f && rotationEuler.x < 180.0f)	rotationEuler.x = 89.0f;
 		if (rotationEuler.x > 180.0f && rotationEuler.x < 271.0f)	rotationEuler.x = 271.0f;
 
-		m_selfTransform.lock()->setLocalEulerAngles(rotationEuler);
+		m_selfTransform->setLocalEulerAngles(rotationEuler);
 
 		m_preMousePos = curMousePos;
 	}
@@ -90,7 +90,7 @@ namespace tktk
 		}
 
 		verticalMoveVel *= tktk::Time::deltaTime() * m_moveSpeedPerSec;
-		m_selfTransform.lock()->addLocalPosition(Vector3(0.0f, verticalMoveVel, 0.0f));
+		m_selfTransform->addLocalPosition(Vector3(0.0f, verticalMoveVel, 0.0f));
 	}
 
 	void FirstPersonModule::inputToMove()
@@ -99,15 +99,15 @@ namespace tktk
 
 		if (m_alwaysMoveForward)
 		{
-			pose = m_selfTransform.lock()->calculateWorldMatrix();
+			pose = m_selfTransform->calculateWorldMatrix();
 		}
 		else
 		{
-			Vector3 cameraRote = m_selfTransform.lock()->calculateWorldEulerAngles();
+			Vector3 cameraRote = m_selfTransform->calculateWorldEulerAngles();
 
-			pose = Matrix4::createScale(m_selfTransform.lock()->getWorldScaleRate())
+			pose = Matrix4::createScale(m_selfTransform->getWorldScaleRate())
 				 * Matrix4::createFromYawPitchRoll(cameraRote.y, 0.0f, 0.0f)
-				 * Matrix4::createTranslation(m_selfTransform.lock()->getWorldPosition());
+				 * Matrix4::createTranslation(m_selfTransform->getWorldPosition());
 		}
 
 		Vector3 moveVel = Vector3::zero;
@@ -119,6 +119,6 @@ namespace tktk
 
 
 		moveVel *= tktk::Time::deltaTime() * m_moveSpeedPerSec;
-		m_selfTransform.lock()->addLocalPosition(moveVel);
+		m_selfTransform->addLocalPosition(moveVel);
 	}
 }

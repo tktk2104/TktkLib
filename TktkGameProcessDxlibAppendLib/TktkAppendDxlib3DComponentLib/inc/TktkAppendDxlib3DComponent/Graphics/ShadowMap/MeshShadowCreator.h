@@ -14,7 +14,7 @@ namespace tktk
 
 		MeshShadowCreator(
 			float drawPriority,						// 描画優先度
-			std::weak_ptr<MeshDrawer> meshDrawer	// メッシュ描画コンポーネント
+			CfpPtr<MeshDrawer> meshDrawer	// メッシュ描画コンポーネント
 		);
 
 	public:
@@ -24,7 +24,7 @@ namespace tktk
 
 	private:
 
-		std::weak_ptr<MeshDrawer> m_meshDrawer;
+		CfpPtr<MeshDrawer> m_meshDrawer;
 	};
 }
 

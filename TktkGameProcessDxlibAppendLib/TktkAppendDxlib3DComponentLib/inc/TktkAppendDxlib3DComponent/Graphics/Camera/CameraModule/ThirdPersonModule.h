@@ -1,8 +1,8 @@
 #ifndef THIRD_PERSON_MODULE_H_
 #define THIRD_PERSON_MODULE_H_
 
-#include <memory>
 #include <TktkMath/Vector3.h>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend3DComponent/Transform3D.h>
 
@@ -41,7 +41,7 @@ namespace tktk
 	private:
 
 		// 自身の３次元座標コンポーネント
-		std::weak_ptr<Transform3D> m_selfTransform;
+		CfpPtr<Transform3D> m_selfTransform;
 
 		// カメラが追うGameObject
 		GameObjectPtr m_target;

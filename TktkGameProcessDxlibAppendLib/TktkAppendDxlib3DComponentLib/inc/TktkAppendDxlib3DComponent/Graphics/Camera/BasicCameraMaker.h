@@ -1,7 +1,6 @@
 #ifndef BASIC_CAMERA_MAKER_H_
 #define BASIC_CAMERA_MAKER_H_
 
-#include <memory>
 #include <TktkMath/Vector3.h>
 #include "BasicCamera.h"
 
@@ -18,7 +17,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<BasicCamera> create();
+		BasicCamera* create();
 
 		// •`‰æ—Dæ“x
 		BasicCameraMaker& drawPriority(float value);

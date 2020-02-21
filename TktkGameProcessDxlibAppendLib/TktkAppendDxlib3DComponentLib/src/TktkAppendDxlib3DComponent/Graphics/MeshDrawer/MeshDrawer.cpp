@@ -33,22 +33,22 @@ namespace tktk
 	{
 		if (m_dxLibDraw3DParam.createShadow)
 		{
-			getGameObject().lock()->addComponent(std::make_shared<MeshShadowCreator>(
+			getGameObject()->addComponent(new MeshShadowCreator(
 				m_dxLibDraw3DParam.shadowCreatorPriority,
-				std::dynamic_pointer_cast<MeshDrawer>(shared_from_this())
+				getThisPtr<MeshDrawer>()
 				));
 		}
 
 		m_transform3D = getComponent<Transform3D>();
 
-		if (m_transform3D.expired())
+		if (m_transform3D.isNull())
 		{
 			throw std::runtime_error("MeshDrawer not found Transform3D");
 		}
 
 		m_meshMaterial = getComponent<MeshMaterial>();
 
-		MeshHandles drawMeshHandles = Assets3DManager::getMeshAssets().lock()->getMeshHandle(m_meshID);
+		MeshHandles drawMeshHandles = Assets3DManager::getMeshAssets()->getMeshHandle(m_meshID);
 		m_localBoneMatrices = std::vector<Matrix4>(DxLib::MV1GetFrameNum(drawMeshHandles.meshHandle), Matrix4::identity);
 		for (int i = 0; i < static_cast<int>(m_localBoneMatrices.size()); ++i)
 		{
@@ -61,17 +61,17 @@ namespace tktk
 	{
 		if (m_dxLibDraw3DParam.renderTargetId != -1) RenderTargetManager::setRenderTarget(m_dxLibDraw3DParam.renderTargetId);
 
-		if (!m_meshMaterial.expired() && m_meshMaterial.lock()->getDxLibShader3DParam().useOriginalShader())
+		if (!m_meshMaterial.isNull() && m_meshMaterial->getDxLibShader3DParam().useOriginalShader())
 		{
-			const DxLibShader3DParam& shaderParam = m_meshMaterial.lock()->getDxLibShader3DParam();
+			const DxLibShader3DParam& shaderParam = m_meshMaterial->getDxLibShader3DParam();
 
 			DxLib::MV1SetUseOrigShader(TRUE);
 
 			auto pixelShaderAssets = Assets2DManager::getPixelShaderAssets();
 			auto vertexShaderAssets = Assets3DManager::getVertexShaderAssets();
 
-			DxLib::SetUseVertexShader(pixelShaderAssets.lock()->getPixelShaderHandle(shaderParam.pixelShaderId));
-			DxLib::SetUsePixelShader(vertexShaderAssets.lock()->getVertexShaderHandle(shaderParam.vertexShaderId));
+			DxLib::SetUseVertexShader(pixelShaderAssets->getPixelShaderHandle(shaderParam.pixelShaderId));
+			DxLib::SetUsePixelShader(vertexShaderAssets->getVertexShaderHandle(shaderParam.vertexShaderId));
 
 			std::for_each(
 				std::begin(shaderParam.shaderUseConstantBufferMap),
@@ -86,7 +86,7 @@ namespace tktk
 			);
 		}
 
-		int drawMeshHandle = Assets3DManager::getMeshAssets().lock()->getMeshHandle(m_meshID).meshHandle;
+		int drawMeshHandle = Assets3DManager::getMeshAssets()->getMeshHandle(m_meshID).meshHandle;
 
 		for (int i = 0; i < static_cast<int>(m_localBoneMatrices.size()); ++i)
 		{
@@ -96,10 +96,10 @@ namespace tktk
 		DxLib::SetDrawBlendMode(m_dxLibDraw3DParam.blendMode, static_cast<int>(m_dxLibDraw3DParam.blendParam));
 		DxLib::SetUseLighting((m_dxLibDraw3DParam.useLight) ? TRUE : FALSE);
 		DxLib::MV1SetWriteZBuffer(drawMeshHandle, (m_dxLibDraw3DParam.writeZBuffer) ? TRUE : FALSE);
-		DxLib::MV1SetMatrix(drawMeshHandle, DXConverter::toMATRIX(m_dxLibDraw3DParam.localMat * m_transform3D.lock()->calculateWorldMatrix()));
+		DxLib::MV1SetMatrix(drawMeshHandle, DXConverter::toMATRIX(m_dxLibDraw3DParam.localMat * m_transform3D->calculateWorldMatrix()));
 		DxLib::MV1DrawModel(drawMeshHandle);
 
-		if (!m_meshMaterial.expired() && m_meshMaterial.lock()->getDxLibShader3DParam().useOriginalShader()) DxLib::MV1SetUseOrigShader(FALSE);
+		if (!m_meshMaterial.isNull() && m_meshMaterial->getDxLibShader3DParam().useOriginalShader()) DxLib::MV1SetUseOrigShader(FALSE);
 
 		if (m_dxLibDraw3DParam.renderTargetId != -1) RenderTargetManager::unSetRenderTarget();
 	}
@@ -141,13 +141,13 @@ namespace tktk
 
 	void MeshDrawer::setTextureGraphHandle(int materialIndex, int textureId, bool haveAlpha)
 	{
-		int drawMeshHandle = Assets3DManager::getMeshAssets().lock()->getMeshHandle(m_meshID).meshHandle;
+		int drawMeshHandle = Assets3DManager::getMeshAssets()->getMeshHandle(m_meshID).meshHandle;
 		int materialDifMapTextureIndex = DxLib::MV1GetMaterialDifMapTexture(drawMeshHandle, materialIndex);
 
 		DxLib::MV1SetTextureGraphHandle(
 			drawMeshHandle,
 			materialDifMapTextureIndex,
-			Assets3DManager::getMeshTextureAssets().lock()->getMeshTextureHandles(textureId),
+			Assets3DManager::getMeshTextureAssets()->getMeshTextureHandles(textureId),
 			(haveAlpha) ? TRUE : FALSE
 		);
 	}

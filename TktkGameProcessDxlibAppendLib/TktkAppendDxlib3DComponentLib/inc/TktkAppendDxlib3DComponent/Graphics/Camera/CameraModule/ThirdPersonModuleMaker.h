@@ -1,7 +1,6 @@
 #ifndef THIRD_PERSON_MODULE_MAKER_H_
 #define THIRD_PERSON_MODULE_MAKER_H_
 
-#include <memory>
 #include <TktkMath/Vector3.h>
 #include <TktkComponentFramework/GameObject/GameObject.h>
 #include <TktkComponentFramework/GameObject/GameObjectPtr.h>
@@ -20,7 +19,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<ThirdPersonModule> create();
+		ThirdPersonModule* create();
 
 		// ƒJƒƒ‰‚ª’Ç‚¤GameObject‚ğİ’è‚·‚é
 		ThirdPersonModuleMaker& target(GameObjectPtr value);

@@ -1,7 +1,6 @@
 #ifndef SHADOW_MAP_ENABLER_H_
 #define SHADOW_MAP_ENABLER_H_
 
-#include <memory>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include "ShadowMapDrawer.h"
 
@@ -14,7 +13,7 @@ namespace tktk
 
 		ShadowMapEnabler(
 			float drawPriority,
-			std::weak_ptr<ShadowMapDrawer> shadowMapDrawer
+			CfpPtr<ShadowMapDrawer> shadowMapDrawer
 		);
 
 	public:
@@ -24,7 +23,7 @@ namespace tktk
 
 	private:
 
-		std::weak_ptr<ShadowMapDrawer> m_shadowMapDrawer;
+		CfpPtr<ShadowMapDrawer> m_shadowMapDrawer;
 	};
 }
 #endif // !SHADOW_MAP_ENABLER_H_

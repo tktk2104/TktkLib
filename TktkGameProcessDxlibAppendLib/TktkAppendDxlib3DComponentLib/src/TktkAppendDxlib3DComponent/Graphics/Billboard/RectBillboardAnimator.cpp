@@ -26,7 +26,7 @@ namespace tktk
 	{
 		auto rectBillboardDrawer = getComponent<RectBillboardDrawer>();
 
-		if (rectBillboardDrawer.expired())
+		if (rectBillboardDrawer.isNull())
 		{
 			throw std::runtime_error("RectBillboardAnimator not found RectBillboardDrawer");
 		}
@@ -48,8 +48,8 @@ namespace tktk
 		// •ÛŒ¯
 		if (curAnimationIdIndex >= m_splitTextureIndexList.size()) curAnimationIdIndex = m_splitTextureIndexList.size() - 1u;
 
-		m_rectBillboardDrawer.lock()->setTextureID(m_textureId);
-		m_rectBillboardDrawer.lock()->setSplitTextureIndex(m_splitTextureIndexList.at(curAnimationIdIndex));
+		m_rectBillboardDrawer->setTextureID(m_textureId);
+		m_rectBillboardDrawer->setSplitTextureIndex(m_splitTextureIndexList.at(curAnimationIdIndex));
 	}
 
 	bool RectBillboardAnimator::isEndAnimation() const

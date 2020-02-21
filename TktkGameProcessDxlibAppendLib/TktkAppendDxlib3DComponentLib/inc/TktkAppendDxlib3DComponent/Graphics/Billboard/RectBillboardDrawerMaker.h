@@ -1,7 +1,6 @@
 #ifndef RECT_BILLBOARD_DRAWER_MAKER_H_
 #define RECT_BILLBOARD_DRAWER_MAKER_H_
 
-#include <memory>
 #include "RectBillboardDrawer.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<RectBillboardDrawer> create();
+		RectBillboardDrawer* create();
 
 		// •`‰æ—Dæ“x‚ğİ’è‚·‚é
 		RectBillboardDrawerMaker& drawPriority(float value);

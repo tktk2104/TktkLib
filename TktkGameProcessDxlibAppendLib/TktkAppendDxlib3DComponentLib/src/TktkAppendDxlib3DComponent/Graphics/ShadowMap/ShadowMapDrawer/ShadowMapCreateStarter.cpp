@@ -7,7 +7,7 @@ namespace tktk
 {
 	ShadowMapCreateStarter::ShadowMapCreateStarter(
 		float drawPriority,
-		std::weak_ptr<ShadowMapDrawer> shadowMapDrawer
+		CfpPtr<ShadowMapDrawer> shadowMapDrawer
 	)
 		: ComponentBase(drawPriority)
 		, m_shadowMapDrawer(shadowMapDrawer)
@@ -16,11 +16,11 @@ namespace tktk
 
 	void ShadowMapCreateStarter::draw() const
 	{
-		if (m_shadowMapDrawer.expired() || !m_shadowMapDrawer.lock()->isActive()) return;
+		if (m_shadowMapDrawer.isNull() || !m_shadowMapDrawer->isActive()) return;
 
 		// シャドウマップへの描画を開始
 		DxLib::ShadowMap_DrawSetup(
-			Assets3DManager::getShadowMapAssets().lock()->getShadowMapHandle(m_shadowMapDrawer.lock()->getShadowMapId())
+			Assets3DManager::getShadowMapAssets()->getShadowMapHandle(m_shadowMapDrawer->getShadowMapId())
 		);
 	}
 }

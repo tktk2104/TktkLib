@@ -28,14 +28,14 @@ namespace tktk
 	{
 		auto transform3D = getComponent<Transform3D>();
 
-		if (transform3D.expired())
+		if (transform3D.isNull())
 		{
 			throw std::runtime_error("AppendPointLight not found Transform3D");
 		}
 
 		m_transform3D = transform3D;
 
-		int lightHandle = Assets3DManager::getLightAssets().lock()->getLightHandle(m_lightId);
+		int lightHandle = Assets3DManager::getLightAssets()->getLightHandle(m_lightId);
 
 		DxLib::SetLightRangeAttenHandle(
 			lightHandle,
@@ -64,7 +64,7 @@ namespace tktk
 	void AppendPointLight::onEnable()
 	{
 		DxLib::SetLightEnableHandle(
-			Assets3DManager::getLightAssets().lock()->getLightHandle(m_lightId),
+			Assets3DManager::getLightAssets()->getLightHandle(m_lightId),
 			TRUE
 		);
 	}
@@ -72,7 +72,7 @@ namespace tktk
 	void AppendPointLight::onDisable()
 	{
 		DxLib::SetLightEnableHandle(
-			Assets3DManager::getLightAssets().lock()->getLightHandle(m_lightId),
+			Assets3DManager::getLightAssets()->getLightHandle(m_lightId),
 			FALSE
 		);
 	}
@@ -80,8 +80,8 @@ namespace tktk
 	void AppendPointLight::update()
 	{
 		DxLib::SetLightPositionHandle(
-			Assets3DManager::getLightAssets().lock()->getLightHandle(m_lightId),
-			DXConverter::toVECTOR(m_transform3D.lock()->getWorldPosition())
+			Assets3DManager::getLightAssets()->getLightHandle(m_lightId),
+			DXConverter::toVECTOR(m_transform3D->getWorldPosition())
 		);
 	}
 
@@ -94,7 +94,7 @@ namespace tktk
 	{
 		m_range = range;
 		DxLib::SetLightRangeAttenHandle(
-			Assets3DManager::getLightAssets().lock()->getLightHandle(m_lightId),
+			Assets3DManager::getLightAssets()->getLightHandle(m_lightId),
 			m_range,
 			m_attenuation.at(0),
 			m_attenuation.at(1),
@@ -111,7 +111,7 @@ namespace tktk
 	{
 		m_attenuation = attenuation;
 		DxLib::SetLightRangeAttenHandle(
-			Assets3DManager::getLightAssets().lock()->getLightHandle(m_lightId),
+			Assets3DManager::getLightAssets()->getLightHandle(m_lightId),
 			m_range,
 			m_attenuation.at(0),
 			m_attenuation.at(1),
@@ -128,7 +128,7 @@ namespace tktk
 	{
 		m_difColor = difColor;
 		DxLib::SetLightDifColorHandle(
-			Assets3DManager::getLightAssets().lock()->getLightHandle(m_lightId),
+			Assets3DManager::getLightAssets()->getLightHandle(m_lightId),
 			DXConverter::toCOLOR_F(m_difColor)
 		);
 	}
@@ -142,7 +142,7 @@ namespace tktk
 	{
 		m_spcColor = spcColor;
 		DxLib::SetLightSpcColorHandle(
-			Assets3DManager::getLightAssets().lock()->getLightHandle(m_lightId),
+			Assets3DManager::getLightAssets()->getLightHandle(m_lightId),
 			DXConverter::toCOLOR_F(m_spcColor)
 		);
 	}
@@ -156,7 +156,7 @@ namespace tktk
 	{
 		m_ambColor = ambColor;
 		DxLib::SetLightAmbColorHandle(
-			Assets3DManager::getLightAssets().lock()->getLightHandle(m_lightId),
+			Assets3DManager::getLightAssets()->getLightHandle(m_lightId),
 			DXConverter::toCOLOR_F(m_ambColor)
 		);
 	}

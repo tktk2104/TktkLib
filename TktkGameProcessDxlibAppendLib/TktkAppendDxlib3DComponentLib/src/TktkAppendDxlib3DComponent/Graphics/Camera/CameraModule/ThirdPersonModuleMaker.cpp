@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<ThirdPersonModule> ThirdPersonModuleMaker::create()
+	ThirdPersonModule* ThirdPersonModuleMaker::create()
 	{
-		return std::make_shared<ThirdPersonModule>(
+		return new ThirdPersonModule(
 			m_target,
 			m_targetRelativeLookAtPos,
 			m_relativePos

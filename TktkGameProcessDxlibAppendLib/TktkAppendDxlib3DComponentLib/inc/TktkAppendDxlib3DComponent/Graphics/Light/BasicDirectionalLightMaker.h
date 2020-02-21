@@ -1,7 +1,6 @@
 #ifndef BASIC_DIRECTIONAL_LIGHT_MAKER_H_
 #define BASIC_DIRECTIONAL_LIGHT_MAKER_H_
 
-#include <memory>
 #include "BasicDirectionalLight.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<BasicDirectionalLight> create();
+		BasicDirectionalLight* create();
 
 		// ©g‚ÌŠgU”½ËŒõ‚ğİ’è
 		BasicDirectionalLightMaker& difColor(const Color& value);

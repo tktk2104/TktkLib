@@ -14,7 +14,7 @@ namespace tktk
 	{
 		ShaderUseConstantBuffer shaderUseConstantBuffer;
 		shaderUseConstantBuffer.targetShaderType = targetShaderType;
-		shaderUseConstantBuffer.shaderConstantBufferHandle = Assets3DManager::getShaderConstantBufferAssets().lock()->getData(id).shaderConstantBufferHandle;
+		shaderUseConstantBuffer.shaderConstantBufferHandle = Assets3DManager::getShaderConstantBufferAssets()->getData(id).shaderConstantBufferHandle;
 
 		shaderUseConstantBufferMap.insert(std::make_pair(slot, shaderUseConstantBuffer));
 	}
@@ -28,7 +28,7 @@ namespace tktk
 	{
 		ShaderUseGraphHandle shaderUseGraphHandle;
 		shaderUseGraphHandle.texAddress = texAddress;
-		shaderUseGraphHandle.graphHandle = Assets2DManager::getTextureAssets().lock()->getTextureHandles(id).textureHandle;
+		shaderUseGraphHandle.graphHandle = Assets2DManager::getTextureAssets()->getTextureHandles(id).textureHandle;
 
 		shaderUseGraphHandleMap.insert(std::make_pair(stageIndex, shaderUseGraphHandle));
 	}
@@ -37,7 +37,7 @@ namespace tktk
 	{
 		ShaderUseGraphHandle shaderUseGraphHandle;
 		shaderUseGraphHandle.texAddress = texAddress;
-		shaderUseGraphHandle.graphHandle = Assets3DManager::getMeshTextureAssets().lock()->getMeshTextureHandles(id);
+		shaderUseGraphHandle.graphHandle = Assets3DManager::getMeshTextureAssets()->getMeshTextureHandles(id);
 
 		shaderUseGraphHandleMap.insert(std::make_pair(stageIndex, shaderUseGraphHandle));
 	}
@@ -46,7 +46,7 @@ namespace tktk
 	{
 		ShaderUseGraphHandle shaderUseGraphHandle;
 		shaderUseGraphHandle.texAddress = texAddress;
-		shaderUseGraphHandle.graphHandle = Assets2DManager::getRenderTargetAssets().lock()->getRenderTargetHandle(id).screenGraphHandle;
+		shaderUseGraphHandle.graphHandle = Assets2DManager::getRenderTargetAssets()->getRenderTargetHandle(id).screenGraphHandle;
 
 		shaderUseGraphHandleMap.insert(std::make_pair(stageIndex, shaderUseGraphHandle));
 	}

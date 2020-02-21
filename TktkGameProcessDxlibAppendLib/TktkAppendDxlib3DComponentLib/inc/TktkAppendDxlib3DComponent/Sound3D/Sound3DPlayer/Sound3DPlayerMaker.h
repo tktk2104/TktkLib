@@ -1,7 +1,6 @@
 #ifndef SOUND_3D_PLAYER_MAKER_H_
 #define SOUND_3D_PLAYER_MAKER_H_
 
-#include <memory>
 #include <TktkMath/Vector3.h>
 #include "Sound3DPlayer.h"
 
@@ -17,7 +16,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<Sound3DPlayer> create();
+		Sound3DPlayer* create();
 
 		// ©g‚Ì¶¬Œã‚·‚®‚ÉÄ¶‚·‚é‚©‚ğİ’è
 		Sound3DPlayerMaker& startToPlay(bool value);

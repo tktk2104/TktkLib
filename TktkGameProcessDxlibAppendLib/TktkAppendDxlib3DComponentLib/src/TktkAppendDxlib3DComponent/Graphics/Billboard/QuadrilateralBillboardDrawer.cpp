@@ -33,7 +33,7 @@ namespace tktk
 	{
 		auto transform3D = getComponent<Transform3D>();
 
-		if (transform3D.expired())
+		if (transform3D.isNull())
 		{
 			throw std::runtime_error("QuadrilateralBillboardDrawer not found Transform3D");
 		}
@@ -48,18 +48,18 @@ namespace tktk
 
 		if (m_splitTextureIndex == -1)
 		{
-			textureHandle = Assets2DManager::getTextureAssets().lock()->getTextureHandles(m_textureID).textureHandle;
+			textureHandle = Assets2DManager::getTextureAssets()->getTextureHandles(m_textureID).textureHandle;
 		}
 		else
 		{
-			textureHandle = Assets2DManager::getTextureAssets().lock()->getTextureHandles(m_textureID).splitTextureHandles.at(m_splitTextureIndex);
+			textureHandle = Assets2DManager::getTextureAssets()->getTextureHandles(m_textureID).splitTextureHandles.at(m_splitTextureIndex);
 		}
 
 		DxLib::SetDrawBlendMode(m_dxLibDraw3DParam.blendMode, static_cast<int>(m_dxLibDraw3DParam.blendParam));
 		DxLib::SetUseLighting((m_dxLibDraw3DParam.useLight) ? TRUE : FALSE);
 		DxLib::SetWriteZBuffer3D((m_dxLibDraw3DParam.writeZBuffer) ? TRUE : FALSE);
 		DrawModiBillboard3D(
-			DXConverter::toVECTOR(m_transform3D.lock()->getWorldPosition() + m_dxLibDraw3DParam.localMat.calculateTranslation()),
+			DXConverter::toVECTOR(m_transform3D->getWorldPosition() + m_dxLibDraw3DParam.localMat.calculateTranslation()),
 			m_leftTopPos.x,
 			m_leftTopPos.y,
 			m_rightTopPos.x,

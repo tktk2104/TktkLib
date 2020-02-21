@@ -14,7 +14,7 @@ namespace tktk
 
 		ShadowMapCreateStarter(
 			float drawPriority,
-			std::weak_ptr<ShadowMapDrawer> shadowMapDrawer
+			CfpPtr<ShadowMapDrawer> shadowMapDrawer
 		);
 
 	public:
@@ -24,7 +24,7 @@ namespace tktk
 
 	private:
 
-		std::weak_ptr<ShadowMapDrawer> m_shadowMapDrawer;
+		CfpPtr<ShadowMapDrawer> m_shadowMapDrawer;
 	};
 }
 #endif // !SHADOW_MAP_CREATE_STARTER_H_

@@ -1,7 +1,6 @@
 #ifndef MESH_ANIMATOR_H_
 #define MESH_ANIMATOR_H_
 
-#include <memory>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include "MeshDrawer.h"
 
@@ -55,7 +54,7 @@ namespace tktk
 
 	private:
 
-		std::weak_ptr<MeshDrawer> m_meshDrawer;
+		CfpPtr<MeshDrawer> m_meshDrawer;
 
 		// 別ファイルになっているモーションを現在使用しているか
 		bool m_curUseOtherMotionData;

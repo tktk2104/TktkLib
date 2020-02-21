@@ -10,7 +10,7 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<MeshDrawer> MeshDrawerMaker::create()
+	MeshDrawer* MeshDrawerMaker::create()
 	{
 		DxLibDraw3DParam dxLibDraw3DParam = DxLibDraw3DParam(m_drawPriority);
 		dxLibDraw3DParam.localMat = Matrix4::createTRS(m_meshLocalPos, m_meshLocalRotation, m_meshLocalScale);
@@ -22,7 +22,7 @@ namespace tktk
 		dxLibDraw3DParam.createShadow = m_createShadow;
 		dxLibDraw3DParam.shadowCreatorPriority = m_shadowCreatorPriority;
 
-		return std::make_shared<MeshDrawer>(
+		return new MeshDrawer(
 			dxLibDraw3DParam,
 			m_meshID
 			);

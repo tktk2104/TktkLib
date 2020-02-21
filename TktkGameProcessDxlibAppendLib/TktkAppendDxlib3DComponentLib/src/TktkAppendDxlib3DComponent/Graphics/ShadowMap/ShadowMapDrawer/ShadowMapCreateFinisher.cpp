@@ -6,7 +6,7 @@ namespace tktk
 {
 	ShadowMapCreateFinisher::ShadowMapCreateFinisher(
 		float drawPriority,
-		std::weak_ptr<ShadowMapDrawer> shadowMapDrawer
+		CfpPtr<ShadowMapDrawer> shadowMapDrawer
 	)
 		: ComponentBase(drawPriority)
 		, m_shadowMapDrawer(shadowMapDrawer)
@@ -15,7 +15,7 @@ namespace tktk
 
 	void ShadowMapCreateFinisher::draw() const
 	{
-		if (m_shadowMapDrawer.expired() || !m_shadowMapDrawer.lock()->isActive()) return;
+		if (m_shadowMapDrawer.isNull() || !m_shadowMapDrawer->isActive()) return;
 
 		// シャドウマップへの描画を終了
 		DxLib::ShadowMap_DrawEnd();

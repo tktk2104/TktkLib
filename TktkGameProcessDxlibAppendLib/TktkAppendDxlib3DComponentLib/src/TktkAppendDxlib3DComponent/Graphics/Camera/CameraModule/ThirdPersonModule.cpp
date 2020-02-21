@@ -25,7 +25,7 @@ namespace tktk
 	{
 		auto selfTransform = getComponent<Transform3D>();
 
-		if (selfTransform.expired())
+		if (selfTransform.isNull())
 		{
 			throw std::runtime_error("ThirdPersonModule not found self Transform3D");
 		}
@@ -35,7 +35,7 @@ namespace tktk
 
 	void ThirdPersonModule::afterCollide()
 	{
-		if (m_selfTransform.expired())
+		if (m_selfTransform.isNull())
 		{
 			throw std::runtime_error("ThirdPersonModule not found self Transform3D");
 		}
@@ -43,17 +43,17 @@ namespace tktk
 		Vector3 targetPos = Vector3::zero;
 		Vector3 targetRotation = Vector3::zero;
 
-		if (!m_target.expired())
+		if (!m_target.isNull())
 		{
-			auto targetTransform = m_target.lock()->getComponent<Transform3D>();
+			auto targetTransform = m_target->getComponent<Transform3D>();
 
-			if (targetTransform.expired())
+			if (targetTransform.isNull())
 			{
 				throw std::runtime_error("ThirdPersonModule not found target Transform3D");
 			}
 
-			targetPos = targetTransform.lock()->getWorldPosition();
-			targetRotation = targetTransform.lock()->calculateWorldEulerAngles();
+			targetPos = targetTransform->getWorldPosition();
+			targetRotation = targetTransform->calculateWorldEulerAngles();
 		}
 
 		Vector3 cameraToTarget = m_targetRelativeLookAtPos - m_relativePos;
@@ -69,9 +69,9 @@ namespace tktk
 			* Matrix4::createFromYawPitchRoll(targetRotation.y, targetRotation.x, targetRotation.z);
 
 		Vector3 selfPos = rotateMat.calculateTranslation() + targetPos;
-		m_selfTransform.lock()->setLocalPosition(selfPos);
+		m_selfTransform->setLocalPosition(selfPos);
 
-		m_selfTransform.lock()->setLocalEulerAngles(rotateMat.calculateRotation().calculateEulerAngle());
+		m_selfTransform->setLocalEulerAngles(rotateMat.calculateRotation().calculateEulerAngle());
 	}
 
 	void ThirdPersonModule::setTarget(GameObjectPtr target)

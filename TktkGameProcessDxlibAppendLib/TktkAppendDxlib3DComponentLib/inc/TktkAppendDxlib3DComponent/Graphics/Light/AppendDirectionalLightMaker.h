@@ -1,7 +1,6 @@
 #ifndef APPEND_DIRECTIONAL_LIGHT_MAKER_H_
 #define APPEND_DIRECTIONAL_LIGHT_MAKER_H_
 
-#include <memory>
 #include "AppendDirectionalLight.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<AppendDirectionalLight> create();
+		AppendDirectionalLight* create();
 
 		// ©g‚Ìƒ‰ƒCƒgID‚ğİ’è
 		AppendDirectionalLightMaker& lightId(int value);

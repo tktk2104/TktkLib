@@ -28,7 +28,7 @@ namespace tktk
 		, m_drawAreaMaxPos(drawAreaMaxPos)
 	{
 		DxLib::SetShadowMapDrawArea(
-			Assets3DManager::getShadowMapAssets().lock()->getShadowMapHandle(m_shadowMapId),
+			Assets3DManager::getShadowMapAssets()->getShadowMapHandle(m_shadowMapId),
 			DXConverter::toVECTOR(m_drawAreaMinPos),
 			DXConverter::toVECTOR(m_drawAreaMaxPos)
 		);
@@ -43,40 +43,40 @@ namespace tktk
 	{
 		auto transform3D = getComponent<Transform3D>();
 
-		if (transform3D.expired())
+		if (transform3D.isNull())
 		{
 			throw std::runtime_error("ShadowMapDrawer not found Transform3D");
 		}
 		m_transform3D = transform3D;
 
-		getGameObject().lock()->addComponent(
-			std::make_shared<ShadowMapCreateStarter>(
+		getGameObject()->addComponent(
+			new ShadowMapCreateStarter(
 				m_shadowMapCreateStarterDrawPriority,
-				std::dynamic_pointer_cast<ShadowMapDrawer>(shared_from_this())
-				));
+				getThisPtr<ShadowMapDrawer>()
+			));
 
-		getGameObject().lock()->addComponent(
-			std::make_shared<ShadowMapCreateFinisher>(
+		getGameObject()->addComponent(
+			new ShadowMapCreateFinisher(
 				m_shadowMapCreateFinisherDrawPriority,
-				std::dynamic_pointer_cast<ShadowMapDrawer>(shared_from_this())
-				));
+				getThisPtr<ShadowMapDrawer>()
+			));
 
-		getGameObject().lock()->addComponent(
-			std::make_shared<ShadowMapEnabler>(
+		getGameObject()->addComponent(
+			new ShadowMapEnabler(
 				m_shadowMapEnablerDrawPriority,
-				std::dynamic_pointer_cast<ShadowMapDrawer>(shared_from_this())
-				));
+				getThisPtr<ShadowMapDrawer>()
+			));
 
-		getGameObject().lock()->addComponent(
-			std::make_shared<ShadowMapDisabler>(
+		getGameObject()->addComponent(
+			new ShadowMapDisabler(
 				m_shadowMapDisablerDrawPriority,
-				std::dynamic_pointer_cast<ShadowMapDrawer>(shared_from_this())
-				));
+				getThisPtr<ShadowMapDrawer>()
+			));
 
 		// シャドウマップが想定するライトの方向もセット
 		DxLib::SetShadowMapLightDirection(
-			Assets3DManager::getShadowMapAssets().lock()->getShadowMapHandle(m_shadowMapId),
-			DXConverter::toVECTOR(m_transform3D.lock()->calculateLocalForwardLH())
+			Assets3DManager::getShadowMapAssets()->getShadowMapHandle(m_shadowMapId),
+			DXConverter::toVECTOR(m_transform3D->calculateLocalForwardLH())
 		);
 	}
 
@@ -111,7 +111,7 @@ namespace tktk
 		m_drawAreaMaxPos = maxPos;
 
 		DxLib::SetShadowMapDrawArea(
-			Assets3DManager::getShadowMapAssets().lock()->getShadowMapHandle(m_shadowMapId),
+			Assets3DManager::getShadowMapAssets()->getShadowMapHandle(m_shadowMapId),
 			DXConverter::toVECTOR(m_drawAreaMinPos),
 			DXConverter::toVECTOR(m_drawAreaMaxPos)
 		);

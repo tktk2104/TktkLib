@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<RectBillboardAnimator> RectBillboardAnimatorMaker::create()
+	RectBillboardAnimator* RectBillboardAnimatorMaker::create()
 	{
-		return std::make_shared<RectBillboardAnimator>(
+		return new RectBillboardAnimator(
 			m_textureId,
 			m_splitTextureIndexList,
 			m_animationIntervalSec,

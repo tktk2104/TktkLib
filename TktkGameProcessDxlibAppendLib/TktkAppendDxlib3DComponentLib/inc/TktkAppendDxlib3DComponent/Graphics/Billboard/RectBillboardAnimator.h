@@ -1,7 +1,6 @@
 #ifndef RECT_BILLBOARD_ANIMATOR_H_
 #define RECT_BILLBOARD_ANIMATOR_H_
 
-#include <memory>
 #include <vector>
 #include <TktkMath/Vector2.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
@@ -68,7 +67,7 @@ namespace tktk
 	private:
 
 		// 自身の長方形ビルボード描画コンポーネント
-		std::weak_ptr<RectBillboardDrawer> m_rectBillboardDrawer;
+		CfpPtr<RectBillboardDrawer> m_rectBillboardDrawer;
 
 		// 使用するテクスチャのId
 		int m_textureId{ -1 };

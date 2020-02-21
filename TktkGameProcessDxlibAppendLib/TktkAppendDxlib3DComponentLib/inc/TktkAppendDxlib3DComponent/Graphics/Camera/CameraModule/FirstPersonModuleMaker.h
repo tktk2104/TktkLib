@@ -20,7 +20,7 @@ namespace tktk
 	public:
 
 		// 作成する
-		std::shared_ptr<FirstPersonModule> create();
+		FirstPersonModule* create();
 
 		// マウスカーソルが１ピクセル移動した時の回転角度を設定する（度数法）
 		FirstPersonModuleMaker& rotationDegPerPixelOnMouseMove(float value);

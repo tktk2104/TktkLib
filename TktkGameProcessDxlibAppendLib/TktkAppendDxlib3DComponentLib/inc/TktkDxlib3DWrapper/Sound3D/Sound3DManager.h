@@ -12,8 +12,6 @@ namespace tktk
 	{
 	public:
 
-		static void setUp();
-
 		// サウンドを再生する
 		// ※ topPositionFlag を true にするとサウンドを最初から再生する。
 		static void playSound(int id, SoundPlayType soundPlayType, bool topPositionFlag);
@@ -43,10 +41,6 @@ namespace tktk
 		static void setCurrentPosition(int id, int samplePosition);
 
 		static void setSoundListenerPosition(const Vector3& pos, const Vector3& front, const Vector3 & up);
-
-	private:
-
-		static std::weak_ptr<SoundAssets> m_soundAssets;
 	};
 }
 #endif // !SOUND_3D_MANAGER_H_

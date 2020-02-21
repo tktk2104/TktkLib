@@ -1,7 +1,6 @@
 #ifndef RECT_BILLBOARD_ANIMATOR_MAKER_H_
 #define RECT_BILLBOARD_ANIMATOR_MAKER_H_
 
-#include <memory>
 #include <vector>
 #include "RectBillboardAnimator.h"
 
@@ -17,7 +16,7 @@ namespace tktk
 	public:
 
 		// 作成する
-		std::shared_ptr<RectBillboardAnimator> create();
+		RectBillboardAnimator* create();
 
 		// 使用するテクスチャのIdを設定する
 		RectBillboardAnimatorMaker& textureId(int value);

@@ -30,7 +30,7 @@ namespace tktk
 	{
 		auto meshDrawer = getComponent<MeshDrawer>();
 
-		if (meshDrawer.expired())
+		if (meshDrawer.isNull())
 		{
 			throw std::runtime_error("MeshAnimator not found MeshDrawer");
 		}
@@ -44,7 +44,7 @@ namespace tktk
 			m_curMotionTimer = std::fmod(m_curMotionTimer + getCurMotionEndTime(), getCurMotionEndTime());
 		}
 
-		MeshHandles drawMeshHandles = Assets3DManager::getMeshAssets().lock()->getMeshHandle(m_meshDrawer.lock()->getMeshID());
+		MeshHandles drawMeshHandles = Assets3DManager::getMeshAssets()->getMeshHandle(m_meshDrawer->getMeshID());
 
 		int preAttachIndex;
 
@@ -73,14 +73,14 @@ namespace tktk
 		DxLib::MV1SetAttachAnimTime(drawMeshHandles.meshHandle, preAttachIndex, std::fmax(m_preMotionTimer, 0.01f));
 		DxLib::MV1SetAttachAnimTime(drawMeshHandles.meshHandle, curAttachIndex, std::fmax(m_curMotionTimer, 0.01f));
 
-		auto meshLocalBoneMatrices = std::vector<Matrix4>(m_meshDrawer.lock()->getBoneCount());
+		auto meshLocalBoneMatrices = std::vector<Matrix4>(m_meshDrawer->getBoneCount());
 
 		for (int i = 0; i < static_cast<int>(meshLocalBoneMatrices.size()); ++i)
 		{
 			DxLib::MV1ResetFrameUserLocalMatrix(drawMeshHandles.meshHandle, i);
 			meshLocalBoneMatrices.at(i) = DXConverter::toMatrix(DxLib::MV1GetFrameLocalMatrix(drawMeshHandles.meshHandle, i));
 		}
-		m_meshDrawer.lock()->setLocalBoneMatrices(meshLocalBoneMatrices);
+		m_meshDrawer->setLocalBoneMatrices(meshLocalBoneMatrices);
 
 		DxLib::MV1DetachAnim(drawMeshHandles.meshHandle, preAttachIndex);
 		DxLib::MV1DetachAnim(drawMeshHandles.meshHandle, curAttachIndex);
@@ -123,7 +123,7 @@ namespace tktk
 
 	float MeshAnimator::getCurMotionEndTime() const
 	{
-		MeshHandles drawMeshHandles = Assets3DManager::getMeshAssets().lock()->getMeshHandle(m_meshDrawer.lock()->getMeshID());
+		MeshHandles drawMeshHandles = Assets3DManager::getMeshAssets()->getMeshHandle(m_meshDrawer->getMeshID());
 
 		if (m_curUseOtherMotionData)
 		{

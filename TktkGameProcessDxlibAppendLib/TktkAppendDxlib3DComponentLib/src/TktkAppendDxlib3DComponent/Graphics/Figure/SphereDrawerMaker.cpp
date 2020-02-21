@@ -10,7 +10,7 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<SphereDrawer> SphereDrawerMaker::create()
+	SphereDrawer* SphereDrawerMaker::create()
 	{
 		DxLibDraw3DParam dxLibDraw3DParam = DxLibDraw3DParam(m_drawPriority);
 		dxLibDraw3DParam.localMat = Matrix4::createTranslation(m_localPosition);
@@ -22,7 +22,7 @@ namespace tktk
 		dxLibDraw3DParam.createShadow = m_createShadow;
 		dxLibDraw3DParam.shadowCreatorPriority = m_shadowCreatorPriority;
 
-		return std::make_shared<SphereDrawer>(
+		return new SphereDrawer(
 			dxLibDraw3DParam,
 			m_radius,
 			m_divNum,

@@ -33,7 +33,7 @@ namespace tktk
 	{
 		auto transform3D = getComponent<Transform3D>();
 
-		if (transform3D.expired())
+		if (transform3D.isNull())
 		{
 			throw std::runtime_error("Sound3DPlayer not found Transform3D");
 		}
@@ -44,7 +44,7 @@ namespace tktk
 
 	void Sound3DPlayer::update()
 	{
-		Sound3DManager::changePlayPosition(m_playSoundId, m_transform3D.lock()->getWorldPosition());
+		Sound3DManager::changePlayPosition(m_playSoundId, m_transform3D->getWorldPosition());
 	}
 
 	void Sound3DPlayer::onDestroy() const

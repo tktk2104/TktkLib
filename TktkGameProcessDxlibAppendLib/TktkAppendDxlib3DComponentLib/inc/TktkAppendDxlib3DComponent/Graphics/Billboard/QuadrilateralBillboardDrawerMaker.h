@@ -1,7 +1,6 @@
 #ifndef QUADRILATERAL_BILLBOARD_DRAWER_MAKER_H_
 #define QUADRILATERAL_BILLBOARD_DRAWER_MAKER_H_
 
-#include <memory>
 #include "QuadrilateralBillboardDrawer.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<QuadrilateralBillboardDrawer> create();
+		QuadrilateralBillboardDrawer* create();
 
 		// •`‰æ—Dæ“x‚ğİ’è‚·‚é
 		QuadrilateralBillboardDrawerMaker& drawPriority(float value);

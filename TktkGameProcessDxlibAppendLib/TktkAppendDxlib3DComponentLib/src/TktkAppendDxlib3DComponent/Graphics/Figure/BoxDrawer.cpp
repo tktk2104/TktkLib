@@ -29,15 +29,15 @@ namespace tktk
 	{
 		if (m_dxLibDraw3DParam.createShadow)
 		{
-			getGameObject().lock()->addComponent(std::make_shared<BoxShadowCreator>(
+			getGameObject()->addComponent(new BoxShadowCreator(
 				m_dxLibDraw3DParam.shadowCreatorPriority,
-				std::dynamic_pointer_cast<BoxDrawer>(shared_from_this())
+				getThisPtr<BoxDrawer>()
 				));
 		}
 
 		auto transform3D = getComponent<Transform3D>();
 
-		if (transform3D.expired())
+		if (transform3D.isNull())
 		{
 			throw std::runtime_error("BoxDrawer not found Transform3D");
 		}
@@ -49,8 +49,8 @@ namespace tktk
 		if (m_dxLibDraw3DParam.renderTargetId != -1) RenderTargetManager::setRenderTarget(m_dxLibDraw3DParam.renderTargetId);
 
 		Matrix4 selfNotRotatePose
-			= Matrix4::createScale(m_transform3D.lock()->getWorldScaleRate())
-			* Matrix4::createTranslation(m_transform3D.lock()->getWorldPosition());
+			= Matrix4::createScale(m_transform3D->getWorldScaleRate())
+			* Matrix4::createTranslation(m_transform3D->getWorldPosition());
 
 		Vector3 localPos = m_dxLibDraw3DParam.localMat.calculateTranslation();
 

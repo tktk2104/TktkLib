@@ -16,7 +16,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<AppendPointLight> create();
+		AppendPointLight* create();
 
 		// ©g‚Ìƒ‰ƒCƒgID‚ğİ’è
 		AppendPointLightMaker& lightId(int value);

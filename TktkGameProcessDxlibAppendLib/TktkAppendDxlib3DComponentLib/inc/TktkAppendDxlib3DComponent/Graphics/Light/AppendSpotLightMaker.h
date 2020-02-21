@@ -1,7 +1,6 @@
 #ifndef APPEND_SPOT_LIGHT_MAKER_H_
 #define APPEND_SPOT_LIGHT_MAKER_H_
 
-#include <memory>
 #include "AppendSpotLight.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<AppendSpotLight> create();
+		AppendSpotLight* create();
 
 		// ©g‚Ìƒ‰ƒCƒgID‚ğİ’è
 		AppendSpotLightMaker& lightId(int value);

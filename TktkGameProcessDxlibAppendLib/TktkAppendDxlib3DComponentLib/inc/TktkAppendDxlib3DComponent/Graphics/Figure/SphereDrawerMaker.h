@@ -1,7 +1,6 @@
 #ifndef SPHERE_DRAWER_MAKER_H_
 #define SPHERE_DRAWER_MAKER_H_
 
-#include <memory>
 #include "SphereDrawer.h"
 
 namespace tktk
@@ -14,7 +13,7 @@ namespace tktk
 
 	public:
 
-		std::shared_ptr<SphereDrawer> create();
+		SphereDrawer* create();
 
 		// •`‰æ—Dæ“x‚ğİ’è‚·‚é
 		SphereDrawerMaker& drawPriority(float value);

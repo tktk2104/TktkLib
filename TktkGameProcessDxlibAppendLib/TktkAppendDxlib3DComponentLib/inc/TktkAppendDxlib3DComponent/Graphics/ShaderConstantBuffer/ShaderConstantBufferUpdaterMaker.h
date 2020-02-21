@@ -1,7 +1,6 @@
 #ifndef SHADER_CONSTANT_BUFFER_UPDATER_MAKER_H_
 #define SHADER_CONSTANT_BUFFER_UPDATER_MAKER_H_
 
-#include <memory>
 #include "ShaderConstantBufferUpdater.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// 作成する
-		std::shared_ptr<ShaderConstantBufferUpdater> create();
+		ShaderConstantBufferUpdater* create();
 
 		// 自身のシェーダー用定数バッファIDを設定
 		ShaderConstantBufferUpdaterMaker& shaderConstantBufferId(int value);

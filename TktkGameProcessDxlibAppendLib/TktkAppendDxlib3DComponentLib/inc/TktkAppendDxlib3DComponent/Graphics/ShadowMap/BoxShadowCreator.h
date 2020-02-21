@@ -1,7 +1,6 @@
 #ifndef BOX_SHADOW_CREATOR_H_
 #define BOX_SHADOW_CREATOR_H_
 
-#include <memory>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include "../Figure/BoxDrawer.h"
 
@@ -14,7 +13,7 @@ namespace tktk
 
 		BoxShadowCreator(
 			float drawPriority,						// 描画優先度
-			std::weak_ptr<BoxDrawer> boxDrawer		// 立方体描画コンポーネント
+			CfpPtr<BoxDrawer> boxDrawer		// 立方体描画コンポーネント
 		);
 
 	public:
@@ -24,7 +23,7 @@ namespace tktk
 
 	private:
 
-		std::weak_ptr<BoxDrawer> m_boxDrawer;
+		CfpPtr<BoxDrawer> m_boxDrawer;
 	};
 }
 #endif // !BOX_SHADOW_CREATOR_H_

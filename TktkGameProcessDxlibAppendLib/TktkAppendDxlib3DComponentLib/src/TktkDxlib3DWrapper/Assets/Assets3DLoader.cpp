@@ -65,7 +65,7 @@ namespace tktk
 
 		auto lastNode = --std::end(splitWordData);
 
-		Assets2DManager::getSoundAssets().lock()->loadSound(
+		Assets2DManager::getSoundAssets()->loadSound(
 			soundID,
 			(*lastNode),
 			1.0f,
@@ -98,7 +98,7 @@ namespace tktk
 		{
 			throw std::runtime_error("load sound2d error");
 		}
-		Assets2DManager::getSoundAssets().lock()->duplicateSound(soundID, originalSoundId);
+		Assets2DManager::getSoundAssets()->duplicateSound(soundID, originalSoundId);
 	}
 
 	void Assets3DLoader::loadMesh(const std::vector<std::string>& splitWordData)
@@ -122,7 +122,7 @@ namespace tktk
 
 		if (splitWordData.size() == 2)
 		{
-			Assets3DManager::getMeshAssets().lock()->loadMesh(meshID, splitWordData.at(1));
+			Assets3DManager::getMeshAssets()->loadMesh(meshID, splitWordData.at(1));
 			return;
 		}
 
@@ -133,7 +133,7 @@ namespace tktk
 			std::end(splitWordData),
 			std::begin(animFileNames)
 		);
-		Assets3DManager::getMeshAssets().lock()->loadMesh(meshID, splitWordData.at(1), animFileNames);
+		Assets3DManager::getMeshAssets()->loadMesh(meshID, splitWordData.at(1), animFileNames);
 	}
 
 	void Assets3DLoader::loadVertexShader(const std::vector<std::string>& splitWordData)
@@ -155,6 +155,6 @@ namespace tktk
 			throw std::runtime_error("load vertex shader error");
 		}
 
-		Assets3DManager::getVertexShaderAssets().lock()->loadVertexShader(vertexShaderID, splitWordData[1]);
+		Assets3DManager::getVertexShaderAssets()->loadVertexShader(vertexShaderID, splitWordData[1]);
 	}
 }

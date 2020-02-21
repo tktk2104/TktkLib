@@ -10,7 +10,7 @@ namespace tktk
 {
 	BoxShadowCreator::BoxShadowCreator(
 		float drawPriority,
-		std::weak_ptr<BoxDrawer> boxDrawer
+		CfpPtr<BoxDrawer> boxDrawer
 	)
 		: ComponentBase(drawPriority)
 		, m_boxDrawer(boxDrawer)
@@ -19,19 +19,19 @@ namespace tktk
 
 	void BoxShadowCreator::draw() const
 	{
-		if (m_boxDrawer.expired() || !m_boxDrawer.lock()->isActive()) return;
+		if (m_boxDrawer.isNull() || !m_boxDrawer->isActive()) return;
 
-		auto boxSize = m_boxDrawer.lock()->getBoxSize();
-		auto boxColor = m_boxDrawer.lock()->getBoxColor();
-		auto isFill = m_boxDrawer.lock()->getIsFill();
-		auto dxLibDraw3DParam = m_boxDrawer.lock()->getDxLibDraw3DParam();
-		auto transform3D = m_boxDrawer.lock()->getComponent<Transform3D>();
+		auto boxSize = m_boxDrawer->getBoxSize();
+		auto boxColor = m_boxDrawer->getBoxColor();
+		auto isFill = m_boxDrawer->getIsFill();
+		auto dxLibDraw3DParam = m_boxDrawer->getDxLibDraw3DParam();
+		auto transform3D = m_boxDrawer->getComponent<Transform3D>();
 
 		if (dxLibDraw3DParam.renderTargetId != -1) RenderTargetManager::setRenderTarget(dxLibDraw3DParam.renderTargetId);
 
 		Matrix4 selfNotRotatePose
-			= Matrix4::createScale(transform3D.lock()->getWorldScaleRate())
-			* Matrix4::createTranslation(transform3D.lock()->getWorldPosition());
+			= Matrix4::createScale(transform3D->getWorldScaleRate())
+			* Matrix4::createTranslation(transform3D->getWorldPosition());
 
 		Vector3 localPos = dxLibDraw3DParam.localMat.calculateTranslation();
 

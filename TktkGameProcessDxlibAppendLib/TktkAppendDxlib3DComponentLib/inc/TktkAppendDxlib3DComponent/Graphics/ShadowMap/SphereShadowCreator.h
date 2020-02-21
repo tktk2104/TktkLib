@@ -1,7 +1,6 @@
 #ifndef SPHERE_SHADOW_CREATOR_H_
 #define SPHERE_SHADOW_CREATOR_H_
 
-#include <memory>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include "../Figure/SphereDrawer.h"
 
@@ -14,7 +13,7 @@ namespace tktk
 
 		SphereShadowCreator(
 			float drawPriority,							// 描画優先度
-			std::weak_ptr<SphereDrawer> sphereDrawer	// 球体描画コンポーネント
+			CfpPtr<SphereDrawer> sphereDrawer	// 球体描画コンポーネント
 		);
 
 	public:
@@ -24,7 +23,7 @@ namespace tktk
 
 	private:
 
-		std::weak_ptr<SphereDrawer> m_sphereDrawer;
+		CfpPtr<SphereDrawer> m_sphereDrawer;
 	};
 }
 #endif // !SPHERE_SHADOW_CREATOR_H_

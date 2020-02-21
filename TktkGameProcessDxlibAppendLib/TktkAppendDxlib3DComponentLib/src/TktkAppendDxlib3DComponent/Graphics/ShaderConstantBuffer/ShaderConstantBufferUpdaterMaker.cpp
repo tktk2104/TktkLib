@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<ShaderConstantBufferUpdater> ShaderConstantBufferUpdaterMaker::create()
+	ShaderConstantBufferUpdater* ShaderConstantBufferUpdaterMaker::create()
 	{
-		return std::make_shared<ShaderConstantBufferUpdater>(
+		return new ShaderConstantBufferUpdater(
 			m_shaderConstantBufferId
 			);
 	}

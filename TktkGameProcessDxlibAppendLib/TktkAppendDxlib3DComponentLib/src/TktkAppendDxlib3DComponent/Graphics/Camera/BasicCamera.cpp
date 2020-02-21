@@ -23,18 +23,18 @@ namespace tktk
 
 	void BasicCamera::afterCollide()
 	{
-		if (m_transform3D.expired())
+		if (m_transform3D.isNull())
 		{
-			auto transform3D = getGameObject().lock()->getComponent<Transform3D>();
+			auto transform3D = getComponent<Transform3D>();
 
-			if (transform3D.expired()) return;
+			if (transform3D.isNull()) return;
 
 			m_transform3D = transform3D;
 		}
 		Sound3DManager::setSoundListenerPosition(
-			m_transform3D.lock()->getWorldPosition(),
-			m_transform3D.lock()->calculateWorldMatrix().calculateForwardLH(),
-			m_transform3D.lock()->calculateWorldMatrix().calculateUp()
+			m_transform3D->getWorldPosition(),
+			m_transform3D->calculateWorldMatrix().calculateForwardLH(),
+			m_transform3D->calculateWorldMatrix().calculateUp()
 		);
 	}
 
@@ -46,11 +46,11 @@ namespace tktk
 
 	Matrix4 BasicCamera::calculateViewMatrix() const
 	{
-		auto cameraWorldMat = m_transform3D.lock()->calculateWorldMatrix();
+		auto cameraWorldMat = m_transform3D->calculateWorldMatrix();
 
 		return Matrix4::createLookAtLH(
-			m_transform3D.lock()->getWorldPosition(), 
-			m_transform3D.lock()->getWorldPosition() + cameraWorldMat.calculateForwardLH(),
+			m_transform3D->getWorldPosition(), 
+			m_transform3D->getWorldPosition() + cameraWorldMat.calculateForwardLH(),
 			cameraWorldMat.calculateUp()
 		);
 	}

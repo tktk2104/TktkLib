@@ -62,7 +62,7 @@ namespace tktk
 	private:
 
 		// 自身の３次元座標コンポーネント
-		std::weak_ptr<Transform3D> m_transform3D;
+		CfpPtr<Transform3D> m_transform3D;
 
 		// カメラの射角？
 		float m_cameraFov;

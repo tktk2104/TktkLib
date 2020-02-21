@@ -10,7 +10,7 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<QuadrilateralBillboardDrawer> QuadrilateralBillboardDrawerMaker::create()
+	QuadrilateralBillboardDrawer* QuadrilateralBillboardDrawerMaker::create()
 	{
 		DxLibDraw3DParam dxLibDraw3DParam = DxLibDraw3DParam(m_drawPriority);
 		dxLibDraw3DParam.localMat = Matrix4::createTranslation(m_localPos);
@@ -20,7 +20,7 @@ namespace tktk
 		dxLibDraw3DParam.writeZBuffer = m_writeZBuffer;
 		dxLibDraw3DParam.renderTargetId = m_renderTargetId;
 
-		return std::make_shared<QuadrilateralBillboardDrawer>(
+		return new QuadrilateralBillboardDrawer(
 			dxLibDraw3DParam,
 			m_textureId,
 			m_splitTextureIndex,

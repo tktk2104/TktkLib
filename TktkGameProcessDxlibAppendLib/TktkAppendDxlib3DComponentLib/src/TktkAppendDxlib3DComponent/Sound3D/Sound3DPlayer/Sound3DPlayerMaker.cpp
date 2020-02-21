@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<Sound3DPlayer> Sound3DPlayerMaker::create()
+	Sound3DPlayer* Sound3DPlayerMaker::create()
 	{
-		return std::make_shared<Sound3DPlayer>(
+		return new Sound3DPlayer(
 			m_startToPlay,
 			m_playSoundId,
 			m_soundPlayType,

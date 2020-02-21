@@ -16,7 +16,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<MeshDrawer> create();
+		MeshDrawer* create();
 
 		// •`‰æ—Dæ“x
 		MeshDrawerMaker& drawPriority(float value);

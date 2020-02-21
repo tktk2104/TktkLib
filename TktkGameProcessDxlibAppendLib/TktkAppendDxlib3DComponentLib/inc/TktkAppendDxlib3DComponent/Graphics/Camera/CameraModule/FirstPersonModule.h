@@ -1,7 +1,6 @@
 #ifndef FIRST_PERSON_MODULE_H_
 #define FIRST_PERSON_MODULE_H_
 
-#include <memory>
 #include <TktkMath/Vector2.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend3DComponent/Transform3D.h>
@@ -42,7 +41,7 @@ namespace tktk
 	private:
 
 		// 自身の３次元座標コンポーネント
-		std::weak_ptr<tktk::Transform3D> m_selfTransform;
+		CfpPtr<tktk::Transform3D> m_selfTransform;
 
 		// 前フレームのマウスの座標
 		Vector2 m_preMousePos;

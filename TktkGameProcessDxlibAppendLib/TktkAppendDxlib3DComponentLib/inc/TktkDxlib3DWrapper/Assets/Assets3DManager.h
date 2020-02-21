@@ -1,7 +1,7 @@
 #ifndef ASSETS_3D_MANAGER_H_
 #define ASSETS_3D_MANAGER_H_
 
-#include <memory>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include "LightAssets/LightAssets.h"
 #include "ShadowMapAssets/ShadowMapAssets.h"
 #include "MeshAssets/MeshAssets.h"
@@ -17,21 +17,21 @@ namespace tktk
 
 		static void createAsset();
 
-		static std::weak_ptr<LightAssets> getLightAssets();
-		static std::weak_ptr<ShadowMapAssets> getShadowMapAssets();
-		static std::weak_ptr<MeshAssets> getMeshAssets();
-		static std::weak_ptr<MeshTextureAssets> getMeshTextureAssets();
-		static std::weak_ptr<VertexShaderAssets> getVertexShaderAssets();
-		static std::weak_ptr<ShaderConstantBufferAssets> getShaderConstantBufferAssets();
+		static CfpPtr<LightAssets>					getLightAssets();
+		static CfpPtr<ShadowMapAssets>				getShadowMapAssets();
+		static CfpPtr<MeshAssets>					getMeshAssets();
+		static CfpPtr<MeshTextureAssets>			getMeshTextureAssets();
+		static CfpPtr<VertexShaderAssets>			getVertexShaderAssets();
+		static CfpPtr<ShaderConstantBufferAssets>	getShaderConstantBufferAssets();
 
 	private:
 
-		static std::weak_ptr<LightAssets>			m_lightAssets;
-		static std::weak_ptr<ShadowMapAssets>		m_shadowMapAssets;
-		static std::weak_ptr<MeshAssets>			m_meshAssets;
-		static std::weak_ptr<MeshTextureAssets>		m_meshTextureAssets;
-		static std::weak_ptr<VertexShaderAssets>	m_vertexShaderAssets;
-		static std::weak_ptr<ShaderConstantBufferAssets>	m_shaderConstantBufferAssets;
+		static CfpPtr<LightAssets>					m_lightAssets;
+		static CfpPtr<ShadowMapAssets>				m_shadowMapAssets;
+		static CfpPtr<MeshAssets>					m_meshAssets;
+		static CfpPtr<MeshTextureAssets>			m_meshTextureAssets;
+		static CfpPtr<VertexShaderAssets>			m_vertexShaderAssets;
+		static CfpPtr<ShaderConstantBufferAssets>	m_shaderConstantBufferAssets;
 	};
 }
 #endif // !ASSETS_3D_MANAGER_H_

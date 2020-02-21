@@ -1,7 +1,6 @@
 #ifndef APPEND_DIRECTIONAL_LIGHT_H_
 #define APPEND_DIRECTIONAL_LIGHT_H_
 
-#include <memory>
 #include <TktkMath/Color.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend3DComponent/Transform3D.h>
@@ -46,7 +45,7 @@ namespace tktk
 
 	private:
 
-		std::weak_ptr<Transform3D> m_transform3D;
+		CfpPtr<Transform3D> m_transform3D;
 
 
 		int m_lightId{ -1 };

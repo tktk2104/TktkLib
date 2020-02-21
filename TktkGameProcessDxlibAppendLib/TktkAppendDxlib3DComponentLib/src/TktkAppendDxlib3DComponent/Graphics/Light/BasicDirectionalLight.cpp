@@ -21,14 +21,14 @@ namespace tktk
 	{
 		auto transform3D = getComponent<Transform3D>();
 
-		if (transform3D.expired())
+		if (transform3D.isNull())
 		{
 			throw std::runtime_error("BasicLight not found Transform3D");
 		}
 
 		m_transform3D = transform3D;
 
-		DxLib::ChangeLightTypeDir(DXConverter::toVECTOR(m_transform3D.lock()->calculateLocalForwardLH()));
+		DxLib::ChangeLightTypeDir(DXConverter::toVECTOR(m_transform3D->calculateLocalForwardLH()));
 	
 		DxLib::SetLightDifColor(DXConverter::toCOLOR_F(m_difColor));
 		DxLib::SetLightSpcColor(DXConverter::toCOLOR_F(m_spcColor));
@@ -47,7 +47,7 @@ namespace tktk
 
 	void BasicDirectionalLight::update()
 	{
-		DxLib::SetLightDirection(DXConverter::toVECTOR(m_transform3D.lock()->calculateLocalForwardLH()));
+		DxLib::SetLightDirection(DXConverter::toVECTOR(m_transform3D->calculateLocalForwardLH()));
 	}
 
 	const Color & BasicDirectionalLight::getDifColor() const

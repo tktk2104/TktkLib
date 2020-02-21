@@ -1,7 +1,6 @@
 #ifndef SHADOW_MAP_DRAWER_H_
 #define SHADOW_MAP_DRAWER_H_
 
-#include <memory>
 #include <TktkMath/Vector3.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend3DComponent/Transform3D.h>
@@ -41,7 +40,7 @@ namespace tktk
 
 	private:
 
-		std::weak_ptr<Transform3D> m_transform3D;
+		CfpPtr<Transform3D> m_transform3D;
 
 		float m_shadowMapCreateStarterDrawPriority;
 		float m_shadowMapCreateFinisherDrawPriority;

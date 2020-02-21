@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<BasicCamera> BasicCameraMaker::create()
+	BasicCamera* BasicCameraMaker::create()
 	{
-		return std::make_shared<BasicCamera>(
+		return new BasicCamera(
 			m_drawPriority,
 			m_initCameraFov,
 			m_initCameraAspectRate,

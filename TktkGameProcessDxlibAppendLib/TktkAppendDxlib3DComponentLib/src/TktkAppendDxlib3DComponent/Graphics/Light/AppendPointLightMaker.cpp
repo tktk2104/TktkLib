@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<AppendPointLight> AppendPointLightMaker::create()
+	AppendPointLight* AppendPointLightMaker::create()
 	{
-		return std::make_shared<AppendPointLight>(
+		return new AppendPointLight(
 			m_lightId,
 			m_range,
 			m_attenuation,

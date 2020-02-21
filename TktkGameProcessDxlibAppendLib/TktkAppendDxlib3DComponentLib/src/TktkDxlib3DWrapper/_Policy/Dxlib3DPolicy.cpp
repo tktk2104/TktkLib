@@ -76,12 +76,6 @@ namespace tktk
 		// ゲームパッド入力管理クラスをセットアップ
 		GamePadManager::setUp();
 
-		// ２次元サウンド再生管理クラスをセットアップ
-		Sound2DManager::setUp();
-
-		// ３次元サウンド管理クラスをセットアップ
-		Sound3DManager::setUp();
-
 		setUpdatePriority();
 
 		DxLib::SetUseZBuffer3D(TRUE);
@@ -95,26 +89,26 @@ namespace tktk
 
 	void Dxlib3DPolicy::setUpdatePriority()
 	{
-		ComponentFrameworkProcessor::addUpdatePriority<ScreenUpdater>(-10000.0f);
+		// ScreenUpdater UpdatePriority : -10000.0f
 
-		ComponentFrameworkProcessor::addUpdatePriority<ParentChildManager>(-1000.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<ParentChildManager>(-1000.0f);
 
-		ComponentFrameworkProcessor::addUpdatePriority<ShadowMapDrawer>(-100.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<ShadowMapDrawer>(-100.0f);
 
 
-		ComponentFrameworkProcessor::addUpdatePriority<InertialMovement2D>(1000.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<InertialRotatement2D>(1000.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<InertialMovement3D>(1000.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<InertialMovement2D>(1000.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<InertialRotatement2D>(1000.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<InertialMovement3D>(1000.0f);
 
-		ComponentFrameworkProcessor::addUpdatePriority<Transform2D>(1010.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<Transform3D>(1010.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<Transform2D>(1010.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<Transform3D>(1010.0f);
 
-		ComponentFrameworkProcessor::addUpdatePriority<RectCollider>(1020.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<CircleCollider>(1020.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<Polygon2dCollider>(1020.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<SphereCollider>(1020.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<BoxCollider>(1020.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<RectCollider>(1020.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<CircleCollider>(1020.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<Polygon2dCollider>(1020.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<SphereCollider>(1020.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<BoxCollider>(1020.0f);
 
-		ComponentFrameworkProcessor::addUpdatePriority<RectColliderExtrusion>(1050.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<RectColliderExtrusion>(1050.0f);
 	}
 }

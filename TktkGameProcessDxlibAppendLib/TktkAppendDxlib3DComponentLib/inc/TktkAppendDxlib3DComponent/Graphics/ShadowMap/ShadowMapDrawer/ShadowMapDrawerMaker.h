@@ -1,7 +1,6 @@
 #ifndef SHADOW_MAP_DRAWER_MAKER_H_
 #define SHADOW_MAP_DRAWER_MAKER_H_
 
-#include <memory>
 #include "ShadowMapDrawer.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// 作成する
-		std::shared_ptr<ShadowMapDrawer> create();
+		ShadowMapDrawer* create();
 
 		// シャドウマップの生成を開始する描画優先度
 		ShadowMapDrawerMaker& shadowMapCreateStarterDrawPriority(float value);

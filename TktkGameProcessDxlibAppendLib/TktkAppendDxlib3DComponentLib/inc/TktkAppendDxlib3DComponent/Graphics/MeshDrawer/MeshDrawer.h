@@ -81,10 +81,10 @@ namespace tktk
 	private:
 
 		// 自身の３次元座標コンポーネント
-		std::weak_ptr<Transform3D> m_transform3D;
+		CfpPtr<Transform3D> m_transform3D;
 
 		// 自身のマテリアル情報のコンポーネント
-		std::weak_ptr<MeshMaterial> m_meshMaterial;
+		CfpPtr<MeshMaterial> m_meshMaterial;
 
 		// DxLibを使った3D描画で使用するパラメータ
 		DxLibDraw3DParam m_dxLibDraw3DParam;

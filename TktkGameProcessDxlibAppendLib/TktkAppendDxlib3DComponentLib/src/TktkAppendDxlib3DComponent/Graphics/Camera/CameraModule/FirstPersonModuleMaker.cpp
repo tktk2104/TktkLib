@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<FirstPersonModule> FirstPersonModuleMaker::create()
+	FirstPersonModule* FirstPersonModuleMaker::create()
 	{
-		return std::make_shared<FirstPersonModule>(
+		return new FirstPersonModule(
 			m_rotationDegPerPixelOnMouseMove,
 			m_moveSpeedPerSec,
 			m_alwaysMoveForward,
