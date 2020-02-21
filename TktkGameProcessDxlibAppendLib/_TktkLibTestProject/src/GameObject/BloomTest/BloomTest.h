@@ -7,7 +7,7 @@ struct BloomTest
 {
 	static void create()
 	{
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
 		auto postEffectDrawParameters = std::vector<tktk::PostEffectDrawParameter>();
 		{
@@ -43,7 +43,7 @@ struct BloomTest
 			postEffectDrawParameters.push_back(bloomCombineParam);
 		}
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::PostEffectDrawerMaker::makeStart()
 			.drawPriority(DrawPriority::DRAW_PRIORITY_DEFAULT)
 			.postEffectDrawParameters(postEffectDrawParameters)

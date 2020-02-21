@@ -8,15 +8,15 @@ public:
 
 	static void create()
 	{
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::Transform3DMaker::makeStart()
 			.position(Vector3(0.0f, -1.0f, 0.0f))
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::MeshDrawerMaker::makeStart()
 			.drawPriority(DrawPriority::DRAW_PRIORITY_DEFAULT)
 			.meshID(MeshId::MESH_STAGE)

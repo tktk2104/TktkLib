@@ -16,15 +16,15 @@ struct MeshTest
 {
 	static void create()
 	{
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::Transform3DMaker::makeStart()
 			//.position(Vector3(0.0f, 0.0f, 0.0f))
 			.create()
 		);
 
-		/*gameObject.lock()->addComponent(
+		/*gameObject->addComponent(
 			tktk::RectBillboardDrawerMaker::makeStart()
 			.drawPriority(10.0f)
 			.textureId(TextureId::TEXTURE_ANIM_SAMPLE)
@@ -34,7 +34,7 @@ struct MeshTest
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::RectBillboardAnimatorMaker::makeStart()
 			.textureId(TextureId::TEXTURE_ANIM_SAMPLE)
 			.splitTextureIndexList<0, 1, 2, 3>()
@@ -43,7 +43,7 @@ struct MeshTest
 			.create()
 		);*/
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::MeshDrawerMaker::makeStart()
 			.drawPriority(1.0f)
 			.meshID(1)
@@ -54,7 +54,7 @@ struct MeshTest
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::MeshAnimatorMaker::makeStart()
 			.isLoop(true)
 			.motionID(4)
@@ -62,7 +62,7 @@ struct MeshTest
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::BoxColliderMaker::makeStart()
 			.collisionGroupType(CollisionGroup::COLLISION_GROUP_PLAYER)
 			.boxSize(Vector3(15.0f, 22.0f, 15.0f))
@@ -70,7 +70,7 @@ struct MeshTest
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::ColliderWireFrameDrawer3DMaker::makeStart()
 			.drawPriority(100)
 			.wireFrameColor(Color::white)
@@ -79,14 +79,14 @@ struct MeshTest
 
 		// .renderTargetId(RenderTargetId::RENDER_TARGET_BEFOR_BLOOM)
 	
-		gameObject.lock()->addComponent(tktk::CurStateTypeListMaker::makeStart().create());
+		gameObject->addComponent(tktk::CurStateTypeListMaker::makeStart().create());
 		MeshTestMoveState::create(gameObject);
 		MeshTestRotateState::create(gameObject);
 		MeshTestScaleState::create(gameObject);
 
-		gameObject.lock()->addComponent(std::make_shared<MeshTestScript>());
+		gameObject->addComponent(new MeshTestScript());
 
-		gameObject.lock()->addChild(MeshTestChild::create(Vector3(0.0f, 0.0f, 0.0f)));
+		gameObject->addChild(MeshTestChild::create(Vector3(0.0f, 0.0f, 0.0f)));
 	}
 };
 

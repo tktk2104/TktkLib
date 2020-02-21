@@ -13,13 +13,13 @@ public:
 
 	void start();
 	void update();
-	void afterChangeParent(tktk::GameObjectPtr beforParent);
+	void afterChangeParent(GameObjectPtr beforParent);
 
 private:
 
-	std::weak_ptr<tktk::Transform3D> m_transform;
+	tktk::CfpPtr<tktk::Transform3D> m_transform;
 
-	tktk::GameObjectPtr m_parent;
+	GameObjectPtr m_parent;
 
 	int m_curBone{ 2 };
 };

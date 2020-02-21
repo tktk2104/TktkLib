@@ -16,5 +16,5 @@ public:
 
 private:
 
-	std::weak_ptr<tktk::Transform3D> m_transform;
+	tktk::CfpPtr<tktk::Transform3D> m_transform;
 };

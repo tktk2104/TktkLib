@@ -6,9 +6,9 @@ struct RenderTargetTest
 {
 	static void create()
 	{
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::RenderTargetDrawerMaker::makeStart()
 			.drawPriority(DrawPriority::DRAW_PRIORITY_DEFAULT + 10.0f)
 			.drawRenderTargetId(RenderTargetId::RENDER_TARGET_BLOOM_COMBINE)

@@ -6,7 +6,7 @@ void SelfRotater::start()
 {
 	auto transform = getComponent<tktk::Transform3D>();
 
-	if (transform.expired())
+	if (transform.isNull())
 	{
 		throw std::runtime_error("SelfMover not found Transform3D");
 	}
@@ -17,11 +17,11 @@ void SelfRotater::update()
 {
 	if (tktk::Keyboard::getState(tktk::InputType::INPUT_PUSHING, tktk::KeyboardKeyType::KEYBOARD_LEFT))
 	{
-		m_transform.lock()->addLocalEulerAngles(Vector3::up);
+		m_transform->addLocalEulerAngles(Vector3::up);
 	}
 
 	if (tktk::Keyboard::getState(tktk::InputType::INPUT_PUSHING, tktk::KeyboardKeyType::KEYBOARD_RIGHT))
 	{
-		m_transform.lock()->addLocalEulerAngles(Vector3::down);
+		m_transform->addLocalEulerAngles(Vector3::down);
 	}
 }

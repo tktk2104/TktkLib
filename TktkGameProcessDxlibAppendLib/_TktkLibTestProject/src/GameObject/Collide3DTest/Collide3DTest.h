@@ -6,17 +6,17 @@ struct Collide3DTest
 {
 	static void create()
 	{
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::Transform3DMaker::makeStart()
 			//.position(Vector3(-80.0f, 0.0f, 0.0f))[x:-0.040122, y:0.884570, z:-0.192970]
 			//.scaleRate(Vector3(1.0f, 1.0f, 1.0f))
-			.position(Vector3(-0.040122, 0.884570, -0.192970))
+			.position(Vector3(-0.040122f, 0.884570f, -0.192970f))
 			.create()
 		);
 
-		/*gameObject.lock()->addComponent(
+		/*gameObject->addComponent(
 			tktk::BoxDrawerMaker::makeStart()
 			.boxColor(Color::red)
 			.isFill(true)
@@ -25,7 +25,7 @@ struct Collide3DTest
 			.create()
 		);*/
 
-		/*gameObject.lock()->addComponent(
+		/*gameObject->addComponent(
 			tktk::MeshDrawerMaker::makeStart()
 			.drawPriority(10.0f)
 			.meshID(8)
@@ -34,7 +34,7 @@ struct Collide3DTest
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::SphereColliderMaker::makeStart()
 			.collisionGroupType(CollisionGroup::COLLISION_GROUP_ENEMY)
 			.radius(10.0f)
@@ -42,7 +42,7 @@ struct Collide3DTest
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::SphereColliderMaker::makeStart()
 			.collisionGroupType(CollisionGroup::COLLISION_GROUP_ENEMY)
 			.radius(15.0f)
@@ -50,7 +50,7 @@ struct Collide3DTest
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::Sound3DPlayerMaker::makeStart()
 			.playSoundId(SoundId::SOUND_3D_TEST_SE)
 			.soundPlayType(tktk::SoundPlayType::SOUND_PLAY_TYPE_LOOP)
@@ -59,7 +59,7 @@ struct Collide3DTest
 			.create()
 		);*/
 
-		/*gameObject.lock()->addComponent(
+		/*gameObject->addComponent(
 			tktk::BoxColliderMaker::makeStart()
 			.collisionGroupType(CollisionGroup::COLLISION_GROUP_ENEMY)
 			.boxSize(Vector3(20.0f, 25.0f, 20.0f))
@@ -67,7 +67,7 @@ struct Collide3DTest
 			.create()
 		);*/
 
-		/*gameObject.lock()->addComponent(
+		/*gameObject->addComponent(
 			tktk::ColliderWireFrameDrawer3DMaker::makeStart()
 			.drawPriority(2.0f)
 			.wireFrameColor(Color::white)

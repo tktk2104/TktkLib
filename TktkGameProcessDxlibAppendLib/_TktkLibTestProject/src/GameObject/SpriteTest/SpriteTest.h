@@ -25,20 +25,20 @@ struct SpriteTest
 
 
 
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::Transform2DMaker::makeStart()
 			.position(tktk::Screen::getGameScreenSize() / 2)
 			.scaleRate(Vector2(10))
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::SpriteDrawerMaker::makeStart().drawPriority(DrawPriority::DRAW_PRIORITY_DEFAULT).create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::SpriteAnimatorMaker::makeStart()
 			.textureId(TEXTURE_ANIM_SAMPLE)
 			.splitTextureIndexList<0,1,2,3>()
@@ -48,13 +48,13 @@ struct SpriteTest
 			.create()
 		);
 
-		gameObject.lock()->addComponent(tktk::CurStateTypeListMaker::makeStart().create());
+		gameObject->addComponent(tktk::CurStateTypeListMaker::makeStart().create());
 
 		StopState::create(gameObject);
 		WalkState::create(gameObject);
 		RunState::create(gameObject);
 
-		gameObject.lock()->addComponent(std::make_shared<SpriteTestScript>());
+		gameObject->addComponent(new SpriteTestScript());
 	}
 };
 #endif // !SPRITE_TEST_H_

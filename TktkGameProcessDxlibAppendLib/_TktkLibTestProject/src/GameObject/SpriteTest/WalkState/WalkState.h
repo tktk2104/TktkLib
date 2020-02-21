@@ -6,11 +6,11 @@
 
 struct WalkState
 {
-	static tktk::StateMachinePtr create(tktk::GameObjectPtr user)
+	static tktk::CfpPtr<tktk::StateMachine> create(GameObjectPtr user)
 	{
-		tktk::StateMachinePtr stateMachine = tktk::StateMachine::create(user, SpriteTestState::WALK_STATE);
+		auto stateMachine = tktk::StateMachine::create(user, SpriteTestState::WALK_STATE);
 
-		stateMachine.lock()->addComponent(std::make_shared<WalkStateScript>());
+		stateMachine->addComponent(new WalkStateScript());
 
 		return stateMachine;
 	}

@@ -6,17 +6,17 @@ class SkyTest
 {
 public:
 
-	static tktk::GameObjectPtr create()
+	static GameObjectPtr create()
 	{
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::Transform3DMaker::makeStart()
 			.traceType(tktk::TraceParentType::TRACE_PARENT_POS_AND_SCALE)
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::MeshDrawerMaker::makeStart()
 			.drawPriority(DrawPriority::DRAW_PRIORITY_SKY)
 			.meshID(MeshId::MESH_SKY)

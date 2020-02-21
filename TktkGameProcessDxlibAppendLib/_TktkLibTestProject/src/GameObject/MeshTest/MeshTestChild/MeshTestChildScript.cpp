@@ -6,13 +6,13 @@ void MeshTestChildScript::start()
 {
 	auto transform = getComponent<tktk::Transform3D>();
 
-	if (transform.expired())
+	if (transform.isNull())
 	{
 		throw std::runtime_error("MeshTestChildScript not found Transform3D");
 	}
 	m_transform = transform;
 
-	m_parent = getGameObject().lock()->getParent();
+	m_parent = getGameObject()->getParent();
 }
 
 void MeshTestChildScript::update()
@@ -24,53 +24,53 @@ void MeshTestChildScript::update()
 
 	if (m_curBone >= 30) m_curBone = 2;
 
-	auto meshDrawer = m_parent.lock()->getComponent<tktk::MeshDrawer>();
+	auto meshDrawer = m_parent->getComponent<tktk::MeshDrawer>();
 
 	auto tempMat
-		= meshDrawer.lock()->getLocalBoneMatrix(7)
-		* meshDrawer.lock()->getLocalBoneMatrix(6)
-		* meshDrawer.lock()->getLocalBoneMatrix(5)
-		* meshDrawer.lock()->getLocalBoneMatrix(4)
-		* meshDrawer.lock()->getLocalBoneMatrix(3)
-		* meshDrawer.lock()->getLocalBoneMatrix(2)
-		* meshDrawer.lock()->getLocalBoneMatrix(1)
-		* meshDrawer.lock()->getDxLibDraw3DParam().localMat
+		= meshDrawer->getLocalBoneMatrix(7)
+		* meshDrawer->getLocalBoneMatrix(6)
+		* meshDrawer->getLocalBoneMatrix(5)
+		* meshDrawer->getLocalBoneMatrix(4)
+		* meshDrawer->getLocalBoneMatrix(3)
+		* meshDrawer->getLocalBoneMatrix(2)
+		* meshDrawer->getLocalBoneMatrix(1)
+		* meshDrawer->getDxLibDraw3DParam().localMat
 		;
 
-	m_transform.lock()->setLocalPosition(tempMat.calculateTranslation());
-	m_transform.lock()->setLocalRotation(tempMat.calculateRotation());
+	m_transform->setLocalPosition(tempMat.calculateTranslation());
+	m_transform->setLocalRotation(tempMat.calculateRotation());
 
 	///*if (tktk::Keyboard::getState(tktk::InputType::INPUT_PUSHING, tktk::KeyboardKeyType::KEYBOARD_W))
 	//{
-	//	m_transform.lock()->addLocalPosition(Vector3::forwardLH);
+	//	m_transform->addLocalPosition(Vector3::forwardLH);
 	//}
 
 	//if (tktk::Keyboard::getState(tktk::InputType::INPUT_PUSHING, tktk::KeyboardKeyType::KEYBOARD_S))
 	//{
-	//	m_transform.lock()->addLocalPosition(Vector3::backwardLH);
+	//	m_transform->addLocalPosition(Vector3::backwardLH);
 	//}
 
 	//if (tktk::Keyboard::getState(tktk::InputType::INPUT_PUSHING, tktk::KeyboardKeyType::KEYBOARD_A))
 	//{
-	//	m_transform.lock()->addLocalPosition(Vector3::left);
+	//	m_transform->addLocalPosition(Vector3::left);
 	//}
 
 	//if (tktk::Keyboard::getState(tktk::InputType::INPUT_PUSHING, tktk::KeyboardKeyType::KEYBOARD_D))
 	//{
-	//	m_transform.lock()->addLocalPosition(Vector3::right);
+	//	m_transform->addLocalPosition(Vector3::right);
 	//}*/
 
 	//if (tktk::Keyboard::getState(tktk::InputType::INPUT_BEGIN, tktk::KeyboardKeyType::KEYBOARD_RETURN))
 	//{
-	//	auto pt = m_parent.lock()->getComponent<tktk::Transform3D>();
+	//	auto pt = m_parent->getComponent<tktk::Transform3D>();
 
-	//	m_transform.lock()->()
+	//	m_transform->()
 
-	//	//m_transform.lock()->setWorldPosition(Vector3::right);
+	//	//m_transform->setWorldPosition(Vector3::right);
 	//}
 }
 
-void MeshTestChildScript::afterChangeParent(tktk::GameObjectPtr beforParent)
+void MeshTestChildScript::afterChangeParent(GameObjectPtr beforParent)
 {
 	std::cout << "change!" << std::endl;
 }

@@ -27,14 +27,14 @@ void MeshTestScript::start()
 
 	auto curStateTypeList = getComponent<tktk::CurStateTypeList>();
 
-	if (curStateTypeList.expired())
+	if (curStateTypeList.isNull())
 	{
 		throw std::runtime_error("MeshTestScript not found CurStateTypeList");
 	}
 	m_curStateTypeList = curStateTypeList;
-	m_curStateTypeList.lock()->addState(MeshTestState::MESH_TEST_MOVE_STATE);
+	m_curStateTypeList->addState(MeshTestState::MESH_TEST_MOVE_STATE);
 
-	auto childList = getGameObject().lock()->getChildren();
+	auto childList = getGameObject()->getChildren();
 	
 	if (std::begin(childList) == std::end(childList))
 	{
@@ -47,37 +47,37 @@ void MeshTestScript::update()
 {
 	if (tktk::Keyboard::getState(tktk::InputType::INPUT_PUSHING, tktk::KeyboardKeyType::KEYBOARD_1))
 	{
-		m_curStateTypeList.lock()->clearState();
-		m_curStateTypeList.lock()->addState(MeshTestState::MESH_TEST_MOVE_STATE);
+		m_curStateTypeList->clearState();
+		m_curStateTypeList->addState(MeshTestState::MESH_TEST_MOVE_STATE);
 	}
 
 	if (tktk::Keyboard::getState(tktk::InputType::INPUT_PUSHING, tktk::KeyboardKeyType::KEYBOARD_2))
 	{
-		m_curStateTypeList.lock()->clearState();
-		m_curStateTypeList.lock()->addState(MeshTestState::MESH_TEST_ROTATE_STATE);
+		m_curStateTypeList->clearState();
+		m_curStateTypeList->addState(MeshTestState::MESH_TEST_ROTATE_STATE);
 	}
 
 	if (tktk::Keyboard::getState(tktk::InputType::INPUT_PUSHING, tktk::KeyboardKeyType::KEYBOARD_3))
 	{
-		m_curStateTypeList.lock()->clearState();
-		m_curStateTypeList.lock()->addState(MeshTestState::MESH_TEST_SCALE_STATE);
+		m_curStateTypeList->clearState();
+		m_curStateTypeList->addState(MeshTestState::MESH_TEST_SCALE_STATE);
 	}
 
 	if (tktk::Keyboard::getState(tktk::InputType::INPUT_BEGIN, tktk::KeyboardKeyType::KEYBOARD_SPACE))
 	{
-		auto childList = getGameObject().lock()->getChildren();
+		auto childList = getGameObject()->getChildren();
 
 		if (std::begin(childList) == std::end(childList))
 		{
 			//m_child.lock()->setParent(getGameObject());
 
-			getGameObject().lock()->addChild(m_child);
+			getGameObject()->addChild(m_child);
 		}
 		else
 		{
 			//m_child.lock()->setParent(tktk::NULL_GAME_OBJECT);
 
-			getGameObject().lock()->removeChild(m_child);
+			getGameObject()->removeChild(m_child);
 		}
 	}
 
@@ -97,17 +97,17 @@ void MeshTestScript::update()
 	//<< std::endl;
 }
 
-void MeshTestScript::onCollisionEnter(tktk::GameObjectPtr other)
+void MeshTestScript::onCollisionEnter(GameObjectPtr other)
 {
 	std::cout << "enter" << std::endl;
 }
 
-void MeshTestScript::onCollisionStay(tktk::GameObjectPtr other)
+void MeshTestScript::onCollisionStay(GameObjectPtr other)
 {
 	std::cout << "stay" << std::endl;
 }
 
-void MeshTestScript::onCollisionExit(tktk::GameObjectPtr other)
+void MeshTestScript::onCollisionExit(GameObjectPtr other)
 {
 	std::cout << "exit" << std::endl;
 }

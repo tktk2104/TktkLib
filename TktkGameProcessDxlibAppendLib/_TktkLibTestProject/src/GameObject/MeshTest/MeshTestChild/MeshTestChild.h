@@ -5,17 +5,17 @@
 
 struct MeshTestChild
 {
-	static tktk::GameObjectPtr create(const Vector3& pos)
+	static GameObjectPtr create(const Vector3& pos)
 	{
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::Transform3DMaker::makeStart()
 			//.position(pos)
 			.create()
 		);
 
-		/*gameObject.lock()->addComponent(
+		/*gameObject->addComponent(
 			tktk::SphereDrawerMaker::makeStart()
 			.sphereColor(Color::red)
 			.isFill(true)
@@ -24,7 +24,7 @@ struct MeshTestChild
 			.create()
 		);*/
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::BoxDrawerMaker::makeStart()
 			.boxColor(Color::red)
 			.isFill(true)
@@ -33,7 +33,7 @@ struct MeshTestChild
 			.create()
 		);
 
-		/*gameObject.lock()->addComponent(
+		/*gameObject->addComponent(
 			tktk::MeshDrawerMaker::makeStart()
 			.meshLocalRotation(Quaternion::identity)
 			.drawPriority(1.0f)
@@ -43,7 +43,7 @@ struct MeshTestChild
 			.create()
 		);*/
 
-		gameObject.lock()->addComponent(std::make_shared<MeshTestChildScript>());
+		gameObject->addComponent(new MeshTestChildScript());
 
 		return gameObject;
 	}

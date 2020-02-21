@@ -14,9 +14,9 @@ public:
 
 	static void create()
 	{
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::Transform3DMaker::makeStart()
 			.position(Vector3(0.0f, 100.0f, -300.0f))
 			.rotationDeg(Vector3(20.0f, 0.0f, 0.0f))
@@ -25,7 +25,7 @@ public:
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::BasicCameraMaker::makeStart()
 			.drawPriority(-100.0f)
 			.initCameraFov(45.0f)
@@ -35,7 +35,7 @@ public:
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::FirstPersonModuleMaker::makeStart()
 			.alwaysMoveForward(true)
 			.moveSpeedPerSec(100.0f)
@@ -43,9 +43,9 @@ public:
 			.create()
 		);
 
-		gameObject.lock()->addChild(SkyTest::create());
+		gameObject->addChild(SkyTest::create());
 
-		gameObject.lock()->addComponent(std::make_shared<CameraTestScript>());
+		gameObject->addComponent(new CameraTestScript());
 	}
 };
 #endif // !CAMERA_TEST_H_

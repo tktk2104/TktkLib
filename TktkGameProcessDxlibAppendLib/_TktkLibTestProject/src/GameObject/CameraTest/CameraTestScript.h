@@ -1,7 +1,6 @@
 #ifndef CAMERA_TEST_SCRIPT_H_
 #define CAMERA_TEST_SCRIPT_H_
 
-#include <memory>
 #include "CommonIncludePaths.h"
 
 class CameraTestScript
@@ -18,7 +17,7 @@ public:
 
 private:
 
-	std::weak_ptr<tktk::Transform3D> m_transform;
+	tktk::CfpPtr<tktk::Transform3D> m_transform;
 
 	// TODO : ‚±‚Ì•Ï”‚ğg‚í‚È‚¢À‘•
 	Vector3 m_curCameraRotation{ 0.0f, 180.0f, 0.0f };

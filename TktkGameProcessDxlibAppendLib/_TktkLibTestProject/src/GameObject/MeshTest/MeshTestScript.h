@@ -14,14 +14,14 @@ public:
 
 	void start();
 	void update();
-	void onCollisionEnter(tktk::GameObjectPtr other);
-	void onCollisionStay(tktk::GameObjectPtr other);
-	void onCollisionExit(tktk::GameObjectPtr other);
+	void onCollisionEnter(GameObjectPtr other);
+	void onCollisionStay(GameObjectPtr other);
+	void onCollisionExit(GameObjectPtr other);
 
 private:
 
-	std::weak_ptr<tktk::CurStateTypeList> m_curStateTypeList;
+	tktk::CfpPtr<tktk::CurStateTypeList> m_curStateTypeList;
 
-	tktk::GameObjectPtr m_child;
+	GameObjectPtr m_child;
 };
 #endif // !MESH_TEST_SCRIPT_H_

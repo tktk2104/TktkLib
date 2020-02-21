@@ -9,7 +9,7 @@ void CameraTestScript::start()
 {
 	auto transform = getComponent<tktk::Transform3D>();
 
-	if (transform.expired())
+	if (transform.isNull())
 	{
 		throw std::runtime_error("CameraTestScript not found Transform3D");
 	}

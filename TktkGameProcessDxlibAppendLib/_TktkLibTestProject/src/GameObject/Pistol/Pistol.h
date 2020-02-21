@@ -6,15 +6,15 @@ struct Pistol
 {
 	static void create()
 	{
-		tktk::GameObjectPtr gameObject = tktk::GameObject::create();
+		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::Transform3DMaker::makeStart()
 			.position(Vector3(0.0f, 10.0f, 0.0f))
 			.create()
 		);
 
-		gameObject.lock()->addComponent(
+		gameObject->addComponent(
 			tktk::MeshDrawerMaker::makeStart()
 			.drawPriority(1.0f)
 			.meshID(MESH_PISTOL)

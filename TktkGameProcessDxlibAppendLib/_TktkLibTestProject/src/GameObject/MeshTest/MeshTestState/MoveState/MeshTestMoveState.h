@@ -6,11 +6,11 @@
 
 struct MeshTestMoveState
 {
-	static tktk::StateMachinePtr create(tktk::GameObjectPtr user)
+	static tktk::CfpPtr<tktk::StateMachine> create(GameObjectPtr user)
 	{
-		tktk::StateMachinePtr stateMachine = tktk::StateMachine::create(user, MeshTestState::MESH_TEST_MOVE_STATE);
+		auto stateMachine = tktk::StateMachine::create(user, MeshTestState::MESH_TEST_MOVE_STATE);
 
-		stateMachine.lock()->addComponent(std::make_shared<SelfMover>());
+		stateMachine->addComponent(new SelfMover());
 
 		return stateMachine;
 	}
