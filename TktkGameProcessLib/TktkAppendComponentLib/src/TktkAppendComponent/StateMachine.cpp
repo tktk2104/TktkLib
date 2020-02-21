@@ -28,7 +28,7 @@ namespace tktk
 	{
 		if (m_curStateTypeList.isNull())
 		{
-			auto m_curStateTypeList = getComponent<CurStateTypeList>();
+			m_curStateTypeList = getComponent<CurStateTypeList>();
 
 			if (m_curStateTypeList.isNull())
 			{
