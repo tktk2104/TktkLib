@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<SpriteDrawer> SpriteDrawerMaker::create()
+	SpriteDrawer* SpriteDrawerMaker::create()
 	{
-		auto spriteDrawer = std::make_shared<SpriteDrawer>(
+		auto spriteDrawer = new SpriteDrawer(
 			m_textureId,
 			m_splitTextureIndex,
 			m_drawPriority,
@@ -23,7 +23,7 @@ namespace tktk
 			m_useClipping,
 			m_clippingLeftTopPos,
 			m_clippingRightBottomPos
-			);
+		);
 
 		if (m_useRenderTarget) spriteDrawer->useRenderTarget(m_renderTargetId);
 

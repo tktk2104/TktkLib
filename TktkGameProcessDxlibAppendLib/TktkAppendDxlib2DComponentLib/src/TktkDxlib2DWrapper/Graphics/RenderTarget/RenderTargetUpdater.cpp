@@ -5,20 +5,10 @@
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
 #include <DxLib.h>
 #include "TktkDxlib2DWrapper/Utility/DXConverter.h"
+#include "TktkDxlib2DWrapper/Assets/Assets2DManager.h"
 
 namespace tktk
 {
-	void RenderTargetUpdater::start()
-	{
-		auto renderTargetAssets = ComponentFrameworkProcessor::find<RenderTargetAssets>();
-
-		if (renderTargetAssets.expired())
-		{
-			throw std::runtime_error("ScreenUpdater not found RenderTargetAssets");
-		}
-		m_renderTargetAssets = renderTargetAssets;
-	}
-
 	void RenderTargetUpdater::onDestroy() const
 	{
 		if (m_mainScreenHandle == -1) return;
@@ -28,7 +18,7 @@ namespace tktk
 
 	void RenderTargetUpdater::frameEnd()
 	{
-		m_renderTargetAssets.lock()->clearAutoRefreshRenderTargetAll(m_mainScreenHandle);
+		Assets2DManager::getRenderTargetAssets()->clearAutoRefreshRenderTargetAll(m_mainScreenHandle);
 	}
 
 	void RenderTargetUpdater::makeMainScreen(const Vector2 & screenSize)
@@ -48,7 +38,7 @@ namespace tktk
 
 	void RenderTargetUpdater::setRenderTarget(int id)
 	{
-		setDrawScreen(m_renderTargetAssets.lock()->getRenderTargetHandle(id).screenGraphHandle);
+		setDrawScreen(Assets2DManager::getRenderTargetAssets()->getRenderTargetHandle(id).screenGraphHandle);
 	}
 
 	void RenderTargetUpdater::unSetRenderTarget()
@@ -61,7 +51,7 @@ namespace tktk
 		DxLib::DrawGraph(
 			0,
 			0,
-			m_renderTargetAssets.lock()->getRenderTargetHandle(id).screenGraphHandle,
+			Assets2DManager::getRenderTargetAssets()->getRenderTargetHandle(id).screenGraphHandle,
 			TRUE
 		);
 	}

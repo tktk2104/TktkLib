@@ -74,7 +74,7 @@ namespace tktk
 			throw std::runtime_error("load mesh error");
 		}
 
-		Assets2DManager::getSoundAssets().lock()->loadSound(
+		Assets2DManager::getSoundAssets()->loadSound(
 			soundID,
 			splitWordData.at(1),
 			1.0f,
@@ -100,7 +100,7 @@ namespace tktk
 
 		if (splitWordData.size() <= 3)
 		{
-			Assets2DManager::getTextureAssets().lock()->loadTexture(textureID, splitWordData[1]);
+			Assets2DManager::getTextureAssets()->loadTexture(textureID, splitWordData[1]);
 			return;
 		}
 
@@ -124,7 +124,7 @@ namespace tktk
 			throw std::runtime_error("load texture error");
 		}
 
-		Assets2DManager::getTextureAssets().lock()->loadTexture(textureID, splitWordData[1], row, column);
+		Assets2DManager::getTextureAssets()->loadTexture(textureID, splitWordData[1], row, column);
 	}
 
 	void Assets2DLoader::loadMovie(const std::vector<std::string>& splitWordData)
@@ -142,7 +142,7 @@ namespace tktk
 			throw std::runtime_error("load movie error");
 		}
 
-		Assets2DManager::getMovieAssets().lock()->loadMovie(movieID, splitWordData[1]);
+		Assets2DManager::getMovieAssets()->loadMovie(movieID, splitWordData[1]);
 	}
 
 	void Assets2DLoader::loadPixelShader(const std::vector<std::string>& splitWordData)
@@ -164,6 +164,6 @@ namespace tktk
 			throw std::runtime_error("load pixel shader error");
 		}
 
-		Assets2DManager::getPixelShaderAssets().lock()->loadPixelShader(pixelShaderID, splitWordData[1]);
+		Assets2DManager::getPixelShaderAssets()->loadPixelShader(pixelShaderID, splitWordData[1]);
 	}
 }

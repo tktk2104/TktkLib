@@ -1,8 +1,8 @@
 #ifndef MOVIE_PLAYER_H_
 #define MOVIE_PLAYER_H_
 
-#include <memory>
 #include <TktkMath/Vector2.h>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend2DComponent/Transform2D.h>
 #include "../../../TktkDxlib2DWrapper/Assets/MovieAssets/MovieAssets.h"
@@ -75,10 +75,10 @@ namespace tktk
 	private:
 
 		// 自身の２次元座標コンポーネント
-		std::weak_ptr<Transform2D> m_transform2D;
+		CfpPtr<Transform2D> m_transform2D;
 
 		// 動画リソースの管理クラス
-		std::weak_ptr<MovieAssets> m_movieAssets;
+		CfpPtr<MovieAssets> m_movieAssets;
 
 		// 表示する動画のId
 		int m_movieId{ -1 };

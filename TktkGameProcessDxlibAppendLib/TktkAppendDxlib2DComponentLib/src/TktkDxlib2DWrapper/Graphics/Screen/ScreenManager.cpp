@@ -4,35 +4,30 @@
 
 namespace tktk
 {
-	std::weak_ptr<ScreenUpdater> ScreenManager::m_screenUpdater;
+	CfpPtr<ScreenUpdater> ScreenManager::m_screenUpdater;
 
-	void ScreenManager::setUp(
-		const Vector2& gameScreenSize,
-		bool fullScreen
-	)
+	void ScreenManager::setUp(const Vector2& gameScreenSize, bool fullScreen)
 	{
-		auto screenUpdater = std::make_shared<ScreenUpdater>(gameScreenSize, fullScreen);
-		ComponentFrameworkProcessor::addClass(screenUpdater);
-		m_screenUpdater = screenUpdater;
+		m_screenUpdater = ComponentFrameworkProcessor::addClass(true, new ScreenUpdater(gameScreenSize, fullScreen));
 	}
 
 	const Vector2 & ScreenManager::getDisplaySize()
 	{
-		return m_screenUpdater.lock()->getDisplaySize();
+		return m_screenUpdater->getDisplaySize();
 	}
 
 	const Vector2 & ScreenManager::getGameScreenSize()
 	{
-		return m_screenUpdater.lock()->getGameScreenSize();
+		return m_screenUpdater->getGameScreenSize();
 	}
 
 	const Vector2 & ScreenManager::getLetterBoxSize()
 	{
-		return m_screenUpdater.lock()->getLetterBoxSize();
+		return m_screenUpdater->getLetterBoxSize();
 	}
 
 	void ScreenManager::backgroundColor(const Color & color)
 	{
-		m_screenUpdater.lock()->backgroundColor(color);
+		m_screenUpdater->backgroundColor(color);
 	}
 }

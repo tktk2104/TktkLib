@@ -1,7 +1,6 @@
 #ifndef SPRITE_ANIMATOR_H_
 #define SPRITE_ANIMATOR_H_
 
-#include <memory>
 #include <vector>
 #include <TktkMath/Vector2.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
@@ -70,7 +69,7 @@ namespace tktk
 	private:
 
 		// 自身の２次元描画コンポーネント
-		std::weak_ptr<SpriteDrawer> m_spriteDrawer;
+		CfpPtr<SpriteDrawer> m_spriteDrawer;
 
 		// 使用するテクスチャのId
 		int m_textureId{ -1 };

@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<RectDrawer> RectDrawerMaker::create()
+	RectDrawer* RectDrawerMaker::create()
 	{
-		auto rectDrawer = std::make_shared<RectDrawer>(
+		auto rectDrawer = new RectDrawer(
 			m_rectSize,
 			m_localPosition,
 			m_lineThickness,
@@ -22,7 +22,7 @@ namespace tktk
 			m_blendMode,
 			m_blendParam,
 			m_useAntialiasing
-			);
+		);
 
 		if (m_useRenderTarget) rectDrawer->useRenderTarget(m_renderTargetId);
 

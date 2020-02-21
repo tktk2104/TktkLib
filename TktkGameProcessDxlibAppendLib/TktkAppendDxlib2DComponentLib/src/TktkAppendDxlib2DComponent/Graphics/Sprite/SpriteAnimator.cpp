@@ -26,7 +26,7 @@ namespace tktk
 	{
 		auto spriteDrawer = getComponent<SpriteDrawer>();
 
-		if (spriteDrawer.expired())
+		if (spriteDrawer.isNull())
 		{
 			throw std::runtime_error("SpriteAnimator not found SpriteDrawer");
 		}
@@ -48,8 +48,8 @@ namespace tktk
 		// •ÛŒ¯
 		if (curAnimationIdIndex >= m_splitTextureIndexList.size()) curAnimationIdIndex = m_splitTextureIndexList.size() - 1u;
 
-		m_spriteDrawer.lock()->setTextureId(m_textureId);
-		m_spriteDrawer.lock()->setSplitTextureIndex(m_splitTextureIndexList.at(curAnimationIdIndex));
+		m_spriteDrawer->setTextureId(m_textureId);
+		m_spriteDrawer->setSplitTextureIndex(m_splitTextureIndexList.at(curAnimationIdIndex));
 	}
 
 	bool SpriteAnimator::isEndAnimation() const

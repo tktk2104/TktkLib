@@ -1,7 +1,6 @@
 #ifndef SPRITE_DRAWER_H_
 #define SPRITE_DRAWER_H_
 
-#include <memory>
 #include <TktkMath/Vector2.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend2DComponent/Transform2D.h>
@@ -84,10 +83,10 @@ namespace tktk
 	private:
 
 		// 自身の２次元座標コンポーネント
-		std::weak_ptr<Transform2D> m_transform2D;
+		CfpPtr<Transform2D> m_transform2D;
 
 		// テクスチャリソースの管理クラス
-		std::weak_ptr<TextureAssets> m_textureAssets;
+		CfpPtr<TextureAssets> m_textureAssets;
 
 		// 表示するテクスチャのId
 		int m_textureId{ -1 };

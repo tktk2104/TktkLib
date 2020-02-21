@@ -66,19 +66,19 @@ namespace tktk
 
 	void Dxlib2DPolicy::setUpdatePriority()
 	{
-		ComponentFrameworkProcessor::addUpdatePriority<ScreenUpdater>(-10000.0f);
+		// ScreenUpdater UpdatePriority : -10000.0f
 
-		ComponentFrameworkProcessor::addUpdatePriority<ParentChildManager>(-1000.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<ParentChildManager>(-1000.0f);
 
-		ComponentFrameworkProcessor::addUpdatePriority<InertialMovement2D>(1000.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<InertialRotatement2D>(1000.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<InertialMovement2D>(1000.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<InertialRotatement2D>(1000.0f);
 
-		ComponentFrameworkProcessor::addUpdatePriority<Transform2D>(1010.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<Transform2D>(1010.0f);
 
-		ComponentFrameworkProcessor::addUpdatePriority<RectCollider>(1020.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<CircleCollider>(1020.0f);
-		ComponentFrameworkProcessor::addUpdatePriority<Polygon2dCollider>(1020.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<RectCollider>(1020.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<CircleCollider>(1020.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<Polygon2dCollider>(1020.0f);
 
-		ComponentFrameworkProcessor::addUpdatePriority<RectColliderExtrusion>(1050.0f);
+		ComponentFrameworkProcessor::addComponentUpdatePriority<RectColliderExtrusion>(1050.0f);
 	}
 }

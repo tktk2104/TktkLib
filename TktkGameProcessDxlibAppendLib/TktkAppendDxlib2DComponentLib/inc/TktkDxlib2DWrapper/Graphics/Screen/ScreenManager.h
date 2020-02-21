@@ -1,7 +1,7 @@
 #ifndef SCREEN_MANAGER_H_
 #define SCREEN_MANAGER_H_
 
-#include <memory>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include "ScreenUpdater.h"
 
 namespace tktk
@@ -29,7 +29,7 @@ namespace tktk
 
 	private:
 
-		static std::weak_ptr<ScreenUpdater> m_screenUpdater;
+		static CfpPtr<ScreenUpdater> m_screenUpdater;
 	};
 }
 #endif // !SCREEN_MANAGER_H_

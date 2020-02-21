@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<Sound2DPlayer> Sound2DPlayerMaker::create()
+	Sound2DPlayer* Sound2DPlayerMaker::create()
 	{
-		return std::make_shared<Sound2DPlayer>(
+		return new Sound2DPlayer(
 			m_startToPlay,
 			m_playSoundId,
 			m_soundPlayType,

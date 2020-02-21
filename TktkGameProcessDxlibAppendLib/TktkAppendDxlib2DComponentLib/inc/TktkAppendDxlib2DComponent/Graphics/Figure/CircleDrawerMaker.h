@@ -1,7 +1,6 @@
 #ifndef CIRCLE_DRAWER_MAKER_H_
 #define CIRCLE_DRAWER_MAKER_H_
 
-#include <memory>
 #include "CircleDrawer.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<CircleDrawer> create();
+		CircleDrawer* create();
 
 		// ^‰~‚Ì”¼Œa‚ğİ’è‚·‚é
 		CircleDrawerMaker& radius(float value);

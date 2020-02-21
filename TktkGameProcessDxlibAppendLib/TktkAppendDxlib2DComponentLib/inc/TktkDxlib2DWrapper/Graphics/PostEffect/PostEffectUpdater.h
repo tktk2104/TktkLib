@@ -1,8 +1,8 @@
 #ifndef POST_EFFECT_UPDATER_H_
 #define POST_EFFECT_UPDATER_H_
 
-#include <memory>
 #include <unordered_map>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 
 #include "../../Assets/TextureAssets/TextureAssets.h"
 #include "../../Assets/RenderTargetAssets/RenderTargetAssets.h"
@@ -12,10 +12,6 @@ namespace tktk
 {
 	class PostEffectUpdater
 	{
-	public:
-
-		void start();
-
 	public:
 
 		void bindPixelShader(int pixelShaderId);
@@ -38,10 +34,6 @@ namespace tktk
 		int m_renderTargetId;
 		std::unordered_map<int, int> m_shaderUsedTextureMap;
 		std::unordered_map<int, int> m_shaderUsedRenderTargetMap;
-
-		std::weak_ptr<TextureAssets> m_textureAssets;
-		std::weak_ptr<RenderTargetAssets> m_renderTargetAssets;
-		std::weak_ptr<PixelShaderAssets> m_pixelShaderAssets;
 	};
 }
 

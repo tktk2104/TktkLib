@@ -1,9 +1,9 @@
 #ifndef LINE_DRAWER_H_
 #define LINE_DRAWER_H_
 
-#include <memory>
 #include <TktkMath/Color.h>
 #include <TktkMath/Vector2.h>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend2DComponent/Transform2D.h>
 #include "../../../TktkDxlib2DWrapper/Graphics/BlendMode.h"
@@ -79,7 +79,7 @@ namespace tktk
 	private:
 
 		// 自身の２次元座標コンポーネント
-		std::weak_ptr<Transform2D> m_transform2D;
+		CfpPtr<Transform2D> m_transform2D;
 
 		// 自身の座標から見た線分の１つ目の座標
 		Vector2 m_relativeFirstPos;

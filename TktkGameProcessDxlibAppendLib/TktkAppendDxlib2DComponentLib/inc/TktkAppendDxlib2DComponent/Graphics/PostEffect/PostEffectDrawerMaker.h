@@ -1,7 +1,6 @@
 #ifndef POST_EFFECT_DRAWER_MAKER_H_
 #define POST_EFFECT_DRAWER_MAKER_H_
 
-#include <memory>
 #include "PostEffectDrawer.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<PostEffectDrawer> create();
+		PostEffectDrawer* create();
 
 		// •`‰æ—Dæ“x‚ğİ’è‚·‚é
 		PostEffectDrawerMaker& drawPriority(float value);

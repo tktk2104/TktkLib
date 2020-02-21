@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<LineDrawer> LineDrawerMaker::create()
+	LineDrawer* LineDrawerMaker::create()
 	{
-		auto lineDrawer = std::make_shared<LineDrawer>(
+		auto lineDrawer = new LineDrawer(
 			m_relativeFirstPos,
 			m_relativeSecondPos,
 			m_lineThickness,
@@ -21,7 +21,7 @@ namespace tktk
 			m_blendMode,
 			m_blendParam,
 			m_useAntialiasing
-			);
+		);
 
 		if (m_useRenderTarget) lineDrawer->useRenderTarget(m_renderTargetId);
 

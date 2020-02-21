@@ -1,7 +1,7 @@
 #ifndef MOUSE_MANAGER_H_
 #define MOUSE_MANAGER_H_
 
-#include <memory>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include <TktkMath/Vector2.h>
 #include "MouseUpdater.h"
 #include "MouseButtonType.h"
@@ -41,7 +41,7 @@ namespace tktk
 
 	private:
 
-		static std::weak_ptr<MouseUpdater> m_mouseUpdater;
+		static CfpPtr<MouseUpdater> m_mouseUpdater;
 	};
 }
 

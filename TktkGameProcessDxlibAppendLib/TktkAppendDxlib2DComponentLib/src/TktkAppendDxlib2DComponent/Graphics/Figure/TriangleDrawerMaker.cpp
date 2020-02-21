@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<TriangleDrawer> TriangleDrawerMaker::create()
+	TriangleDrawer* TriangleDrawerMaker::create()
 	{
-		auto triangleDrawer = std::make_shared<TriangleDrawer>(
+		auto triangleDrawer = new TriangleDrawer(
 			m_relativeFirstPos,
 			m_relativeSecondPos,
 			m_relativeThirdPos,
@@ -23,7 +23,7 @@ namespace tktk
 			m_blendMode,
 			m_blendParam,
 			m_useAntialiasing
-			);
+		);
 
 		if (m_useRenderTarget) triangleDrawer->useRenderTarget(m_renderTargetId);
 

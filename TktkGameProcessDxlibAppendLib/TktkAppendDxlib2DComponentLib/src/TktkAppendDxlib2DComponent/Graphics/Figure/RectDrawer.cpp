@@ -36,7 +36,7 @@ namespace tktk
 	{
 		auto transform2D = getComponent<Transform2D>();
 
-		if (transform2D.expired())
+		if (transform2D.isNull())
 		{
 			throw std::runtime_error("SpriteDrawer not found Transform2D");
 		}
@@ -49,7 +49,7 @@ namespace tktk
 
 		if (m_blendMode != DX_BLENDMODE_NOBLEND) DxLib::SetDrawBlendMode(m_blendMode, static_cast<int>(m_blendParam * 255));
 
-		Matrix3 selfPose = m_transform2D.lock()->calculateWorldMatrix();
+		Matrix3 selfPose = m_transform2D->calculateWorldMatrix();
 
 		Vector2 pos1 = (Vector2(-m_rectSize.x * 0.5f, -m_rectSize.y * 0.5f) + m_localPosition) * selfPose;
 		Vector2 pos2 = (Vector2( m_rectSize.x * 0.5f, -m_rectSize.y * 0.5f) + m_localPosition) * selfPose;

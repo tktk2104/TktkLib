@@ -1,7 +1,6 @@
 #ifndef MOVIE_PLAYER_MAKER_H_
 #define MOVIE_PLAYER_MAKER_H_
 
-#include <memory>
 #include "MoviePlayer.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<MoviePlayer> create();
+		MoviePlayer* create();
 
 		// •`‰æ—Dæ“x‚ğİ’è‚·‚é
 		MoviePlayerMaker& drawPriority(float value);

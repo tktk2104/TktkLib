@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<OvalDrawer> OvalDrawerMaker::create()
+	OvalDrawer* OvalDrawerMaker::create()
 	{
-		auto ovalDrawer = std::make_shared<OvalDrawer>(
+		auto ovalDrawer = new OvalDrawer(
 			m_ovalSize,
 			m_localPosition,
 			m_lineThickness,
@@ -23,7 +23,7 @@ namespace tktk
 			m_blendParam,
 			m_useAntialiasing,
 			m_vertexNum
-			);
+		);
 
 		if (m_useRenderTarget) ovalDrawer->useRenderTarget(m_renderTargetId);
 

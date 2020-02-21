@@ -1,7 +1,7 @@
 #ifndef ASSETS_2D_MANAGER_H_
 #define ASSETS_2D_MANAGER_H_
 
-#include <memory>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include "SoundAssets/SoundAssets.h"
 #include "RenderTargetAssets/RenderTargetAssets.h"
 #include "TextureAssets/TextureAssets.h"
@@ -16,23 +16,23 @@ namespace tktk
 
 		static void createAsset();
 
-		static std::weak_ptr<SoundAssets> getSoundAssets();
+		static CfpPtr<SoundAssets> getSoundAssets();
 
-		static std::weak_ptr<RenderTargetAssets> getRenderTargetAssets();
+		static CfpPtr<RenderTargetAssets> getRenderTargetAssets();
 
-		static std::weak_ptr<TextureAssets> getTextureAssets();
+		static CfpPtr<TextureAssets> getTextureAssets();
 
-		static std::weak_ptr<MovieAssets> getMovieAssets();
+		static CfpPtr<MovieAssets> getMovieAssets();
 
-		static std::weak_ptr<PixelShaderAssets> getPixelShaderAssets();
+		static CfpPtr<PixelShaderAssets> getPixelShaderAssets();
 
 	private:
 
-		static std::weak_ptr<SoundAssets>			m_soundAssets;
-		static std::weak_ptr<RenderTargetAssets>	m_renderTargetAssets;
-		static std::weak_ptr<TextureAssets>			m_textureAssets;
-		static std::weak_ptr<MovieAssets>			m_movieAssets;
-		static std::weak_ptr<PixelShaderAssets>		m_pixelShaderAssets;
+		static CfpPtr<SoundAssets>			m_soundAssets;
+		static CfpPtr<RenderTargetAssets>	m_renderTargetAssets;
+		static CfpPtr<TextureAssets>			m_textureAssets;
+		static CfpPtr<MovieAssets>			m_movieAssets;
+		static CfpPtr<PixelShaderAssets>		m_pixelShaderAssets;
 	};
 }
 #endif // !ASSETS_2D_MANAGER_H_

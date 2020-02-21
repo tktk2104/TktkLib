@@ -1,7 +1,7 @@
 #ifndef RENDER_TARGET_MANAGER_H_
 #define RENDER_TARGET_MANAGER_H_
 
-#include <memory>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include "RenderTargetUpdater.h"
 
 namespace tktk
@@ -24,7 +24,7 @@ namespace tktk
 
 	private:
 
-		static std::weak_ptr<RenderTargetUpdater> m_renderTargetUpdater;
+		static CfpPtr<RenderTargetUpdater> m_renderTargetUpdater;
 	};
 }
 #endif // !RENDER_TARGET_MANAGER_H_

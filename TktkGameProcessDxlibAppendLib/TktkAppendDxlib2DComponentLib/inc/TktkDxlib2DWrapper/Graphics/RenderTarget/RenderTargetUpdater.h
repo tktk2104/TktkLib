@@ -1,7 +1,6 @@
 #ifndef RENDER_TARGET_UPDATER_H_
 #define RENDER_TARGET_UPDATER_H_
 
-#include <memory>
 #include "../../Assets/RenderTargetAssets/RenderTargetAssets.h"
 
 namespace tktk
@@ -13,8 +12,6 @@ namespace tktk
 		RenderTargetUpdater() = default;
 
 	public:
-
-		void start();
 		void onDestroy() const;
 		void frameEnd();
 
@@ -37,8 +34,6 @@ namespace tktk
 	private:
 
 		int m_mainScreenHandle{ -1 };
-
-		std::weak_ptr<RenderTargetAssets> m_renderTargetAssets;
 	};
 }
 #endif // !RENDER_TARGET_UPDATER_H_

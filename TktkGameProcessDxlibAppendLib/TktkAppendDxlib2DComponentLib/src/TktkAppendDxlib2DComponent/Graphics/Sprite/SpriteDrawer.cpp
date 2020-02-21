@@ -39,7 +39,7 @@ namespace tktk
 	{
 		auto transform2D = getComponent<Transform2D>();
 
-		if (transform2D.expired())
+		if (transform2D.isNull())
 		{
 			throw std::runtime_error("SpriteDrawer not found Transform2D");
 		}
@@ -47,7 +47,7 @@ namespace tktk
 
 		auto textureAssets = Assets2DManager::getTextureAssets();
 
-		if (textureAssets.expired())
+		if (textureAssets.isNull())
 		{
 			throw std::runtime_error("SpriteDrawer not found TextureAssets");
 		}
@@ -62,12 +62,12 @@ namespace tktk
 
 		if (m_blendMode != DX_BLENDMODE_NOBLEND) DxLib::SetDrawBlendMode(m_blendMode, static_cast<int>(m_blendParam * 255));
 
-		Matrix3 selfPose = m_transform2D.lock()->calculateWorldMatrix();
+		Matrix3 selfPose = m_transform2D->calculateWorldMatrix();
 
-		TextureHandles textureHandles = m_textureAssets.lock()->getTextureHandles(m_textureId);
+		TextureHandles textureHandles = m_textureAssets->getTextureHandles(m_textureId);
 		int textureHandle = (m_splitTextureIndex == -1) ? textureHandles.textureHandle : textureHandles.splitTextureHandles.at(m_splitTextureIndex);
 	
-		Vector2 textureSize = m_textureAssets.lock()->getTextureSize(m_textureId, m_splitTextureIndex);
+		Vector2 textureSize = m_textureAssets->getTextureSize(m_textureId, m_splitTextureIndex);
 	
 		Vector2 reverseScale = Vector2::one;
 		if ((m_reverseFlag & HORIZONTAL_REVERSE) != 0)	reverseScale.x = -1.0f;

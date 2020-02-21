@@ -1,7 +1,6 @@
 #ifndef TRIANGLE_DRAWER_MAKER_H_
 #define TRIANGLE_DRAWER_MAKER_H_
 
-#include <memory>
 #include "TriangleDrawer.h"
 
 namespace tktk
@@ -16,7 +15,9 @@ namespace tktk
 	public:
 
 		// 作成する
-		std::shared_ptr<TriangleDrawer> create();
+		TriangleDrawer* create();
+
+	public:
 
 		// 自身の座標から見た三角形の１つ目の座標を設定
 		TriangleDrawerMaker& relativeFirstPos(const Vector2& value);

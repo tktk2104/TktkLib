@@ -25,6 +25,7 @@ namespace tktk
 		void update();
 		void draw();
 		void frameEnd();
+		float getUpdatePriority();
 		float getDrawPriority();
 
 	public:
@@ -55,8 +56,6 @@ namespace tktk
 		Vector2 m_letterBoxSize{ Vector2::zero };
 
 		bool m_fullScreen;
-
-		std::weak_ptr<RenderTargetUpdater> m_renderTargetUpdater;
 	};
 }
 #endif // !SCREEN_UPDATER_H_

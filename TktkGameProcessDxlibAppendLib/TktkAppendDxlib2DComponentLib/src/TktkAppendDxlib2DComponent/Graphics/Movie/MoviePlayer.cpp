@@ -37,7 +37,7 @@ namespace tktk
 	{
 		auto transform2D = getComponent<Transform2D>();
 
-		if (transform2D.expired())
+		if (transform2D.isNull())
 		{
 			throw std::runtime_error("MoviePlayer not found Transform2D");
 		}
@@ -45,7 +45,7 @@ namespace tktk
 
 		auto movieAssets = Assets2DManager::getMovieAssets();
 
-		if (movieAssets.expired())
+		if (movieAssets.isNull())
 		{
 			throw std::runtime_error("MoviePlayer not found MovieAssets");
 		}
@@ -60,11 +60,11 @@ namespace tktk
 
 		if (m_blendMode != DX_BLENDMODE_NOBLEND) DxLib::SetDrawBlendMode(m_blendMode, static_cast<int>(m_blendParam * 255));
 
-		Matrix3 selfPose = m_transform2D.lock()->calculateWorldMatrix();
+		Matrix3 selfPose = m_transform2D->calculateWorldMatrix();
 
-		int movieHandle = m_movieAssets.lock()->getMovieHandle(m_movieId);
+		int movieHandle = m_movieAssets->getMovieHandle(m_movieId);
 
-		Vector2 movieSize = m_movieAssets.lock()->getMovieSize(m_movieId);
+		Vector2 movieSize = m_movieAssets->getMovieSize(m_movieId);
 
 		Vector2 reverseScale = Vector2::one;
 		if ((m_reverseFlag & HORIZONTAL_REVERSE) != 0)	reverseScale.x = -1.0f;

@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<PostEffectDrawer> PostEffectDrawerMaker::create()
+	PostEffectDrawer* PostEffectDrawerMaker::create()
 	{
-		return std::make_shared<PostEffectDrawer>(
+		return new PostEffectDrawer(
 			m_drawPriority,
 			m_postEffectDrawParameters
 			);

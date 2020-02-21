@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<Polygon2DDrawer> Polygon2DDrawerMaker::create()
+	Polygon2DDrawer* Polygon2DDrawerMaker::create()
 	{
-		auto polygon2DDrawer = std::make_shared<Polygon2DDrawer>(
+		auto polygon2DDrawer = new Polygon2DDrawer(
 			m_vertexs,
 			m_lineThickness,
 			m_isFill,
@@ -20,7 +20,7 @@ namespace tktk
 			m_drawPriority,
 			m_blendMode,
 			m_blendParam
-			);
+		);
 
 		if (m_useRenderTarget) polygon2DDrawer->useRenderTarget(m_renderTargetId);
 

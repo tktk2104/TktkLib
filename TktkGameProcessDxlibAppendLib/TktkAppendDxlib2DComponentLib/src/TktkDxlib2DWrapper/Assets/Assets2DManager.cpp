@@ -4,54 +4,42 @@
 
 namespace tktk
 {
-	std::weak_ptr<SoundAssets>			Assets2DManager::m_soundAssets;
-	std::weak_ptr<RenderTargetAssets>	Assets2DManager::m_renderTargetAssets;
-	std::weak_ptr<TextureAssets>		Assets2DManager::m_textureAssets;
-	std::weak_ptr<MovieAssets>			Assets2DManager::m_movieAssets;
-	std::weak_ptr<PixelShaderAssets>	Assets2DManager::m_pixelShaderAssets;
+	CfpPtr<SoundAssets>			Assets2DManager::m_soundAssets;
+	CfpPtr<RenderTargetAssets>	Assets2DManager::m_renderTargetAssets;
+	CfpPtr<TextureAssets>		Assets2DManager::m_textureAssets;
+	CfpPtr<MovieAssets>			Assets2DManager::m_movieAssets;
+	CfpPtr<PixelShaderAssets>	Assets2DManager::m_pixelShaderAssets;
 
 	void Assets2DManager::createAsset()
 	{
-		auto soundAssets		= std::make_shared<SoundAssets>();
-		auto renderTargetAssets = std::make_shared<RenderTargetAssets>();
-		auto textureAssets		= std::make_shared<TextureAssets>();
-		auto movieAssets		= std::make_shared<MovieAssets>();
-		auto pixelShaderAssets	= std::make_shared<PixelShaderAssets>();
-
-		ComponentFrameworkProcessor::addClass(soundAssets);
-		ComponentFrameworkProcessor::addClass(renderTargetAssets);
-		ComponentFrameworkProcessor::addClass(textureAssets);
-		ComponentFrameworkProcessor::addClass(movieAssets);
-		ComponentFrameworkProcessor::addClass(pixelShaderAssets);
-
-		m_soundAssets			= soundAssets;
-		m_renderTargetAssets	= renderTargetAssets;
-		m_textureAssets			= textureAssets;
-		m_movieAssets			= movieAssets;
-		m_pixelShaderAssets		= pixelShaderAssets;
+		m_soundAssets			= ComponentFrameworkProcessor::addClass(true, new SoundAssets());
+		m_renderTargetAssets	= ComponentFrameworkProcessor::addClass(true, new RenderTargetAssets());
+		m_textureAssets			= ComponentFrameworkProcessor::addClass(true, new TextureAssets());
+		m_movieAssets			= ComponentFrameworkProcessor::addClass(true, new MovieAssets());
+		m_pixelShaderAssets		= ComponentFrameworkProcessor::addClass(true, new PixelShaderAssets());
 	}
 
-	std::weak_ptr<SoundAssets> Assets2DManager::getSoundAssets()
+	CfpPtr<SoundAssets> Assets2DManager::getSoundAssets()
 	{
 		return m_soundAssets;
 	}
 
-	std::weak_ptr<RenderTargetAssets> Assets2DManager::getRenderTargetAssets()
+	CfpPtr<RenderTargetAssets> Assets2DManager::getRenderTargetAssets()
 	{
 		return m_renderTargetAssets;
 	}
 
-	std::weak_ptr<TextureAssets> Assets2DManager::getTextureAssets()
+	CfpPtr<TextureAssets> Assets2DManager::getTextureAssets()
 	{
 		return m_textureAssets;
 	}
 
-	std::weak_ptr<MovieAssets> Assets2DManager::getMovieAssets()
+	CfpPtr<MovieAssets> Assets2DManager::getMovieAssets()
 	{
 		return m_movieAssets;
 	}
 
-	std::weak_ptr<PixelShaderAssets> Assets2DManager::getPixelShaderAssets()
+	CfpPtr<PixelShaderAssets> Assets2DManager::getPixelShaderAssets()
 	{
 		return m_pixelShaderAssets;
 	}

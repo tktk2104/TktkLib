@@ -1,7 +1,6 @@
 #ifndef SPRITE_DRAWER_MAKER_H_
 #define SPRITE_DRAWER_MAKER_H_
 
-#include <memory>
 #include "SpriteDrawer.h"
 
 namespace tktk
@@ -17,7 +16,7 @@ namespace tktk
 	public:
 
 		// 作成する
-		std::shared_ptr<SpriteDrawer> create();
+		SpriteDrawer* create();
 
 		// 表示するテクスチャのIdを設定する
 		SpriteDrawerMaker& textureId(int value);

@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<MoviePlayer> MoviePlayerMaker::create()
+	MoviePlayer* MoviePlayerMaker::create()
 	{
-		auto spriteDrawer = std::make_shared<MoviePlayer>(
+		auto spriteDrawer = new MoviePlayer(
 			m_drawPriority,
 			m_movieId,
 			m_movieCenterPosRate,
@@ -22,7 +22,7 @@ namespace tktk
 			m_useClipping,
 			m_clippingLeftTopPos,
 			m_clippingRightBottomPos
-			);
+		);
 
 		if (m_useRenderTarget) spriteDrawer->useRenderTarget(m_renderTargetId);
 

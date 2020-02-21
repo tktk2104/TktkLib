@@ -70,12 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib\dxlib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)lib\</OutDir>
     <TargetName>$(ProjectName)_mtd</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)lib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib\dxlib\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)..\TktkUtilityLib\TktkMathLib\inc;$(SolutionDir)..\TktkUtilityLib\Tktk2dCollisionLib\inc;$(SolutionDir)..\TktkUtilityLib\TktkTextProcessingLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkSelfMadePtrLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkTemplateMetaFuncLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkClassFuncProcessLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkComponentFrameworkLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppendComponentLib\inc;$(SolutionDir)..\TktkGameProcessLib\TktkAppend2DComponentLib\inc;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)lib\</OutDir>
     <TargetName>$(ProjectName)_mt</TargetName>
   </PropertyGroup>

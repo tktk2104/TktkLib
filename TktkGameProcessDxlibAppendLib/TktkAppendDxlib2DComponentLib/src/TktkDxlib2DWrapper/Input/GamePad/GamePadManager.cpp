@@ -5,42 +5,40 @@
 
 namespace tktk
 {
-	std::weak_ptr<GamePadUpdater> GamePadManager::m_gamePadUpdater;
+	CfpPtr<GamePadUpdater> GamePadManager::m_gamePadUpdater;
 
 	void GamePadManager::setUp()
 	{
-		auto gamePadUpdater = std::make_shared<GamePadUpdater>();
-		ComponentFrameworkProcessor::addClass(gamePadUpdater);
-		m_gamePadUpdater = gamePadUpdater;
+		m_gamePadUpdater = ComponentFrameworkProcessor::addClass(true, new GamePadUpdater());
 	}
 
 	void GamePadManager::setGamePadCount(int gamePadCount)
 	{
-		m_gamePadUpdater.lock()->setGamePadCount(gamePadCount);
+		m_gamePadUpdater->setGamePadCount(gamePadCount);
 	}
 
 	bool GamePadManager::getState(GamePadNumber padNumber, int inputType, int gamePadButtonType)
 	{
-		return m_gamePadUpdater.lock()->getState(padNumber, inputType, gamePadButtonType);
+		return m_gamePadUpdater->getState(padNumber, inputType, gamePadButtonType);
 	}
 
 	Vector2 GamePadManager::getLeftStick(GamePadNumber padNumber, bool getPreviosState)
 	{
-		return m_gamePadUpdater.lock()->getLeftStick(padNumber, getPreviosState);
+		return m_gamePadUpdater->getLeftStick(padNumber, getPreviosState);
 	}
 
 	Vector2 GamePadManager::getRightStick(GamePadNumber padNumber, bool getPreviosState)
 	{
-		return m_gamePadUpdater.lock()->getRightStick(padNumber, getPreviosState);
+		return m_gamePadUpdater->getRightStick(padNumber, getPreviosState);
 	}
 
 	float GamePadManager::getLeftTrigger(GamePadNumber padNumber, bool getPreviosState)
 	{
-		return m_gamePadUpdater.lock()->getLeftTrigger(padNumber, getPreviosState);
+		return m_gamePadUpdater->getLeftTrigger(padNumber, getPreviosState);
 	}
 
 	float GamePadManager::getRightTrigger(GamePadNumber padNumber, bool getPreviosState)
 	{
-		return m_gamePadUpdater.lock()->getRightTrigger(padNumber, getPreviosState);
+		return m_gamePadUpdater->getRightTrigger(padNumber, getPreviosState);
 	}
 }

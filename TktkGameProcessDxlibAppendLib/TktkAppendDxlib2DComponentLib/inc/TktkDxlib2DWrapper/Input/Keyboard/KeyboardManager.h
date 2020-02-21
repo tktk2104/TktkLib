@@ -1,7 +1,7 @@
 #ifndef KEYBOARD_MANAGER_H_
 #define KEYBOARD_MANAGER_H_
 
-#include <memory>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include "KeyboardUpdater.h"
 #include "KeyboardKeyType.h"
 
@@ -19,7 +19,7 @@ namespace tktk
 
 	private:
 
-		static std::weak_ptr<KeyboardUpdater> m_keyboardUpdater;
+		static CfpPtr<KeyboardUpdater> m_keyboardUpdater;
 	};
 }
 

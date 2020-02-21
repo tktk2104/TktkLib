@@ -5,17 +5,15 @@
 
 namespace tktk
 {
-	std::weak_ptr<KeyboardUpdater> KeyboardManager::m_keyboardUpdater;
+	CfpPtr<KeyboardUpdater> KeyboardManager::m_keyboardUpdater;
 
 	void KeyboardManager::setUp()
 	{
-		auto keyboardUpdater = std::make_shared<KeyboardUpdater>();
-		ComponentFrameworkProcessor::addClass(keyboardUpdater);
-		m_keyboardUpdater = keyboardUpdater;
+		m_keyboardUpdater = ComponentFrameworkProcessor::addClass(true, new KeyboardUpdater());
 	}
 
 	bool KeyboardManager::getState(int inputType, KeyboardKeyType keyboardKeyType)
 	{
-		return m_keyboardUpdater.lock()->getState(inputType, keyboardKeyType);
+		return m_keyboardUpdater->getState(inputType, keyboardKeyType);
 	}
 }

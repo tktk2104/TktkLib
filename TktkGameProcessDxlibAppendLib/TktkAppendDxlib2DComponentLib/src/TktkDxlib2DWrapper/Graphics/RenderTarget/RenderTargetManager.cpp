@@ -5,37 +5,35 @@
 
 namespace tktk
 {
-	std::weak_ptr<RenderTargetUpdater> RenderTargetManager::m_renderTargetUpdater;
+	CfpPtr<RenderTargetUpdater> RenderTargetManager::m_renderTargetUpdater;
 
 	void RenderTargetManager::setUp()
 	{
-		auto renderTargetUpdater = std::make_shared<RenderTargetUpdater>();
-		ComponentFrameworkProcessor::addClass(renderTargetUpdater);
-		m_renderTargetUpdater = renderTargetUpdater;
+		m_renderTargetUpdater = ComponentFrameworkProcessor::addClass(true, new RenderTargetUpdater());;
 	}
 
 	void RenderTargetManager::makeMainScreen(const Vector2 & screenSize)
 	{
-		m_renderTargetUpdater.lock()->makeMainScreen(screenSize);
+		m_renderTargetUpdater->makeMainScreen(screenSize);
 	}
 
 	int RenderTargetManager::getMainScreenHandle()
 	{
-		return m_renderTargetUpdater.lock()->getMainScreenHandle();
+		return m_renderTargetUpdater->getMainScreenHandle();
 	}
 
 	void RenderTargetManager::setRenderTarget(int id)
 	{
-		m_renderTargetUpdater.lock()->setRenderTarget(id);
+		m_renderTargetUpdater->setRenderTarget(id);
 	}
 
 	void RenderTargetManager::unSetRenderTarget()
 	{
-		m_renderTargetUpdater.lock()->unSetRenderTarget();
+		m_renderTargetUpdater->unSetRenderTarget();
 	}
 
 	void RenderTargetManager::drawRenderTargetTexture(int id)
 	{
-		m_renderTargetUpdater.lock()->drawRenderTargetTexture(id);
+		m_renderTargetUpdater->drawRenderTargetTexture(id);
 	}
 }

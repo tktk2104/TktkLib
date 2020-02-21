@@ -17,7 +17,7 @@ namespace tktk
 	public:
 
 		// 作成する
-		std::shared_ptr<SpriteAnimator> create();
+		SpriteAnimator* create();
 
 		// 使用するテクスチャのIdを設定する
 		SpriteAnimatorMaker& textureId(int value);

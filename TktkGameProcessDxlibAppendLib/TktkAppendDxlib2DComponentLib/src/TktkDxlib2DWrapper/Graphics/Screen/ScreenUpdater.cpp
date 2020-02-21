@@ -4,6 +4,7 @@
 #include <TktkMath/Matrix4.h>
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
 #include <DxLib.h>
+#include "TktkDxlib2DWrapper/Graphics/RenderTarget/RenderTargetManager.h"
 
 namespace tktk
 {
@@ -48,14 +49,7 @@ namespace tktk
 
 	void ScreenUpdater::start()
 	{
-		auto renderTargetUpdater = ComponentFrameworkProcessor::find<RenderTargetUpdater>();
-
-		if (renderTargetUpdater.expired())
-		{
-			throw std::runtime_error("ScreenUpdater not found RenderTarget");
-		}
-		m_renderTargetUpdater = renderTargetUpdater;
-		m_renderTargetUpdater.lock()->makeMainScreen(m_gameScreenSize);
+		RenderTargetManager::makeMainScreen(m_gameScreenSize);
 	}
 
 	void ScreenUpdater::onDestroy()
@@ -73,7 +67,7 @@ namespace tktk
 
 	void ScreenUpdater::draw()
 	{
-		int mainScreenHandle = m_renderTargetUpdater.lock()->getMainScreenHandle();
+		int mainScreenHandle = RenderTargetManager::getMainScreenHandle();
 
 		DxLib::SetDrawScreen(DX_SCREEN_BACK);
 		DxLib::ClearDrawScreen();
@@ -92,6 +86,11 @@ namespace tktk
 	void ScreenUpdater::frameEnd()
 	{
 		DxLib::ScreenFlip();
+	}
+
+	float ScreenUpdater::getUpdatePriority()
+	{
+		return -10000.0f;
 	}
 
 	float ScreenUpdater::getDrawPriority()

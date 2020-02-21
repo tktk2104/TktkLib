@@ -1,7 +1,7 @@
 #ifndef GAME_PAD_MANAGER_H_
 #define GAME_PAD_MANAGER_H_
 
-#include <memory>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include <TktkMath/Vector2.h>
 #include "GamePadUpdater.h"
 #include "GamePadNumber.h"
@@ -31,7 +31,7 @@ namespace tktk
 
 	private:
 
-		static std::weak_ptr<GamePadUpdater> m_gamePadUpdater;
+		static CfpPtr<GamePadUpdater> m_gamePadUpdater;
 	};
 }
 

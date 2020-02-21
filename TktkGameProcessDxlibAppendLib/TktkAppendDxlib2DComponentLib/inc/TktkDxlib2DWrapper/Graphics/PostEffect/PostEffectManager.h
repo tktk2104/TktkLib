@@ -1,7 +1,6 @@
 #ifndef POST_EFFECT_MANAGER_H_
 #define POST_EFFECT_MANAGER_H_
 
-#include <memory>
 #include "PostEffectUpdater.h"
 
 namespace tktk
@@ -28,7 +27,7 @@ namespace tktk
 
 	private:
 
-		static std::weak_ptr<PostEffectUpdater> m_postEffectUpdater;
+		static CfpPtr<PostEffectUpdater> m_postEffectUpdater;
 	};
 }
 #endif // !POST_EFFECT_MANAGER_H_

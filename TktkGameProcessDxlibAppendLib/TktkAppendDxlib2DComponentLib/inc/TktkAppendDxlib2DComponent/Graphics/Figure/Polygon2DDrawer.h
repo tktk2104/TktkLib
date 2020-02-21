@@ -1,10 +1,10 @@
 #ifndef POLYGON_2D_DRAWER_H_
 #define POLYGON_2D_DRAWER_H_
 
-#include <memory>
 #include <vector>
 #include <TktkMath/Color.h>
 #include <TktkMath/Vector2.h>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend2DComponent/Transform2D.h>
 #include "../../../TktkDxlib2DWrapper/Graphics/BlendMode.h"
@@ -84,7 +84,7 @@ namespace tktk
 	private:
 
 		// 自身の２次元座標コンポーネント
-		std::weak_ptr<Transform2D> m_transform2D;
+		CfpPtr<Transform2D> m_transform2D;
 
 		// ポリゴンを形成する頂点の配列（時計回り）
 		std::vector<Vector2> m_vertexs;

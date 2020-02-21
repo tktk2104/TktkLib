@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<SpriteAnimator> SpriteAnimatorMaker::create()
+	SpriteAnimator* SpriteAnimatorMaker::create()
 	{
-		return std::make_shared<SpriteAnimator>(
+		return new SpriteAnimator(
 			m_textureId,
 			m_splitTextureIndexList,
 			m_animationIntervalSec,

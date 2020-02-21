@@ -1,7 +1,6 @@
 #ifndef COLLIDER_WIRE_FRAME_DRAWER_2D_MAKER_H_
 #define COLLIDER_WIRE_FRAME_DRAWER_2D_MAKER_H_
 
-#include <memory>
 #include "ColliderWireFrameDrawer2D.h"
 
 namespace tktk
@@ -16,7 +15,9 @@ namespace tktk
 	public:
 
 		// çÏê¨Ç∑ÇÈ
-		std::shared_ptr<ColliderWireFrameDrawer2D> create();
+		ColliderWireFrameDrawer2D* create();
+
+	public:
 
 		ColliderWireFrameDrawer2DMaker& drawPriority(float value);
 

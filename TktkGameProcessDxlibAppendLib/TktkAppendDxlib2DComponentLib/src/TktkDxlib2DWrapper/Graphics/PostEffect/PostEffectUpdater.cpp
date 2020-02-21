@@ -6,36 +6,10 @@
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
 #include <DxLib.h>
 #include "TktkDxlib2DWrapper/Utility/DXConverter.h"
+#include "TktkDxlib2DWrapper/Assets/Assets2DManager.h"
 
 namespace tktk
 {
-	void PostEffectUpdater::start()
-	{
-		auto textureAssets = ComponentFrameworkProcessor::find<TextureAssets>();
-
-		if (textureAssets.expired())
-		{
-			throw std::runtime_error("PostEffect not found TextureAssets");
-		}
-		m_textureAssets = textureAssets;
-
-		auto renderTargetAssets = ComponentFrameworkProcessor::find<RenderTargetAssets>();
-
-		if (renderTargetAssets.expired())
-		{
-			throw std::runtime_error("PostEffect not found RenderTargetAssets");
-		}
-		m_renderTargetAssets = renderTargetAssets;
-
-		auto pixelShaderAssets = ComponentFrameworkProcessor::find<PixelShaderAssets>();
-
-		if (pixelShaderAssets.expired())
-		{
-			throw std::runtime_error("PostEffect not found PixelShaderAssets");
-		}
-		m_pixelShaderAssets = pixelShaderAssets;
-	}
-
 	void PostEffectUpdater::bindPixelShader(int pixelShaderId)
 	{
 		m_pixelShaderId = pixelShaderId;
@@ -69,21 +43,21 @@ namespace tktk
 	void PostEffectUpdater::drawPostEffect()
 	{
 		DxLib::MV1SetUseOrigShader(TRUE);
-		DxLib::SetUsePixelShader(m_pixelShaderAssets.lock()->getPixelShaderHandle(m_pixelShaderId));
+		DxLib::SetUsePixelShader(Assets2DManager::getPixelShaderAssets()->getPixelShaderHandle(m_pixelShaderId));
 
 		std::for_each(
 			std::begin(m_shaderUsedTextureMap),
 			std::end(m_shaderUsedTextureMap),
-			[this](const auto & node) { DxLib::SetUseTextureToShader(node.first, m_textureAssets.lock()->getTextureHandles(node.second).textureHandle); }
+			[](const auto & node) { DxLib::SetUseTextureToShader(node.first, Assets2DManager::getTextureAssets()->getTextureHandles(node.second).textureHandle); }
 		);
 
 		std::for_each(
 			std::begin(m_shaderUsedRenderTargetMap),
 			std::end(m_shaderUsedRenderTargetMap),
-			[this](const auto & node) { DxLib::SetUseTextureToShader(node.first, m_renderTargetAssets.lock()->getRenderTargetHandle(node.second).screenGraphHandle); }
+			[](const auto & node) { DxLib::SetUseTextureToShader(node.first, Assets2DManager::getRenderTargetAssets()->getRenderTargetHandle(node.second).screenGraphHandle); }
 		);
 
-		auto renderTargetHandles = m_renderTargetAssets.lock()->getRenderTargetHandle(m_renderTargetId);
+		auto renderTargetHandles = Assets2DManager::getRenderTargetAssets()->getRenderTargetHandle(m_renderTargetId);
 
 		std::array<VERTEX2DSHADER, 4u> vertex2DDatas;
 

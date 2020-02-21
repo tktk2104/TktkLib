@@ -1,7 +1,6 @@
 #ifndef RENDER_TARGET_DRAWER_MAKER_H_
 #define RENDER_TARGET_DRAWER_MAKER_H_
 
-#include <memory>
 #include "RenderTargetDrawer.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<RenderTargetDrawer> create();
+		RenderTargetDrawer* create();
 
 		// •`‰æ—Dæ“x‚ğİ’è‚·‚é
 		RenderTargetDrawerMaker& drawPriority(float value);

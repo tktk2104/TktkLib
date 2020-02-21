@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<CircleDrawer> CircleDrawerMaker::create()
+	CircleDrawer* CircleDrawerMaker::create()
 	{
-		auto circleDrawer = std::make_shared<CircleDrawer>(
+		auto circleDrawer = new CircleDrawer(
 			m_radius,
 			m_localPosition,
 			m_lineThickness,
@@ -23,7 +23,7 @@ namespace tktk
 			m_blendParam,
 			m_useAntialiasing,
 			m_vertexNum
-			);
+		);
 
 		if (m_useRenderTarget) circleDrawer->useRenderTarget(m_renderTargetId);
 

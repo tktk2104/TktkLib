@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<RenderTargetDrawer> RenderTargetDrawerMaker::create()
+	RenderTargetDrawer* RenderTargetDrawerMaker::create()
 	{
-		return std::make_shared<RenderTargetDrawer>(
+		return new RenderTargetDrawer(
 			m_drawRenderTargetId,
 			m_drawPriority,
 			m_blendMode,

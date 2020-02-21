@@ -1,9 +1,9 @@
 #ifndef OVAL_DRAWER_H_
 #define OVAL_DRAWER_H_
 
-#include <memory>
 #include <TktkMath/Color.h>
 #include <TktkMath/Vector2.h>
+#include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend2DComponent/Transform2D.h>
 #include "../../../TktkDxlib2DWrapper/Graphics/BlendMode.h"
@@ -86,7 +86,7 @@ namespace tktk
 	private:
 
 		// 自身の２次元座標コンポーネント
-		std::weak_ptr<Transform2D> m_transform2D;
+		CfpPtr<Transform2D> m_transform2D;
 
 		// 楕円の大きさ
 		Vector2 m_ovalSize;

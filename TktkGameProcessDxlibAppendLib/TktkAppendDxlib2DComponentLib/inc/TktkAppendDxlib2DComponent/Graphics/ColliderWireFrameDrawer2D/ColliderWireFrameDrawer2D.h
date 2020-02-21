@@ -3,8 +3,9 @@
 
 #include <memory>
 #include <TktkMath/Color.h>
-#include <TktkClassFuncProcessor/RunFuncClass/RunFuncClassList.h>
-#include <TktkClassFuncProcessor/RunFuncClass/HasFuncClass/HasSetActiveClass.h>
+#include <TktkClassFuncProcessor/RunFuncClass/RunFuncSimpleContainer.h>
+#include <TktkClassFuncProcessor/RunFuncClass/HasFuncClass/HasOneArgFuncClass.h>
+#include <TktkMetaFunc/HasFuncCheck/CreatedStruct/HasSetActiveChecker.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 
 namespace tktk
@@ -32,7 +33,7 @@ namespace tktk
 		Color m_wireFrameColor;
 
 		// アクティブ状態を切り替えるためのコンテナのラッパー
-		RunFuncClassList<HasSetActiveClass> m_hasSetActiveClassList;
+		RunFuncSimpleContainer<HasOneArgFuncClass<has_setActive_checker<bool>, setActive_runner<bool>, bool>> m_hasSetActiveClassList;
 	};
 }
 #endif // !COLLIDER_WIREFRAME_DRAWER_2D_H_

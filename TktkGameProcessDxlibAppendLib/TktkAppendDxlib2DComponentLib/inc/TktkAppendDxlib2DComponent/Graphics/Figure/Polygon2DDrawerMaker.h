@@ -1,7 +1,6 @@
 #ifndef POLYGON_2D_DRAWER_MAKER_H_
 #define POLYGON_2D_DRAWER_MAKER_H_
 
-#include <memory>
 #include "Polygon2DDrawer.h"
 
 namespace tktk
@@ -16,7 +15,9 @@ namespace tktk
 	public:
 
 		// 作成する
-		std::shared_ptr<Polygon2DDrawer> create();
+		Polygon2DDrawer* create();
+
+	public:
 
 		// ポリゴンを形成する頂点の配列を設定（時計回り）
 		Polygon2DDrawerMaker& vertexs(const std::vector<Vector2>& value);

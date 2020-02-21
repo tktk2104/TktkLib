@@ -1,7 +1,6 @@
 #ifndef SOUND_2D_PLAYER_MAKER_H_
 #define SOUND_2D_PLAYER_MAKER_H_
 
-#include <memory>
 #include "Sound2DPlayer.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<Sound2DPlayer> create();
+		Sound2DPlayer* create();
 
 		// ©g‚Ì¶¬Œã‚·‚®‚ÉÄ¶‚·‚é‚©‚ğİ’è
 		Sound2DPlayerMaker& startToPlay(bool value);

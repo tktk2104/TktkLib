@@ -5,57 +5,55 @@
 
 namespace tktk
 {
-	std::weak_ptr<MouseUpdater> MouseManager::m_mouseUpdater;
+	CfpPtr<MouseUpdater> MouseManager::m_mouseUpdater;
 
 	void MouseManager::setUp()
 	{
-		auto mouseUpdater = std::make_shared<MouseUpdater>();
-		ComponentFrameworkProcessor::addClass(mouseUpdater);
-		m_mouseUpdater = mouseUpdater;
+		m_mouseUpdater = ComponentFrameworkProcessor::addClass(true, new MouseUpdater());
 	}
 
 	Vector2 MouseManager::getCursorPoint()
 	{
-		return m_mouseUpdater.lock()->getCursorPoint();
+		return m_mouseUpdater->getCursorPoint();
 	}
 
 	void MouseManager::setCursorPoint(const Vector2 & point)
 	{
-		m_mouseUpdater.lock()->setCursorPoint(point);
+		m_mouseUpdater->setCursorPoint(point);
 	}
 
 	void MouseManager::showCursor()
 	{
-		m_mouseUpdater.lock()->showCursor();
+		m_mouseUpdater->showCursor();
 	}
 
 	void MouseManager::hideCursor()
 	{
-		m_mouseUpdater.lock()->hideCursor();
+		m_mouseUpdater->hideCursor();
 	}
 
 	bool MouseManager::getState(int inputType, int mouseButtonType)
 	{
-		return m_mouseUpdater.lock()->getState(inputType, mouseButtonType);
+		return m_mouseUpdater->getState(inputType, mouseButtonType);
 	}
 
 	int MouseManager::getVerticalMouseWheel()
 	{
-		return m_mouseUpdater.lock()->getVerticalMouseWheel();
+		return m_mouseUpdater->getVerticalMouseWheel();
 	}
 
 	float MouseManager::getVerticalMouseWheelF()
 	{
-		return m_mouseUpdater.lock()->getVerticalMouseWheelF();
+		return m_mouseUpdater->getVerticalMouseWheelF();
 	}
 
 	int MouseManager::getHorizontalMouseWheel()
 	{
-		return m_mouseUpdater.lock()->getHorizontalMouseWheel();
+		return m_mouseUpdater->getHorizontalMouseWheel();
 	}
 
 	float MouseManager::getHorizontalMouseWheelF()
 	{
-		return m_mouseUpdater.lock()->getHorizontalMouseWheelF();
+		return m_mouseUpdater->getHorizontalMouseWheelF();
 	}
 }

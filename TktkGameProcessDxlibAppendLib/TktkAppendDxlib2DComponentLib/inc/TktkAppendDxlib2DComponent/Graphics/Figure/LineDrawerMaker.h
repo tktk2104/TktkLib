@@ -1,7 +1,6 @@
 #ifndef LINE_DRAWER_MAKER_H_
 #define LINE_DRAWER_MAKER_H_
 
-#include <memory>
 #include "LineDrawer.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<LineDrawer> create();
+		LineDrawer* create();
 
 		// ©g‚ÌÀ•W‚©‚çŒ©‚½ü•ª‚Ì‚P‚Â–Ú‚ÌÀ•W‚ğİ’è
 		LineDrawerMaker& relativeFirstPos(const Vector2& value);

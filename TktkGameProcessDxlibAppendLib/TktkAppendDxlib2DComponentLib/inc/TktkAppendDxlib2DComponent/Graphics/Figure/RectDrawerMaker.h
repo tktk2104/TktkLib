@@ -16,7 +16,9 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<RectDrawer> create();
+		RectDrawer* create();
+
+	public:
 
 		// ’·•ûŒ`‚Ì‘å‚«‚³‚ğİ’è
 		RectDrawerMaker& rectSize(const Vector2& value);

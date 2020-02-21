@@ -1,7 +1,6 @@
 #ifndef SOUND_2D_MANAGER_H_
 #define SOUND_2D_MANAGER_H_
 
-#include <memory>
 #include "../Assets/SoundAssets/SoundAssets.h"
 #include "SoundPlayType.h"
 
@@ -34,10 +33,6 @@ namespace tktk
 		static void setLoopSamplePos(int id, int loopSamplePosition);
 
 		static void setCurrentPosition(int id, int samplePosition);
-
-	private:
-
-		static std::weak_ptr<SoundAssets> m_soundAssets;
 	};
 }
 

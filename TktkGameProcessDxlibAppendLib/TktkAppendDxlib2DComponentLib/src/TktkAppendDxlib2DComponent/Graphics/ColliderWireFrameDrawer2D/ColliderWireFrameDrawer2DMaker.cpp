@@ -10,12 +10,12 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<ColliderWireFrameDrawer2D> ColliderWireFrameDrawer2DMaker::create()
+	ColliderWireFrameDrawer2D* ColliderWireFrameDrawer2DMaker::create()
 	{
-		return std::make_shared<ColliderWireFrameDrawer2D>(
+		return new ColliderWireFrameDrawer2D(
 			m_drawPriority,
 			m_wireFrameColor
-			);
+		);
 	}
 
 	ColliderWireFrameDrawer2DMaker & ColliderWireFrameDrawer2DMaker::drawPriority(float value)

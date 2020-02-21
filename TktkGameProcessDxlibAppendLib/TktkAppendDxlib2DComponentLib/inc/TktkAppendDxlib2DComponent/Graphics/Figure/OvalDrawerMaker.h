@@ -1,7 +1,6 @@
 #ifndef OVAL_DRAWER_MAKER_H_
 #define OVAL_DRAWER_MAKER_H_
 
-#include <memory>
 #include "OvalDrawer.h"
 
 namespace tktk
@@ -16,7 +15,9 @@ namespace tktk
 	public:
 
 		// ì¬‚·‚é
-		std::shared_ptr<OvalDrawer> create();
+		OvalDrawer* create();
+
+	public:
 
 		// ‘È‰~‚Ì‘å‚«‚³‚ğİ’è‚·‚é
 		OvalDrawerMaker& ovalSize(const Vector2& value);

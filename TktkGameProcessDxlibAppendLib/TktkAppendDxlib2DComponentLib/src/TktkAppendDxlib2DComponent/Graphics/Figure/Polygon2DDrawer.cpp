@@ -32,7 +32,7 @@ namespace tktk
 	{
 		auto transform2D = getComponent<Transform2D>();
 
-		if (transform2D.expired())
+		if (transform2D.isNull())
 		{
 			throw std::runtime_error("SpriteDrawer not found Transform2D");
 		}
@@ -57,7 +57,7 @@ namespace tktk
 
 	void Polygon2DDrawer::drawPolygon2D() const
 	{
-		Matrix3 selfMat = m_transform2D.lock()->calculateWorldMatrix();
+		Matrix3 selfMat = m_transform2D->calculateWorldMatrix();
 
 		std::vector<DxLib::VERTEX2D> dxlib2DVertexs;
 		dxlib2DVertexs.resize(m_vertexs.size());
@@ -98,7 +98,7 @@ namespace tktk
 
 	void Polygon2DDrawer::drawPolygon2DFlame() const
 	{
-		Matrix3 selfMat = m_transform2D.lock()->calculateWorldMatrix();
+		Matrix3 selfMat = m_transform2D->calculateWorldMatrix();
 
 		for (auto itr = std::begin(m_vertexs); itr != --std::end(m_vertexs); itr++)
 		{

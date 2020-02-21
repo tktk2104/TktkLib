@@ -22,9 +22,9 @@ namespace tktk
 	void ColliderWireFrameDrawer2D::start()
 	{
 		auto circleCollider	= getComponent<CircleCollider>();
-		if (!circleCollider.expired())
+		if (!circleCollider.isNull())
 		{
-			auto boundingCircle = dynamic_cast<const BoundingCircle&>(circleCollider.lock()->getBodyBase());
+			auto boundingCircle = dynamic_cast<const BoundingCircle&>(circleCollider->getBodyBase());
 
 			auto circleDrawer = CircleDrawerMaker::makeStart()
 				.drawPriority(m_drawPriority)
@@ -33,14 +33,14 @@ namespace tktk
 				.radius(boundingCircle.calculateLocalRadius())
 				.create();
 
-			auto processingClassPtr = getGameObject().lock()->addComponent(circleDrawer);
-			m_hasSetActiveClassList.checkAndAdd<CircleDrawer>(processingClassPtr);
+			auto processingClassPtr = getGameObject()->addComponent(circleDrawer);
+			m_hasSetActiveClassList.checkAndAdd<CircleDrawer>(getGameObject()->isStatic(), processingClassPtr.processingClassPtr(), circleDrawer);
 		}
 
 		auto rectCollider = getComponent<RectCollider>();
-		if (!rectCollider.expired())
+		if (!rectCollider.isNull())
 		{
-			auto bundingPolygon = dynamic_cast<const BoundingPolygon2d&>(rectCollider.lock()->getBodyBase());
+			auto bundingPolygon = dynamic_cast<const BoundingPolygon2d&>(rectCollider->getBodyBase());
 
 			auto polygon2DDrawer = Polygon2DDrawerMaker::makeStart()
 				.drawPriority(m_drawPriority)
@@ -49,14 +49,14 @@ namespace tktk
 				.vertexs(bundingPolygon.calculateLocalVertexs())
 				.create();
 
-			auto processingClassPtr = getGameObject().lock()->addComponent(polygon2DDrawer);
-			m_hasSetActiveClassList.checkAndAdd<Polygon2DDrawer>(processingClassPtr);
+			auto processingClassPtr = getGameObject()->addComponent(polygon2DDrawer);
+			m_hasSetActiveClassList.checkAndAdd<Polygon2DDrawer>(getGameObject()->isStatic(), processingClassPtr.processingClassPtr(), polygon2DDrawer);
 		}
 
 		auto polygon2dCollider	= getComponent<Polygon2dCollider>();
-		if (!polygon2dCollider.expired())
+		if (!polygon2dCollider.isNull())
 		{
-			auto bundingPolygon = dynamic_cast<const BoundingPolygon2d&>(polygon2dCollider.lock()->getBodyBase());
+			auto bundingPolygon = dynamic_cast<const BoundingPolygon2d&>(polygon2dCollider->getBodyBase());
 
 			auto polygon2DDrawer = Polygon2DDrawerMaker::makeStart()
 				.drawPriority(m_drawPriority)
@@ -65,14 +65,14 @@ namespace tktk
 				.vertexs(bundingPolygon.calculateLocalVertexs())
 				.create();
 
-			auto processingClassPtr = getGameObject().lock()->addComponent(polygon2DDrawer);
-			m_hasSetActiveClassList.checkAndAdd<Polygon2DDrawer>(processingClassPtr);
+			auto processingClassPtr = getGameObject()->addComponent(polygon2DDrawer);
+			m_hasSetActiveClassList.checkAndAdd<Polygon2DDrawer>(getGameObject()->isStatic(), processingClassPtr.processingClassPtr(), polygon2DDrawer);
 		}
 	}
 
 	void ColliderWireFrameDrawer2D::update()
 	{
-		m_hasSetActiveClassList.update();
+		m_hasSetActiveClassList.updateContainer();
 	}
 
 	void ColliderWireFrameDrawer2D::onEnable()
