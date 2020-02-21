@@ -10,8 +10,6 @@ namespace tktk
 	{
 	public:
 
-		static void setUp();
-
 		// サウンドを再生する
 		// ※ topPositionFlag を true にするとサウンドを最初から再生する。
 		static void playSound(int id, SoundPlayType soundPlayType, bool topPositionFlag);

@@ -53,9 +53,6 @@ namespace tktk
 		// ゲームパッド入力管理クラスをセットアップ
 		GamePadManager::setUp();
 
-		// サウンド再生管理クラスをセットアップ
-		Sound2DManager::setUp();
-
 		setUpdatePriority();
 	}
 
