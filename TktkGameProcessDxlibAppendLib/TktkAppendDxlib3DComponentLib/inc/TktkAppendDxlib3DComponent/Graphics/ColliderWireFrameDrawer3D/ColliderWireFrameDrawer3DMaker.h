@@ -1,7 +1,6 @@
 #ifndef COLLIDER_WIREFRAME_DRAWER_3D_MAKER_H_
 #define COLLIDER_WIREFRAME_DRAWER_3D_MAKER_H_
 
-#include <memory>
 #include "ColliderWireFrameDrawer3D.h"
 
 namespace tktk
@@ -16,7 +15,7 @@ namespace tktk
 	public:
 
 		// çÏê¨Ç∑ÇÈ
-		std::shared_ptr<ColliderWireFrameDrawer3D> create();
+		ColliderWireFrameDrawer3D* create();
 
 		ColliderWireFrameDrawer3DMaker& drawPriority(float value);
 

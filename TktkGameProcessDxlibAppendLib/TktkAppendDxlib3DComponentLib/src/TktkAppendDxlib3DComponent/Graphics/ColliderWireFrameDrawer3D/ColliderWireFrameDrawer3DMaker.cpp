@@ -10,9 +10,9 @@ namespace tktk
 		return m_self;
 	}
 
-	std::shared_ptr<ColliderWireFrameDrawer3D> ColliderWireFrameDrawer3DMaker::create()
+	ColliderWireFrameDrawer3D* ColliderWireFrameDrawer3DMaker::create()
 	{
-		return std::make_shared<ColliderWireFrameDrawer3D>(
+		return new ColliderWireFrameDrawer3D(
 			m_drawPriority,
 			m_wireFrameColor
 			);
