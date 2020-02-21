@@ -55,8 +55,15 @@ namespace tktk
 		// 衝突判定のグループを取得
 		int getCollisionGroup() const;
 
+		// 自身のCfpPtrを取得する
+		template<class T>
+		CfpPtr<T> getThisPtr();
+
 		// GameObjectを取得
 		CfpPtr<GameObject> getGameObject() const;
+
+		// 自身のポインタを設定する（マネージャー用関数）
+		void setProcessingClassPtr(ProcessingClassPtr ptr);
 
 		// 自身の所持者となるGameObjectを再設定（マネージャー用関数）
 		void setGameObject(CfpPtr<GameObject> user);
@@ -79,12 +86,21 @@ namespace tktk
 		bool m_isActive{ true };
 		bool m_nextFrameIsActive{ true };
 
+		ProcessingClassPtr m_this;
 		CfpPtr<GameObject> m_user;
 
 		float m_updatePriority{ 0.0f };
 		float m_drawPriority{ 0.0f };
 		int m_collisionGroupType{ 0 };
 	};
+
+	template<class T>
+	inline CfpPtr<T> ComponentBase::getThisPtr()
+	{
+		if (m_this->canCast<T>()) return CfpPtr<T>(m_this);
+		
+		return CfpPtr<T>();
+	}
 
 	template<class T>
 	inline CfpPtr<T> ComponentBase::getComponent() const

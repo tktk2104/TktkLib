@@ -150,6 +150,7 @@
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasSetActiveChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasSetGameObjectChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasSetIsRunFuncChecker.h" />
+    <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasSetProcessingClassPtrChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasStartChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasUpdateChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasUpdateContainerChecker.h" />

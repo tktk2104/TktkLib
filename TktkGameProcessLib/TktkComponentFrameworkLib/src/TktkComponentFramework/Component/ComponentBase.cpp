@@ -53,6 +53,11 @@ namespace tktk
 		return m_user;
 	}
 
+	void ComponentBase::setProcessingClassPtr(ProcessingClassPtr ptr)
+	{
+		m_this = ptr;
+	}
+
 	void ComponentBase::setGameObject(CfpPtr<GameObject> user)
 	{
 		m_user = user;
