@@ -12,19 +12,6 @@ struct SpriteTest
 {
 	static void create()
 	{
-		unsigned int i	= 1 << 1;	//0010
-		unsigned int j	= 1 << 3;	//1000
-
-		unsigned int ij	= i | j;	//1010
-		
-		unsigned int k	= 0b0101;	//0101
-		
-		unsigned int l	= ~i;		//1101
-		
-		unsigned int m	= (ij & ~i);//1000
-
-
-
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
 		gameObject->addComponent(
