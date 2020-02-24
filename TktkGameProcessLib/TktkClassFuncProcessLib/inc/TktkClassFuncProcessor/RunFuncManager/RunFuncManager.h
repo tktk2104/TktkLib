@@ -160,7 +160,7 @@ namespace tktk
 	template <int N, class Thead, class... Tbody>
 	inline void RunFuncManager<RunFuncContainers...>::runFuncImpl()
 	{
-		runFunc_runner<>::checkAndRun(&std::get<N>(m_runFuncContainers));
+		runFunc_runner<void>::checkAndRun(&std::get<N>(m_runFuncContainers));
 		if (static_cast<unsigned int>(N + 1) >= m_autoRunFuncCount) return;
 		runFuncImpl<N + 1, Tbody...>();
 	}
@@ -178,7 +178,7 @@ namespace tktk
 	template<int N, class Thead, class ...Tbody>
 	inline void RunFuncManager<RunFuncContainers...>::updateContainerImpl()
 	{
-		updateContainer_runner<>::checkAndRun(&std::get<N>(m_runFuncContainers));
+		updateContainer_runner<void>::checkAndRun(&std::get<N>(m_runFuncContainers));
 		updateContainerImpl<N + 1, Tbody...>();
 	}
 
@@ -195,7 +195,7 @@ namespace tktk
 	template<int N, class T, class Thead, class ...Tbody>
 	inline void RunFuncManager<RunFuncContainers...>::addClassImpl(bool isStatic, ProcessingClassPtr addClass)
 	{
-		checkAndAdd_runner<bool, const ProcessingClassPtr &, T*>::checkAndRun(&std::get<N>(m_runFuncContainers), isStatic, addClass, nullptr);
+		checkAndAdd_runner<void, bool, const ProcessingClassPtr &, T*>::checkAndRun(&std::get<N>(m_runFuncContainers), isStatic, addClass, nullptr);
 		addClassImpl<N + 1, T, Tbody...>(isStatic, addClass);
 	}
 
@@ -212,7 +212,7 @@ namespace tktk
 	template<int N, class Thead, class ...Tbody>
 	inline void RunFuncManager<RunFuncContainers...>::setIsRunFuncAllImpl(bool flag)
 	{
-		setIsRunFunc_runner<bool>::checkAndRun(&std::get<N>(m_runFuncContainers), flag);
+		setIsRunFunc_runner<void, bool>::checkAndRun(&std::get<N>(m_runFuncContainers), flag);
 		setIsRunFuncAllImpl<N + 1, Tbody...>(flag);
 	}
 

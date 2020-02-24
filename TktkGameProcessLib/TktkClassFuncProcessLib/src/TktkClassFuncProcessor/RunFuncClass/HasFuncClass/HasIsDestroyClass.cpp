@@ -10,11 +10,6 @@ namespace tktk
 		}
 	}
 
-	bool HasIsDestroyClass::hasFuncCheck()
-	{
-		return m_vtablePtr->hasFunc(m_processingClass->voidPtr());
-	}
-
 	ProcessingClassPtr HasIsDestroyClass::processingClassPtr() const
 	{
 		return m_processingClass;

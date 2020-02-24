@@ -1,7 +1,7 @@
 #ifndef HAS_GET_COLLISION_GROUP_CHECKER_H_
 #define HAS_GET_COLLISION_GROUP_CHECKER_H_
 
-#include "../HasReturnIntFuncCheckMacro.h"
-HAS_RETURN_INT_FUNC_CHECK(getCollisionGroup)
+#include "../HasFuncCheckMacro.h"
+HAS_FUNC_CHECK(getCollisionGroup)
 
 #endif // !HAS_GET_COLLISION_GROUP_CHECKER_H_

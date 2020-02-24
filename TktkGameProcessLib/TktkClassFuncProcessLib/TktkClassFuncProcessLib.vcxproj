@@ -41,8 +41,6 @@
     <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\HasFuncClass\HasCollideClass.h" />
     <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\HasFuncClass\HasFuncClass.h" />
     <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\HasFuncClass\HasIsDestroyClass.h" />
-    <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\HasFuncClass\HasOneArgFuncClass.h" />
-    <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\HasFuncClass\HasTwoArgFuncClass.h" />
     <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\RunFuncMoveOnceContainer.h" />
     <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\RunFuncSimpleCollisionContainer.h" />
     <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\RunFuncSimpleContainer.h" />

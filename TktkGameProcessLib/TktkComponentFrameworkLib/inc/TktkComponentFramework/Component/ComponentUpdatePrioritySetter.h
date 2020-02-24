@@ -50,7 +50,7 @@ namespace tktk
 		{
 			priority = m_updatePriorityMap.at(classId);
 		}
-		setUpdatePriority_runner<float>::checkAndRun(addComponent, priority);
+		setUpdatePriority_runner<void, float>::checkAndRun(addComponent, priority);
 	}
 }
 #endif // !COMPONENT_UPDATE_PRIORITY_SETTER_H_

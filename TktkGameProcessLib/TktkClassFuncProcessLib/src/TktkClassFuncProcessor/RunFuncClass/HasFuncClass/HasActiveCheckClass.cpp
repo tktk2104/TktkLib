@@ -21,11 +21,6 @@ namespace tktk
 		m_preIsActive = curIsActive;
 	}
 
-	bool HasActiveCheckClass::hasFuncCheck()
-	{
-		return m_vtablePtr->hasFunc(m_processingClass->voidPtr());
-	}
-
 	ProcessingClassPtr HasActiveCheckClass::processingClassPtr() const
 	{
 		return m_processingClass;

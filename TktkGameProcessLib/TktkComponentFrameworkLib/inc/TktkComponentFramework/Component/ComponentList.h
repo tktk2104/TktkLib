@@ -6,8 +6,6 @@
 #include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include <TktkClassFuncProcessor/RunFuncClass/RunFuncSimpleContainer.h>
 #include <TktkClassFuncProcessor/RunFuncClass/HasFuncClass/HasAlwaysRunFuncClass.h>
-#include <TktkClassFuncProcessor/RunFuncClass/HasFuncClass/HasOneArgFuncClass.h>
-#include <TktkClassFuncProcessor/RunFuncClass/HasFuncClass/HasTwoArgFuncClass.h>
 #include <TktkMetaFunc/HasFuncCheck/CreatedStruct/HasHandleMessageChecker.h>
 #include <TktkMetaFunc/HasFuncCheck/CreatedStruct/HasAfterChangeParentChecker.h>
 #include <TktkMetaFunc/HasFuncCheck/CreatedStruct/HasOnDestroyChecker.h>
@@ -18,9 +16,30 @@
 
 namespace tktk
 {
-	// 別名ーズ
-	template <class T>
-	using SimpleCont = RunFuncSimpleContainer<T>;
+	// スーパー★別名ーズ
+	template <class NodeType, template<class JudgePtrType> class HasFuncChecker>
+	using SimpleCont = RunFuncSimpleContainer<NodeType, HasFuncChecker>;
+
+	template <class JudgePtrType>
+	using hasAfterChangeParentChecker	= has_afterChangeParent_checker<JudgePtrType, void, CfpPtr<GameObject>>;
+	template <class JudgePtrType>
+	using hasHandleMessageChecker		= has_handleMessage_checker<JudgePtrType, void, int, const SafetyVoidPtr&>;
+	template <class JudgePtrType>
+	using hasOnDestroy					= has_onDestroy_checker<JudgePtrType, void>;
+	template <class JudgePtrType>
+	using hasOnCollisionEnter			= has_onCollisionEnter_checker<JudgePtrType, void, CfpPtr<GameObject>>;
+	template <class JudgePtrType>
+	using hasOnCollisionStay			= has_onCollisionStay_checker<JudgePtrType, void, CfpPtr<GameObject>>;
+	template <class JudgePtrType>
+	using hasOnCollisionExit			= has_onCollisionExit_checker<JudgePtrType, void, CfpPtr<GameObject>>;
+
+	// サブ★別名ーズ
+	using AfterChangeParentCont = SimpleCont<HasFuncClass<afterChangeParent_runner, void, CfpPtr<GameObject>>, hasAfterChangeParentChecker>;
+	using HandleMessageCont		= SimpleCont<HasFuncClass<handleMessage_runner, void, int, const SafetyVoidPtr&>, hasHandleMessageChecker>;
+	using OnDestroyCont			= SimpleCont<HasFuncClass<onDestroy_runner, void>, hasOnDestroy>;
+	using OnCollisionEnterCont	= SimpleCont<HasFuncClass<onCollisionEnter_runner, void, CfpPtr<GameObject>>, hasOnCollisionEnter>;
+	using OnCollisionStayCont	= SimpleCont<HasFuncClass<onCollisionStay_runner, void, CfpPtr<GameObject>>, hasOnCollisionStay>;
+	using OnCollisionExitCont	= SimpleCont<HasFuncClass<onCollisionExit_runner, void, CfpPtr<GameObject>>, hasOnCollisionExit>;
 
 	// コンポーネントを管理するリスト
 	class ComponentList
@@ -72,43 +91,18 @@ namespace tktk
 		std::forward_list<ProcessingClassPtr> m_componentList;
 
 		// 親要素が変わった時に呼ばれるコンポーネントのリスト
-		SimpleCont<HasOneArgFuncClass<
-			has_afterChangeParent_checker<CfpPtr<GameObject>>,
-			afterChangeParent_runner<CfpPtr<GameObject>>,
-			CfpPtr<GameObject>
-		>> m_afterChangeParentableList;
+		AfterChangeParentCont m_afterChangeParentableList;
 		
 		// メッセージ受信関数を持っているコンポーネントのリスト
-		SimpleCont<HasTwoArgFuncClass<
-			has_handleMessage_checker<int, const SafetyVoidPtr&>,
-			handleMessage_runner<int, const SafetyVoidPtr&>,
-			int, const SafetyVoidPtr&
-		>> m_messageableList;
+		HandleMessageCont m_messageableList;
 
 		// 削除時関数を持っているコンポーネントのリスト
-		SimpleCont<HasAlwaysRunFuncClass<
-				has_onDestroy_checker<>,
-				onDestroy_runner<>
-		>> m_hasOnDestroyClassContainer;
+		OnDestroyCont m_hasOnDestroyClassContainer;
 		
 		// 衝突（開始・中・終了）時の関数を持っているコンポーネントのリスト
-		SimpleCont<HasOneArgFuncClass<
-			has_onCollisionEnter_checker<CfpPtr<GameObject>>,
-			onCollisionEnter_runner<CfpPtr<GameObject>>,
-			CfpPtr<GameObject>
-		>> m_hasCollisionEnterClassContainer;
-
-		SimpleCont<HasOneArgFuncClass<
-			has_onCollisionStay_checker<CfpPtr<GameObject>>,
-			onCollisionStay_runner<CfpPtr<GameObject>>,
-			CfpPtr<GameObject>
-		>> m_hasCollisionStayClassContainer;
-
-		SimpleCont<HasOneArgFuncClass<
-			has_onCollisionExit_checker<CfpPtr<GameObject>>,
-			onCollisionExit_runner<CfpPtr<GameObject>>,
-			CfpPtr<GameObject>
-		>> m_hasCollisionExitClassContainer;
+		OnCollisionEnterCont m_hasCollisionEnterClassContainer;
+		OnCollisionStayCont m_hasCollisionStayClassContainer;
+		OnCollisionExitCont m_hasCollisionExitClassContainer;
 	};
 
 	template<class T>

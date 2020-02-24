@@ -22,8 +22,6 @@ namespace tktk
 
 		bool isActive();
 
-		bool hasFuncCheck();
-
 		ProcessingClassPtr processingClassPtr() const;
 
 	private:
@@ -33,7 +31,6 @@ namespace tktk
 			bool(*isCollide)(void*, ProcessingClassPtr);
 			void(*onCollide)(void*, ProcessingClassPtr);
 			bool(*isActive)(void*);
-			bool(*hasFunc)(void*);
 		};
 
 		template <class T>
@@ -41,14 +38,10 @@ namespace tktk
 		{
 			static VTable m_vtable;
 
-			static bool hasFunc(void* self);
 
 			static bool isCollide(void* self, ProcessingClassPtr other);
 			static void onCollide(void* self, ProcessingClassPtr other);
 			static bool isActive(void* self);
-
-			template <class U>
-			static bool chackHasFunc(U runClass);
 
 			template <class U>
 			static bool checkAndRunIsCollide(U runClass, ProcessingClassPtr other);
@@ -77,15 +70,8 @@ namespace tktk
 	{
 		&HasCollideClass::VTableInitializer<T>::isCollide,
 		&HasCollideClass::VTableInitializer<T>::onCollide,
-		&HasCollideClass::VTableInitializer<T>::isActive,
-		&HasCollideClass::VTableInitializer<T>::hasFunc
+		&HasCollideClass::VTableInitializer<T>::isActive
 	};
-
-	template<class T>
-	inline bool HasCollideClass::VTableInitializer<T>::hasFunc(void* self)
-	{
-		return chackHasFunc(reinterpret_cast<T*>(self));
-	}
 
 	template<class T>
 	inline bool HasCollideClass::VTableInitializer<T>::isCollide(void* self, ProcessingClassPtr other)
@@ -107,30 +93,23 @@ namespace tktk
 
 	template<class T>
 	template<class U>
-	inline bool HasCollideClass::VTableInitializer<T>::chackHasFunc(U runClass)
-	{
-		return (has_isCollide_checker<ProcessingClassPtr>::check(runClass) && has_onCollide_checker<ProcessingClassPtr>::check(runClass));
-	}
-
-	template<class T>
-	template<class U>
 	inline bool HasCollideClass::VTableInitializer<T>::checkAndRunIsCollide(U runClass, ProcessingClassPtr other)
 	{
-		return isCollide_runner<ProcessingClassPtr>::checkAndRun(runClass, other);
+		return isCollide_runner<bool, ProcessingClassPtr>::checkAndRun(runClass, false, other);
 	}
 
 	template<class T>
 	template<class U>
 	inline void HasCollideClass::VTableInitializer<T>::checkAndRunOnCollide(U runClass, ProcessingClassPtr other)
 	{
-		onCollide_runner<ProcessingClassPtr>::checkAndRun(runClass, other);
+		onCollide_runner<void, ProcessingClassPtr>::checkAndRun(runClass, other);
 	}
 
 	template<class T>
 	template<class U>
 	inline bool HasCollideClass::VTableInitializer<T>::checkAndRunIsActive(U runClass)
 	{
-		return (!has_isActive_checker<>::check(runClass) || isActive_runner<>::checkAndRun(runClass));
+		return isActive_runner<bool>::checkAndRun(runClass, true);
 	}
 }
 #endif // !HAS_COLLIDE_CLASS_H_

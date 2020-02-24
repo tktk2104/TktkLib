@@ -58,7 +58,7 @@ namespace tktk
 		auto findResult = m_sceneMap.find(ClassTypeChecker::getClassId<T>());
 		if (findResult == std::end(m_sceneMap)) throw std::runtime_error("scene notFound");
 		auto scene = (*findResult).second->castPtr<T>();
-		setActive_runner<bool>::checkAndRun(scene, true);
+		setActive_runner<void, bool>::checkAndRun(scene, true);
 	}
 
 	// テンプレート引数のシーンを無効にする
@@ -68,7 +68,7 @@ namespace tktk
 		auto findResult = m_sceneMap.find(ClassTypeChecker::getClassId<T>());
 		if (findResult == std::end(m_sceneMap)) throw std::runtime_error("scene notFound");
 		auto scene = (*findResult).second->castPtr<T>();
-		setActive_runner<bool>::checkAndRun(scene, false);
+		setActive_runner<void, bool>::checkAndRun<T*>(scene, false);
 	}
 }
 #endif // !SCENE_MANAGER_H_

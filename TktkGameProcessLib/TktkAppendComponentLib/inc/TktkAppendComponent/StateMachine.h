@@ -3,7 +3,7 @@
 
 #include <TktkMetaFunc/HasFuncCheck/CreatedStruct/HasSetActiveChecker.h>
 #include <TktkClassFuncProcessor/RunFuncClass/RunFuncSimpleContainer.h>
-#include <TktkClassFuncProcessor/RunFuncClass/HasFuncClass/HasOneArgFuncClass.h>
+#include <TktkClassFuncProcessor/RunFuncClass/HasFuncClass/HasAlwaysRunFuncClass.h>
 #include <TktkComponentFramework/GameObject/GameObject.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include "CurStateTypeList.h"
@@ -11,6 +11,16 @@
 
 namespace tktk
 {
+	// スーパー★別名ーズ
+	template <class NodeType, template<class JudgePtrType> class HasFuncChecker>
+	using SimpleCont = RunFuncSimpleContainer<NodeType, HasFuncChecker>;
+
+	template <class JudgePtrType>
+	using HasSetActiveChecker = has_setActive_checker<JudgePtrType, void, bool>;
+
+	// サブ★別名ーズ
+	using SetActiveCont = SimpleCont<HasAlwaysRunFuncClass<setActive_runner, void, bool>, HasSetActiveChecker>;
+
 	// ステートマシーンコンポーネント
 	// 【前提コンポーネント：CurStateTypeList】
 	class StateMachine
@@ -64,7 +74,7 @@ namespace tktk
 		CfpPtr<CurStateTypeList> m_curStateTypeList;
 
 		// アクティブ状態を切り替えるためのコンテナのラッパー
-		RunFuncSimpleContainer<HasOneArgFuncClass<has_setActive_checker<bool>, setActive_runner<bool>, bool>> m_hasSetActiveClassList;
+		SetActiveCont m_hasSetActiveClassList;
 
 		// このステートマシーンにどのコンポーネントが登録されているかを管理するリスト
 		StateMachineRegistrationList m_stateMachineRegistrationList;

@@ -21,16 +21,7 @@
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasFuncCheckMacro.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasReturnBoolFuncCheckMacro.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasReturnFloatFuncCheckMacro.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasIsActiveChecker.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasReturnIntFuncCheckMacro.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasOnDestroyChecker.h">

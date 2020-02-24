@@ -5,30 +5,36 @@
 
 namespace tktk
 {
-	template<class HasFuncChecker, class FuncRunner>
+	template<template<class ReturnType, class... ArgsType> class FuncRunner, class ReturnType, class... ArgsType>
 	class HasAlwaysRunFuncClass
 	{
 	public:
 
 		template<class T>
-		HasAlwaysRunFuncClass(ProcessingClassPtr processingClassPtr, T*);
-		~HasAlwaysRunFuncClass() {};
+		HasAlwaysRunFuncClass(ProcessingClassPtr processingClassPtr, T*)
+			: m_processingClassPtr(processingClassPtr)
+			, m_vtablePtr(&VTableInitializer<T>::m_vtable) {}
 
 	public:
 
-		bool hasFuncCheck() const;
+		ReturnType runFunc(ReturnType& defaultReturnValue, ArgsType... args)
+		{
+			if (m_processingClassPtr.isNull()) return defaultReturnValue;
 
-		void runFunc();
+			return m_vtablePtr->runFunc(m_processingClassPtr->voidPtr(), std::forward<ArgsType>(args)...);
+		}
 
-		ProcessingClassPtr processingClassPtr() const;
+		ProcessingClassPtr processingClassPtr() const
+		{
+			return m_processingClassPtr;
+		}
 
 	private:
 
 
 		struct VTable
 		{
-			bool(*hasFunc)(void*);
-			void(*runFunc)(void*);
+			ReturnType(*runFunc)(void*, ArgsType...);
 		};
 
 		template <class T>
@@ -36,13 +42,16 @@ namespace tktk
 		{
 			static VTable m_vtable;
 
-			static bool hasFunc(void* self);
-			static void runFunc(void* self);
+			static ReturnType runFunc(void* self, ArgsType... args)
+			{
+				return checkAndRunFunc(reinterpret_cast<T*>(self), std::forward<ArgsType>(args)...);
+			}
 
 			template<class U>
-			static bool checkHasFunc(U runClass);
-			template<class U>
-			static void checkAndRunFunc(U runClass);
+			static ReturnType checkAndRunFunc(U runClass, ArgsType... args)
+			{
+				return FuncRunner<ReturnType, ArgsType...>::checkAndRun(runClass, std::forward<ArgsType>(args)...);
+			}
 		};
 
 	private:
@@ -52,70 +61,74 @@ namespace tktk
 		VTable* m_vtablePtr;
 	};
 
-	template<class HasFuncChecker, class FuncRunner>
+	template<template<class ReturnType, class... ArgsType> class FuncRunner, class ReturnType, class... ArgsType>
 	template<class T>
-	inline HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::HasAlwaysRunFuncClass(ProcessingClassPtr processingClassPtr, T *)
-		: m_processingClassPtr(processingClassPtr)
-		, m_vtablePtr(&VTableInitializer<T>::m_vtable)
+	typename HasAlwaysRunFuncClass<FuncRunner, ReturnType, ArgsType...>::VTable HasAlwaysRunFuncClass<FuncRunner, ReturnType, ArgsType...>::VTableInitializer<T>::m_vtable =
 	{
-	}
-
-	template<class HasFuncChecker, class FuncRunner>
-	inline bool HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::hasFuncCheck() const
-	{
-		if (m_processingClassPtr.isNull()) return false;
-		return m_vtablePtr->hasFunc(m_processingClassPtr->voidPtr());
-	}
-
-	template<class HasFuncChecker, class FuncRunner>
-	inline void HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::runFunc()
-	{
-		if (m_processingClassPtr.isNull()) return;
-		m_vtablePtr->runFunc(m_processingClassPtr->voidPtr());
-	}
-
-	template<class HasFuncChecker, class FuncRunner>
-	inline ProcessingClassPtr HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::processingClassPtr() const
-	{
-		return m_processingClassPtr;
-	}
-
-	template<class HasFuncChecker, class FuncRunner>
-	template<class T>
-	typename HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::VTable HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::VTableInitializer<T>::m_vtable =
-	{
-		&HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::VTableInitializer<T>::hasFunc,
-		&HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::VTableInitializer<T>::runFunc
+		&HasAlwaysRunFuncClass<FuncRunner, ReturnType, ArgsType...>::template VTableInitializer<T>::runFunc
 	};
 
-	template<class HasFuncChecker, class FuncRunner>
-	template<class T>
-	inline bool HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::VTableInitializer<T>::hasFunc(void* self)
+	template<template<class ReturnType, class... ArgsType> class FuncRunner, class... ArgsType>
+	class HasAlwaysRunFuncClass<FuncRunner, void, ArgsType...>
 	{
-		return checkHasFunc(reinterpret_cast<T*>(self));
-	}
+	public:
 
-	template<class HasFuncChecker, class FuncRunner>
-	template<class T>
-	inline void HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::VTableInitializer<T>::runFunc(void * self)
-	{
-		checkAndRunFunc(reinterpret_cast<T*>(self));
-	}
+		template<class T>
+		HasAlwaysRunFuncClass(ProcessingClassPtr processingClassPtr, T*)
+			: m_processingClassPtr(processingClassPtr)
+			, m_vtablePtr(&VTableInitializer<T>::m_vtable) {}
 
-	template<class HasFuncChecker, class FuncRunner>
-	template<class T>
-	template<class U>
-	inline bool HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::VTableInitializer<T>::checkHasFunc(U runClass)
-	{
-		return HasFuncChecker::check(runClass);
-	}
+	public:
 
-	template<class HasFuncChecker, class FuncRunner>
+		void runFunc(ArgsType... args)
+		{
+			if (m_processingClassPtr.isNull()) return;
+
+			m_vtablePtr->runFunc(m_processingClassPtr->voidPtr(), std::forward<ArgsType>(args)...);
+		}
+
+		ProcessingClassPtr processingClassPtr() const
+		{
+			return m_processingClassPtr;
+		}
+
+	private:
+
+
+		struct VTable
+		{
+			void(*runFunc)(void*, ArgsType...);
+		};
+
+		template <class T>
+		struct VTableInitializer
+		{
+			static VTable m_vtable;
+
+			static void runFunc(void* self, ArgsType... args)
+			{
+				checkAndRunFunc(reinterpret_cast<T*>(self), std::forward<ArgsType>(args)...);
+			}
+
+			template<class U>
+			static void checkAndRunFunc(U runClass, ArgsType... args)
+			{
+				FuncRunner<void, ArgsType...>::checkAndRun(runClass, std::forward<ArgsType>(args)...);
+			}
+		};
+
+	private:
+
+		ProcessingClassPtr m_processingClassPtr;
+
+		VTable* m_vtablePtr;
+	};
+
+	template<template<class ReturnType, class... ArgsType> class FuncRunner, class... ArgsType>
 	template<class T>
-	template<class U>
-	inline void HasAlwaysRunFuncClass<HasFuncChecker, FuncRunner>::VTableInitializer<T>::checkAndRunFunc(U runClass)
+	typename HasAlwaysRunFuncClass<FuncRunner, void, ArgsType...>::VTable HasAlwaysRunFuncClass<FuncRunner, void, ArgsType...>::VTableInitializer<T>::m_vtable =
 	{
-		FuncRunner::checkAndRun(runClass);
-	}
+		&HasAlwaysRunFuncClass<FuncRunner, void, ArgsType...>::template VTableInitializer<T>::runFunc
+	};
 }
 #endif // !HAS_ALWAYS_RUN_FUN_CCLASS_H_

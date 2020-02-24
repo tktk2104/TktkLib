@@ -156,9 +156,6 @@
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasUpdateContainerChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\CreatedStruct\HasSetUpdatePriorityChecker.h" />
     <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasFuncCheckMacro.h" />
-    <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasReturnBoolFuncCheckMacro.h" />
-    <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasReturnFloatFuncCheckMacro.h" />
-    <ClInclude Include="inc\TktkMetaFunc\HasFuncCheck\HasReturnIntFuncCheckMacro.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

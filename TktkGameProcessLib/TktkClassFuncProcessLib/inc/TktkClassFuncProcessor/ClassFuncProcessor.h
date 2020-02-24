@@ -74,7 +74,7 @@ namespace tktk
 	{
 		ProcessingClassPtr newClass = m_processingSimpleContainer.addClass(isStatic, rawPtr);
 		m_runFuncManager.addClass<T>(isStatic, newClass);
-		awake_runner<>::checkAndRun(rawPtr);
+		awake_runner<void>::checkAndRun(rawPtr);
 		return CfpPtr<T>(newClass);
 	}
 

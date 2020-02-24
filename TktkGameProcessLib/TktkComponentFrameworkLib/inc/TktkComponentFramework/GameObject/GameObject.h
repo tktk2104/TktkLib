@@ -10,6 +10,7 @@
 #include "../Component/ComponentList.h"
 #include "../Component/ComponentUpdatePrioritySetter.h"
 
+
 namespace tktk
 {
 	class ParentChildManager;
@@ -140,13 +141,13 @@ namespace tktk
 	template<class T>
 	inline CfpPtr<T> GameObject::addComponent(T* addClass)
 	{
-		setGameObject_runner<CfpPtr<GameObject>>::checkAndRun(addClass, m_selfPtr);
+		setGameObject_runner<void, CfpPtr<GameObject>>::checkAndRun(addClass, m_selfPtr);
 		
 		ComponentUpdatePrioritySetter::setUpdatePriority(addClass);
 
 		CfpPtr<T> cpfPtr = m_componentList.add<T>(m_isStatic, addClass);
 
-		setProcessingClassPtr_runner<ProcessingClassPtr>::checkAndRun(addClass, cpfPtr.processingClassPtr());
+		setProcessingClassPtr_runner<void, ProcessingClassPtr>::checkAndRun(addClass, cpfPtr.processingClassPtr());
 
 		return cpfPtr;
 	}

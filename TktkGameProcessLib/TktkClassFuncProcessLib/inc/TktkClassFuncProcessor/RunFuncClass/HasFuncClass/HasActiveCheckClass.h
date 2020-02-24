@@ -22,15 +22,12 @@ namespace tktk
 
 		void runFunc();
 
-		bool hasFuncCheck();
-
 		ProcessingClassPtr processingClassPtr() const;
 
 	private:
 
 		struct VTable
 		{
-			bool(*hasFunc)(void*);
 			bool(*isActive)(void*);
 			void(*onEnable)(void*);
 			void(*onDisable)(void*);
@@ -41,15 +38,9 @@ namespace tktk
 		{
 			static VTable m_vtable;
 
-			static bool hasFunc(void* self);
-
 			static bool isActive(void* self);
 			static void onEnable(void* self);
 			static void onDisable(void* self);
-			
-
-			template <class U>
-			static bool chackHasFunc(U runClass);
 
 			template <class U>
 			static bool checkAndRunIsActive(U runClass);
@@ -78,17 +69,10 @@ namespace tktk
 	template <class T>
 	HasActiveCheckClass::VTable HasActiveCheckClass::VTableInitializer<T>::m_vtable =
 	{
-		&HasActiveCheckClass::VTableInitializer<T>::hasFunc,
 		&HasActiveCheckClass::VTableInitializer<T>::isActive,
 		&HasActiveCheckClass::VTableInitializer<T>::onEnable,
 		&HasActiveCheckClass::VTableInitializer<T>::onDisable
 	};
-
-	template<class T>
-	inline bool HasActiveCheckClass::VTableInitializer<T>::hasFunc(void* self)
-	{
-		return chackHasFunc(reinterpret_cast<T*>(self));
-	}
 
 	template<class T>
 	inline void HasActiveCheckClass::VTableInitializer<T>::onEnable(void* self)
@@ -110,30 +94,23 @@ namespace tktk
 
 	template<class T>
 	template<class U>
-	inline bool HasActiveCheckClass::VTableInitializer<T>::chackHasFunc(U runClass)
-	{
-		return (has_isActive_checker<>::check(runClass));
-	}
-
-	template<class T>
-	template<class U>
 	inline void HasActiveCheckClass::VTableInitializer<T>::checkAndRunOnEnable(U runClass)
 	{
-		onEnable_runner<>::checkAndRun(runClass);
+		onEnable_runner<void>::checkAndRun(runClass);
 	}
 
 	template<class T>
 	template<class U>
 	inline void HasActiveCheckClass::VTableInitializer<T>::checkAndRunOnDisable(U runClass)
 	{
-		onDisable_runner<>::checkAndRun(runClass);
+		onDisable_runner<void>::checkAndRun(runClass);
 	}
 
 	template<class T>
 	template<class U>
 	inline bool HasActiveCheckClass::VTableInitializer<T>::checkAndRunIsActive(U runClass)
 	{
-		return (!has_isActive_checker<>::check(runClass) || isActive_runner<>::checkAndRun(runClass));
+		return isActive_runner<bool>::checkAndRun(runClass, true);
 	}
 }
 #endif // !HAS_ACTIVE_CHECK_CLASS_H_

@@ -77,12 +77,6 @@
     <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\HasFuncClass\HasFuncClass.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\HasFuncClass\HasOneArgFuncClass.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\HasFuncClass\HasTwoArgFuncClass.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkClassFuncProcessor\RunFuncClass\HasFuncClass\HasAlwaysRunFuncClass.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

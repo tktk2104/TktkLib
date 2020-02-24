@@ -20,11 +20,6 @@ namespace tktk
 		return m_vtablePtr->isActive(m_processingClass->voidPtr());
 	}
 
-	bool HasCollideClass::hasFuncCheck()
-	{
-		return m_vtablePtr->hasFunc(m_processingClass->voidPtr());
-	}
-
 	ProcessingClassPtr HasCollideClass::processingClassPtr() const
 	{
 		return m_processingClass;
