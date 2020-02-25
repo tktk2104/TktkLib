@@ -2,6 +2,7 @@
 #define RECT_COLLIDER_MAKER_H_
 
 #include <TktkMath/Vector2.h>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "RectCollider.h"
 
 namespace tktk
@@ -12,12 +13,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static RectColliderMaker& makeStart();
+		static RectColliderMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		RectCollider* create();
+		CfpPtr<RectCollider> create();
 
 		// 当たり判定のグループを設定
 		RectColliderMaker& collisionGroupType(int value);
@@ -30,11 +31,16 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static RectColliderMaker m_self;
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{ };
 		int m_collisionGroupType{ 0 };
 		Vector2 m_rectSize{ Vector2::one };
 		Vector2 m_localPosition{ Vector2::zero };

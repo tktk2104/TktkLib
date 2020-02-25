@@ -5,20 +5,21 @@ namespace tktk
 {
 	Transform2DMaker Transform2DMaker::m_self;
 
-	Transform2DMaker & Transform2DMaker::makeStart()
+	Transform2DMaker & Transform2DMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = Transform2DMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	Transform2D* Transform2DMaker::create()
+	CfpPtr<Transform2D> Transform2DMaker::create()
 	{
-		return new Transform2D(
+		return m_user->createComponent<Transform2D>(
 			m_initPosition,
 			m_initScaleRate,
 			m_initRotationDeg,
 			m_traceType
-		);
+			);
 	}
 
 	Transform2DMaker & Transform2DMaker::position(const Vector2 & value)
@@ -43,5 +44,13 @@ namespace tktk
 	{
 		m_traceType = value;
 		return *this;
+	}
+
+	void Transform2DMaker::reset()
+	{
+		m_self.m_initPosition = Vector2::zero;
+		m_self.m_initScaleRate = Vector2::one;
+		m_self.m_initRotationDeg = 0.0f;
+		m_self.m_traceType = TraceParentType::TRACE_PARENT_ALL;
 	}
 }

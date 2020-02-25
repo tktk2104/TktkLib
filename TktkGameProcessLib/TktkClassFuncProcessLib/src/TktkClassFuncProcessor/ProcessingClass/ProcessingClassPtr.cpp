@@ -23,7 +23,7 @@ namespace tktk
 
 	const SafetyVoidPtr * ProcessingClassPtr::operator->() const
 	{
-		if (isNull()) return nullptr;
+		//if (isNull()) return nullptr;
 		return m_managementPtr;
 	}
 }

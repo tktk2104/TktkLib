@@ -5,18 +5,19 @@ namespace tktk
 {
 	InertialMovement2DMaker InertialMovement2DMaker::m_self;
 
-	InertialMovement2DMaker & InertialMovement2DMaker::makeStart()
+	InertialMovement2DMaker & InertialMovement2DMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = InertialMovement2DMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	InertialMovement2D* InertialMovement2DMaker::create()
+	CfpPtr<InertialMovement2D> InertialMovement2DMaker::create()
 	{
-		return new InertialMovement2D(
+		return m_user->createComponent<InertialMovement2D>(
 			m_decelerationPerSec,
 			m_initVelocity
-		);
+			);
 	}
 
 	InertialMovement2DMaker & InertialMovement2DMaker::decelerationPerSec(float value)
@@ -29,5 +30,11 @@ namespace tktk
 	{
 		m_initVelocity = value;
 		return *this;
+	}
+
+	void InertialMovement2DMaker::reset()
+	{
+		m_self.m_decelerationPerSec = 64.0f;
+		m_self.m_initVelocity = Vector2::zero;
 	}
 }

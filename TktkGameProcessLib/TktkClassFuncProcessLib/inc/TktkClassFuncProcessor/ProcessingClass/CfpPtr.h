@@ -20,7 +20,6 @@ namespace tktk
 
 	public:
 
-		// 自身のポインタが死んでいたらnullptrが返る
 		T* operator ->() const;
 
 		// お互いのポインタが同じ番地を指していたらtrueが返る
@@ -48,11 +47,11 @@ namespace tktk
 	{
 	}
 
-	// 自身のポインタが死んでいたらnullptrが返る
+	
 	template<class T>
 	inline T * CfpPtr<T>::operator->() const
 	{
-		if (m_processingClassPtr.isNull()) return nullptr;
+		//if (m_processingClassPtr.isNull()) return nullptr;
 		return m_processingClassPtr->castPtr<T>();
 	}
 

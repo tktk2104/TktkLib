@@ -2,6 +2,7 @@
 #define CIRCLE_COLLIDER_MAKER_H_
 
 #include <TktkMath/Vector2.h>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "CircleCollider.h"
 
 namespace tktk
@@ -11,13 +12,13 @@ namespace tktk
 	{
 	public:
 
-		// インスタンス作成開始
-		static CircleColliderMaker& makeStart();
+		// 作成開始
+		static CircleColliderMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		CircleCollider* create();
+		CfpPtr<CircleCollider> create();
 
 		// 当たり判定のグループを設定
 		CircleColliderMaker& collisionGroupType(int value);
@@ -30,11 +31,16 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static CircleColliderMaker m_self;
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{ };
 		int m_collisionGroupType{ 0 };
 		float m_radius{ 1.0f };
 		Vector2 m_localPosition{ Vector2::zero };

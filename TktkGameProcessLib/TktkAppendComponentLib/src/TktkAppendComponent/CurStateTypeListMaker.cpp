@@ -4,14 +4,19 @@ namespace tktk
 {
 	CurStateTypeListMaker CurStateTypeListMaker::m_self;
 
-	CurStateTypeListMaker & CurStateTypeListMaker::makeStart()
+	CurStateTypeListMaker & CurStateTypeListMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = CurStateTypeListMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	CurStateTypeList* CurStateTypeListMaker::create()
+	CfpPtr<CurStateTypeList> CurStateTypeListMaker::create()
 	{
-		return new CurStateTypeList();
+		return m_user->createComponent<CurStateTypeList>();
+	}
+
+	void CurStateTypeListMaker::reset()
+	{
 	}
 }

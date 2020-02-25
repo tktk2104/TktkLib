@@ -4,19 +4,20 @@ namespace tktk
 {
 	SphereColliderMaker SphereColliderMaker::m_self;
 
-	SphereColliderMaker & SphereColliderMaker::makeStart()
+	SphereColliderMaker & SphereColliderMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = SphereColliderMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	SphereCollider* SphereColliderMaker::create()
+	CfpPtr<SphereCollider>SphereColliderMaker::create()
 	{
-		return new SphereCollider(
+		return m_user->createComponent<SphereCollider>(
 			m_collisionGroupType,
 			m_radius,
 			m_localPosition
-		);
+			);
 	}
 
 	SphereColliderMaker & SphereColliderMaker::collisionGroupType(int value)
@@ -35,5 +36,12 @@ namespace tktk
 	{
 		m_localPosition = value;
 		return *this;
+	}
+
+	void SphereColliderMaker::reset()
+	{
+		m_self.m_collisionGroupType = 0;
+		m_self.m_radius = 1.0f;
+		m_self.m_localPosition = Vector3::zero;
 	}
 }

@@ -4,14 +4,19 @@ namespace tktk
 {
 	RectColliderExtrusionMaker RectColliderExtrusionMaker::m_self;
 
-	RectColliderExtrusionMaker & RectColliderExtrusionMaker::makeStart()
+	RectColliderExtrusionMaker & RectColliderExtrusionMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = RectColliderExtrusionMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	RectColliderExtrusion* RectColliderExtrusionMaker::create()
+	CfpPtr<RectColliderExtrusion> RectColliderExtrusionMaker::create()
 	{
-		return new RectColliderExtrusion();
+		return m_user->createComponent<RectColliderExtrusion>();
+	}
+
+	void RectColliderExtrusionMaker::reset()
+	{
 	}
 }

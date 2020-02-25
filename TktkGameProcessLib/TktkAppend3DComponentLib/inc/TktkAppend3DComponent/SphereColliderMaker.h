@@ -2,6 +2,7 @@
 #define SPHERE_COLLIDER_MAKER_H_
 
 #include <TktkMath/Vector3.h>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "SphereCollider.h"
 
 namespace tktk
@@ -12,12 +13,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static SphereColliderMaker& makeStart();
+		static SphereColliderMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		SphereCollider* create();
+		CfpPtr<SphereCollider> create();
 
 		// 当たり判定のグループを設定
 		SphereColliderMaker& collisionGroupType(int value);
@@ -30,12 +31,17 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static SphereColliderMaker m_self;
 
 	private:
 
-		int m_collisionGroupType{ -1 };
+		// 作成用変数達
+		GameObjectPtr m_user{ };
+		int m_collisionGroupType{ 0 };
 		float m_radius{ 1.0f };
 		Vector3 m_localPosition{ Vector3::zero };
 	};

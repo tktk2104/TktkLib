@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <TktkMath/Vector2.h>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "Polygon2dCollider.h"
 
 namespace tktk
@@ -13,12 +14,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static Polygon2dColliderMaker& makeStart();
+		static Polygon2dColliderMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		Polygon2dCollider* create();
+		CfpPtr<Polygon2dCollider> create();
 
 		// 当たり判定のグループを設定
 		Polygon2dColliderMaker& collisionGroupType(int value);
@@ -31,11 +32,16 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static Polygon2dColliderMaker m_self;
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{ };
 		int m_collisionGroupType{ 0 };
 		std::vector<Vector2> m_vertexs{};
 		Vector2 m_localPosition{ Vector2::zero };

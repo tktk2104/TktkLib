@@ -4,19 +4,20 @@ namespace tktk
 {
 	CircleColliderMaker CircleColliderMaker::m_self;
 
-	CircleColliderMaker & CircleColliderMaker::makeStart()
+	CircleColliderMaker & CircleColliderMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = CircleColliderMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	CircleCollider* CircleColliderMaker::create()
+	CfpPtr<CircleCollider> CircleColliderMaker::create()
 	{
-		return new CircleCollider(
+		return m_user->createComponent<CircleCollider>(
 			m_collisionGroupType,
 			m_radius,
 			m_localPosition
-		);
+			);
 	}
 
 	CircleColliderMaker & CircleColliderMaker::collisionGroupType(int value)
@@ -35,5 +36,12 @@ namespace tktk
 	{
 		m_localPosition = value;
 		return *this;
+	}
+
+	void CircleColliderMaker::reset()
+	{
+		m_self.m_collisionGroupType = 0;
+		m_self.m_radius = 1.0f;
+		m_self.m_localPosition = Vector2::zero;
 	}
 }

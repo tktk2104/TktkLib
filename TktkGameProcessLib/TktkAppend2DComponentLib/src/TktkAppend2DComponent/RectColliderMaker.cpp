@@ -4,19 +4,20 @@ namespace tktk
 {
 	RectColliderMaker RectColliderMaker::m_self;
 
-	RectColliderMaker & RectColliderMaker::makeStart()
+	RectColliderMaker & RectColliderMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = RectColliderMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	RectCollider* RectColliderMaker::create()
+	CfpPtr<RectCollider> RectColliderMaker::create()
 	{
-		return new RectCollider(
+		return m_user->createComponent<RectCollider>(
 			m_collisionGroupType,
 			m_rectSize,
 			m_localPosition
-		);
+			);
 	}
 
 	RectColliderMaker & RectColliderMaker::collisionGroupType(int value)
@@ -35,5 +36,12 @@ namespace tktk
 	{
 		m_localPosition = value;
 		return *this;
+	}
+
+	void RectColliderMaker::reset()
+	{
+		m_self.m_collisionGroupType = 0;
+		m_self.m_rectSize = Vector2::one;
+		m_self.m_localPosition = Vector2::zero;
 	}
 }

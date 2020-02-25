@@ -2,6 +2,7 @@
 #define BOX_COLLIDER_MAKER_H_
 
 #include <TktkMath/Vector3.h>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "BoxCollider.h"
 
 namespace tktk
@@ -12,12 +13,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static BoxColliderMaker& makeStart();
+		static BoxColliderMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		BoxCollider* create();
+		CfpPtr<BoxCollider> create();
 
 		// 当たり判定のグループを設定
 		BoxColliderMaker& collisionGroupType(int value);
@@ -30,12 +31,17 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static BoxColliderMaker m_self;
 
 	private:
 
-		int m_collisionGroupType{ -1 };
+		// 作成用変数達
+		GameObjectPtr m_user{ };
+		int m_collisionGroupType{ 0 };
 		Vector3 m_boxSize{ Vector3::one };
 		Vector3 m_localPosition{ Vector3::zero };
 	};

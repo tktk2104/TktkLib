@@ -32,7 +32,6 @@ namespace tktk
 		// 引数のポインタと自身の持つポインタが同じかどうかを判定する
 		bool isSame(ProcessingClassPtr other) const;
 
-		// 自身のポインタが死んでいたらnullptrが返る
 		const SafetyVoidPtr* operator ->() const;
 
 	private:
