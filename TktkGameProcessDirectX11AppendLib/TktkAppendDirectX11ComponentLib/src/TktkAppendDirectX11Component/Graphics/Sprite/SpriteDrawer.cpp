@@ -13,8 +13,9 @@
 
 namespace tktk
 {
-	SpriteDrawer::SpriteDrawer(int textureId)
-		: m_textureId(textureId)
+	SpriteDrawer::SpriteDrawer(float drawPriority, int textureId)
+		: ComponentBase(drawPriority)
+		, m_textureId(textureId)
 	{
 	}
 

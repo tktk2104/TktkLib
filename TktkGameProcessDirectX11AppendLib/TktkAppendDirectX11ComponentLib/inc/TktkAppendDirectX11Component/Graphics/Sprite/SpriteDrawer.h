@@ -15,6 +15,7 @@ namespace tktk
 	public:
 
 		SpriteDrawer(
+			float drawPriority,
 			int textureId
 		);
 
