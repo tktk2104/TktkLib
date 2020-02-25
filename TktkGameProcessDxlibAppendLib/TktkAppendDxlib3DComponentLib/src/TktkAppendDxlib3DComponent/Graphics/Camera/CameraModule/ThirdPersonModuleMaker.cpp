@@ -4,15 +4,16 @@ namespace tktk
 {
 	ThirdPersonModuleMaker ThirdPersonModuleMaker::m_self;
 
-	ThirdPersonModuleMaker & ThirdPersonModuleMaker::makeStart()
+	ThirdPersonModuleMaker & ThirdPersonModuleMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = ThirdPersonModuleMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	ThirdPersonModule* ThirdPersonModuleMaker::create()
+	CfpPtr<ThirdPersonModule> ThirdPersonModuleMaker::create()
 	{
-		return new ThirdPersonModule(
+		return m_user->createComponent<ThirdPersonModule>(
 			m_target,
 			m_targetRelativeLookAtPos,
 			m_relativePos

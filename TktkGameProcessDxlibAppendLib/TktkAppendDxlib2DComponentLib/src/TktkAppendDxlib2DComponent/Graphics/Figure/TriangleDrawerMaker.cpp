@@ -4,15 +4,16 @@ namespace tktk
 {
 	TriangleDrawerMaker TriangleDrawerMaker::m_self;
 
-	TriangleDrawerMaker & TriangleDrawerMaker::makeStart()
+	TriangleDrawerMaker & TriangleDrawerMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = TriangleDrawerMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	TriangleDrawer* TriangleDrawerMaker::create()
+	CfpPtr<TriangleDrawer> TriangleDrawerMaker::create()
 	{
-		auto triangleDrawer = new TriangleDrawer(
+		auto triangleDrawer = m_user->createComponent<TriangleDrawer>(
 			m_relativeFirstPos,
 			m_relativeSecondPos,
 			m_relativeThirdPos,
@@ -23,7 +24,7 @@ namespace tktk
 			m_blendMode,
 			m_blendParam,
 			m_useAntialiasing
-		);
+			);
 
 		if (m_useRenderTarget) triangleDrawer->useRenderTarget(m_renderTargetId);
 
@@ -95,5 +96,21 @@ namespace tktk
 		m_useRenderTarget = true;
 		m_renderTargetId = value;
 		return *this;
+	}
+
+	void TriangleDrawerMaker::reset()
+	{
+		m_self.m_relativeFirstPos = Vector2(0.0f, 1.0f);
+		m_self.m_relativeSecondPos = Vector2(1.0f, -1.0f);
+		m_self.m_relativeThirdPos = Vector2(1.0f, 1.0f);
+		m_self.m_lineThickness = 1.0f;
+		m_self.m_isFill = true;
+		m_self.m_triangleColor = Color::white;
+		m_self.m_drawPriority = 0.0f;
+		m_self.m_blendMode = BlendMode::Alpha;
+		m_self.m_blendParam = 1.0f;
+		m_self.m_useAntialiasing = true;
+		m_self.m_useRenderTarget = false;
+		m_self.m_renderTargetId = -1;
 	}
 }

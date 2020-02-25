@@ -4,15 +4,16 @@ namespace tktk
 {
 	AppendPointLightMaker AppendPointLightMaker::m_self;
 
-	AppendPointLightMaker & AppendPointLightMaker::makeStart()
+	AppendPointLightMaker & AppendPointLightMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = AppendPointLightMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	AppendPointLight* AppendPointLightMaker::create()
+	CfpPtr<AppendPointLight> AppendPointLightMaker::create()
 	{
-		return new AppendPointLight(
+		return m_user->createComponent<AppendPointLight>(
 			m_lightId,
 			m_range,
 			m_attenuation,

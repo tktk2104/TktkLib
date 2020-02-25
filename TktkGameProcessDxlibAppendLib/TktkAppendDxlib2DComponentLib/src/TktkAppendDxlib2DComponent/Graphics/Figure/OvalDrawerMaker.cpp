@@ -4,15 +4,16 @@ namespace tktk
 {
 	OvalDrawerMaker OvalDrawerMaker::m_self;
 
-	OvalDrawerMaker & OvalDrawerMaker::makeStart()
+	OvalDrawerMaker & OvalDrawerMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = OvalDrawerMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	OvalDrawer* OvalDrawerMaker::create()
+	CfpPtr<OvalDrawer> OvalDrawerMaker::create()
 	{
-		auto ovalDrawer = new OvalDrawer(
+		auto ovalDrawer = m_user->createComponent<OvalDrawer>(
 			m_ovalSize,
 			m_localPosition,
 			m_lineThickness,
@@ -23,7 +24,7 @@ namespace tktk
 			m_blendParam,
 			m_useAntialiasing,
 			m_vertexNum
-		);
+			);
 
 		if (m_useRenderTarget) ovalDrawer->useRenderTarget(m_renderTargetId);
 
@@ -95,5 +96,21 @@ namespace tktk
 		m_useRenderTarget = true;
 		m_renderTargetId = value;
 		return *this;
+	}
+
+	void OvalDrawerMaker::reset()
+	{
+		m_self.m_ovalSize = Vector2::one;
+		m_self.m_localPosition = Vector2::zero;
+		m_self.m_lineThickness = 1.0f;
+		m_self.m_isFill = true;
+		m_self.m_ovalColor = Color::white;
+		m_self.m_drawPriority = 0.0f;
+		m_self.m_blendMode = BlendMode::Alpha;
+		m_self.m_blendParam = 1.0f;
+		m_self.m_useAntialiasing = true;
+		m_self.m_vertexNum = 32;
+		m_self.m_useRenderTarget = false;
+		m_self.m_renderTargetId = -1;
 	}
 }

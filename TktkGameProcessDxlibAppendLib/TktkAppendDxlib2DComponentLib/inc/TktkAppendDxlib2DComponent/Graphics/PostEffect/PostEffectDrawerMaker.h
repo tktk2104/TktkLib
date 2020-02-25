@@ -1,6 +1,7 @@
 #ifndef POST_EFFECT_DRAWER_MAKER_H_
 #define POST_EFFECT_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "PostEffectDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static PostEffectDrawerMaker& makeStart();
+		static PostEffectDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		PostEffectDrawer* create();
+		CfpPtr<PostEffectDrawer> create();
 
 		// 描画優先度を設定する
 		PostEffectDrawerMaker& drawPriority(float value);
@@ -33,6 +34,8 @@ namespace tktk
 
 	private:
 		
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		float m_drawPriority{ 0 };
 		std::vector<PostEffectDrawParameter> m_postEffectDrawParameters;
 	};

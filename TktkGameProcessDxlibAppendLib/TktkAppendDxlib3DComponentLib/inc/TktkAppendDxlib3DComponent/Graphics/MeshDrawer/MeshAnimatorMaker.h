@@ -1,6 +1,7 @@
 #ifndef MESH_ANIMATOR_MAKER_H_
 #define MESH_ANIMATOR_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "MeshAnimator.h"
 
 namespace tktk
@@ -9,12 +10,12 @@ namespace tktk
 	{
 	public:
 
-		static MeshAnimatorMaker& makeStart();
+		static MeshAnimatorMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		MeshAnimator* create();
+		CfpPtr<MeshAnimator> create();
 
 		// 再生するモーションのID
 		MeshAnimatorMaker& motionID(int value);
@@ -38,6 +39,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		int m_motionID{ -1 };
 		bool m_isLoop{ false };
 		float m_motionSpeedRate{ 1.0f };

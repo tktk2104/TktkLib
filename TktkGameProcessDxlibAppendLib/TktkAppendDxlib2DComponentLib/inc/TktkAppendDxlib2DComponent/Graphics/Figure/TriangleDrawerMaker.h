@@ -1,6 +1,7 @@
 #ifndef TRIANGLE_DRAWER_MAKER_H_
 #define TRIANGLE_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "TriangleDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static TriangleDrawerMaker& makeStart();
+		static TriangleDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		TriangleDrawer* create();
+		CfpPtr<TriangleDrawer> create();
 
 	public:
 
@@ -54,18 +55,23 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static TriangleDrawerMaker m_self;
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		Vector2 m_relativeFirstPos{ Vector2(0.0f, 1.0f) };
 		Vector2 m_relativeSecondPos{ Vector2(1.0f, -1.0f) };
 		Vector2 m_relativeThirdPos{ Vector2(1.0f, 1.0f) };
 		float m_lineThickness{ 1.0f };
 		bool m_isFill{ true };
 		Color m_triangleColor{ Color::white };
-		float m_drawPriority{ 0 };
+		float m_drawPriority{ 0.0f };
 		BlendMode m_blendMode{ BlendMode::Alpha };
 		float m_blendParam{ 1.0f };
 		bool m_useAntialiasing{ true };

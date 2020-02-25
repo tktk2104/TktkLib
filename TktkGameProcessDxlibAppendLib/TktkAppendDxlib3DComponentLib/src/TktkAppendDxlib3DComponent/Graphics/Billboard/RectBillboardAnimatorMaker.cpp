@@ -4,15 +4,16 @@ namespace tktk
 {
 	RectBillboardAnimatorMaker RectBillboardAnimatorMaker::m_self;
 
-	RectBillboardAnimatorMaker & RectBillboardAnimatorMaker::makeStart()
+	RectBillboardAnimatorMaker & RectBillboardAnimatorMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = RectBillboardAnimatorMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	RectBillboardAnimator* RectBillboardAnimatorMaker::create()
+	CfpPtr<RectBillboardAnimator> RectBillboardAnimatorMaker::create()
 	{
-		return new RectBillboardAnimator(
+		return m_user->createComponent<RectBillboardAnimator>(
 			m_textureId,
 			m_splitTextureIndexList,
 			m_animationIntervalSec,

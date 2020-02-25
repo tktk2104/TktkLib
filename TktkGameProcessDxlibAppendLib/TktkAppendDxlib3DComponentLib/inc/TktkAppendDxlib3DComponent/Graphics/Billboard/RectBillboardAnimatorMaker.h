@@ -1,6 +1,7 @@
 #ifndef RECT_BILLBOARD_ANIMATOR_MAKER_H_
 #define RECT_BILLBOARD_ANIMATOR_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include <vector>
 #include "RectBillboardAnimator.h"
 
@@ -11,12 +12,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static RectBillboardAnimatorMaker& makeStart();
+		static RectBillboardAnimatorMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		RectBillboardAnimator* create();
+		CfpPtr<RectBillboardAnimator> create();
 
 		// 使用するテクスチャのIdを設定する
 		RectBillboardAnimatorMaker& textureId(int value);
@@ -45,6 +46,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		int m_textureId{ -1 };
 		std::vector<int> m_splitTextureIndexList;
 		float m_animationIntervalSec{ 0.1f };

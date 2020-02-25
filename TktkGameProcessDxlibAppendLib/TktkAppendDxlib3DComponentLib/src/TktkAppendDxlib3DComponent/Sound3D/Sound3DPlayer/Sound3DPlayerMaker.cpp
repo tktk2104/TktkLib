@@ -4,15 +4,16 @@ namespace tktk
 {
 	Sound3DPlayerMaker Sound3DPlayerMaker::m_self;
 
-	Sound3DPlayerMaker & Sound3DPlayerMaker::makeStart()
+	Sound3DPlayerMaker & Sound3DPlayerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = Sound3DPlayerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	Sound3DPlayer* Sound3DPlayerMaker::create()
+	CfpPtr<Sound3DPlayer> Sound3DPlayerMaker::create()
 	{
-		return new Sound3DPlayer(
+		return m_user->createComponent<Sound3DPlayer>(
 			m_startToPlay,
 			m_playSoundId,
 			m_soundPlayType,

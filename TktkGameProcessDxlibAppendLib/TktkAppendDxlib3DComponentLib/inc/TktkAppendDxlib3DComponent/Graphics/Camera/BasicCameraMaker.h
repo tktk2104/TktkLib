@@ -1,6 +1,7 @@
 #ifndef BASIC_CAMERA_MAKER_H_
 #define BASIC_CAMERA_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include <TktkMath/Vector3.h>
 #include "BasicCamera.h"
 
@@ -12,12 +13,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static BasicCameraMaker& makeStart();
+		static BasicCameraMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		BasicCamera* create();
+		CfpPtr<BasicCamera> create();
 
 		// 描画優先度
 		BasicCameraMaker& drawPriority(float value);
@@ -41,6 +42,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		float m_drawPriority{ 0.0f };
 		float m_initCameraFov{ 45.0f };
 		float m_initCameraAspectRate{ 1280.0f / 720.0f };

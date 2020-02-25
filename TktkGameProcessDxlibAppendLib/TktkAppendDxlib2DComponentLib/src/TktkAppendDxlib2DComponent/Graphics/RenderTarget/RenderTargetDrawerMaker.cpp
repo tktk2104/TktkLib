@@ -4,15 +4,16 @@ namespace tktk
 {
 	RenderTargetDrawerMaker RenderTargetDrawerMaker::m_self;
 
-	RenderTargetDrawerMaker & RenderTargetDrawerMaker::makeStart()
+	RenderTargetDrawerMaker & RenderTargetDrawerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = RenderTargetDrawerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	RenderTargetDrawer* RenderTargetDrawerMaker::create()
+	CfpPtr<RenderTargetDrawer> RenderTargetDrawerMaker::create()
 	{
-		return new RenderTargetDrawer(
+		return m_user->createComponent<RenderTargetDrawer>(
 			m_drawRenderTargetId,
 			m_drawPriority,
 			m_blendMode,

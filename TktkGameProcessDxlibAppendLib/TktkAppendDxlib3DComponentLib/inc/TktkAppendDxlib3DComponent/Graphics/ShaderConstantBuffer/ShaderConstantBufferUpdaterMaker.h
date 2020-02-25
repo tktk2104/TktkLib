@@ -1,6 +1,7 @@
 #ifndef SHADER_CONSTANT_BUFFER_UPDATER_MAKER_H_
 #define SHADER_CONSTANT_BUFFER_UPDATER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "ShaderConstantBufferUpdater.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static ShaderConstantBufferUpdaterMaker& makeStart();
+		static ShaderConstantBufferUpdaterMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		ShaderConstantBufferUpdater* create();
+		CfpPtr<ShaderConstantBufferUpdater> create();
 
 		// 自身のシェーダー用定数バッファIDを設定
 		ShaderConstantBufferUpdaterMaker& shaderConstantBufferId(int value);
@@ -27,6 +28,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		int m_shaderConstantBufferId{ -1 };
 	};
 }

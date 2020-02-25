@@ -1,6 +1,7 @@
 #ifndef SHADOW_MAP_DRAWER_MAKER_H_
 #define SHADOW_MAP_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "ShadowMapDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static ShadowMapDrawerMaker& makeStart();
+		static ShadowMapDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		ShadowMapDrawer* create();
+		CfpPtr<ShadowMapDrawer> create();
 
 		// シャドウマップの生成を開始する描画優先度
 		ShadowMapDrawerMaker& shadowMapCreateStarterDrawPriority(float value);
@@ -45,6 +46,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		float m_shadowMapCreateStarterDrawPriority{ 0.0f };
 		float m_shadowMapCreateFinisherDrawPriority{ 0.0f };
 		float m_shadowMapEnablerDrawPriority{ 0.0f };

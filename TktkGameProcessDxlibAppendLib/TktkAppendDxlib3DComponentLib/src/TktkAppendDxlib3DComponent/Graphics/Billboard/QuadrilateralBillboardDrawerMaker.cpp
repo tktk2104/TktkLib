@@ -4,13 +4,14 @@ namespace tktk
 {
 	QuadrilateralBillboardDrawerMaker QuadrilateralBillboardDrawerMaker::m_self;
 
-	QuadrilateralBillboardDrawerMaker & QuadrilateralBillboardDrawerMaker::makeStart()
+	QuadrilateralBillboardDrawerMaker & QuadrilateralBillboardDrawerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = QuadrilateralBillboardDrawerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	QuadrilateralBillboardDrawer* QuadrilateralBillboardDrawerMaker::create()
+	CfpPtr<QuadrilateralBillboardDrawer> QuadrilateralBillboardDrawerMaker::create()
 	{
 		DxLibDraw3DParam dxLibDraw3DParam = DxLibDraw3DParam(m_drawPriority);
 		dxLibDraw3DParam.localMat = Matrix4::createTranslation(m_localPos);
@@ -20,7 +21,7 @@ namespace tktk
 		dxLibDraw3DParam.writeZBuffer = m_writeZBuffer;
 		dxLibDraw3DParam.renderTargetId = m_renderTargetId;
 
-		return new QuadrilateralBillboardDrawer(
+		return m_user->createComponent<QuadrilateralBillboardDrawer>(
 			dxLibDraw3DParam,
 			m_textureId,
 			m_splitTextureIndex,

@@ -4,15 +4,16 @@ namespace tktk
 {
 	Polygon2DDrawerMaker Polygon2DDrawerMaker::m_self;
 
-	Polygon2DDrawerMaker & Polygon2DDrawerMaker::makeStart()
+	Polygon2DDrawerMaker & Polygon2DDrawerMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = Polygon2DDrawerMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	Polygon2DDrawer* Polygon2DDrawerMaker::create()
+	CfpPtr<Polygon2DDrawer> Polygon2DDrawerMaker::create()
 	{
-		auto polygon2DDrawer = new Polygon2DDrawer(
+		auto polygon2DDrawer = m_user->createComponent<Polygon2DDrawer>(
 			m_vertexs,
 			m_lineThickness,
 			m_isFill,
@@ -20,7 +21,7 @@ namespace tktk
 			m_drawPriority,
 			m_blendMode,
 			m_blendParam
-		);
+			);
 
 		if (m_useRenderTarget) polygon2DDrawer->useRenderTarget(m_renderTargetId);
 
@@ -74,5 +75,18 @@ namespace tktk
 		m_useRenderTarget = true;
 		m_renderTargetId = value;
 		return *this;
+	}
+
+	void Polygon2DDrawerMaker::reset()
+	{
+		m_self.m_vertexs = {};
+		m_self.m_lineThickness = 1.0f;
+		m_self.m_isFill = true;
+		m_self.m_polygonColor = Color::white;
+		m_self.m_drawPriority = 0.0f;
+		m_self.m_blendMode = BlendMode::Alpha;
+		m_self.m_blendParam = 1.0f;
+		m_self.m_useRenderTarget = false;
+		m_self.m_renderTargetId = -1;
 	}
 }

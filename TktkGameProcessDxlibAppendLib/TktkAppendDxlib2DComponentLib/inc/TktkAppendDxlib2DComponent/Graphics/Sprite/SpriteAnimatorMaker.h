@@ -1,8 +1,8 @@
 #ifndef SPRITE_ANIMATOR_MAKER_H_
 #define SPRITE_ANIMATOR_MAKER_H_
 
-#include <memory>
 #include <vector>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "SpriteAnimator.h"
 
 namespace tktk
@@ -12,12 +12,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static SpriteAnimatorMaker& makeStart();
+		static SpriteAnimatorMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		SpriteAnimator* create();
+		CfpPtr<SpriteAnimator> create();
 
 		// 使用するテクスチャのIdを設定する
 		SpriteAnimatorMaker& textureId(int value);
@@ -46,8 +46,10 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		int m_textureId{ -1 };
-		std::vector<int> m_splitTextureIndexList;
+		std::vector<int> m_splitTextureIndexList{ };
 		float m_animationIntervalSec{ 0.1f };
 		bool m_loop{ false };
 		float m_animSpeedRate{ 1.0f };

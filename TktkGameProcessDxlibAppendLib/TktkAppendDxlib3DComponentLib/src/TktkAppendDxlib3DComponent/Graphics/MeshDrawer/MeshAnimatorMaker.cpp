@@ -4,15 +4,16 @@ namespace tktk
 {
 	MeshAnimatorMaker MeshAnimatorMaker::m_self;
 
-	MeshAnimatorMaker & MeshAnimatorMaker::makeStart()
+	MeshAnimatorMaker & MeshAnimatorMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = MeshAnimatorMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	MeshAnimator* MeshAnimatorMaker::create()
+	CfpPtr<MeshAnimator> MeshAnimatorMaker::create()
 	{
-		return new MeshAnimator(
+		return m_user->createComponent<MeshAnimator>(
 			m_motionID,
 			m_isLoop,
 			m_motionSpeedRate,

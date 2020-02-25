@@ -4,13 +4,14 @@ namespace tktk
 {
 	RectBillboardDrawerMaker RectBillboardDrawerMaker::m_self;
 
-	RectBillboardDrawerMaker & RectBillboardDrawerMaker::makeStart()
+	RectBillboardDrawerMaker & RectBillboardDrawerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = RectBillboardDrawerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	RectBillboardDrawer* RectBillboardDrawerMaker::create()
+	CfpPtr<RectBillboardDrawer> RectBillboardDrawerMaker::create()
 	{
 		DxLibDraw3DParam dxLibDraw3DParam = DxLibDraw3DParam(m_drawPriority);
 		dxLibDraw3DParam.localMat = Matrix4::createTranslation(m_localPos);
@@ -20,7 +21,7 @@ namespace tktk
 		dxLibDraw3DParam.writeZBuffer = m_writeZBuffer;
 		dxLibDraw3DParam.renderTargetId = m_renderTargetId;
 
-		return new RectBillboardDrawer(
+		return m_user->createComponent<RectBillboardDrawer>(
 			dxLibDraw3DParam,
 			m_textureId,
 			m_splitTextureIndex,

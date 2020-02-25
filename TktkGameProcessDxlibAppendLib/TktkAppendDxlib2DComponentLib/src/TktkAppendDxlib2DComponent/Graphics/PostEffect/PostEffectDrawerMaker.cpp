@@ -4,15 +4,16 @@ namespace tktk
 {
 	PostEffectDrawerMaker PostEffectDrawerMaker::m_self;
 
-	PostEffectDrawerMaker & PostEffectDrawerMaker::makeStart()
+	PostEffectDrawerMaker & PostEffectDrawerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = PostEffectDrawerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	PostEffectDrawer* PostEffectDrawerMaker::create()
+	CfpPtr<PostEffectDrawer> PostEffectDrawerMaker::create()
 	{
-		return new PostEffectDrawer(
+		return m_user->createComponent<PostEffectDrawer>(
 			m_drawPriority,
 			m_postEffectDrawParameters
 			);

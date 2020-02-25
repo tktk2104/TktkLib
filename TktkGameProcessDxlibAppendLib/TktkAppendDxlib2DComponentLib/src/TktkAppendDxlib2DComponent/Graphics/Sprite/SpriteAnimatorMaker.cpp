@@ -4,15 +4,16 @@ namespace tktk
 {
 	SpriteAnimatorMaker SpriteAnimatorMaker::m_self;
 
-	SpriteAnimatorMaker & SpriteAnimatorMaker::makeStart()
+	SpriteAnimatorMaker & SpriteAnimatorMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = SpriteAnimatorMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	SpriteAnimator* SpriteAnimatorMaker::create()
+	CfpPtr<SpriteAnimator> SpriteAnimatorMaker::create()
 	{
-		return new SpriteAnimator(
+		return m_user->createComponent<SpriteAnimator>(
 			m_textureId,
 			m_splitTextureIndexList,
 			m_animationIntervalSec,

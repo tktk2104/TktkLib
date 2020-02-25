@@ -1,6 +1,7 @@
 #ifndef POLYGON_2D_DRAWER_MAKER_H_
 #define POLYGON_2D_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "Polygon2DDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static Polygon2DDrawerMaker& makeStart();
+		static Polygon2DDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		Polygon2DDrawer* create();
+		CfpPtr<Polygon2DDrawer> create();
 
 	public:
 
@@ -49,16 +50,21 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static Polygon2DDrawerMaker m_self;
 
 	private:
 
-		std::vector<Vector2> m_vertexs;
+		// 作成用変数達
+		GameObjectPtr m_user{};
+		std::vector<Vector2> m_vertexs{ };
 		float m_lineThickness{ 1.0f };
 		bool m_isFill{ true };
 		Color m_polygonColor{ Color::white };
-		float m_drawPriority{ 0 };
+		float m_drawPriority{ 0.0f };
 		BlendMode m_blendMode{ BlendMode::Alpha };
 		float m_blendParam{ 1.0f };
 		bool m_useRenderTarget{ false };

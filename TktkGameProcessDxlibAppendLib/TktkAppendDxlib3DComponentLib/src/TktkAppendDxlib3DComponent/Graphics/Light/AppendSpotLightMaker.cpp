@@ -4,15 +4,16 @@ namespace tktk
 {
 	AppendSpotLightMaker AppendSpotLightMaker::m_self;
 
-	AppendSpotLightMaker & AppendSpotLightMaker::makeStart()
+	AppendSpotLightMaker & AppendSpotLightMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = AppendSpotLightMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	AppendSpotLight* AppendSpotLightMaker::create()
+	CfpPtr<AppendSpotLight> AppendSpotLightMaker::create()
 	{
-		return new AppendSpotLight(
+		return m_user->createComponent<AppendSpotLight>(
 			m_lightId,
 			m_outAngleDegree,
 			m_inAngleDegree,

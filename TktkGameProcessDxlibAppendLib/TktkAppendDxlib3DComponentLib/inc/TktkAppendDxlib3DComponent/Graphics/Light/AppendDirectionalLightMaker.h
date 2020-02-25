@@ -1,6 +1,7 @@
 #ifndef APPEND_DIRECTIONAL_LIGHT_MAKER_H_
 #define APPEND_DIRECTIONAL_LIGHT_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "AppendDirectionalLight.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static AppendDirectionalLightMaker& makeStart();
+		static AppendDirectionalLightMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		AppendDirectionalLight* create();
+		CfpPtr<AppendDirectionalLight> create();
 
 		// 自身のライトIDを設定
 		AppendDirectionalLightMaker& lightId(int value);
@@ -36,6 +37,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		int m_lightId{ -1 };
 		Color m_difColor{ Color::white };
 		Color m_spcColor{ Color::white };

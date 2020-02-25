@@ -4,15 +4,16 @@ namespace tktk
 {
 	BasicCameraMaker BasicCameraMaker::m_self;
 
-	BasicCameraMaker & BasicCameraMaker::makeStart()
+	BasicCameraMaker & BasicCameraMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = BasicCameraMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	BasicCamera* BasicCameraMaker::create()
+	CfpPtr<BasicCamera> BasicCameraMaker::create()
 	{
-		return new BasicCamera(
+		return m_user->createComponent<BasicCamera>(
 			m_drawPriority,
 			m_initCameraFov,
 			m_initCameraAspectRate,

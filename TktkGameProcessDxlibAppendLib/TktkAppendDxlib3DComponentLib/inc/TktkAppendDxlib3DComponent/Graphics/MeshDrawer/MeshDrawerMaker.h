@@ -1,7 +1,7 @@
 #ifndef MESH_DRAWER_MAKER_H_
 #define MESH_DRAWER_MAKER_H_
 
-#include <memory>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "MeshDrawer.h"
 
 namespace tktk
@@ -11,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static MeshDrawerMaker& makeStart();
+		static MeshDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		MeshDrawer* create();
+		CfpPtr<MeshDrawer> create();
 
 		// 描画優先度
 		MeshDrawerMaker& drawPriority(float value);
@@ -61,6 +61,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		float m_drawPriority{ 0.0f };
 		int m_meshID{ -1 };
 		Vector3 m_meshLocalPos{ Vector3::zero };

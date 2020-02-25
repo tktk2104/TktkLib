@@ -1,6 +1,7 @@
 #ifndef MOVIE_PLAYER_MAKER_H_
 #define MOVIE_PLAYER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "MoviePlayer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static MoviePlayerMaker& makeStart();
+		static MoviePlayerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		MoviePlayer* create();
+		CfpPtr<MoviePlayer> create();
 
 		// 描画優先度を設定する
 		MoviePlayerMaker& drawPriority(float value);
@@ -51,7 +52,9 @@ namespace tktk
 
 	private:
 
-		float m_drawPriority{ 0 };
+		// 作成用変数達
+		GameObjectPtr m_user{};
+		float m_drawPriority{ 0.0f };
 		int m_movieId{ -1 };
 		Vector2 m_movieCenterPosRate{ Vector2(0.5f, 0.5f) };
 		BlendMode m_blendMode{ BlendMode::Alpha };

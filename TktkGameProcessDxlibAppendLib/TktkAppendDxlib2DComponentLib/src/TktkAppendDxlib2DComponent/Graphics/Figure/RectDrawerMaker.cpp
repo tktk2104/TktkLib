@@ -4,15 +4,16 @@ namespace tktk
 {
 	RectDrawerMaker RectDrawerMaker::m_self;
 
-	RectDrawerMaker & RectDrawerMaker::makeStart()
+	RectDrawerMaker & RectDrawerMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = RectDrawerMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	RectDrawer* RectDrawerMaker::create()
+	CfpPtr<RectDrawer> RectDrawerMaker::create()
 	{
-		auto rectDrawer = new RectDrawer(
+		auto rectDrawer = m_user->createComponent<RectDrawer>(
 			m_rectSize,
 			m_localPosition,
 			m_lineThickness,
@@ -22,7 +23,7 @@ namespace tktk
 			m_blendMode,
 			m_blendParam,
 			m_useAntialiasing
-		);
+			);
 
 		if (m_useRenderTarget) rectDrawer->useRenderTarget(m_renderTargetId);
 
@@ -88,5 +89,20 @@ namespace tktk
 		m_useRenderTarget = true;
 		m_renderTargetId = value;
 		return *this;
+	}
+
+	void RectDrawerMaker::reset()
+	{
+		m_self.m_rectSize = Vector2::one;
+		m_self.m_localPosition = Vector2::zero;
+		m_self.m_lineThickness = 1.0f;
+		m_self.m_isFill = true;
+		m_self.m_rectColor = Color::white;
+		m_self.m_drawPriority = 0.0f;
+		m_self.m_blendMode = BlendMode::Alpha;
+		m_self.m_blendParam = 1.0f;
+		m_self.m_useAntialiasing = true;
+		m_self.m_useRenderTarget = false;
+		m_self.m_renderTargetId = -1;
 	}
 }

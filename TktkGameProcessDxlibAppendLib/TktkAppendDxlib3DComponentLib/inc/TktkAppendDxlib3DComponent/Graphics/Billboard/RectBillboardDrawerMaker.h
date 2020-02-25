@@ -1,6 +1,7 @@
 #ifndef RECT_BILLBOARD_DRAWER_MAKER_H_
 #define RECT_BILLBOARD_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "RectBillboardDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static RectBillboardDrawerMaker& makeStart();
+		static RectBillboardDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		RectBillboardDrawer* create();
+		CfpPtr<RectBillboardDrawer> create();
 
 		// 描画優先度を設定する
 		RectBillboardDrawerMaker& drawPriority(float value);
@@ -57,6 +58,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		float m_drawPriority{ 0 };
 		int m_textureId{ -1 };
 		int m_splitTextureIndex{ -1 };

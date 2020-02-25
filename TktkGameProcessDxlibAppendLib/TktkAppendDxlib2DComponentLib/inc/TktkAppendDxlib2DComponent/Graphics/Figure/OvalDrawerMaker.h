@@ -1,6 +1,7 @@
 #ifndef OVAL_DRAWER_MAKER_H_
 #define OVAL_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "OvalDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static OvalDrawerMaker& makeStart();
+		static OvalDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		OvalDrawer* create();
+		CfpPtr<OvalDrawer> create();
 
 	public:
 
@@ -54,17 +55,22 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static OvalDrawerMaker m_self;
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		Vector2 m_ovalSize{ Vector2::one };
 		Vector2 m_localPosition{ Vector2::zero };
 		float m_lineThickness{ 1.0f };
 		bool m_isFill{ true };
 		Color m_ovalColor{ Color::white };
-		float m_drawPriority{ 0 };
+		float m_drawPriority{ 0.0f };
 		BlendMode m_blendMode{ BlendMode::Alpha };
 		float m_blendParam{ 1.0f };
 		bool m_useAntialiasing{ true };

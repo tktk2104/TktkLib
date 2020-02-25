@@ -4,15 +4,16 @@ namespace tktk
 {
 	SpriteDrawerMaker SpriteDrawerMaker::m_self;
 
-	SpriteDrawerMaker & SpriteDrawerMaker::makeStart()
+	SpriteDrawerMaker & SpriteDrawerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = SpriteDrawerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	SpriteDrawer* SpriteDrawerMaker::create()
+	CfpPtr<SpriteDrawer> SpriteDrawerMaker::create()
 	{
-		auto spriteDrawer = new SpriteDrawer(
+		auto spriteDrawer = m_user->createComponent<SpriteDrawer>(
 			m_textureId,
 			m_splitTextureIndex,
 			m_drawPriority,
@@ -23,7 +24,7 @@ namespace tktk
 			m_useClipping,
 			m_clippingLeftTopPos,
 			m_clippingRightBottomPos
-		);
+			);
 
 		if (m_useRenderTarget) spriteDrawer->useRenderTarget(m_renderTargetId);
 

@@ -1,6 +1,7 @@
 #ifndef SPRITE_DRAWER_MAKER_H_
 #define SPRITE_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "SpriteDrawer.h"
 
 namespace tktk
@@ -11,12 +12,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static SpriteDrawerMaker& makeStart();
+		static SpriteDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		SpriteDrawer* create();
+		CfpPtr<SpriteDrawer> create();
 
 		// 表示するテクスチャのIdを設定する
 		SpriteDrawerMaker& textureId(int value);
@@ -55,9 +56,11 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		int m_textureId{ -1 };
 		int m_splitTextureIndex{ -1 };
-		float m_drawPriority{ 0 };
+		float m_drawPriority{ 0.0f };
 		Vector2 m_spriteCenterPosRate{ Vector2(0.5f, 0.5f) };
 		BlendMode m_blendMode{ BlendMode::Alpha };
 		float m_blendParam{ 1.0f };

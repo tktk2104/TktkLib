@@ -2,7 +2,6 @@
 #define THIRD_PERSON_MODULE_MAKER_H_
 
 #include <TktkMath/Vector3.h>
-#include <TktkComponentFramework/GameObject/GameObject.h>
 #include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "ThirdPersonModule.h"
 
@@ -14,12 +13,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static ThirdPersonModuleMaker& makeStart();
+		static ThirdPersonModuleMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		ThirdPersonModule* create();
+		CfpPtr<ThirdPersonModule> create();
 
 		// カメラが追うGameObjectを設定する
 		ThirdPersonModuleMaker& target(GameObjectPtr value);
@@ -37,6 +36,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		GameObjectPtr m_target;
 		Vector3 m_targetRelativeLookAtPos{ Vector3::zero };
 		Vector3 m_relativePos{ Vector3(0.0f, 0.0f, -100.0f) };

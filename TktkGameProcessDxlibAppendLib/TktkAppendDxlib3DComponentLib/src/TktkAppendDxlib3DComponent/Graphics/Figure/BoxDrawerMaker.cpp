@@ -4,13 +4,14 @@ namespace tktk
 {
 	BoxDrawerMaker BoxDrawerMaker::m_self;
 
-	BoxDrawerMaker & BoxDrawerMaker::makeStart()
+	BoxDrawerMaker & BoxDrawerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = BoxDrawerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	BoxDrawer* BoxDrawerMaker::create()
+	CfpPtr<BoxDrawer> BoxDrawerMaker::create()
 	{
 		DxLibDraw3DParam dxLibDraw3DParam = DxLibDraw3DParam(m_drawPriority);
 		dxLibDraw3DParam.localMat = Matrix4::createTranslation(m_localPosition);
@@ -22,7 +23,7 @@ namespace tktk
 		dxLibDraw3DParam.createShadow = m_createShadow;
 		dxLibDraw3DParam.shadowCreatorPriority = m_shadowCreatorPriority;
 
-		return new BoxDrawer(
+		return m_user->createComponent<BoxDrawer>(
 			dxLibDraw3DParam,
 			m_boxSize,
 			m_isFill,

@@ -4,15 +4,16 @@ namespace tktk
 {
 	FirstPersonModuleMaker FirstPersonModuleMaker::m_self;
 
-	FirstPersonModuleMaker & FirstPersonModuleMaker::makeStart()
+	FirstPersonModuleMaker & FirstPersonModuleMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = FirstPersonModuleMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	FirstPersonModule* FirstPersonModuleMaker::create()
+	CfpPtr<FirstPersonModule> FirstPersonModuleMaker::create()
 	{
-		return new FirstPersonModule(
+		return m_user->createComponent<FirstPersonModule>(
 			m_rotationDegPerPixelOnMouseMove,
 			m_moveSpeedPerSec,
 			m_alwaysMoveForward,

@@ -4,15 +4,16 @@ namespace tktk
 {
 	ShaderConstantBufferUpdaterMaker ShaderConstantBufferUpdaterMaker::m_self;
 
-	ShaderConstantBufferUpdaterMaker & ShaderConstantBufferUpdaterMaker::makeStart()
+	ShaderConstantBufferUpdaterMaker & ShaderConstantBufferUpdaterMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = ShaderConstantBufferUpdaterMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	ShaderConstantBufferUpdater* ShaderConstantBufferUpdaterMaker::create()
+	CfpPtr<ShaderConstantBufferUpdater> ShaderConstantBufferUpdaterMaker::create()
 	{
-		return new ShaderConstantBufferUpdater(
+		return m_user->createComponent<ShaderConstantBufferUpdater>(
 			m_shaderConstantBufferId
 			);
 	}

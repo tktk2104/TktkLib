@@ -4,13 +4,14 @@ namespace tktk
 {
 	SphereDrawerMaker SphereDrawerMaker::m_self;
 
-	SphereDrawerMaker & SphereDrawerMaker::makeStart()
+	SphereDrawerMaker & SphereDrawerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = SphereDrawerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	SphereDrawer* SphereDrawerMaker::create()
+	CfpPtr<SphereDrawer> SphereDrawerMaker::create()
 	{
 		DxLibDraw3DParam dxLibDraw3DParam = DxLibDraw3DParam(m_drawPriority);
 		dxLibDraw3DParam.localMat = Matrix4::createTranslation(m_localPosition);
@@ -22,7 +23,7 @@ namespace tktk
 		dxLibDraw3DParam.createShadow = m_createShadow;
 		dxLibDraw3DParam.shadowCreatorPriority = m_shadowCreatorPriority;
 
-		return new SphereDrawer(
+		return m_user->createComponent<SphereDrawer>(
 			dxLibDraw3DParam,
 			m_radius,
 			m_divNum,

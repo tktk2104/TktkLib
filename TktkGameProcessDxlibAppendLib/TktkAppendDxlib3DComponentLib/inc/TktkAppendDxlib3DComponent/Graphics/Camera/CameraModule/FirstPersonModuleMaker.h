@@ -1,9 +1,7 @@
 #ifndef FIRST_PERSON_MODULE_MAKER_H_
 #define FIRST_PERSON_MODULE_MAKER_H_
 
-#include <memory>
 #include <TktkMath/Vector2.h>
-#include <TktkComponentFramework/GameObject/GameObject.h>
 #include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "FirstPersonModule.h"
 
@@ -15,12 +13,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static FirstPersonModuleMaker& makeStart();
+		static FirstPersonModuleMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		FirstPersonModule* create();
+		CfpPtr<FirstPersonModule> create();
 
 		// マウスカーソルが１ピクセル移動した時の回転角度を設定する（度数法）
 		FirstPersonModuleMaker& rotationDegPerPixelOnMouseMove(float value);
@@ -41,6 +39,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		float m_rotationDegPerPixelOnMouseMove;
 		float m_moveSpeedPerSec;
 		bool m_alwaysMoveForward{ false };

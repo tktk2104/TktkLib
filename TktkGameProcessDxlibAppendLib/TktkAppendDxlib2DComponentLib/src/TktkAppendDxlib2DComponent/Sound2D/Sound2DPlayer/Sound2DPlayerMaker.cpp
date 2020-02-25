@@ -4,15 +4,16 @@ namespace tktk
 {
 	Sound2DPlayerMaker Sound2DPlayerMaker::m_self;
 
-	Sound2DPlayerMaker & Sound2DPlayerMaker::makeStart()
+	Sound2DPlayerMaker & Sound2DPlayerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = Sound2DPlayerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	Sound2DPlayer* Sound2DPlayerMaker::create()
+	CfpPtr<Sound2DPlayer> Sound2DPlayerMaker::create()
 	{
-		return new Sound2DPlayer(
+		return m_user->createComponent<Sound2DPlayer>(
 			m_startToPlay,
 			m_playSoundId,
 			m_soundPlayType,

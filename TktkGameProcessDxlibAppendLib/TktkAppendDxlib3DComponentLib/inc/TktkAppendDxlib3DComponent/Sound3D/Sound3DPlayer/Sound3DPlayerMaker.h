@@ -2,6 +2,7 @@
 #define SOUND_3D_PLAYER_MAKER_H_
 
 #include <TktkMath/Vector3.h>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "Sound3DPlayer.h"
 
 namespace tktk
@@ -11,12 +12,12 @@ namespace tktk
 	public:
 
 		// インスタンス生成開始
-		static Sound3DPlayerMaker& makeStart();
+		static Sound3DPlayerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		Sound3DPlayer* create();
+		CfpPtr<Sound3DPlayer> create();
 
 		// 自身の生成後すぐに再生するかを設定
 		Sound3DPlayerMaker& startToPlay(bool value);
@@ -46,6 +47,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		bool m_startToPlay{ true };
 		int m_playSoundId{ -1 };
 		SoundPlayType m_soundPlayType{ SoundPlayType::SOUND_PLAY_TYPE_BACKGROUND };

@@ -4,15 +4,16 @@ namespace tktk
 {
 	ColliderWireFrameDrawer3DMaker ColliderWireFrameDrawer3DMaker::m_self;
 
-	ColliderWireFrameDrawer3DMaker & ColliderWireFrameDrawer3DMaker::makeStart()
+	ColliderWireFrameDrawer3DMaker & ColliderWireFrameDrawer3DMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = ColliderWireFrameDrawer3DMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	ColliderWireFrameDrawer3D* ColliderWireFrameDrawer3DMaker::create()
+	CfpPtr<ColliderWireFrameDrawer3D> ColliderWireFrameDrawer3DMaker::create()
 	{
-		return new ColliderWireFrameDrawer3D(
+		return m_user->createComponent<ColliderWireFrameDrawer3D>(
 			m_drawPriority,
 			m_wireFrameColor
 			);

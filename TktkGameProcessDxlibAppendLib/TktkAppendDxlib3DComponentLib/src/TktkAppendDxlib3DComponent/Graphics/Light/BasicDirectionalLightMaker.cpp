@@ -4,15 +4,16 @@ namespace tktk
 {
 	BasicDirectionalLightMaker BasicDirectionalLightMaker::m_self;
 
-	BasicDirectionalLightMaker & BasicDirectionalLightMaker::makeStart()
+	BasicDirectionalLightMaker & BasicDirectionalLightMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = BasicDirectionalLightMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	BasicDirectionalLight* BasicDirectionalLightMaker::create()
+	CfpPtr<BasicDirectionalLight> BasicDirectionalLightMaker::create()
 	{
-		return new BasicDirectionalLight(
+		return m_user->createComponent<BasicDirectionalLight>(
 			m_difColor,
 			m_spcColor,
 			m_ambColor

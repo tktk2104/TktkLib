@@ -1,6 +1,7 @@
 #ifndef SPHERE_DRAWER_MAKER_H_
 #define SPHERE_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "SphereDrawer.h"
 
 namespace tktk
@@ -9,11 +10,11 @@ namespace tktk
 	{
 	public:
 
-		static SphereDrawerMaker& makeStart();
+		static SphereDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
-		SphereDrawer* create();
+		CfpPtr<SphereDrawer> create();
 
 		// •`‰æ—Dæ“x‚ğİ’è‚·‚é
 		SphereDrawerMaker& drawPriority(float value);
@@ -60,6 +61,8 @@ namespace tktk
 
 	private:
 
+		// ì¬—p•Ï”’B
+		GameObjectPtr m_user{};
 		float m_drawPriority{ 0.0f };
 		float m_radius{ 1.0f };
 		int m_divNum{ 30 };

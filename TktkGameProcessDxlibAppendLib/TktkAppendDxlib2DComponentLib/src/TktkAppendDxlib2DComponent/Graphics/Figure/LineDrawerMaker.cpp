@@ -4,15 +4,16 @@ namespace tktk
 {
 	LineDrawerMaker LineDrawerMaker::m_self;
 
-	LineDrawerMaker & LineDrawerMaker::makeStart()
+	LineDrawerMaker & LineDrawerMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = LineDrawerMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	LineDrawer* LineDrawerMaker::create()
+	CfpPtr<LineDrawer> LineDrawerMaker::create()
 	{
-		auto lineDrawer = new LineDrawer(
+		auto lineDrawer = m_user->createComponent<LineDrawer>(
 			m_relativeFirstPos,
 			m_relativeSecondPos,
 			m_lineThickness,
@@ -21,7 +22,7 @@ namespace tktk
 			m_blendMode,
 			m_blendParam,
 			m_useAntialiasing
-		);
+			);
 
 		if (m_useRenderTarget) lineDrawer->useRenderTarget(m_renderTargetId);
 
@@ -81,5 +82,19 @@ namespace tktk
 		m_useRenderTarget = true;
 		m_renderTargetId = value;
 		return *this;
+	}
+
+	void LineDrawerMaker::reset()
+	{
+		m_self.m_relativeFirstPos = -Vector2::one;
+		m_self.m_relativeSecondPos = Vector2::one;
+		m_self.m_lineThickness = 1.0f;
+		m_self.m_lineColor = Color::white;
+		m_self.m_drawPriority = 0.0f;
+		m_self.m_blendMode = BlendMode::Alpha;
+		m_self.m_blendParam = 1.0f;
+		m_self.m_useAntialiasing = true;
+		m_self.m_useRenderTarget = false;
+		m_self.m_renderTargetId = -1;
 	}
 }

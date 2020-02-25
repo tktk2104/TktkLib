@@ -4,15 +4,16 @@ namespace tktk
 {
 	CircleDrawerMaker CircleDrawerMaker::m_self;
 
-	CircleDrawerMaker & CircleDrawerMaker::makeStart()
+	CircleDrawerMaker & CircleDrawerMaker::makeStart(GameObjectPtr user)
 	{
-		m_self = CircleDrawerMaker();
+		reset();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	CircleDrawer* CircleDrawerMaker::create()
+	CfpPtr<CircleDrawer> CircleDrawerMaker::create()
 	{
-		auto circleDrawer = new CircleDrawer(
+		auto circleDrawer = m_user->createComponent<CircleDrawer>(
 			m_radius,
 			m_localPosition,
 			m_lineThickness,
@@ -23,7 +24,7 @@ namespace tktk
 			m_blendParam,
 			m_useAntialiasing,
 			m_vertexNum
-		);
+			);
 
 		if (m_useRenderTarget) circleDrawer->useRenderTarget(m_renderTargetId);
 
@@ -95,5 +96,21 @@ namespace tktk
 		m_useRenderTarget = true;
 		m_renderTargetId = value;
 		return *this;
+	}
+
+	void CircleDrawerMaker::reset()
+	{
+		m_self.m_radius = 1.0f;
+		m_self.m_localPosition = Vector2::zero;
+		m_self.m_lineThickness = 1.0f;
+		m_self.m_isFill = true;
+		m_self.m_circleColor = Color::white;
+		m_self.m_drawPriority = 0.0f;
+		m_self.m_blendMode = BlendMode::Alpha;
+		m_self.m_blendParam = 1.0f;
+		m_self.m_useAntialiasing = true;
+		m_self.m_vertexNum = 32;
+		m_self.m_useRenderTarget = false;
+		m_self.m_renderTargetId = -1;
 	}
 }

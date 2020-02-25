@@ -1,6 +1,7 @@
 #ifndef APPEND_SPOT_LIGHT_MAKER_H_
 #define APPEND_SPOT_LIGHT_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "AppendSpotLight.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static AppendSpotLightMaker& makeStart();
+		static AppendSpotLightMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		AppendSpotLight* create();
+		CfpPtr<AppendSpotLight> create();
 
 		// 自身のライトIDを設定
 		AppendSpotLightMaker& lightId(int value);
@@ -50,6 +51,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		int m_lightId{ -1 };
 		float m_outAngleDegree{ 90.0f };
 		float m_inAngleDegree{ 45.0f };

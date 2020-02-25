@@ -26,15 +26,14 @@ namespace tktk
 		{
 			auto boundingCircle = dynamic_cast<const BoundingCircle&>(circleCollider->getBodyBase());
 
-			auto circleDrawer = CircleDrawerMaker::makeStart()
+			auto circleDrawer = CircleDrawerMaker::makeStart(getGameObject())
 				.drawPriority(m_drawPriority)
 				.circleColor(m_wireFrameColor)
 				.isFill(false)
 				.radius(boundingCircle.calculateLocalRadius())
 				.create();
 
-			auto processingClassPtr = getGameObject()->addComponent(circleDrawer);
-			m_hasSetActiveClassList.checkAndAdd<CircleDrawer>(getGameObject()->isStatic(), processingClassPtr.processingClassPtr(), circleDrawer);
+			m_hasSetActiveClassList.checkAndAdd<CircleDrawer>(getGameObject()->isStatic(), circleDrawer.processingClassPtr(), nullptr);
 		}
 
 		auto rectCollider = getComponent<RectCollider>();
@@ -42,15 +41,14 @@ namespace tktk
 		{
 			auto bundingPolygon = dynamic_cast<const BoundingPolygon2d&>(rectCollider->getBodyBase());
 
-			auto polygon2DDrawer = Polygon2DDrawerMaker::makeStart()
+			auto polygon2DDrawer = Polygon2DDrawerMaker::makeStart(getGameObject())
 				.drawPriority(m_drawPriority)
 				.polygonColor(m_wireFrameColor)
 				.isFill(false)
 				.vertexs(bundingPolygon.calculateLocalVertexs())
 				.create();
 
-			auto processingClassPtr = getGameObject()->addComponent(polygon2DDrawer);
-			m_hasSetActiveClassList.checkAndAdd<Polygon2DDrawer>(getGameObject()->isStatic(), processingClassPtr.processingClassPtr(), polygon2DDrawer);
+			m_hasSetActiveClassList.checkAndAdd<Polygon2DDrawer>(getGameObject()->isStatic(), polygon2DDrawer.processingClassPtr(), nullptr);
 		}
 
 		auto polygon2dCollider	= getComponent<Polygon2dCollider>();
@@ -58,15 +56,14 @@ namespace tktk
 		{
 			auto bundingPolygon = dynamic_cast<const BoundingPolygon2d&>(polygon2dCollider->getBodyBase());
 
-			auto polygon2DDrawer = Polygon2DDrawerMaker::makeStart()
+			auto polygon2DDrawer = Polygon2DDrawerMaker::makeStart(getGameObject())
 				.drawPriority(m_drawPriority)
 				.polygonColor(m_wireFrameColor)
 				.isFill(false)
 				.vertexs(bundingPolygon.calculateLocalVertexs())
 				.create();
 
-			auto processingClassPtr = getGameObject()->addComponent(polygon2DDrawer);
-			m_hasSetActiveClassList.checkAndAdd<Polygon2DDrawer>(getGameObject()->isStatic(), processingClassPtr.processingClassPtr(), polygon2DDrawer);
+			m_hasSetActiveClassList.checkAndAdd<Polygon2DDrawer>(getGameObject()->isStatic(), polygon2DDrawer.processingClassPtr(), nullptr);
 		}
 	}
 

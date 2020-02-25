@@ -1,7 +1,7 @@
 #ifndef APPEND_POINT_LIGHT_MAKER_H_
 #define APPEND_POINT_LIGHT_MAKER_H_
 
-#include <memory>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "AppendPointLight.h"
 
 namespace tktk
@@ -11,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static AppendPointLightMaker& makeStart();
+		static AppendPointLightMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		AppendPointLight* create();
+		CfpPtr<AppendPointLight> create();
 
 		// 自身のライトIDを設定
 		AppendPointLightMaker& lightId(int value);
@@ -45,6 +45,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		int m_lightId{ -1 };
 		float m_range{ 2000.0f };
 		std::array<float, 3> m_attenuation{ std::array<float, 3>({ 0.0f, 0.0006f, 0.0f }) };

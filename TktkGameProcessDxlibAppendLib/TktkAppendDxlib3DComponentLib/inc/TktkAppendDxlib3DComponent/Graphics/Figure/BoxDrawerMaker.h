@@ -1,7 +1,7 @@
 #ifndef BOX_DRAWER_MAKER_H_
 #define BOX_DRAWER_MAKER_H_
 
-#include <memory>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "BoxDrawer.h"
 
 namespace tktk
@@ -10,11 +10,11 @@ namespace tktk
 	{
 	public:
 
-		static BoxDrawerMaker& makeStart();
+		static BoxDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
-		BoxDrawer* create();
+		CfpPtr<BoxDrawer> create();
 
 		// •`‰æ—Dæ“x‚ğİ’è‚·‚é
 		BoxDrawerMaker& drawPriority(float value);
@@ -58,6 +58,8 @@ namespace tktk
 
 	private:
 
+		// ì¬—p•Ï”’B
+		GameObjectPtr m_user{};
 		float m_drawPriority{ 0.0f };
 		Vector3 m_boxSize{ Vector3::one };
 		Vector3 m_localPosition{ Vector3::zero };

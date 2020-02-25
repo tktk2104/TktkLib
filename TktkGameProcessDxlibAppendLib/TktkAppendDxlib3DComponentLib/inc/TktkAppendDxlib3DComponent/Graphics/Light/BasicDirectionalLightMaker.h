@@ -1,6 +1,7 @@
 #ifndef BASIC_DIRECTIONAL_LIGHT_MAKER_H_
 #define BASIC_DIRECTIONAL_LIGHT_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "BasicDirectionalLight.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static BasicDirectionalLightMaker& makeStart();
+		static BasicDirectionalLightMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		BasicDirectionalLight* create();
+		CfpPtr<BasicDirectionalLight> create();
 
 		// 自身の拡散反射光を設定
 		BasicDirectionalLightMaker& difColor(const Color& value);
@@ -33,6 +34,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		Color m_difColor{ Color::white };
 		Color m_spcColor{ Color::white };
 		Color m_ambColor{ Color::white };

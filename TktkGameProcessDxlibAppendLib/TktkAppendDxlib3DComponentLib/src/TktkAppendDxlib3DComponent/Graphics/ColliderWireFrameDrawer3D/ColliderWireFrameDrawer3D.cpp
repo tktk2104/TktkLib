@@ -58,7 +58,7 @@ namespace tktk
 
 		const auto& aabb = dynamic_cast<const AxisAlignedBoundingBox&>(boxCollider->getBodyBase());
 
-		auto boxDrawer = BoxDrawerMaker::makeStart()
+		auto boxDrawer = BoxDrawerMaker::makeStart(getGameObject())
 			.drawPriority(m_drawPriority)
 			.boxColor(m_wireFrameColor)
 			.isFill(false)
@@ -67,8 +67,7 @@ namespace tktk
 			.useLight(false)
 			.create();
 
-		auto cfpPtr = getGameObject()->addComponent(boxDrawer);
-		m_hasSetActiveClassList.checkAndAdd<BoxDrawer>(getGameObject()->isStatic(), cfpPtr.processingClassPtr());
+		m_hasSetActiveClassList.checkAndAdd<BoxDrawer>(getGameObject()->isStatic(), boxDrawer.processingClassPtr());
 	}
 
 	void ColliderWireFrameDrawer3D::createSphereDrawer(CfpPtr<SphereCollider> sphereCollider)
@@ -77,7 +76,7 @@ namespace tktk
 
 		const auto& boundingSphere = dynamic_cast<const BoundingSphere&>(sphereCollider->getBodyBase());
 
-		auto sphereDrawer = SphereDrawerMaker::makeStart()
+		auto sphereDrawer = SphereDrawerMaker::makeStart(getGameObject())
 			.drawPriority(m_drawPriority)
 			.sphereColor(m_wireFrameColor)
 			.isFill(false)
@@ -86,7 +85,6 @@ namespace tktk
 			.useLight(false)
 			.create();
 
-		auto cfpPtr = getGameObject()->addComponent(sphereDrawer);
-		m_hasSetActiveClassList.checkAndAdd<SphereDrawer>(getGameObject()->isStatic(), cfpPtr.processingClassPtr());
+		m_hasSetActiveClassList.checkAndAdd<SphereDrawer>(getGameObject()->isStatic(), sphereDrawer.processingClassPtr());
 	}
 }

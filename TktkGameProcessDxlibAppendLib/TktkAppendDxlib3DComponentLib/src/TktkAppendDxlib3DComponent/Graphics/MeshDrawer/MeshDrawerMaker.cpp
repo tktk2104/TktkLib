@@ -4,13 +4,14 @@ namespace tktk
 {
 	MeshDrawerMaker MeshDrawerMaker::m_self;
 
-	MeshDrawerMaker & MeshDrawerMaker::makeStart()
+	MeshDrawerMaker & MeshDrawerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = MeshDrawerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	MeshDrawer* MeshDrawerMaker::create()
+	CfpPtr<MeshDrawer> MeshDrawerMaker::create()
 	{
 		DxLibDraw3DParam dxLibDraw3DParam = DxLibDraw3DParam(m_drawPriority);
 		dxLibDraw3DParam.localMat = Matrix4::createTRS(m_meshLocalPos, m_meshLocalRotation, m_meshLocalScale);
@@ -22,7 +23,7 @@ namespace tktk
 		dxLibDraw3DParam.createShadow = m_createShadow;
 		dxLibDraw3DParam.shadowCreatorPriority = m_shadowCreatorPriority;
 
-		return new MeshDrawer(
+		return m_user->createComponent<MeshDrawer>(
 			dxLibDraw3DParam,
 			m_meshID
 			);

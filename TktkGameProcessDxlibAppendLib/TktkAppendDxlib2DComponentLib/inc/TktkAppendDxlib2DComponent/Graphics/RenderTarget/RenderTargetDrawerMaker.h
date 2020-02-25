@@ -1,6 +1,7 @@
 #ifndef RENDER_TARGET_DRAWER_MAKER_H_
 #define RENDER_TARGET_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "RenderTargetDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static RenderTargetDrawerMaker& makeStart();
+		static RenderTargetDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		RenderTargetDrawer* create();
+		CfpPtr<RenderTargetDrawer> create();
 
 		// 描画優先度を設定する
 		RenderTargetDrawerMaker& drawPriority(float value);
@@ -36,7 +37,9 @@ namespace tktk
 
 	private:
 
-		float m_drawPriority{ 0 };
+		// 作成用変数達
+		GameObjectPtr m_user{};
+		float m_drawPriority{ 0.0f };
 		int m_drawRenderTargetId{ -1 };
 		BlendMode m_blendMode{ BlendMode::Alpha };
 		float m_blendParam{ 1.0f };

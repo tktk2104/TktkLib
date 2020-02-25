@@ -1,6 +1,7 @@
 #ifndef QUADRILATERAL_BILLBOARD_DRAWER_MAKER_H_
 #define QUADRILATERAL_BILLBOARD_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "QuadrilateralBillboardDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static QuadrilateralBillboardDrawerMaker& makeStart();
+		static QuadrilateralBillboardDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		QuadrilateralBillboardDrawer* create();
+		CfpPtr<QuadrilateralBillboardDrawer> create();
 
 		// 描画優先度を設定する
 		QuadrilateralBillboardDrawerMaker& drawPriority(float value);
@@ -63,7 +64,9 @@ namespace tktk
 
 	private:
 
-		float m_drawPriority{ 0 };
+		// 作成用変数達
+		GameObjectPtr m_user{};
+		float m_drawPriority{ 0.0f };
 		int m_textureId{ -1 };
 		int m_splitTextureIndex{ -1 };
 		Vector3 m_localPos{ Vector3::zero };

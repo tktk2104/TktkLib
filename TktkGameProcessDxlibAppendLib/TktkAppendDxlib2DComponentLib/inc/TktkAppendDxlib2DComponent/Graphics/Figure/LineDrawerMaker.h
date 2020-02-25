@@ -1,6 +1,7 @@
 #ifndef LINE_DRAWER_MAKER_H_
 #define LINE_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "LineDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static LineDrawerMaker& makeStart();
+		static LineDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		LineDrawer* create();
+		CfpPtr<LineDrawer> create();
 
 		// 自身の座標から見た線分の１つ目の座標を設定
 		LineDrawerMaker& relativeFirstPos(const Vector2& value);
@@ -46,16 +47,21 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static LineDrawerMaker m_self;
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		Vector2 m_relativeFirstPos{ Vector2(-1.0f, -1.0f) };
 		Vector2 m_relativeSecondPos{ Vector2( 1.0f,  1.0f) };
 		float m_lineThickness{ 1.0f };
 		Color m_lineColor{ Color::white };
-		float m_drawPriority{ 0 };
+		float m_drawPriority{ 0.0f };
 		BlendMode m_blendMode{ BlendMode::Alpha };
 		float m_blendParam{ 1.0f };
 		bool m_useAntialiasing{ true };

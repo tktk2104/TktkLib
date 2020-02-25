@@ -1,6 +1,7 @@
 #ifndef CIRCLE_DRAWER_MAKER_H_
 #define CIRCLE_DRAWER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "CircleDrawer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static CircleDrawerMaker& makeStart();
+		static CircleDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		CircleDrawer* create();
+		CfpPtr<CircleDrawer> create();
 
 		// 真円の半径を設定する
 		CircleDrawerMaker& radius(float value);
@@ -52,17 +53,22 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static CircleDrawerMaker m_self;
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		float m_radius{ 1.0f };
 		Vector2 m_localPosition{ Vector2::zero };
 		float m_lineThickness{ 1.0f };
 		bool m_isFill{ true };
 		Color m_circleColor{ Color::white };
-		float m_drawPriority{ 0 };
+		float m_drawPriority{ 0.0f };
 		BlendMode m_blendMode{ BlendMode::Alpha };
 		float m_blendParam{ 1.0f };
 		bool m_useAntialiasing{ true };

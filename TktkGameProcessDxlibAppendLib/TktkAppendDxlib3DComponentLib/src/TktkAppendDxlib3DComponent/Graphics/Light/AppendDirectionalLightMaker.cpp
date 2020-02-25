@@ -4,15 +4,16 @@ namespace tktk
 {
 	AppendDirectionalLightMaker AppendDirectionalLightMaker::m_self;
 
-	AppendDirectionalLightMaker & AppendDirectionalLightMaker::makeStart()
+	AppendDirectionalLightMaker & AppendDirectionalLightMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = AppendDirectionalLightMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	AppendDirectionalLight* AppendDirectionalLightMaker::create()
+	CfpPtr<AppendDirectionalLight> AppendDirectionalLightMaker::create()
 	{
-		return new AppendDirectionalLight(
+		return m_user->createComponent<AppendDirectionalLight>(
 			m_lightId,
 			m_difColor,
 			m_spcColor,

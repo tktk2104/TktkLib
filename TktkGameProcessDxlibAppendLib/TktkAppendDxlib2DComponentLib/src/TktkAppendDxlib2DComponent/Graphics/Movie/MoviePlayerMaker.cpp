@@ -4,15 +4,16 @@ namespace tktk
 {
 	MoviePlayerMaker MoviePlayerMaker::m_self;
 
-	MoviePlayerMaker & MoviePlayerMaker::makeStart()
+	MoviePlayerMaker & MoviePlayerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = MoviePlayerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	MoviePlayer* MoviePlayerMaker::create()
+	CfpPtr<MoviePlayer> MoviePlayerMaker::create()
 	{
-		auto spriteDrawer = new MoviePlayer(
+		auto spriteDrawer = m_user->createComponent<MoviePlayer>(
 			m_drawPriority,
 			m_movieId,
 			m_movieCenterPosRate,
@@ -22,7 +23,7 @@ namespace tktk
 			m_useClipping,
 			m_clippingLeftTopPos,
 			m_clippingRightBottomPos
-		);
+			);
 
 		if (m_useRenderTarget) spriteDrawer->useRenderTarget(m_renderTargetId);
 

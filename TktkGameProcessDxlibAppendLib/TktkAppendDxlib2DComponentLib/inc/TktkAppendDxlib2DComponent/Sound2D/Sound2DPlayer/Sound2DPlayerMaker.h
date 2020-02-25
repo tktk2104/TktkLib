@@ -1,6 +1,7 @@
 #ifndef SOUND_2D_PLAYER_MAKER_H_
 #define SOUND_2D_PLAYER_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "Sound2DPlayer.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static Sound2DPlayerMaker& makeStart();
+		static Sound2DPlayerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		Sound2DPlayer* create();
+		CfpPtr<Sound2DPlayer> create();
 
 		// 自身の生成後すぐに再生するかを設定
 		Sound2DPlayerMaker& startToPlay(bool value);
@@ -42,6 +43,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		bool m_startToPlay{ true };
 		int m_playSoundId{ -1 };
 		SoundPlayType m_soundPlayType{ SoundPlayType::SOUND_PLAY_TYPE_BACKGROUND };

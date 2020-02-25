@@ -4,15 +4,16 @@ namespace tktk
 {
 	ShadowMapDrawerMaker ShadowMapDrawerMaker::m_self;
 
-	ShadowMapDrawerMaker & ShadowMapDrawerMaker::makeStart()
+	ShadowMapDrawerMaker & ShadowMapDrawerMaker::makeStart(GameObjectPtr user)
 	{
 		m_self = ShadowMapDrawerMaker();
+		m_self.m_user = user;
 		return m_self;
 	}
 
-	ShadowMapDrawer* ShadowMapDrawerMaker::create()
+	CfpPtr<ShadowMapDrawer> ShadowMapDrawerMaker::create()
 	{
-		return new ShadowMapDrawer(
+		return m_user->createComponent<ShadowMapDrawer>(
 			m_shadowMapCreateStarterDrawPriority,
 			m_shadowMapCreateFinisherDrawPriority,
 			m_shadowMapEnablerDrawPriority,

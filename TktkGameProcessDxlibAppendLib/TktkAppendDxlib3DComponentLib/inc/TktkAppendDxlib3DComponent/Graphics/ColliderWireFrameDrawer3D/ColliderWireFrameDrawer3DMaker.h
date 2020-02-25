@@ -1,6 +1,7 @@
 #ifndef COLLIDER_WIREFRAME_DRAWER_3D_MAKER_H_
 #define COLLIDER_WIREFRAME_DRAWER_3D_MAKER_H_
 
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "ColliderWireFrameDrawer3D.h"
 
 namespace tktk
@@ -10,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static ColliderWireFrameDrawer3DMaker& makeStart();
+		static ColliderWireFrameDrawer3DMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		ColliderWireFrameDrawer3D* create();
+		CfpPtr<ColliderWireFrameDrawer3D> create();
 
 		ColliderWireFrameDrawer3DMaker& drawPriority(float value);
 
@@ -28,6 +29,8 @@ namespace tktk
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		float m_drawPriority;
 		Color m_wireFrameColor;
 	};

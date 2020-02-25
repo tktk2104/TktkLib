@@ -1,7 +1,7 @@
 #ifndef RECT_DRAWER_MAKER_H_
 #define RECT_DRAWER_MAKER_H_
 
-#include <memory>
+#include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "RectDrawer.h"
 
 namespace tktk
@@ -11,12 +11,12 @@ namespace tktk
 	public:
 
 		// インスタンス作成開始
-		static RectDrawerMaker& makeStart();
+		static RectDrawerMaker& makeStart(GameObjectPtr user);
 
 	public:
 
 		// 作成する
-		RectDrawer* create();
+		CfpPtr<RectDrawer> create();
 
 	public:
 
@@ -52,17 +52,22 @@ namespace tktk
 
 	private:
 
+		// 自身のポインタを初期化する
+		static void reset();
+
 		// 自身のポインタ
 		static RectDrawerMaker m_self;
 
 	private:
 
+		// 作成用変数達
+		GameObjectPtr m_user{};
 		Vector2 m_rectSize{ Vector2::one };
 		Vector2 m_localPosition{ Vector2::zero };
 		float m_lineThickness{ 1.0f };
 		bool m_isFill{ true };
 		Color m_rectColor{ Color::white };
-		float m_drawPriority{ 0 };
+		float m_drawPriority{ 0.0f };
 		BlendMode m_blendMode{ BlendMode::Alpha };
 		float m_blendParam{ 1.0f };
 		bool m_useAntialiasing{ true };
