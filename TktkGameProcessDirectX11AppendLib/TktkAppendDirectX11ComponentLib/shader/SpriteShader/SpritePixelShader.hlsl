@@ -18,18 +18,10 @@ struct PS_INPUT
 	float4 position : SV_POSITION;
 };
 
-//Texture2D TextureMapTexture : register(t0);
-
-TextureCube TextureMapTexture : register(t0);
+Texture2D TextureMapTexture : register(t0);
 SamplerState TextureMapSampler : register(s0);
 
 float4 main(PS_INPUT input) : SV_Target
 {
-	return TextureMapTexture.Sample(TextureMapSampler, 
-		float3(
-			(input.texcoord.x * 2) - 1.0,
-			-1.0,
-			-((input.texcoord.y * 2) - 1.0)
-			)
-	) * color;
+	return TextureMapTexture.Sample(TextureMapSampler, input.texcoord) * color;
 }
