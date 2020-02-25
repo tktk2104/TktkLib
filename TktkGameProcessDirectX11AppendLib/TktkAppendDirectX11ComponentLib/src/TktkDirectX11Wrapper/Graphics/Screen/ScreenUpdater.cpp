@@ -81,11 +81,22 @@ namespace tktk
 		}
 		else if (PeekMessage(&m_msg, NULL, 0, 0, PM_REMOVE))
 		{
+			switch (m_msg.message)
+			{
+			case WM_MOUSEMOVE:
+			case WM_NCMOUSEMOVE:
+
+				break;
+
+			default:
+
+				ComponentFrameworkProcessor::setIsRunFuncAll(false);
+				ComponentFrameworkProcessor::setIsRunFunc<RUN_FUNC_frameBegin>(true);
+				break;
+			}
+
 			TranslateMessage(&m_msg);
 			DispatchMessage(&m_msg);
-
-			ComponentFrameworkProcessor::setIsRunFuncAll(false);
-			ComponentFrameworkProcessor::setIsRunFunc<RUN_FUNC_frameBegin>(true);
 		}
 	}
 
