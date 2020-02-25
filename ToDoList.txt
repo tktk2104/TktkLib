@@ -1,0 +1,8 @@
+・StateMachine用のComponentMaker関数を実装
+・シーンでGameObjectを追加できるように
+・RenderTargetを使った描画を行う
+・ゲームパッドを使った入力を可能にする
+・ビルボードを実装する
+・定数バッファのパラメータショートカットの安全性を向上させる
+・一部のComponentMakerにあるreset関数を削除する
+・ComponentMakerのヘッダファイルから前方宣言を活用しインクルードを減らす
