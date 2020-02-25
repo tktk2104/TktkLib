@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CommonIncludePaths.h"
-#include <TktkAppendDirectX11Component/Graphics/Camera/SimpleCamera.h>
-#include <TktkAppendDirectX11Component/Graphics/Camera/Module/FirstPersonModule.h>
+#include <TktkAppendDirectX11Component/Graphics/Camera/SimpleCameraMaker.h>
+#include <TktkAppendDirectX11Component/Graphics/Camera/Module/FirstPersonModuleMaker.h>
 
 struct CameraTest
 {
@@ -10,24 +10,22 @@ struct CameraTest
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(true);
 
-		gameObject->addComponent(
-			tktk::Transform3DMaker::makeStart()
+		tktk::Transform3DMaker::makeStart(gameObject)
 			.position(Vector3(0.0f, 10.0f, -30.0f))
-			.create()
-		);
+			.create();
 
-		gameObject->createComponent<tktk::SimpleCamera>(
-			CAMERA_BASIC,
-			45.0f,
-			0.1f,
-			1000.0f
-			);
+		tktk::SimpleCameraMaker::makeStart(gameObject)
+			.cameraId(CAMERA_BASIC)
+			.cameraFov(45.0f)
+			.cameraNear(0.1f)
+			.cameraFar(1000.0f)
+			.create();
 
-		gameObject->createComponent<tktk::FirstPersonModule>(
-			360.0f,
-			200.0f,
-			false,
-			true
-			);
+		tktk::FirstPersonModuleMaker::makeStart(gameObject)
+			.moveSpeedPerSec(360.0f)
+			.rotateDegSpeedPerSec(500.0f)
+			.alwaysMoveForward(false)
+			.enableUpDownKey(true)
+			.create();
 	}
 };

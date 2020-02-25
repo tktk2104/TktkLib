@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CommonIncludePaths.h"
-#include <TktkAppendDirectX11Component/Graphics/Sprite/SpriteDrawer.h>
+#include <TktkAppendDirectX11Component/Graphics/Sprite/SpriteDrawerMaker.h>
 
 #include "SpriteTestScript.h"
 
@@ -11,15 +11,14 @@ struct SpriteTest
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject->addComponent(
-			tktk::Transform2DMaker::makeStart()
-			.scaleRate(Vector2(0.0000001f))
-			.create()
-		);
+		tktk::Transform2DMaker::makeStart(gameObject)
+			.scaleRate(Vector2(1.0f))
+			.create();
 
-		gameObject->createComponent<tktk::SpriteDrawer>(
-			TEXTURE_2D_SPRITE_CUBE
-			);
+		tktk::SpriteDrawerMaker::makeStart(gameObject)
+			.drawPriority(0.0f)
+			.textureId(TEXTURE_2D_SPRITE_TEST)
+			.create();
 
 		gameObject->createComponent<SpriteTestScript>();
 	}

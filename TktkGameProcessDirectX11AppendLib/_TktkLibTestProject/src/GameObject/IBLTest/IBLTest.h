@@ -1,8 +1,7 @@
 #pragma once
 
 #include "CommonIncludePaths.h"
-#include <TktkAppendDirectX11Component/Graphics/Mesh/MeshDrawer.h>
-#include <TktkAppendDirectX11Component/Graphics/Mesh/MeshAnimator.h>
+#include <TktkAppendDirectX11Component/Graphics/Mesh/MeshDrawerMaker.h>
 
 struct IBLTest
 {
@@ -10,19 +9,17 @@ struct IBLTest
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject->addComponent(
-			tktk::Transform3DMaker::makeStart()
+		tktk::Transform3DMaker::makeStart(gameObject)
 			.position(position)
 			.scaleRate(Vector3(0.5f))
-			.create()
-		);
+			.create();
 
-		gameObject->createComponent<tktk::MeshDrawer>(
-			0.0f,
-			CAMERA_BASIC,
-			MESH_PISTOL,
-			-10,
-			std::vector<int>({ MATERIAL_IBL_PISTOL })
-			);
+		tktk::MeshDrawerMaker::makeStart(gameObject)
+			.drawPriority(0.0f)
+			.cameraId(CAMERA_BASIC)
+			.meshId(MESH_PISTOL)
+			.skeltonId(-10)
+			.materialIdArray(std::vector<int>({ MATERIAL_IBL_PISTOL }))
+			.create();
 	}
 };

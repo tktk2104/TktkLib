@@ -7,8 +7,14 @@
 #include "Scene/LoadingScene/LoadingScene.h"
 #include "Scene/TitleScene/TitleScene.h"
 
+#include <TktkMetaFunc/HasFuncCheck/CreatedStruct/HasAwakeChecker.h>
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine, int nCmdShow)
 {
+	int i;
+
+	awake_runner<void>::checkAndRun(&i);
+
 	tktk::ComponentFrameworkProcessor::createClass<tktk::DirectX11Policy>(
 		true,
 		hInstance,
@@ -27,10 +33,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		"res/shader/pbrIblMeshShader/PbrIblMeshPixelShader.cso",
 		"res/shader/pbrIblMeshShader/PbrIblMeshVertexShader.cso"
 	);
-
+	
 	tktk::SceneManager::createScene<LoadingScene>();
 	tktk::SceneManager::createScene<TitleScene>();
 	tktk::SceneManager::enableScene<LoadingScene>();
-
+	
 	tktk::ComponentFrameworkProcessor::run();
 }

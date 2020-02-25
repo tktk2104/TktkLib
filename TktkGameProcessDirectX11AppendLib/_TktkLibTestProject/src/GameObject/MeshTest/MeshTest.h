@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CommonIncludePaths.h"
-#include <TktkAppendDirectX11Component/Graphics/Mesh/MeshDrawer.h>
-#include <TktkAppendDirectX11Component/Graphics/Mesh/MeshAnimator.h>
+#include <TktkAppendDirectX11Component/Graphics/Mesh/MeshDrawerMaker.h>
+#include <TktkAppendDirectX11Component/Graphics/Mesh/MeshAnimatorMaker.h>
 #include "MeshTestScript.h"
 
 
@@ -12,26 +12,21 @@ struct MeshTest
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject->addComponent(
-			tktk::Transform3DMaker::makeStart()
+		tktk::Transform3DMaker::makeStart(gameObject)
 			.position(position)
-			.create()
-		);
+			.create();
 
-		gameObject->createComponent<tktk::MeshDrawer>(
-			0.0f,
-			CAMERA_BASIC,
-			MESH_ROBOT_KYLE,
-			SKELETON_YBot,
-			std::vector<int>({ MATERIAL_ROBOT_KYLE })
-			);
+		tktk::MeshDrawerMaker::makeStart(gameObject)
+			.drawPriority(0.0f)
+			.cameraId(CAMERA_BASIC)
+			.meshId(MESH_ROBOT_KYLE)
+			.skeltonId(SKELETON_YBot)
+			.materialIdArray(std::vector<int>({ MATERIAL_ROBOT_KYLE }))
+			.create();
 
-		gameObject->createComponent<tktk::MeshAnimator>(
-			tktk::CfpPtr<tktk::MeshDrawer>(),
-			ANIMATION_YBot_kicking_1,
-			60.0f,
-			0.1f
-			);
+		tktk::MeshAnimatorMaker::makeStart(gameObject)
+			.animationId(ANIMATION_YBot_kicking_1)
+			.create();
 
 		gameObject->createComponent<MeshTestScript>();
 	}
