@@ -10,20 +10,17 @@ public:
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject->addComponent(
-			tktk::Transform3DMaker::makeStart()
+		tktk::Transform3DMaker::makeStart(gameObject)
 			.traceType(tktk::TraceParentType::TRACE_PARENT_POS_AND_SCALE)
-			.create()
-		);
+			.create();
 
-		gameObject->addComponent(
-			tktk::MeshDrawerMaker::makeStart()
+		tktk::MeshDrawerMaker::makeStart(gameObject)
 			.drawPriority(DrawPriority::DRAW_PRIORITY_SKY)
 			.meshID(MeshId::MESH_SKY)
 			.writeZBuffer(false)
 			.useLight(false)
-			.create()
-		);
+			.create();
+
 		return gameObject;
 	}
 };

@@ -9,11 +9,9 @@ struct MeshTestChild
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject->addComponent(
-			tktk::Transform3DMaker::makeStart()
+		tktk::Transform3DMaker::makeStart(gameObject)
 			//.position(pos)
-			.create()
-		);
+			.create();
 
 		/*gameObject->addComponent(
 			tktk::SphereDrawerMaker::makeStart()
@@ -24,14 +22,12 @@ struct MeshTestChild
 			.create()
 		);*/
 
-		gameObject->addComponent(
-			tktk::BoxDrawerMaker::makeStart()
+		tktk::BoxDrawerMaker::makeStart(gameObject)
 			.boxColor(Color::red)
 			.isFill(true)
 			.boxSize(Vector3(1.0f))
 			.useLight(false)
-			.create()
-		);
+			.create();
 
 		/*gameObject->addComponent(
 			tktk::MeshDrawerMaker::makeStart()

@@ -18,11 +18,9 @@ struct MeshTest
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject->addComponent(
-			tktk::Transform3DMaker::makeStart()
+		tktk::Transform3DMaker::makeStart(gameObject)
 			//.position(Vector3(0.0f, 0.0f, 0.0f))
-			.create()
-		);
+			.create();
 
 		/*gameObject->addComponent(
 			tktk::RectBillboardDrawerMaker::makeStart()
@@ -43,43 +41,35 @@ struct MeshTest
 			.create()
 		);*/
 
-		gameObject->addComponent(
-			tktk::MeshDrawerMaker::makeStart()
+		tktk::MeshDrawerMaker::makeStart(gameObject)
 			.drawPriority(1.0f)
 			.meshID(1)
 			.createShadow(true)
 			.shadowCreatorPriority(DrawPriority::DRAW_PRIORITY_CREATE_SHADOW)
 			.meshLocalScale(Vector3(15.0f))
 			.meshLocalRotation(Quaternion::identity)
-			.create()
-		);
+			.create();
 
-		gameObject->addComponent(
-			tktk::MeshAnimatorMaker::makeStart()
+		tktk::MeshAnimatorMaker::makeStart(gameObject)
 			.isLoop(true)
 			.motionID(4)
 			.motionIntervalSec(1.0f / 30.0f)
-			.create()
-		);
+			.create();
 
-		gameObject->addComponent(
-			tktk::BoxColliderMaker::makeStart()
+		tktk::BoxColliderMaker::makeStart(gameObject)
 			.collisionGroupType(CollisionGroup::COLLISION_GROUP_PLAYER)
 			.boxSize(Vector3(15.0f, 22.0f, 15.0f))
 			.localPosition(Vector3(0.0f, 10.0f, 0.0f))
-			.create()
-		);
+			.create();
 
-		gameObject->addComponent(
-			tktk::ColliderWireFrameDrawer3DMaker::makeStart()
+		tktk::ColliderWireFrameDrawer3DMaker::makeStart(gameObject)
 			.drawPriority(100)
 			.wireFrameColor(Color::white)
-			.create()
-		);
+			.create();
 
 		// .renderTargetId(RenderTargetId::RENDER_TARGET_BEFOR_BLOOM)
 	
-		gameObject->addComponent(tktk::CurStateTypeListMaker::makeStart().create());
+		tktk::CurStateTypeListMaker::makeStart(gameObject).create();
 		MeshTestMoveState::create(gameObject);
 		MeshTestRotateState::create(gameObject);
 		MeshTestScaleState::create(gameObject);

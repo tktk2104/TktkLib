@@ -43,11 +43,9 @@ struct BloomTest
 			postEffectDrawParameters.push_back(bloomCombineParam);
 		}
 
-		gameObject->addComponent(
-			tktk::PostEffectDrawerMaker::makeStart()
+		tktk::PostEffectDrawerMaker::makeStart(gameObject)
 			.drawPriority(DrawPriority::DRAW_PRIORITY_DEFAULT)
 			.postEffectDrawParameters(postEffectDrawParameters)
-			.create()
-		);
+			.create();
 	}
 };

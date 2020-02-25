@@ -8,20 +8,16 @@ struct Pistol
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject->addComponent(
-			tktk::Transform3DMaker::makeStart()
+		tktk::Transform3DMaker::makeStart(gameObject)
 			.position(Vector3(0.0f, 10.0f, 0.0f))
-			.create()
-		);
+			.create();
 
-		gameObject->addComponent(
-			tktk::MeshDrawerMaker::makeStart()
+		tktk::MeshDrawerMaker::makeStart(gameObject)
 			.drawPriority(1.0f)
 			.meshID(MESH_PISTOL)
 			.createShadow(true)
 			.shadowCreatorPriority(DrawPriority::DRAW_PRIORITY_CREATE_SHADOW)
 			.meshLocalScale(Vector3(0.1f))
-			.create()
-		);
+			.create();
 	}
 };

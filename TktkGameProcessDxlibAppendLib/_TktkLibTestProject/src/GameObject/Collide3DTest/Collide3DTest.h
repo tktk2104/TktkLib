@@ -8,13 +8,11 @@ struct Collide3DTest
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject->addComponent(
-			tktk::Transform3DMaker::makeStart()
+		tktk::Transform3DMaker::makeStart(gameObject)
 			//.position(Vector3(-80.0f, 0.0f, 0.0f))[x:-0.040122, y:0.884570, z:-0.192970]
 			//.scaleRate(Vector3(1.0f, 1.0f, 1.0f))
 			.position(Vector3(-0.040122f, 0.884570f, -0.192970f))
-			.create()
-		);
+			.create();
 
 		/*gameObject->addComponent(
 			tktk::BoxDrawerMaker::makeStart()

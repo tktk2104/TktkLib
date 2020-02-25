@@ -10,19 +10,14 @@ public:
 	{
 		GameObjectPtr gameObject = tktk::GameObjectManager::createGameObject(false);
 
-		gameObject->addComponent(
-			tktk::Transform3DMaker::makeStart()
+		tktk::Transform3DMaker::makeStart(gameObject)
 			.rotationDeg(Vector3(30.0f, 30.0f, 0.0f))
-			.create()
-		);
+			.create();
 
-		gameObject->addComponent(
-			tktk::BasicDirectionalLightMaker::makeStart()
-			.create()
-		);
+		tktk::BasicDirectionalLightMaker::makeStart(gameObject)
+			.create();
 
-		gameObject->addComponent(
-			tktk::ShadowMapDrawerMaker::makeStart()
+		tktk::ShadowMapDrawerMaker::makeStart(gameObject)
 			.shadowMapCreateStarterDrawPriority(DrawPriority::DRAW_PRIORITY_CREATE_SHADOW_BEGIN)
 			.shadowMapCreateFinisherDrawPriority(DrawPriority::DRAW_PRIORITY_CREATE_SHADOW_END)
 			.shadowMapEnablerDrawPriority(DrawPriority::DRAW_PRIORITY_SHADOW_ENABLE)
@@ -30,7 +25,6 @@ public:
 			.shadowMapId(ShadowMapId::BASE_SHADOW_MAP)
 			.drawAreaMinPos(Vector3(-1000.0f, -1.0f, -1000.0f))
 			.drawAreaMaxPos(Vector3(1000.0f, 1000.0f, 1000.0f))
-			.create()
-		);
+			.create();
 	}
 };
