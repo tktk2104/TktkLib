@@ -273,6 +273,24 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModuleMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\SimpleCameraMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Light\PointLightMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimatorMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawerMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawerMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\SpriteShader\SpritePixelShader.hlsl" />
@@ -615,6 +633,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\MeshConstantBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModuleMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\SimpleCameraMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Light\PointLightMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimatorMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawerMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawerMaker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

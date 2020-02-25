@@ -133,11 +133,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModule.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModuleMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\SimpleCamera.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\SimpleCameraMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Light\PointLight.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Light\PointLightMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimator.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimatorMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawerMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawerMaker.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\Animation.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\AnimationLoader.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\AnimationManager.cpp" />
@@ -307,11 +313,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModule.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModuleMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\SimpleCamera.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\SimpleCameraMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Light\PointLight.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Light\PointLightMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimator.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimatorMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawerMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawerMaker.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\DirectX11LibDefinition.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Animation.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\AnimationLoader.h" />
