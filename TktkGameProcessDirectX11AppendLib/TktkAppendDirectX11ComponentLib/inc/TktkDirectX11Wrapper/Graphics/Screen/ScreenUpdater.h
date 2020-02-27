@@ -2,6 +2,7 @@
 #define SCREEN_UPDATER_H_
 
 #include <string>
+#include <vector>
 #include <TktkMath/Color.h>
 #include <TktkMath/Vector2.h>
 #include <d3d11.h>
@@ -41,6 +42,9 @@ namespace tktk
 
 		// 画面の背景色を設定する
 		void setBackgroundColor(const Color& color);
+
+		// レンダーターゲットと深度ステンシルビューを設定する
+		void setRenderTargetsAndDepthStencilView(const std::vector<int>& renderTargetIdArray, int depthStencilViewId);
 
 	private:
 

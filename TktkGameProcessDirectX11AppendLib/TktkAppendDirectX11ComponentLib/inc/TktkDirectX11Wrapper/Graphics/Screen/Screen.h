@@ -1,6 +1,7 @@
 #ifndef SCREEN_H_
 #define SCREEN_H_
 
+#include <vector>
 #include <d3d11.h>
 #include <TktkMath/Color.h>
 
@@ -22,6 +23,9 @@ namespace tktk
 
 		// 画面の背景色を設定する
 		static void setBackgroundColor(const Color& color);
+
+		// レンダーターゲットと深度ステンシルビューを設定する
+		static void setRenderTargetsAndDepthStencilView(const std::vector<int>& renderTargetIdArray, int depthStencilViewId);
 	};
 }
 #endif // !SCREEN_H_

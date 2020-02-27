@@ -62,10 +62,7 @@ namespace tktk
 
 	void ScreenUpdater::start()
 	{
-		const RenderTargetData & renderTargetData = RenderTarget::getData(SYSTEM_RENDER_TARGET_BACK_BUFFER);
-		ID3D11RenderTargetView * backBuffer = renderTargetData.getViewPtr();
-		const DepthStencilData & depthStencilData = DepthStencil::getData(SYSTEM_DEPTH_STENCIL_BASIC);
-		m_deviceContextPtr->OMSetRenderTargets(1, &backBuffer, depthStencilData.getViewPtr());
+		setRenderTargetsAndDepthStencilView({ SYSTEM_RENDER_TARGET_BACK_BUFFER }, SYSTEM_DEPTH_STENCIL_BASIC);
 	}
 
 	void ScreenUpdater::frameBegin()
@@ -141,5 +138,19 @@ namespace tktk
 	void ScreenUpdater::setBackgroundColor(const Color & color)
 	{
 		m_backGroundColor = color;
+	}
+
+	void ScreenUpdater::setRenderTargetsAndDepthStencilView(const std::vector<int>& renderTargetIdArray, int depthStencilViewId)
+	{
+		std::vector<ID3D11RenderTargetView*> renderTargetViewArray;
+		renderTargetViewArray.reserve(renderTargetIdArray.size());
+
+		for (unsigned int i = 0; i < renderTargetIdArray.size(); i++)
+		{
+			renderTargetViewArray.at(i) = RenderTarget::getData(renderTargetIdArray.at(i)).getViewPtr();
+		}
+		const DepthStencilData & depthStencilData = DepthStencil::getData(depthStencilViewId);
+
+		m_deviceContextPtr->OMSetRenderTargets(renderTargetViewArray.size(), renderTargetViewArray.data(), depthStencilData.getViewPtr());
 	}
 }

@@ -23,4 +23,9 @@ namespace tktk
 	{
 		ScreenManager::setBackgroundColor(color);
 	}
+
+	void Screen::setRenderTargetsAndDepthStencilView(const std::vector<int>& renderTargetIdArray, int depthStencilViewId)
+	{
+		ScreenManager::setRenderTargetsAndDepthStencilView(renderTargetIdArray, depthStencilViewId);
+	}
 }

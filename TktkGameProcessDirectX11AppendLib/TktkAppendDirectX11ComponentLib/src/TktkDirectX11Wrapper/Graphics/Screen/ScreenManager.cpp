@@ -30,4 +30,9 @@ namespace tktk
 	{
 		m_updaterPtr->setBackgroundColor(color);
 	}
+
+	void ScreenManager::setRenderTargetsAndDepthStencilView(const std::vector<int>& renderTargetIdArray, int depthStencilViewId)
+	{
+		m_updaterPtr->setRenderTargetsAndDepthStencilView(renderTargetIdArray, depthStencilViewId);
+	}
 }
