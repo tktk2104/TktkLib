@@ -8,7 +8,7 @@ namespace tktk
 
 	void ConstantBufferManager::setUp()
 	{
-		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new ConstantBufferAssets());
+		m_assetsPtr = ComponentFrameworkProcessor::createClass<ConstantBufferAssets>(true);
 	}
 
 	void ConstantBufferManager::erase(int id)

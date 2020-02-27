@@ -65,7 +65,7 @@ namespace tktk
 		, m_tempBufferPtr(data)
 	{
 		D3D11_BUFFER_DESC bufferDesc;
-		bufferDesc.ByteWidth = sizeof(T);
+		bufferDesc.ByteWidth = sizeof(T) + (sizeof(T) % 16U == 0U ? 0U : 16U - sizeof(T) % 16U); // バッファサイズは１６の倍数である必要があるため
 		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;

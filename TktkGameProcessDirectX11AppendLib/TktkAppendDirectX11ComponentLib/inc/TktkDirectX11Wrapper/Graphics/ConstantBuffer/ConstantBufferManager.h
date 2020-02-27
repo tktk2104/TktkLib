@@ -13,7 +13,7 @@ namespace tktk
 	{
 	public:
 
-		// 「ConstantBufferAssets」を生成
+		// 「ConstantBufferAssets」を作成
 		static void setUp();
 
 	public:

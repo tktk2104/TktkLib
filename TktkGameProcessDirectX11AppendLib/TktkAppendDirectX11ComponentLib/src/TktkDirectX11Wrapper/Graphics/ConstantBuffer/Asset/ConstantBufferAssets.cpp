@@ -1,7 +1,5 @@
 #include "TktkDirectX11Wrapper/Graphics/ConstantBuffer/Asset/ConstantBufferAssets.h"
 
-#include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
-
 namespace tktk
 {
 	ConstantBufferAssets::~ConstantBufferAssets()
