@@ -149,6 +149,10 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\AnimationManager.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\Asset\AnimationAssets.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\Asset\AnimationData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\BlendState\Asset\BlendStateAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\BlendState\Asset\BlendStateData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\BlendState\BlendState.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\BlendState\BlendStateManager.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Camera\Asset\CameraAssets.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Camera\Asset\CameraData.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Camera\Camera.cpp" />
@@ -331,6 +335,10 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Asset\AnimationAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Asset\AnimationData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Asset\KeyFrame.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\Asset\BlendStateAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\Asset\BlendStateData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\BlendState.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\BlendStateManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Camera\Asset\CameraAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Camera\Asset\CameraData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Camera\Camera.h" />
