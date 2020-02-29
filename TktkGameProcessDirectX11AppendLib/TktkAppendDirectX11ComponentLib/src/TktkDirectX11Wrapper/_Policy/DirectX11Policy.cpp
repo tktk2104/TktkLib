@@ -2,7 +2,7 @@
 
 #include <TktkDirectX11Wrapper/Graphics/Window/WindowManager.h>
 #include <TktkDirectX11Wrapper/Graphics/Screen/ScreenManager.h>
-#include <TktkDirectX11Wrapper/Graphics/DepthStencil/DepthStencilManager.h>
+#include <TktkDirectX11Wrapper/Graphics/DepthStencilView/DepthStencilViewManager.h>
 #include <TktkDirectX11Wrapper/Graphics/ViewPort/ViewPortManager.h>
 #include <TktkDirectX11Wrapper/Input/Keyboard/KeyboardManager.h>
 #include <TktkDirectX11Wrapper/Sound/SoundManager.h>
@@ -48,7 +48,7 @@ namespace tktk
 
 		ScreenManager::setUp(fullScreenFlag);
 
-		DepthStencilManager::setUp();
+		DepthStencilViewManager::setUp();
 
 		ViewPortManager::setUp();
 
