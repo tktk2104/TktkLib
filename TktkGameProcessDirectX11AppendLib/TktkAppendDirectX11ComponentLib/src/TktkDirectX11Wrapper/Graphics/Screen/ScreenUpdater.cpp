@@ -4,7 +4,7 @@
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
 #include <TktkComponentFramework/RunFuncType.h>
 #include "TktkDirectX11Wrapper/Graphics/Window/Window.h"
-#include "TktkDirectX11Wrapper/Graphics/DepthStencil/DepthStencil.h"
+#include "TktkDirectX11Wrapper/Graphics/DepthStencilView/DepthStencilView.h"
 #include "TktkDirectX11Wrapper/Graphics/RenderTarget/RenderTarget.h"
 
 namespace tktk
@@ -62,7 +62,7 @@ namespace tktk
 
 	void ScreenUpdater::start()
 	{
-		setRenderTargetsAndDepthStencilView({ SYSTEM_RENDER_TARGET_BACK_BUFFER }, SYSTEM_DEPTH_STENCIL_BASIC);
+		setRenderTargetsAndDepthStencilView({ SYSTEM_RENDER_TARGET_BACK_BUFFER }, SYSTEM_DEPTH_STENCIL_VIEW_BASIC);
 	}
 
 	void ScreenUpdater::frameBegin()
@@ -105,7 +105,7 @@ namespace tktk
 		m_deviceContextPtr->ClearRenderTargetView(renderTargetData.getViewPtr(), clearColor);
 
 		// デプスバッファをクリア
-		const DepthStencilData& depthStencilData = DepthStencil::getData(SYSTEM_DEPTH_STENCIL_BASIC);
+		const DepthStencilViewData& depthStencilData = DepthStencilView::getData(SYSTEM_DEPTH_STENCIL_VIEW_BASIC);
 		m_deviceContextPtr->ClearDepthStencilView(depthStencilData.getViewPtr(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
 
@@ -147,9 +147,9 @@ namespace tktk
 
 		for (unsigned int i = 0; i < renderTargetIdArray.size(); i++)
 		{
-			renderTargetViewArray.at(i) = RenderTarget::getData(renderTargetIdArray.at(i)).getViewPtr();
+			renderTargetViewArray.push_back(RenderTarget::getData(renderTargetIdArray.at(i)).getViewPtr());
 		}
-		const DepthStencilData & depthStencilData = DepthStencil::getData(depthStencilViewId);
+		const DepthStencilViewData & depthStencilData = DepthStencilView::getData(depthStencilViewId);
 
 		m_deviceContextPtr->OMSetRenderTargets(renderTargetViewArray.size(), renderTargetViewArray.data(), depthStencilData.getViewPtr());
 	}
