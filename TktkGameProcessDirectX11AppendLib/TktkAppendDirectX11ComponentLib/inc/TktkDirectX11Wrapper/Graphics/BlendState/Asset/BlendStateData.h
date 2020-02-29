@@ -9,7 +9,7 @@ namespace tktk
 	{
 	public:
 
-		BlendStateData(const D3D11_BLEND_DESC& blendDesc);
+		explicit BlendStateData(const D3D11_BLEND_DESC& blendDesc);
 		~BlendStateData();
 
 		// ÉRÉsÅ[ã÷é~
@@ -24,5 +24,6 @@ namespace tktk
 
 		ID3D11BlendState* m_blendState{ nullptr };
 	};
+
 }
 #endif // !BLEND_STATE_DATA_H_
