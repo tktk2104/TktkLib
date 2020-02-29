@@ -701,5 +701,8 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilView\Asset\SystemDepthStencilViewId.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\Asset\SystemBlendStateId.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

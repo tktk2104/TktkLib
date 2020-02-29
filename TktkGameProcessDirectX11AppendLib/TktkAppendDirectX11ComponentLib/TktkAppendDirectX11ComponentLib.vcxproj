@@ -341,6 +341,7 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Asset\KeyFrame.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\Asset\BlendStateAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\Asset\BlendStateData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\Asset\SystemBlendStateId.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\BlendState.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\BlendState\BlendStateManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Camera\Asset\CameraAssets.h" />

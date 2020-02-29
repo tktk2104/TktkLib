@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void BlendState::create(int id, const D3D11_BLEND_DESC & blendDesc)
+	void BlendState::createImpl(int id, const D3D11_BLEND_DESC & blendDesc)
 	{
 		if (id <= 0)
 		{
@@ -14,7 +14,7 @@ namespace tktk
 		BlendStateManager::create(id, blendDesc);
 	}
 
-	void BlendState::erase(int id)
+	void BlendState::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -23,7 +23,7 @@ namespace tktk
 		BlendStateManager::erase(id);
 	}
 
-	BlendStateData * BlendState::getDataPtr(int id)
+	BlendStateData * BlendState::getDataPtrImpl(int id)
 	{
 		return BlendStateManager::getDataPtr(id);
 	}
