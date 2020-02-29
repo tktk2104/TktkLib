@@ -1,13 +1,13 @@
-#ifndef DEPTH_STENCIL_H_
-#define DEPTH_STENCIL_H_
+#ifndef DEPTH_STENCIL_VIEW_H_
+#define DEPTH_STENCIL_VIEW_H_
 
-#include "Asset/DepthStencilData.h"
-#include "Asset/SystemDepthStencilId.h"
+#include "Asset/DepthStencilViewData.h"
+#include "Asset/SystemDepthStencilViewId.h"
 
 namespace tktk
 {
-	// 「DepthStencilManager」の実装の一部を隠すためのクラス
-	class DepthStencil
+	// 「DepthStencilViewManager」の実装の一部を隠すためのクラス
+	class DepthStencilView
 	{
 	public:
 
@@ -20,7 +20,7 @@ namespace tktk
 		static void erase(int id);
 
 		// 指定した深度ビューを管理するクラスの参照を取得する
-		static const DepthStencilData& getData(int id);
+		static const DepthStencilViewData& getData(int id);
 	};
 }
-#endif // !DEPTH_STENCIL_H_
+#endif // !DEPTH_STENCIL_VIEW_H_

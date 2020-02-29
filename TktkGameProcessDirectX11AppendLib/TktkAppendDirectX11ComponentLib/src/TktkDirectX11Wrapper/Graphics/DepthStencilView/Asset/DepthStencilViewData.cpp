@@ -1,10 +1,10 @@
-#include "TktkDirectX11Wrapper/Graphics/DepthStencil/Asset/DepthStencilData.h"
+#include "TktkDirectX11Wrapper/Graphics/DepthStencilView/Asset/DepthStencilViewData.h"
 
 #include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
 
 namespace tktk
 {
-	DepthStencilData::DepthStencilData(const Vector2 & useTextureSize)
+	DepthStencilViewData::DepthStencilViewData(const Vector2 & useTextureSize)
 	{
 		// デプスステンシルバッファ用のテクスチャを生成
 		D3D11_TEXTURE2D_DESC dtd{};
@@ -25,7 +25,7 @@ namespace tktk
 		Screen::getDevicePtr()->CreateDepthStencilView(m_useTexturePtr, NULL, &m_viewPtr);
 	}
 
-	DepthStencilData::~DepthStencilData()
+	DepthStencilViewData::~DepthStencilViewData()
 	{
 		if (m_useTexturePtr != nullptr)
 		{
@@ -38,7 +38,7 @@ namespace tktk
 		}
 	}
 
-	ID3D11DepthStencilView * DepthStencilData::getViewPtr() const
+	ID3D11DepthStencilView * DepthStencilViewData::getViewPtr() const
 	{
 		return m_viewPtr;
 	}

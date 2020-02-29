@@ -75,18 +75,6 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBufferManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilAssets.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\DepthStencil.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\DepthStencilManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Light\Asset\LightAssets.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -315,6 +303,18 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\DepthStencilStateData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilView\DepthStencilView.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilView\DepthStencilViewManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilView\Asset\DepthStencilViewAssets.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilView\Asset\DepthStencilViewData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\SpriteShader\SpritePixelShader.hlsl" />
@@ -381,21 +381,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBufferManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilAssets.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\SystemDepthStencilId.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\DepthStencil.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\DepthStencilManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Light\Asset\LightAssets.h">
@@ -699,6 +684,21 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\DepthStencilStateData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilView\DepthStencilView.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilView\DepthStencilViewManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilView\Asset\DepthStencilViewAssets.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilView\Asset\DepthStencilViewData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilView\Asset\SystemDepthStencilViewId.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

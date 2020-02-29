@@ -1,5 +1,5 @@
-#ifndef DEPTH_STENCIL_DATA_H_
-#define DEPTH_STENCIL_DATA_H_
+#ifndef DEPTH_STENCIL_VIEW_DATA_H_
+#define DEPTH_STENCIL_VIEW_DATA_H_
 
 #include <d3d11.h>
 #include <TktkMath/Vector2.h>
@@ -7,15 +7,15 @@
 namespace tktk
 {
 	// 深度バッファを管理するクラス
-	class DepthStencilData
+	class DepthStencilViewData
 	{
 	public:
 
-		explicit DepthStencilData(const Vector2& useTextureSize);
-		~DepthStencilData();
+		explicit DepthStencilViewData(const Vector2& useTextureSize);
+		~DepthStencilViewData();
 
-		DepthStencilData(const DepthStencilData& other) = delete;
-		DepthStencilData& operator = (const DepthStencilData& other) = delete;
+		DepthStencilViewData(const DepthStencilViewData& other) = delete;
+		DepthStencilViewData& operator = (const DepthStencilViewData& other) = delete;
 
 	public:
 
@@ -31,4 +31,4 @@ namespace tktk
 		ID3D11DepthStencilView* m_viewPtr{ nullptr };
 	};
 }
-#endif // !DEPTH_STENCIL_DATA_H_
+#endif // !DEPTH_STENCIL_VIEW_DATA_H_
