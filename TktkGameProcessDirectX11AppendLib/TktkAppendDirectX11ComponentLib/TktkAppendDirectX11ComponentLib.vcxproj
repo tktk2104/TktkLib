@@ -161,6 +161,10 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\ConstantBufferData.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBuffer.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBufferManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\DepthStencilStateAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\DepthStencilStateData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilState\DepthStencilState.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilState\DepthStencilStateManager.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilAssets.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilData.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencil\DepthStencil.cpp" />
@@ -349,6 +353,10 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\SystemConstantBufferParamLocationType.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBuffer.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBufferManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\DepthStencilStateAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\DepthStencilStateData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\DepthStencilState.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\DepthStencilStateManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\DepthStencilData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencil\Asset\SystemDepthStencilId.h" />
