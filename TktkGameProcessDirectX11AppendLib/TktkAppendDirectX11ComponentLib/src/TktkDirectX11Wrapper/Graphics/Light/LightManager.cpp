@@ -11,34 +11,9 @@ namespace tktk
 		m_updaterPtr = ComponentFrameworkProcessor::addClass(true, new LightUpdater());
 	}
 
-	void LightManager::create(int id, const Color & ambientColor, const Color & diffuseColor, const Color & specularColor, const Vector3 & position)
-	{
-		m_updaterPtr->create(id, ambientColor, diffuseColor, specularColor, position);
-	}
-
-	void LightManager::erase(int id)
-	{
-		m_updaterPtr->erase(id);
-	}
-
 	void LightManager::clear()
 	{
 		m_updaterPtr->clear();
-	}
-
-	LightData * LightManager::getLightDataPtr(int id)
-	{
-		return m_updaterPtr->getLightDataPtr(id);
-	}
-
-	void LightManager::enableLight(int id)
-	{
-		m_updaterPtr->enableLight(id);
-	}
-
-	void LightManager::disableLight(int id)
-	{
-		m_updaterPtr->disableLight(id);
 	}
 
 	void LightManager::disableLightAll()
@@ -61,5 +36,30 @@ namespace tktk
 		std::forward_list<LightData*> result;
 		createEnableLightList(&result);
 		return result;
+	}
+
+	void LightManager::createImpl(int id, const Color & ambientColor, const Color & diffuseColor, const Color & specularColor, const Vector3 & position)
+	{
+		m_updaterPtr->create(id, ambientColor, diffuseColor, specularColor, position);
+	}
+
+	void LightManager::eraseImpl(int id)
+	{
+		m_updaterPtr->erase(id);
+	}
+
+	LightData * LightManager::getLightDataPtrImpl(int id)
+	{
+		return m_updaterPtr->getLightDataPtr(id);
+	}
+
+	void LightManager::enableLightImpl(int id)
+	{
+		m_updaterPtr->enableLight(id);
+	}
+
+	void LightManager::disableLightImpl(int id)
+	{
+		m_updaterPtr->disableLight(id);
 	}
 }
