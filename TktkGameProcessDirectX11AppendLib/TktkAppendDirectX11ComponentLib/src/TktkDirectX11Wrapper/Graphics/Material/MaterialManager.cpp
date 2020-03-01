@@ -11,7 +11,12 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new MaterialAssets());
 	}
 
-	void MaterialManager::create(
+	void MaterialManager::clear()
+	{
+		m_assetsPtr->clear();
+	}
+
+	void MaterialManager::createImpl(
 		int id,
 		int indexBufferStartPos,
 		int indexBufferUseCount,
@@ -40,22 +45,17 @@ namespace tktk
 		);
 	}
 
-	void MaterialManager::duplicate(int id, int originalId)
+	void MaterialManager::duplicateImpl(int id, int originalId)
 	{
 		m_assetsPtr->duplicate(id, originalId);
 	}
 
-	void MaterialManager::erase(int id)
+	void MaterialManager::eraseImpl(int id)
 	{
 		m_assetsPtr->erase(id);
 	}
 
-	void MaterialManager::clear()
-	{
-		m_assetsPtr->clear();
-	}
-
-	MaterialData * MaterialManager::getDataPtr(int id)
+	MaterialData * MaterialManager::getDataPtrImpl(int id)
 	{
 		return m_assetsPtr->getDataPtr(id);
 	}

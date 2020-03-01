@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <TktkMath/Color.h>
+#include <TktkMetaFunc/TypeCheck/isIdType.h>
 #include <TktkClassFuncProcessor/ProcessingClass/SafetyVoidPtr.h>
 #include "../../ConstantBuffer/Asset/ConstantBufferData.h"
 
@@ -40,13 +41,27 @@ namespace tktk
 
 		// 使用する頂点シェーダーのIdを取得する
 		int getUseVertexShaderId() const;
-		// 使用する頂点シェーダーのIdを設定する
-		void setUseVertexShaderId(int id);
+
+		// 使用する頂点シェーダーのIdを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setUseVertexShaderId(IdType id)
+		{
+			m_useVertexShaderId = static_cast<int>(id);
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setUseVertexShaderId(IdType id) { static_assert(false, "VertexShaderId Fraud Type"); }
 
 		// 使用するピクセルシェーダーのIdを取得する
 		int getUsePixelShaderId() const;
-		// 使用するピクセルシェーダーのIdを設定する
-		void setUsePixelShaderId(int id);
+
+		// 使用するピクセルシェーダーのIdを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setUsePixelShaderId(IdType id)
+		{
+			m_usePixelShaderId = static_cast<int>(id);
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setUsePixelShaderId(IdType id) { static_assert(false, "PixelShaderId Fraud Type"); }
 
 		// シェーダーで使用するテクスチャIdの連想配列を取得する
 		const std::unordered_map<unsigned int, int>& getUseTextureIdMap() const;
@@ -72,17 +87,45 @@ namespace tktk
 
 		// 頂点シェーダーが使用する定数バッファに設定する数値の連想配列を取得する
 		const std::unordered_map<int, SafetyVoidPtr>& getSetVSConstantBufferParamMap() const;
-		// 頂点シェーダーが使用する定数バッファの数値を設定する予約をする
-		// ※「T」の型はコピーコンストラクタが無いとビルドエラーになります
-		template<class T>
-		void settingReservationVSConstantBufferParam(int locationType, const T& param);
+
+		// 頂点シェーダーが使用する定数バッファの数値を設定する予約をする（列挙型を含む整数型のidが渡された場合かつ「BufferParamType」がコピーコンストラクタを持っている場合のみビルド可）
+		template<class LocationType, class BufferParamType, std::enable_if_t<is_idType_v<LocationType>>* = nullptr>
+		void settingReservationVSConstantBufferParam(LocationType locationType, const BufferParamType& param)
+		{
+			if (m_setVSConstantBufferParamMap.count(static_cast<int>(locationType)) != 0)
+			{
+				if (m_setVSConstantBufferParamMap.at(static_cast<int>(locationType)).canCast<BufferParamType>())
+				{
+					*(m_setVSConstantBufferParamMap.at(static_cast<int>(locationType)).castPtr<BufferParamType>()) = param;
+					return;
+				}
+				m_setVSConstantBufferParamMap.erase(static_cast<int>(locationType));
+			}
+			m_setVSConstantBufferParamMap.emplace(static_cast<int>(locationType), new BufferParamType(param));
+		}
+		template<class LocationType, class BufferParamType, std::enable_if_t<!is_idType_v<LocationType>>* = nullptr>
+		void settingReservationVSConstantBufferParam(LocationType locationType, const BufferParamType& param) { static_assert(false, "LocationType Fraud Type"); }
 
 		// ピクセルシェーダーが使用する定数バッファに設定する数値の連想配列を取得する
 		const std::unordered_map<int, SafetyVoidPtr>& getSetPSConstantBufferParamMap() const;
-		// ピクセルシェーダーが使用する定数バッファの数値を設定する予約をする
-		// ※「T」の型はコピーコンストラクタが無いとビルドエラーになります
-		template<class T>
-		void settingReservationPSConstantBufferParam(int locationType, const T& param);
+
+		// ピクセルシェーダーが使用する定数バッファの数値を設定する予約をする（列挙型を含む整数型のidが渡された場合かつ「BufferParamType」がコピーコンストラクタを持っている場合のみビルド可）
+		template<class LocationType, class BufferParamType, std::enable_if_t<is_idType_v<LocationType>>* = nullptr>
+		void settingReservationPSConstantBufferParam(LocationType locationType, const BufferParamType& param)
+		{
+			if (m_setPSConstantBufferParamMap.count(static_cast<int>(locationType)) != 0)
+			{
+				if (m_setPSConstantBufferParamMap.at(static_cast<int>(locationType)).canCast<BufferParamType>())
+				{
+					*(m_setPSConstantBufferParamMap.at(static_cast<int>(locationType)).castPtr<BufferParamType>()) = param;
+					return;
+				}
+				m_setPSConstantBufferParamMap.erase(static_cast<int>(locationType));
+			}
+			m_setPSConstantBufferParamMap.emplace(static_cast<int>(locationType), new BufferParamType(param));
+		}
+		template<class LocationType, class BufferParamType, std::enable_if_t<!is_idType_v<LocationType>>* = nullptr>
+		void settingReservationPSConstantBufferParam(LocationType locationType, const BufferParamType& param) { static_assert(false, "LocationType Fraud Type"); }
 
 	private:
 
@@ -115,39 +158,5 @@ namespace tktk
 		// ピクセルシェーダーが使用する定数バッファに設定する数値の連想配列
 		std::unordered_map<int, SafetyVoidPtr> m_setPSConstantBufferParamMap;
 	};
-
-	// 頂点シェーダーが使用する定数バッファの数値を設定する予約をする
-	// ※「T」の型はコピーコンストラクタが無いとビルドエラーになります
-	template<class T>
-	inline void MaterialData::settingReservationVSConstantBufferParam(int locationType, const T & param)
-	{
-		if (m_setVSConstantBufferParamMap.count(locationType) != 0)
-		{
-			if (m_setVSConstantBufferParamMap.at(locationType).canCast<T>())
-			{
-				*(m_setVSConstantBufferParamMap.at(locationType).castPtr<T>()) = param;
-				return;
-			}
-			m_setVSConstantBufferParamMap.erase(locationType);
-		}
-		m_setVSConstantBufferParamMap.emplace(locationType, new T(param));
-	}
-
-	// ピクセルシェーダーが使用する定数バッファの数値を設定する予約をする
-	// ※「T」の型はコピーコンストラクタが無いとビルドエラーになります
-	template<class T>
-	inline void MaterialData::settingReservationPSConstantBufferParam(int locationType, const T & param)
-	{
-		if (m_setPSConstantBufferParamMap.count(locationType) != 0)
-		{
-			if (m_setPSConstantBufferParamMap.at(locationType).canCast<T>())
-			{
-				*(m_setPSConstantBufferParamMap.at(locationType).castPtr<T>()) = param;
-				return;
-			}
-			m_setPSConstantBufferParamMap.erase(locationType);
-		}
-		m_setPSConstantBufferParamMap.emplace(locationType, new T(param));
-	}
 }
 #endif // !MATERIAL_DATA_H_

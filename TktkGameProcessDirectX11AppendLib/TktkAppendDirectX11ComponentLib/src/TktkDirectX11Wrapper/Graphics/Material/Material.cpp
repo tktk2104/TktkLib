@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void Material::create(
+	void Material::createImpl(
 		int id,
 		int indexBufferStartPos,
 		int indexBufferUseCount,
@@ -38,7 +38,7 @@ namespace tktk
 		);
 	}
 
-	void Material::duplicate(int id, int originalId)
+	void Material::duplicateImpl(int id, int originalId)
 	{
 		if (id <= 0)
 		{
@@ -47,7 +47,7 @@ namespace tktk
 		MaterialManager::duplicate(id, originalId);
 	}
 
-	void Material::erase(int id)
+	void Material::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -56,7 +56,7 @@ namespace tktk
 		MaterialManager::erase(id);
 	}
 
-	MaterialData * Material::getDataPtr(int id)
+	MaterialData * Material::getDataPtrImpl(int id)
 	{
 		return MaterialManager::getDataPtr(id);
 	}

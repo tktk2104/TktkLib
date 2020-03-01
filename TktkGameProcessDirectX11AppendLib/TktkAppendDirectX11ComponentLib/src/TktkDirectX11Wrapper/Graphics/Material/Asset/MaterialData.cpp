@@ -46,19 +46,9 @@ namespace tktk
 		return m_useVertexShaderId;
 	}
 
-	void MaterialData::setUseVertexShaderId(int id)
-	{
-		m_useVertexShaderId = id;
-	}
-
 	int MaterialData::getUsePixelShaderId() const
 	{
 		return m_usePixelShaderId;
-	}
-
-	void MaterialData::setUsePixelShaderId(int id)
-	{
-		m_usePixelShaderId = id;
 	}
 
 	const std::unordered_map<unsigned int, int>& MaterialData::getUseTextureIdMap() const
