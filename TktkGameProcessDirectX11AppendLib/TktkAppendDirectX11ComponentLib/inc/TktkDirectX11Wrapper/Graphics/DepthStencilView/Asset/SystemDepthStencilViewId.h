@@ -3,9 +3,9 @@
 
 namespace tktk
 {
-	enum SystemDepthStencilViewId
+	enum class SystemDepthStencilViewId
 	{
-		SYSTEM_DEPTH_STENCIL_VIEW_BASIC = -100,
+		Basic = -100,
 	};
 }
 #endif // !SYSTEM_DEPTH_STENCIL_VIEW_ID_H_

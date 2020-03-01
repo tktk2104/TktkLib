@@ -11,7 +11,7 @@ namespace tktk
 	{
 	public:
 
-		DepthStencilViewAssets();
+		DepthStencilViewAssets() = default;
 		~DepthStencilViewAssets();
 
 		DepthStencilViewAssets(const DepthStencilViewAssets& other) = delete;
