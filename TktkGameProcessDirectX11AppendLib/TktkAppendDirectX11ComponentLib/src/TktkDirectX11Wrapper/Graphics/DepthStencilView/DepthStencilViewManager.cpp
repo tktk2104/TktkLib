@@ -1,6 +1,8 @@
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilView/DepthStencilViewManager.h"
 
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
+#include "TktkDirectX11Wrapper/Graphics/Window/Window.h"
+#include "TktkDirectX11Wrapper/Graphics/DepthStencilView/Asset/SystemDepthStencilViewId.h"
 
 namespace tktk
 {
@@ -9,16 +11,8 @@ namespace tktk
 	void DepthStencilViewManager::setUp()
 	{
 		m_assetsPtr = ComponentFrameworkProcessor::createClass<DepthStencilViewAssets>(true);
-	}
 
-	void DepthStencilViewManager::create(int id, const Vector2 & useTextureSize)
-	{
-		m_assetsPtr->create(id, useTextureSize);
-	}
-
-	void DepthStencilViewManager::erase(int id)
-	{
-		m_assetsPtr->erase(id);
+		create(SystemDepthStencilViewId::Basic, Window::getWindowSize());
 	}
 
 	void DepthStencilViewManager::clear()
@@ -26,7 +20,17 @@ namespace tktk
 		m_assetsPtr->clear();
 	}
 
-	const DepthStencilViewData & DepthStencilViewManager::getData(int id)
+	void DepthStencilViewManager::createImpl(int id, const Vector2 & useTextureSize)
+	{
+		m_assetsPtr->create(id, useTextureSize);
+	}
+
+	void DepthStencilViewManager::eraseImpl(int id)
+	{
+		m_assetsPtr->erase(id);
+	}
+
+	const DepthStencilViewData & DepthStencilViewManager::getDataImpl(int id)
 	{
 		return m_assetsPtr->getData(id);
 	}

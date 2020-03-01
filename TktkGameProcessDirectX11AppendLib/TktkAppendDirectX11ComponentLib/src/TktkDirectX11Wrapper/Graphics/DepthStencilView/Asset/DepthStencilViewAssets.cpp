@@ -1,15 +1,7 @@
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilView/Asset/DepthStencilViewAssets.h"
 
-#include "TktkDirectX11Wrapper/Graphics/Window/Window.h"
-#include "TktkDirectX11Wrapper/Graphics/DepthStencilView/Asset/SystemDepthStencilViewId.h"
-
 namespace tktk
 {
-	DepthStencilViewAssets::DepthStencilViewAssets()
-	{
-		create(SYSTEM_DEPTH_STENCIL_VIEW_BASIC, Window::getWindowSize());
-	}
-
 	DepthStencilViewAssets::~DepthStencilViewAssets()
 	{
 		clear();

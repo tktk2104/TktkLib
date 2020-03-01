@@ -4,7 +4,7 @@
 
 namespace tktk
 {
-	void DepthStencilView::create(int id, const Vector2 & useTextureSize)
+	void DepthStencilView::createImpl(int id, const Vector2 & useTextureSize)
 	{
 		if (id <= 0)
 		{
@@ -13,7 +13,7 @@ namespace tktk
 		DepthStencilViewManager::create(id, useTextureSize);
 	}
 
-	void DepthStencilView::erase(int id)
+	void DepthStencilView::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -22,7 +22,7 @@ namespace tktk
 		DepthStencilViewManager::erase(id);
 	}
 
-	const DepthStencilViewData & DepthStencilView::getData(int id)
+	const DepthStencilViewData & DepthStencilView::getDataImpl(int id)
 	{
 		return DepthStencilViewManager::getData(id);
 	}
