@@ -16,14 +16,14 @@ static void LoadPistolPbrMaterial()
 	pistolPbrMaterial->clearUseTextureId();
 	pistolPbrMaterial->addUseTextureId(0U, -(MATERIAL_PISTOL * 100 + 2));
 
-	pistolPbrMaterial->setUseVertexShaderId(tktk::SYSTEM_VERTEX_SHADER_PBR_MESH);
-	pistolPbrMaterial->setUsePixelShaderId(tktk::SYSTEM_PIXEL_SHADER_PBR_MESH);
+	pistolPbrMaterial->setUseVertexShaderId(tktk::SystemVertexShaderId::PbrMesh);
+	pistolPbrMaterial->setUsePixelShaderId(tktk::SystemPixelShaderId::PbrMesh);
 
-	pistolPbrMaterial->settingReservationVSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_albedoColor, Color::green);
-	pistolPbrMaterial->settingReservationVSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_metallic, 0.5f);
-	pistolPbrMaterial->settingReservationVSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_smoothness, 0.5f);
+	pistolPbrMaterial->settingReservationVSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::albedoColor, Color::green);
+	pistolPbrMaterial->settingReservationVSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::metallic, 0.5f);
+	pistolPbrMaterial->settingReservationVSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::smoothness, 0.5f);
 
-	pistolPbrMaterial->settingReservationPSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_albedoColor, Color::green);
-	pistolPbrMaterial->settingReservationPSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_metallic, 0.5f);
-	pistolPbrMaterial->settingReservationPSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_smoothness, 0.5f);
+	pistolPbrMaterial->settingReservationPSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::albedoColor, Color::green);
+	pistolPbrMaterial->settingReservationPSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::metallic, 0.5f);
+	pistolPbrMaterial->settingReservationPSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::smoothness, 0.5f);
 }

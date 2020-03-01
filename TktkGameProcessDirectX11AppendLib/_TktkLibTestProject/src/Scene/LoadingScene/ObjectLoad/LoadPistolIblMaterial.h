@@ -18,14 +18,14 @@ static void LoadPistolIblMaterial()
 	pistolIblMaterial->addUseTextureId(1U, TEXTURE_2D_SPRITE_CUBE);
 	pistolIblMaterial->addUseTextureId(2U, TEXTURE_2D_SPRITE_ENV);
 
-	pistolIblMaterial->setUseVertexShaderId(tktk::SYSTEM_VERTEX_SHADER_IBL_MESH);
-	pistolIblMaterial->setUsePixelShaderId(tktk::SYSTEM_PIXEL_SHADER_IBL_MESH);
+	pistolIblMaterial->setUseVertexShaderId(tktk::SystemVertexShaderId::IblMesh);
+	pistolIblMaterial->setUsePixelShaderId(tktk::SystemPixelShaderId::IblMesh);
 
-	pistolIblMaterial->settingReservationVSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_albedoColor, Color::white);
-	pistolIblMaterial->settingReservationVSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_metallic, 1.0f);
-	pistolIblMaterial->settingReservationVSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_smoothness, 1.0f);
+	pistolIblMaterial->settingReservationVSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::albedoColor, Color::white);
+	pistolIblMaterial->settingReservationVSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::metallic, 1.0f);
+	pistolIblMaterial->settingReservationVSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::smoothness, 1.0f);
 
-	pistolIblMaterial->settingReservationPSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_albedoColor, Color::white);
-	pistolIblMaterial->settingReservationPSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_metallic, 1.0f);
-	pistolIblMaterial->settingReservationPSConstantBufferParam(tktk::SYSTEM_CONSTANT_BUFFER_PARAM_smoothness, 1.0f);
+	pistolIblMaterial->settingReservationPSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::albedoColor, Color::white);
+	pistolIblMaterial->settingReservationPSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::metallic, 1.0f);
+	pistolIblMaterial->settingReservationPSConstantBufferParam(tktk::SystemConstantBufferParamLocationType::smoothness, 1.0f);
 }

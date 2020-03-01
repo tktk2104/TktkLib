@@ -18,6 +18,6 @@ static void LoadPistolPbrIblMaterial()
 	pistolPbrIblMaterial->addUseTextureId(4U, TEXTURE_2D_SPRITE_CUBE);
 	pistolPbrIblMaterial->addUseTextureId(5U, TEXTURE_2D_SPRITE_ENV);
 
-	pistolPbrIblMaterial->setUseVertexShaderId(tktk::SYSTEM_VERTEX_SHADER_PBR_IBL_MESH);
-	pistolPbrIblMaterial->setUsePixelShaderId(tktk::SYSTEM_PIXEL_SHADER_PBR_IBL_MESH);
+	pistolPbrIblMaterial->setUseVertexShaderId(tktk::SystemVertexShaderId::PbrIblMesh);
+	pistolPbrIblMaterial->setUsePixelShaderId(tktk::SystemPixelShaderId::PbrIblMesh);
 }

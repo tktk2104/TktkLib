@@ -32,14 +32,14 @@ void LoadingScene::sceneStart()
 	tktk::Texture2D::load(TEXTURE_2D_SPRITE_CUBE, "res/texture/cubemap/TestEnvHDR.dds");
 	tktk::Texture2D::load(TEXTURE_2D_SPRITE_ENV, "res/texture/EnvBrdf.png");
 
-	tktk::MeshLoader::loadMesh(MESH_PISTOL, std::vector<int>({ MATERIAL_PISTOL }), "res/mesh/pistol/pistol.msh");
+	tktk::MeshLoader::loadMesh("res/mesh/pistol/pistol.msh", MESH_PISTOL, MATERIAL_PISTOL);
 	tktk::Texture2D::load(TEXTURE_2D_SPRITE_MeSm, "res/mesh/pistol/Cerberus_Metallic_Smoothness.png");
 	tktk::Texture2D::load(TEXTURE_2D_SPRITE_AmOc, "res/mesh/pistol/Cerberus_AO.png");
 	LoadPistolPbrMaterial();
 	LoadPistolIblMaterial();
 	LoadPistolPbrIblMaterial();
 
-	tktk::MeshLoader::loadMesh(MESH_ROBOT_KYLE, std::vector<int>({ MATERIAL_ROBOT_KYLE }), "res/mesh/Robot_Kyle/Robot_Kyle.meshs");
+	tktk::MeshLoader::loadMesh("res/mesh/Robot_Kyle/Robot_Kyle.meshs", MESH_ROBOT_KYLE, MATERIAL_ROBOT_KYLE);
 
 	tktk::SkeletonLoader::load(SKELETON_YBot, "res/mesh/Robot_Kyle/Robot_Kyle.skls");
 	tktk::AnimationLoader::load(ANIMATION_YBot_kicking_1, "res/mesh/Robot_Kyle/Y_Bot@kicking_1.anms");
