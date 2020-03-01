@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <TktkMetaFunc/TypeCheck/isIdType.h>
 
 namespace tktk
 {
@@ -52,7 +53,17 @@ namespace tktk
 		* verticesSize
 
 		*/
-		static void loadMesh(int meshId, const std::vector<int>& materialIdArray, const std::string& fileName);
+		template <class MeshIdType, class... MaterialIdTypes, std::enable_if_t<is_idType_all_v<MeshIdType, MaterialIdTypes...>>* = nullptr>
+		static void loadMesh(const std::string& fileName, MeshIdType meshId, MaterialIdTypes... materialIds)
+		{
+			loadMeshImpl(static_cast<int>(meshId), { static_cast<int>(materialIds)... }, fileName);
+		}
+		template <class MeshIdType, class... MaterialIdTypes, std::enable_if_t<!is_idType_all_v<MeshIdType, MaterialIdTypes...>>* = nullptr>
+		static void loadMesh(const std::string& fileName, MeshIdType meshId, MaterialIdTypes... materialIds) { static_assert(false, "Id Fraud Type"); }
+
+	private:
+
+		static void loadMeshImpl(int meshId, const std::vector<int>& materialIdArray, const std::string& fileName);
 	};
 }
 #endif // !MESH_LOADER_H_

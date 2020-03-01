@@ -16,7 +16,7 @@ namespace tktk
 {
 	fbxsdk::FbxManager* FbxLoader::m_managerPtr{ nullptr };
 
-	void FbxLoader::load(int meshId, const std::vector<int>& materialIdArray, const std::string & fileName)
+	void FbxLoader::loadImpl(int meshId, const std::vector<int>& materialIdArray, const std::string & fileName)
 	{
 		fbxsdk::FbxScene* scenePtr;
 
@@ -120,8 +120,8 @@ namespace tktk
 				materialIdArray.at(i),
 				loadDataParam.subsetDataArray.at(i).start,
 				loadDataParam.subsetDataArray.at(i).count,
-				tktk::SYSTEM_VERTEX_SHADER_MESH,
-				tktk::SYSTEM_PIXEL_SHADER_MESH,
+				SystemVertexShaderId::Mesh,
+				SystemPixelShaderId::Mesh,
 				useTextureIdMap,
 				loadDataParam.materialDataArray.at(i).ambient,
 				loadDataParam.materialDataArray.at(i).diffuse,

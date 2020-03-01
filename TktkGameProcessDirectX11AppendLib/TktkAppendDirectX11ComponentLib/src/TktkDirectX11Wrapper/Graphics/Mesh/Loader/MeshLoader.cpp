@@ -46,7 +46,7 @@ struct SubsetDataType
 
 namespace tktk
 {
-	void MeshLoader::loadMesh(int meshId, const std::vector<int> & materialIdArray, const std::string & fileName)
+	void MeshLoader::loadMeshImpl(int meshId, const std::vector<int> & materialIdArray, const std::string & fileName)
 	{
 		std::ifstream file(fileName, std::ios::binary);
 
@@ -116,8 +116,8 @@ namespace tktk
 				materialIdArray.at(i),
 				subsets.at(i).start,
 				subsets.at(i).count,
-				tktk::SYSTEM_VERTEX_SHADER_MESH,
-				tktk::SYSTEM_PIXEL_SHADER_MESH,
+				SystemVertexShaderId::Mesh,
+				SystemPixelShaderId::Mesh,
 				useTextureIdMap,
 				materials.at(i).ambient,
 				materials.at(i).diffuse,
