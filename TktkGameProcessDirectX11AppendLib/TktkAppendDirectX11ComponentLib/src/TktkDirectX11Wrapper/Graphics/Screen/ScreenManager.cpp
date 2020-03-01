@@ -1,6 +1,8 @@
 #include "TktkDirectX11Wrapper/Graphics/Screen/ScreenManager.h"
 
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
+#include <TktkDirectX11Wrapper/Graphics/DepthStencilView/Asset/SystemDepthStencilViewId.h>
+#include <TktkDirectX11Wrapper/Graphics/RenderTarget/Asset/SystemRenderTargetId.h>
 
 namespace tktk
 {
@@ -31,8 +33,8 @@ namespace tktk
 		m_updaterPtr->setBackgroundColor(color);
 	}
 
-	void ScreenManager::setRenderTargetsAndDepthStencilView(const std::vector<int>& renderTargetIdArray, int depthStencilViewId)
+	void ScreenManager::setDepthStencilViewAndRenderTargetsImpl(int depthStencilViewId, const std::vector<int>& renderTargetIdArray)
 	{
-		m_updaterPtr->setRenderTargetsAndDepthStencilView(renderTargetIdArray, depthStencilViewId);
+		m_updaterPtr->setDepthStencilViewAndRenderTargets(depthStencilViewId, renderTargetIdArray);
 	}
 }

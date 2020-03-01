@@ -43,8 +43,8 @@ namespace tktk
 		// 画面の背景色を設定する
 		void setBackgroundColor(const Color& color);
 
-		// レンダーターゲットと深度ステンシルビューを設定する
-		void setRenderTargetsAndDepthStencilView(const std::vector<int>& renderTargetIdArray, int depthStencilViewId);
+		// 深度ステンシルビューとレンダーターゲットを設定する
+		void setDepthStencilViewAndRenderTargets(int depthStencilViewId, const std::vector<int>& renderTargetIdArray);
 
 	private:
 

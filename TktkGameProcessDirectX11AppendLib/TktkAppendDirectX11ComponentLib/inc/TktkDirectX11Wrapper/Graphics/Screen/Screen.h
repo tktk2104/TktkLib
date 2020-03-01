@@ -2,8 +2,9 @@
 #define SCREEN_H_
 
 #include <vector>
-#include <d3d11.h>
 #include <TktkMath/Color.h>
+#include <TktkMetaFunc/TypeCheck/isIdType.h>
+#include <d3d11.h>
 
 namespace tktk
 {
@@ -24,8 +25,22 @@ namespace tktk
 		// 画面の背景色を設定する
 		static void setBackgroundColor(const Color& color);
 
-		// レンダーターゲットと深度ステンシルビューを設定する
-		static void setRenderTargetsAndDepthStencilView(const std::vector<int>& renderTargetIdArray, int depthStencilViewId);
+		// 深度ステンシルビューとレンダーターゲットを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class DepthStencilViewIdType, class... RenderTargetIdType, std::enable_if_t<is_idType_v<DepthStencilViewIdType> && is_idType_all_v<RenderTargetIdType...>>* = nullptr>
+		static void setDepthStencilViewAndRenderTargets(DepthStencilViewIdType depthStencilViewId, RenderTargetIdType... renderTargetIds)
+		{
+			setDepthStencilViewAndRenderTargetsImpl(static_cast<int>(depthStencilViewId), { static_cast<int>(renderTargetIds)... });
+		}
+		template <class DepthStencilViewIdType, class... RenderTargetIdType, std::enable_if_t<!(is_idType_v<DepthStencilViewIdType> && is_idType_all_v<RenderTargetIdType...>)>* = nullptr>
+		static void setDepthStencilViewAndRenderTargets(DepthStencilViewIdType depthStencilViewId, RenderTargetIdType... renderTargetIds)
+		{
+			static_assert(false, "Id Fraud Type");
+		}
+
+	private:
+
+		// setDepthStencilViewAndRenderTargets()の実装
+		static void setDepthStencilViewAndRenderTargetsImpl(int depthStencilViewId, const std::vector<int>& renderTargetIdArray);
 	};
 }
 #endif // !SCREEN_H_

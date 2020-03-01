@@ -62,7 +62,7 @@ namespace tktk
 
 	void ScreenUpdater::start()
 	{
-		setRenderTargetsAndDepthStencilView({ SYSTEM_RENDER_TARGET_BACK_BUFFER }, SYSTEM_DEPTH_STENCIL_VIEW_BASIC);
+		setDepthStencilViewAndRenderTargets(static_cast<int>(SystemRenderTargetId::Basic), { static_cast<int>(SystemDepthStencilViewId::Basic)});
 	}
 
 	void ScreenUpdater::frameBegin()
@@ -101,11 +101,11 @@ namespace tktk
 	{
 		// バックバッファをクリア
 		float clearColor[4] = { m_backGroundColor.r, m_backGroundColor.g, m_backGroundColor.b, m_backGroundColor.a };
-		const RenderTargetData & renderTargetData = RenderTarget::getData(SYSTEM_RENDER_TARGET_BACK_BUFFER);
+		const RenderTargetData & renderTargetData = RenderTarget::getData(SystemRenderTargetId::Basic);
 		m_deviceContextPtr->ClearRenderTargetView(renderTargetData.getViewPtr(), clearColor);
 
 		// デプスバッファをクリア
-		const DepthStencilViewData& depthStencilData = DepthStencilView::getData(SYSTEM_DEPTH_STENCIL_VIEW_BASIC);
+		const DepthStencilViewData& depthStencilData = DepthStencilView::getData(SystemDepthStencilViewId::Basic);
 		m_deviceContextPtr->ClearDepthStencilView(depthStencilData.getViewPtr(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
 
@@ -140,7 +140,7 @@ namespace tktk
 		m_backGroundColor = color;
 	}
 
-	void ScreenUpdater::setRenderTargetsAndDepthStencilView(const std::vector<int>& renderTargetIdArray, int depthStencilViewId)
+	void ScreenUpdater::setDepthStencilViewAndRenderTargets(int depthStencilViewId, const std::vector<int>& renderTargetIdArray)
 	{
 		std::vector<ID3D11RenderTargetView*> renderTargetViewArray;
 		renderTargetViewArray.reserve(renderTargetIdArray.size());
