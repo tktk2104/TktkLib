@@ -11,22 +11,22 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new SkeletonAssets());
 	}
 
-	void SkeletonManager::create(int id, const std::vector<Bone>& boneArray)
-	{
-		m_assetsPtr->create(id, boneArray);
-	}
-
-	void SkeletonManager::erase(int id)
-	{
-		m_assetsPtr->erase(id);
-	}
-
 	void SkeletonManager::clear()
 	{
 		m_assetsPtr->clear();
 	}
 
-	const SkeletonData & SkeletonManager::getData(int id)
+	void SkeletonManager::createImpl(int id, const std::vector<Bone>& boneArray)
+	{
+		m_assetsPtr->create(id, boneArray);
+	}
+
+	void SkeletonManager::eraseImpl(int id)
+	{
+		m_assetsPtr->erase(id);
+	}
+
+	const SkeletonData & SkeletonManager::getDataImpl(int id)
 	{
 		return m_assetsPtr->getData(id);
 	}

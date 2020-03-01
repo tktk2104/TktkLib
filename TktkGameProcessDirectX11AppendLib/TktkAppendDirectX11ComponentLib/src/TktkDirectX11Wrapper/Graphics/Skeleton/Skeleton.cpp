@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void Skeleton::create(int id, const std::vector<Bone>& boneArray)
+	void Skeleton::createImpl(int id, const std::vector<Bone>& boneArray)
 	{
 		if (id <= 0)
 		{
@@ -14,7 +14,7 @@ namespace tktk
 		SkeletonManager::create(id, boneArray);
 	}
 
-	void Skeleton::erase(int id)
+	void Skeleton::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -23,7 +23,7 @@ namespace tktk
 		SkeletonManager::erase(id);
 	}
 
-	const SkeletonData & Skeleton::getData(int id)
+	const SkeletonData & Skeleton::getDataImpl(int id)
 	{
 		return SkeletonManager::getData(id);
 	}

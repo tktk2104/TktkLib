@@ -15,7 +15,7 @@ struct BoneDataType
 
 namespace tktk
 {
-	void SkeletonLoader::load(int id, const std::string & fileName)
+	void SkeletonLoader::loadImpl(int id, const std::string & fileName)
 	{
 		std::ifstream file(fileName, std::ios::binary);
 		if (!file)
