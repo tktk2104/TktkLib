@@ -39,22 +39,22 @@ namespace tktk
 		Screen::getDeviceContextPtr()->PSSetSamplers(0, 1, &samplerState);
 
 		// 定数バッファに値を詰め詰めする
-		ConstantBufferData* constantBufferData = ConstantBuffer::getDataPtr(SYSTEM_CONSTANT_BUFFER_SPRITE);
+		ConstantBufferData* constantBufferData = ConstantBuffer::getDataPtr(SystemConstantBufferId::Sprite);
 
-		constantBufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_texturePosition,	Vector2::zero);
-		constantBufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_textureSize,		Vector2::one);
-		constantBufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_size,				Vector2(static_cast<float>(texture2DData.width()), static_cast<float>(texture2DData.height())));
-		constantBufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_position,			m_transform->getWorldPosition());
-		constantBufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_scaleRate,			m_transform->getWorldScaleRate());
-		constantBufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_angleDeg,			m_transform->getWorldRotationDeg());
-		constantBufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_color,				Color::white);
-		constantBufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_center,				Vector2::one);
-		constantBufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_screenSize,			Window::getWindowSize());
+		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::texturePosition,	Vector2::zero);
+		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::textureSize,		Vector2::one);
+		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::size,				Vector2(static_cast<float>(texture2DData.width()), static_cast<float>(texture2DData.height())));
+		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::position,			m_transform->getWorldPosition());
+		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::scaleRate,		m_transform->getWorldScaleRate());
+		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::angleDeg,			m_transform->getWorldRotationDeg());
+		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::color,			Color::white);
+		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::center,			Vector2::one);
+		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::screenSize,		Window::getWindowSize());
 		constantBufferData->updateBuffer();
 
 		// シェーダーをセット
-		VertexShader::getData(SYSTEM_VERTEX_SHADER_SPRITE).beginVertexShader();
-		PixelShader::getData(SYSTEM_PIXEL_SHADER_SPRITE).beginShader();
+		VertexShader::getData(SystemVertexShaderId::Sprite).beginVertexShader();
+		PixelShader::getData(SystemPixelShaderId::Sprite).beginShader();
 
 		MeshData* meshDataPtr = Mesh::getDataPtr(SYSTEM_MESH_SPRITE);
 

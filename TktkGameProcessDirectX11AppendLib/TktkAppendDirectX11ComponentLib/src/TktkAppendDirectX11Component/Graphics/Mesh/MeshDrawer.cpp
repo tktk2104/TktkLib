@@ -191,10 +191,10 @@ namespace tktk
 		ConstantBufferData * bufferData = ConstantBuffer::getDataPtr(constantBufferId);
 		CameraData* cameraData = Camera::getDataPtr(m_cameraId);
 
-		bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_worldMatrix,			worldMat);
-		bufferData->setBufferParamArray(SYSTEM_CONSTANT_BUFFER_PARAM_boneMatrices,		skinnedBoneMat.data(), skinnedBoneMat.size());
-		bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_viewMatrix,				*cameraData->getViewMatrixPtr());
-		bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_projectionMatrix,		*cameraData->getProjectionMatrixPtr());
+		bufferData->setBufferParam(SystemConstantBufferParamLocationType::worldMatrix,			worldMat);
+		bufferData->setBufferParamArray(SystemConstantBufferParamLocationType::boneMatrices,	skinnedBoneMat.data(), skinnedBoneMat.size());
+		bufferData->setBufferParam(SystemConstantBufferParamLocationType::viewMatrix,			*cameraData->getViewMatrixPtr());
+		bufferData->setBufferParam(SystemConstantBufferParamLocationType::projectionMatrix,		*cameraData->getProjectionMatrixPtr());
 
 		const auto& enableLightList = Light::createEnableLightList();
 		int count = std::count_if(std::begin(enableLightList), std::end(enableLightList), [](const auto&) { return true; });
@@ -203,23 +203,23 @@ namespace tktk
 		{
 			LightData* lightDataPtr = *(std::begin(enableLightList));
 
-			bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_lightAmbientColor,	*lightDataPtr->getAmbientColorPtr());
-			bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_lightDiffuseColor,	*lightDataPtr->getDiffuseColorPtr());
-			bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_lightSpecularColor, *lightDataPtr->getSpecularColorPtr());
-			bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_lightPosition,		*lightDataPtr->getPositionPtr());
+			bufferData->setBufferParam(SystemConstantBufferParamLocationType::lightAmbientColor,	*lightDataPtr->getAmbientColorPtr());
+			bufferData->setBufferParam(SystemConstantBufferParamLocationType::lightDiffuseColor,	*lightDataPtr->getDiffuseColorPtr());
+			bufferData->setBufferParam(SystemConstantBufferParamLocationType::lightSpecularColor,	*lightDataPtr->getSpecularColorPtr());
+			bufferData->setBufferParam(SystemConstantBufferParamLocationType::lightPosition,		*lightDataPtr->getPositionPtr());
 		}
 
-		bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_materialAmbientColor,	*materialDataPtr->getAmbientColorPtr());
-		bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_materialDiffuseColor,	*materialDataPtr->getDiffuseColorPtr());
-		bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_materialSpecularColor,	*materialDataPtr->getSpecularColorPtr());
-		bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_materialEmissionColor,	*materialDataPtr->getEmissionColorPtr());
-		bufferData->setBufferParam(SYSTEM_CONSTANT_BUFFER_PARAM_materialShininess,		*materialDataPtr->getShininessPtr());
+		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialAmbientColor,		*materialDataPtr->getAmbientColorPtr());
+		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialDiffuseColor,		*materialDataPtr->getDiffuseColorPtr());
+		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialSpecularColor,	*materialDataPtr->getSpecularColorPtr());
+		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialEmissionColor,	*materialDataPtr->getEmissionColorPtr());
+		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialShininess,		*materialDataPtr->getShininessPtr());
 
-		std::for_each(
+		/*std::for_each(
 			std::begin(setConstantBufferParamMap),
 			std::end(setConstantBufferParamMap),
 			[&bufferData](const auto& pair) { bufferData->setBufferParam(pair.first, pair.second); }
-		);
+		);*/
 		bufferData->updateBuffer();
 	}
 }
