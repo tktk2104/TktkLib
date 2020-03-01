@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void Mesh::create(
+	void Mesh::createImpl(
 		int id,
 		const VertexBufferInitParams & vertexBufferParams,
 		const IndexBufferInitParams & indexBufferParams
@@ -22,7 +22,7 @@ namespace tktk
 		);
 	}
 
-	void Mesh::erase(int id)
+	void Mesh::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -31,7 +31,7 @@ namespace tktk
 		MeshManager::erase(id);
 	}
 
-	MeshData * Mesh::getDataPtr(int id)
+	MeshData * Mesh::getDataPtrImpl(int id)
 	{
 		return  MeshManager::getDataPtr(id);
 	}

@@ -11,23 +11,23 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new MeshAssets());
 	}
 
-	void MeshManager::create(int id, const VertexBufferInitParams & vertexBufferParams, const IndexBufferInitParams & indexBufferParams)
+	void MeshManager::createImpl(int id, const VertexBufferInitParams & vertexBufferParams, const IndexBufferInitParams & indexBufferParams)
 	{
 		m_assetsPtr->create(id, vertexBufferParams, indexBufferParams);
 	}
 
-	void MeshManager::erase(int id)
+	void MeshManager::eraseImpl(int id)
 	{
 		m_assetsPtr->erase(id);
+	}
+
+	MeshData * MeshManager::getDataPtrImpl(int id)
+	{
+		return m_assetsPtr->getDataPtr(id);
 	}
 
 	void MeshManager::clear()
 	{
 		m_assetsPtr->clear();
-	}
-
-	MeshData * MeshManager::getDataPtr(int id)
-	{
-		return m_assetsPtr->getDataPtr(id);
 	}
 }

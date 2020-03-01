@@ -1,5 +1,7 @@
 #ifndef MESH_H_
+#define MESH_H_
 
+#include <TktkMetaFunc/TypeCheck/isIdType.h>
 #include "Assets/MeshData.h"
 
 namespace tktk
@@ -10,18 +12,40 @@ namespace tktk
 
 		// 新たなメッシュデータを作成する
 		// ※この関数でメッシュデータを作成する場合、idは1以上でなければならない
-		static void create(
-			int id,
-			const VertexBufferInitParams& vertexBufferParams,
-			const IndexBufferInitParams& indexBufferParams
-		);
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		static void create(IdType id, const VertexBufferInitParams& vertexBufferParams, const IndexBufferInitParams& indexBufferParams)
+		{
+			createImpl(static_cast<int>(id), vertexBufferParams, indexBufferParams);
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		static void create(IdType id, const VertexBufferInitParams& vertexBufferParams, const IndexBufferInitParams& indexBufferParams)
+			{ static_assert(false, "MeshId Fraud Type"); }
 
 		// 指定したメッシュデータを削除する
 		// ※この関数でメッシュデータを削除する場合、idは1以上でなければならない
-		static void erase(int id);
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		static void erase(IdType id)
+		{
+			eraseImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		static void erase(IdType id) { static_assert(false, "MeshId Fraud Type"); }
 
 		// 指定したメッシュデータを管理するクラスのポインタを取得する
-		static MeshData* getDataPtr(int id);
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		static MeshData* getDataPtr(IdType id)
+		{
+			return getDataPtrImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		static MeshData* getDataPtr(IdType id) { static_assert(false, "MeshId Fraud Type"); }
+
+	private:
+
+		// 各種id指定系の関数の実装
+		static void createImpl(int id, const VertexBufferInitParams& vertexBufferParams, const IndexBufferInitParams& indexBufferParams);
+		static void eraseImpl(int id);
+		static MeshData* getDataPtrImpl(int id);
 	};
 }
 #endif // !MESH_H_
