@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void Texture2D::load(int id, const std::string & fileName)
+	void Texture2D::loadImpl(int id, const std::string & fileName)
 	{
 		if (id <= 0)
 		{
@@ -14,7 +14,7 @@ namespace tktk
 		Texture2DManager::load(id, fileName);
 	}
 
-	void Texture2D::erase(int id)
+	void Texture2D::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -23,7 +23,7 @@ namespace tktk
 		Texture2DManager::erase(id);
 	}
 
-	const Texture2DData & Texture2D::getData(int id)
+	const Texture2DData & Texture2D::getDataImpl(int id)
 	{
 		return Texture2DManager::getData(id);
 	}

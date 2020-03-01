@@ -11,22 +11,22 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new Texture2DAssets());
 	}
 
-	void Texture2DManager::load(int id, const std::string & fileName)
-	{
-		m_assetsPtr->load(id, fileName);
-	}
-
-	void Texture2DManager::erase(int id)
-	{
-		m_assetsPtr->erase(id);
-	}
-
 	void Texture2DManager::clear()
 	{
 		m_assetsPtr->clear();
 	}
 
-	const Texture2DData & Texture2DManager::getData(int id)
+	void Texture2DManager::loadImpl(int id, const std::string & fileName)
+	{
+		m_assetsPtr->load(id, fileName);
+	}
+
+	void Texture2DManager::eraseImpl(int id)
+	{
+		m_assetsPtr->erase(id);
+	}
+
+	const Texture2DData & Texture2DManager::getDataImpl(int id)
 	{
 		return m_assetsPtr->getData(id);
 	}
