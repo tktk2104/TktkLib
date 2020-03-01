@@ -1,20 +1,13 @@
 #include <TktkDirectX11Wrapper/DirectX11LibDefinition.h>
 
-#include <memory>
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
 #include <TktkDirectX11Wrapper/Utility/WindownsHeaderIncluder.h>
 #include <TktkDirectX11Wrapper/_Policy/DirectX11Policy.h>
 #include "Scene/LoadingScene/LoadingScene.h"
 #include "Scene/TitleScene/TitleScene.h"
 
-#include <TktkMetaFunc/HasFuncCheck/CreatedStruct/HasAwakeChecker.h>
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine, int nCmdShow)
 {
-	int i;
-
-	awake_runner<void>::checkAndRun(&i);
-
 	tktk::ComponentFrameworkProcessor::createClass<tktk::DirectX11Policy>(
 		true,
 		hInstance,
