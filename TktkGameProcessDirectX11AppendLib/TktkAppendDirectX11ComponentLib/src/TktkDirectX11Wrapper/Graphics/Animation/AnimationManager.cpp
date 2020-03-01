@@ -11,22 +11,24 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new AnimationAssets());
 	}
 
-	void AnimationManager::create(int id, const std::unordered_map<std::string, std::vector<KeyFrame>>& boneKeyFrames)
-	{
-		m_assetsPtr->create(id, boneKeyFrames);
-	}
-
-	void AnimationManager::erase(int id)
-	{
-		m_assetsPtr->erase(id);
-	}
-
 	void AnimationManager::clear()
 	{
 		m_assetsPtr->clear();
 	}
 
-	const AnimationData & AnimationManager::getData(int id)
+	void AnimationManager::createImpl(int id, const std::unordered_map<std::string, std::vector<KeyFrame>>& boneKeyFrames)
+	{
+		m_assetsPtr->create(id, boneKeyFrames);
+	}
+
+	void AnimationManager::eraseImpl(int id)
+	{
+		m_assetsPtr->erase(id);
+	}
+
+	
+
+	const AnimationData & AnimationManager::getDataImpl(int id)
 	{
 		return m_assetsPtr->getData(id);
 	}

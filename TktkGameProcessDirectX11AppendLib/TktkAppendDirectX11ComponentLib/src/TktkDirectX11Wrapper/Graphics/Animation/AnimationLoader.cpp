@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void AnimationLoader::load(int id, const std::string & fileName)
+	void AnimationLoader::loadImpl(int id, const std::string & fileName)
 	{
 		std::ifstream file(fileName, std::ios::binary);
 		if (!file)

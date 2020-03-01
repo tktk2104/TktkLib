@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void Animation::create(int id, const std::unordered_map<std::string, std::vector<KeyFrame>>& boneKeyFrames)
+	void Animation::createImpl(int id, const std::unordered_map<std::string, std::vector<KeyFrame>>& boneKeyFrames)
 	{
 		if (id <= 0)
 		{
@@ -14,7 +14,7 @@ namespace tktk
 		AnimationManager::create(id, boneKeyFrames);
 	}
 
-	void Animation::erase(int id)
+	void Animation::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -23,7 +23,7 @@ namespace tktk
 		AnimationManager::erase(id);
 	}
 
-	const AnimationData & Animation::getData(int id)
+	const AnimationData & Animation::getDataImpl(int id)
 	{
 		return AnimationManager::getData(id);
 	}
