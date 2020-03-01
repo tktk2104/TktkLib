@@ -9,16 +9,24 @@ namespace tktk
 	void DepthStencilStateManager::setUp()
 	{
 		m_assetsPtr = ComponentFrameworkProcessor::createClass<DepthStencilStateAssets>(true);
-	}
 
-	void DepthStencilStateManager::create(int id, const D3D11_DEPTH_STENCIL_DESC & depthStencilDesc)
-	{
-		m_assetsPtr->create(id, depthStencilDesc);
-	}
+		{
+			D3D11_DEPTH_STENCIL_DESC depthStencilDesc{};
+			depthStencilDesc.DepthEnable = true;
+			depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+			depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+			depthStencilDesc.StencilEnable = false;
 
-	void DepthStencilStateManager::erase(int id)
-	{
-		m_assetsPtr->erase(id);
+			create(SystemDepthStencilStateId::Basic, depthStencilDesc);
+		}
+
+		{
+			D3D11_DEPTH_STENCIL_DESC depthStencilDesc{};
+			depthStencilDesc.DepthEnable = false;
+			depthStencilDesc.StencilEnable = false;
+
+			create(SystemDepthStencilStateId::NotUseDepth, depthStencilDesc);
+		}
 	}
 
 	void DepthStencilStateManager::clear()
@@ -26,8 +34,18 @@ namespace tktk
 		m_assetsPtr->clear();
 	}
 
-	DepthStencilStateData * DepthStencilStateManager::getData(int id)
+	void DepthStencilStateManager::createImpl(int id, const D3D11_DEPTH_STENCIL_DESC & depthStencilDesc)
 	{
-		return m_assetsPtr->getData(id);
+		m_assetsPtr->create(id, depthStencilDesc);
+	}
+
+	void DepthStencilStateManager::eraseImpl(int id)
+	{
+		m_assetsPtr->erase(id);
+	}
+
+	DepthStencilStateData * DepthStencilStateManager::getDataPtrImpl(int id)
+	{
+		return m_assetsPtr->getDataPtr(id);
 	}
 }

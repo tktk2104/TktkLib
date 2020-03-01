@@ -356,6 +356,7 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBufferManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\DepthStencilStateAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\DepthStencilStateData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\SystemDepthStencilStateId.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\DepthStencilState.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\DepthStencilStateManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilView\Asset\DepthStencilViewAssets.h" />

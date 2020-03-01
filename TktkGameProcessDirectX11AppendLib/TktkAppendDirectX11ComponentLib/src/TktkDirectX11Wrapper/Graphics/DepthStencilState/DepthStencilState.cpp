@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void DepthStencilState::create(int id, const D3D11_DEPTH_STENCIL_DESC & depthStencilDesc)
+	void DepthStencilState::createImpl(int id, const D3D11_DEPTH_STENCIL_DESC & depthStencilDesc)
 	{
 		if (id <= 0)
 		{
@@ -14,7 +14,7 @@ namespace tktk
 		DepthStencilStateManager::create(id, depthStencilDesc);
 	}
 
-	void DepthStencilState::erase(int id)
+	void DepthStencilState::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -23,8 +23,8 @@ namespace tktk
 		DepthStencilStateManager::erase(id);
 	}
 
-	DepthStencilStateData * DepthStencilState::getData(int id)
+	DepthStencilStateData * DepthStencilState::getDataPtrImpl(int id)
 	{
-		return DepthStencilStateManager::getData(id);
+		return DepthStencilStateManager::getDataPtr(id);
 	}
 }

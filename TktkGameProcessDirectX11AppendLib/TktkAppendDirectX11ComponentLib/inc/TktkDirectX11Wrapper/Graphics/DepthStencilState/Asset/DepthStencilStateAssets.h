@@ -29,7 +29,7 @@ namespace tktk
 		void clear();
 
 		// 指定した深度ステンシルステートを管理するクラスのポインタを取得する
-		DepthStencilStateData* getData(int id);
+		DepthStencilStateData* getDataPtr(int id);
 
 	private:
 

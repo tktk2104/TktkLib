@@ -26,7 +26,7 @@ namespace tktk
 		m_assets.clear();
 	}
 
-	DepthStencilStateData * DepthStencilStateAssets::getData(int id)
+	DepthStencilStateData * DepthStencilStateAssets::getDataPtr(int id)
 	{
 		return &(m_assets.at(id));
 	}
