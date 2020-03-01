@@ -20,6 +20,6 @@ public:
 
 	void update()
 	{
-		std::cout << "TestGameObjectScript_2" << std::endl;
+		//std::cout << "TestGameObjectScript_2" << std::endl;
 	};
 };

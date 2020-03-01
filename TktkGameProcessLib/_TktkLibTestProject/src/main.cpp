@@ -26,7 +26,6 @@
 #include "Utility/UpdatePrioritySetter.h"
 #include "Utility/CollisionGroupSetter.h"
 #include "Utility/SceneSetter.h"
-
 #include "TestObject/RunFuncCheckTest.h"
 
 int main()
@@ -34,9 +33,9 @@ int main()
 	UpdatePrioritySetter::set();
 	CollisionGroupSetter::set();
 	SceneSetter::set();
-
-	tktk::ComponentFrameworkProcessor::createClass<RunFuncCheckTest>(true, true);
-
+	
+	tktk::ComponentFrameworkProcessor::createClass<RunFuncCheckTest>(true, false);
+	
 	tktk::ComponentFrameworkProcessor::run();
 
 	return 0;

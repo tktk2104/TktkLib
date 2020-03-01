@@ -12,6 +12,8 @@ public:
 
 	void frameBegin();
 
+	void awake();
+
 	void start();
 
 	bool isActive();

@@ -1,6 +1,7 @@
 #include "RunFuncCheckTest.h"
 
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
+#include <TktkComponentFramework/Time/Time.h>
 #include <string>
 #include <iostream>
 
@@ -17,19 +18,27 @@ RunFuncCheckTest::~RunFuncCheckTest()
 
 void RunFuncCheckTest::frameBegin()
 {
-	if (m_printRunFuncLog) std::cout << "[frameBegin]------------------------------" << std::endl;
-
-	std::cout <<   " input to [exit] to exit program" << std::endl;
-
-	std::string input;
-
-	std::cin >> input;
-
-	if (input == "exit")
+	if (m_printRunFuncLog)
 	{
-		tktk::ComponentFrameworkProcessor::exitGame();
+		std::cout << "[frameBegin]------------------------------" << std::endl;
+
+		std::cout << " input to [exit] to exit program" << std::endl;
+
+		std::string input;
+
+		std::cin >> input;
+
+		if (input == "exit")
+		{
+			tktk::ComponentFrameworkProcessor::exitGame();
+		}
+		std::cout << std::endl;
 	}
-	std::cout << std::endl;
+}
+
+void RunFuncCheckTest::awake()
+{
+	if (m_printRunFuncLog) std::cout << "[awake]------------------------------" << std::endl;
 }
 
 void RunFuncCheckTest::start()
@@ -55,6 +64,8 @@ void RunFuncCheckTest::onDisable()
 void RunFuncCheckTest::update()
 {
 	if (m_printRunFuncLog) std::cout << "[update]------------------------------" << std::endl;
+
+	std::cout << tktk::Time::deltaTime() << std::endl;
 }
 
 //bool RunFuncCheckTest::isCollide(const SafetyVoidSmartPtr<std::weak_ptr> other)

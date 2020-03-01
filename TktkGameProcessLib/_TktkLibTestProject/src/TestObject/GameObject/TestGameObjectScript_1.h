@@ -19,6 +19,6 @@ public:
 	void update()
 	{
 		//getGameObject().lock()->destroy();
-		std::cout << "TestGameObjectScript_1" << std::endl;
+		//std::cout << "TestGameObjectScript_1" << std::endl;
 	};
 };
