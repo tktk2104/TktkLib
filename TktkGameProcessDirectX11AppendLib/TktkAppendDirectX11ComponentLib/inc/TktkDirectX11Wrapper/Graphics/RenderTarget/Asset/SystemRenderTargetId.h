@@ -3,9 +3,9 @@
 
 namespace tktk
 {
-	enum SystemRenderTargetId
+	enum class SystemRenderTargetId
 	{
-		SYSTEM_RENDER_TARGET_BACK_BUFFER = -100,
+		Basic = -100,
 	};
 }
 #endif // !SYSTEM_RENDER_TARGET_ID_H_

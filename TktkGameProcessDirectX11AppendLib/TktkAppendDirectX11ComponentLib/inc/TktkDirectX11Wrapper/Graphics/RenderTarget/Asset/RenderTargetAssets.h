@@ -11,7 +11,7 @@ namespace tktk
 	{
 	public:
 
-		RenderTargetAssets();
+		RenderTargetAssets() = default;
 		~RenderTargetAssets();
 
 		RenderTargetAssets(const RenderTargetAssets& other) = delete;
