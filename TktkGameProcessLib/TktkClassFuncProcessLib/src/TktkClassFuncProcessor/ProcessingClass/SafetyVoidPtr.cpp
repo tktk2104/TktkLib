@@ -18,6 +18,7 @@ namespace tktk
 		: m_rawPtr(std::move(other.m_rawPtr))
 		, m_vtablePtr(std::move(other.m_vtablePtr))
 	{
+		other.m_rawPtr = nullptr;
 	}
 
 	SafetyVoidPtr & SafetyVoidPtr::operator=(SafetyVoidPtr && other) noexcept
