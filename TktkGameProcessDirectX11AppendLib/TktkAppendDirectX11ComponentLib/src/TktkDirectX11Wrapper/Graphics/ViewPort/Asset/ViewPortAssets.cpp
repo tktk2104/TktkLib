@@ -6,12 +6,6 @@
 
 namespace tktk
 {
-	ViewPortAssets::ViewPortAssets()
-	{
-		create(SYSTEM_VIEW_PORT_DEFAULT, Vector2::zero, Window::getWindowSize());
-		Screen::getDeviceContextPtr()->RSSetViewports(1, &getData(SYSTEM_VIEW_PORT_DEFAULT).getViewPort());
-	}
-
 	ViewPortAssets::~ViewPortAssets()
 	{
 		clear();

@@ -3,9 +3,9 @@
 
 namespace tktk
 {
-	enum SystemViewPortId
+	enum class SystemViewPortId
 	{
-		SYSTEM_VIEW_PORT_DEFAULT = -100,
+		Default = -100,
 	};
 }
 #endif // !SYSTEM_VIEW_PORT_ID_H_

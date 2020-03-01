@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void ViewPort::create(int id, const Vector2 & position, const Vector2 & size)
+	void ViewPort::createImpl(int id, const Vector2 & position, const Vector2 & size)
 	{
 		if (id <= 0)
 		{
@@ -14,7 +14,7 @@ namespace tktk
 		ViewPortManager::create(id, position, size);
 	}
 
-	void ViewPort::erase(int id)
+	void ViewPort::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -23,7 +23,7 @@ namespace tktk
 		ViewPortManager::erase(id);
 	}
 
-	const ViewPortData & ViewPort::getData(int id)
+	const ViewPortData & ViewPort::getDataImpl(int id)
 	{
 		return ViewPortManager::getData(id);
 	}

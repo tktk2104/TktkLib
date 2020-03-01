@@ -10,7 +10,7 @@ namespace tktk
 	{
 	public:
 
-		ViewPortAssets();
+		ViewPortAssets() = default;
 		~ViewPortAssets();
 
 		ViewPortAssets(const ViewPortAssets& other) = delete;

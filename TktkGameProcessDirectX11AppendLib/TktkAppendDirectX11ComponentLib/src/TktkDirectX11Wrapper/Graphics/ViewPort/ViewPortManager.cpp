@@ -1,6 +1,8 @@
 #include "TktkDirectX11Wrapper/Graphics/ViewPort/ViewPortManager.h"
 
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
+#include "TktkDirectX11Wrapper/Graphics/Window/Window.h"
+#include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
 
 namespace tktk
 {
@@ -8,17 +10,8 @@ namespace tktk
 
 	void ViewPortManager::setUp()
 	{
-		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new ViewPortAssets());
-	}
-
-	void ViewPortManager::create(int id, const Vector2 & position, const Vector2 & size)
-	{
-		m_assetsPtr->create(id, position, size);
-	}
-
-	void ViewPortManager::erase(int id)
-	{
-		m_assetsPtr->erase(id);
+		m_assetsPtr = ComponentFrameworkProcessor::createClass<ViewPortAssets>(true);
+		create(SystemViewPortId::Default, Vector2::zero, Window::getWindowSize());
 	}
 
 	void ViewPortManager::clear()
@@ -26,7 +19,17 @@ namespace tktk
 		m_assetsPtr->clear();
 	}
 
-	const ViewPortData & ViewPortManager::getData(int id)
+	void ViewPortManager::createImpl(int id, const Vector2 & position, const Vector2 & size)
+	{
+		m_assetsPtr->create(id, position, size);
+	}
+
+	void ViewPortManager::eraseImpl(int id)
+	{
+		m_assetsPtr->erase(id);
+	}
+
+	const ViewPortData & ViewPortManager::getDataImpl(int id)
 	{
 		return m_assetsPtr->getData(id);
 	}
