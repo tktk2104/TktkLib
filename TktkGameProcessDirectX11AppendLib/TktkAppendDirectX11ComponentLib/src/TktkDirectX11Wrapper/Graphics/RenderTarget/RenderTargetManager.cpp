@@ -1,6 +1,8 @@
 #include "TktkDirectX11Wrapper/Graphics/RenderTarget/RenderTargetManager.h"
 
 #include <TktkComponentFramework/ComponentFrameworkProcessor.h>
+#include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
+#include "TktkDirectX11Wrapper/Graphics/RenderTarget/Asset/SystemRenderTargetId.h"
 
 namespace tktk
 {
@@ -9,16 +11,10 @@ namespace tktk
 	void RenderTargetManager::setUp()
 	{
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new RenderTargetAssets());
-	}
-
-	void RenderTargetManager::create(int id, ID3D11Texture2D * renderTargetTexture)
-	{
-		m_assetsPtr->create(id, renderTargetTexture);
-	}
-
-	void RenderTargetManager::erase(int id)
-	{
-		m_assetsPtr->erase(id);
+		ID3D11Texture2D *backBufferTexture;
+		Screen::getSwapChainPtr()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBufferTexture);
+		create(SystemRenderTargetId::Basic, backBufferTexture);
+		backBufferTexture->Release();
 	}
 
 	void RenderTargetManager::clear()
@@ -26,7 +22,17 @@ namespace tktk
 		m_assetsPtr->clear();
 	}
 
-	const RenderTargetData & RenderTargetManager::getData(int id)
+	void RenderTargetManager::createImpl(int id, ID3D11Texture2D * renderTargetTexture)
+	{
+		m_assetsPtr->create(id, renderTargetTexture);
+	}
+
+	void RenderTargetManager::eraseImpl(int id)
+	{
+		m_assetsPtr->erase(id);
+	}
+
+	const RenderTargetData & RenderTargetManager::getDataImpl(int id)
 	{
 		return m_assetsPtr->getData(id);
 	}

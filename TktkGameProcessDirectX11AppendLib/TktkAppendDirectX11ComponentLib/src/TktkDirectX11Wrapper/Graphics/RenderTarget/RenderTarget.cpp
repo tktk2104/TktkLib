@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void RenderTarget::create(int id, ID3D11Texture2D * renderTargetTexture)
+	void RenderTarget::createImpl(int id, ID3D11Texture2D * renderTargetTexture)
 	{
 		if (id <= 0)
 		{
@@ -14,7 +14,7 @@ namespace tktk
 		RenderTargetManager::create(id, renderTargetTexture);
 	}
 
-	void RenderTarget::erase(int id)
+	void RenderTarget::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -23,7 +23,7 @@ namespace tktk
 		RenderTargetManager::erase(id);
 	}
 
-	const RenderTargetData & RenderTarget::getData(int id)
+	const RenderTargetData & RenderTarget::getDataImpl(int id)
 	{
 		return RenderTargetManager::getData(id);
 	}

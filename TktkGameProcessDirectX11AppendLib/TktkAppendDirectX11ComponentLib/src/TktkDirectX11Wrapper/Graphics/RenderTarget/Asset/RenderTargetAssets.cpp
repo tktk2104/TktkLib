@@ -1,19 +1,9 @@
 #include "TktkDirectX11Wrapper/Graphics/RenderTarget/Asset/RenderTargetAssets.h"
 
 #include <algorithm>
-#include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
-#include "TktkDirectX11Wrapper/Graphics/RenderTarget/Asset/SystemRenderTargetId.h"
 
 namespace tktk
 {
-	RenderTargetAssets::RenderTargetAssets()
-	{
-		ID3D11Texture2D *backBufferTexture;
-		Screen::getSwapChainPtr()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBufferTexture);
-		create(SYSTEM_RENDER_TARGET_BACK_BUFFER, backBufferTexture);
-		backBufferTexture->Release();
-	}
-
 	RenderTargetAssets::~RenderTargetAssets()
 	{
 		clear();
