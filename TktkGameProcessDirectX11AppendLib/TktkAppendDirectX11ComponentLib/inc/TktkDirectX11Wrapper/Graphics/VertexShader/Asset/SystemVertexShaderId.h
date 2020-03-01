@@ -3,13 +3,13 @@
 
 namespace tktk
 {
-	enum SystemVertexShaderId
+	enum class SystemVertexShaderId
 	{
-		SYSTEM_VERTEX_SHADER_SPRITE = -100,
-		SYSTEM_VERTEX_SHADER_MESH = -200,
-		SYSTEM_VERTEX_SHADER_PBR_MESH = -300,
-		SYSTEM_VERTEX_SHADER_IBL_MESH = -400,
-		SYSTEM_VERTEX_SHADER_PBR_IBL_MESH = -500,
+		Sprite		= -100,
+		Mesh		= -200,
+		PbrMesh		= -300,
+		IblMesh		= -400,
+		PbrIblMesh	= -500,
 	};
 }
 #endif // !SYSTEM_VERTEX_SHADER_ID_H_

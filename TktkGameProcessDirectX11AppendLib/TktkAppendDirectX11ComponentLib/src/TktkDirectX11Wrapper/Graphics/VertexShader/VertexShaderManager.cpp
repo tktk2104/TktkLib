@@ -11,22 +11,22 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new VertexShaderAssets());
 	}
 
-	void VertexShaderManager::load(int id, int useConstantBufferId, const std::string & fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout)
-	{
-		m_assetsPtr->load(id, useConstantBufferId, fileName, vertexLayout);
-	}
-
-	void VertexShaderManager::erase(int id)
-	{
-		m_assetsPtr->erase(id);
-	}
-
 	void VertexShaderManager::clear()
 	{
 		m_assetsPtr->clear();
 	}
 
-	const VertexShaderData & VertexShaderManager::getData(int id)
+	void VertexShaderManager::loadImpl(int id, int useConstantBufferId, const std::string & fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout)
+	{
+		m_assetsPtr->load(id, useConstantBufferId, fileName, vertexLayout);
+	}
+
+	void VertexShaderManager::eraseImpl(int id)
+	{
+		m_assetsPtr->erase(id);
+	}
+
+	const VertexShaderData & VertexShaderManager::getDataImpl(int id)
 	{
 		return m_assetsPtr->getData(id);
 	}
