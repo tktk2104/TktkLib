@@ -7,6 +7,13 @@ namespace tktk
 		clear();
 	}
 
+	void ConstantBufferAssets::create(int id, SafetyVoidPtr && data)
+	{
+		erase(id);
+
+		m_assets.emplace(id, std::move(data));
+	}
+
 	void ConstantBufferAssets::erase(int id)
 	{
 		auto eraseNode = m_assets.find(id);

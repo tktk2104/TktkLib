@@ -3,35 +3,35 @@
 
 namespace tktk
 {
-	enum SystemConstantBufferParamLocationType
+	enum class SystemConstantBufferParamLocationType
 	{
-		SYSTEM_CONSTANT_BUFFER_PARAM_texturePosition = -100,
-		SYSTEM_CONSTANT_BUFFER_PARAM_textureSize,
-		SYSTEM_CONSTANT_BUFFER_PARAM_size,
-		SYSTEM_CONSTANT_BUFFER_PARAM_position,
-		SYSTEM_CONSTANT_BUFFER_PARAM_scaleRate,
-		SYSTEM_CONSTANT_BUFFER_PARAM_angleDeg,
-		SYSTEM_CONSTANT_BUFFER_PARAM_color,
-		SYSTEM_CONSTANT_BUFFER_PARAM_center,
-		SYSTEM_CONSTANT_BUFFER_PARAM_screenSize,
+		texturePosition = -100,
+		textureSize,
+		size,
+		position,
+		scaleRate,
+		angleDeg,
+		color,
+		center,
+		screenSize,
 
-		SYSTEM_CONSTANT_BUFFER_PARAM_worldMatrix = -200,
-		SYSTEM_CONSTANT_BUFFER_PARAM_viewMatrix,
-		SYSTEM_CONSTANT_BUFFER_PARAM_projectionMatrix,
-		SYSTEM_CONSTANT_BUFFER_PARAM_boneMatrices,
-		SYSTEM_CONSTANT_BUFFER_PARAM_lightAmbientColor,
-		SYSTEM_CONSTANT_BUFFER_PARAM_lightDiffuseColor,
-		SYSTEM_CONSTANT_BUFFER_PARAM_lightSpecularColor,
-		SYSTEM_CONSTANT_BUFFER_PARAM_lightPosition,
-		SYSTEM_CONSTANT_BUFFER_PARAM_materialAmbientColor,
-		SYSTEM_CONSTANT_BUFFER_PARAM_materialDiffuseColor,
-		SYSTEM_CONSTANT_BUFFER_PARAM_materialSpecularColor,
-		SYSTEM_CONSTANT_BUFFER_PARAM_materialEmissionColor,
-		SYSTEM_CONSTANT_BUFFER_PARAM_materialShininess,
+		worldMatrix = -200,
+		viewMatrix,
+		projectionMatrix,
+		boneMatrices,
+		lightAmbientColor,
+		lightDiffuseColor,
+		lightSpecularColor,
+		lightPosition,
+		materialAmbientColor,
+		materialDiffuseColor,
+		materialSpecularColor,
+		materialEmissionColor,
+		materialShininess,
 
-		SYSTEM_CONSTANT_BUFFER_PARAM_albedoColor,
-		SYSTEM_CONSTANT_BUFFER_PARAM_metallic,
-		SYSTEM_CONSTANT_BUFFER_PARAM_smoothness,
+		albedoColor,
+		metallic,
+		smoothness,
 	};
 }
 #endif // !SYSTEM_CONSTANT_BUFFER_PARAM_LOCATION_TYPE_H_

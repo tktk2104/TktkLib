@@ -3,11 +3,11 @@
 
 namespace tktk
 {
-	enum SystemConstantBufferId
+	enum class SystemConstantBufferId
 	{
-		SYSTEM_CONSTANT_BUFFER_SPRITE	= -100,
-		SYSTEM_CONSTANT_BUFFER_MESH		= -200,
-		SYSTEM_CONSTANT_BUFFER_PBR_MESH = -300,
+		Sprite		= -100,
+		Mesh		= -200,
+		PbrMesh		= -300,
 	};
 }
 #endif // !SYSTEM_CONSTANT_BUFFER_ID_H_

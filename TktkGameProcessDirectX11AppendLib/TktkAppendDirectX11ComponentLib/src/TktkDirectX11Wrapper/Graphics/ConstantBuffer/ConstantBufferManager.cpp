@@ -11,17 +11,27 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::createClass<ConstantBufferAssets>(true);
 	}
 
-	void ConstantBufferManager::erase(int id)
+	void ConstantBufferManager::clear()
+	{
+		m_assetsPtr->clear();
+	}
+
+	void ConstantBufferManager::createImpl(int id, SafetyVoidPtr && data)
+	{
+		m_assetsPtr->create(id, std::move(data));
+	}
+
+	void ConstantBufferManager::eraseImpl(int id)
 	{
 		m_assetsPtr->erase(id);
 	}
 
-	ConstantBufferData * ConstantBufferManager::getDataPtr(int id)
+	ConstantBufferData * ConstantBufferManager::getDataPtrImpl(int id)
 	{
 		return m_assetsPtr->getDataPtr(id);
 	}
 
-	void ConstantBufferManager::addParamLocation(int id, int locationType, unsigned int locationFromBufferTop)
+	void ConstantBufferManager::addParamLocationImpl(int id, int locationType, unsigned int locationFromBufferTop)
 	{
 		m_assetsPtr->addParamLocation(id, locationType, locationFromBufferTop);
 	}

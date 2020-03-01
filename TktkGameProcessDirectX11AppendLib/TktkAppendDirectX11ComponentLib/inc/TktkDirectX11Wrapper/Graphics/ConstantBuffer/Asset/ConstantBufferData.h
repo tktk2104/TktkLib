@@ -3,8 +3,9 @@
 
 #include <stdexcept>
 #include <unordered_map>
-#include <d3d11.h>
+#include <TktkMetaFunc/TypeCheck/isIdType.h>
 #include <TktkClassFuncProcessor/ProcessingClass/SafetyVoidPtr.h>
+#include <d3d11.h>
 #include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
 
 namespace tktk
@@ -14,8 +15,7 @@ namespace tktk
 	{
 	public:
 
-		template <class T>
-		ConstantBufferData(T* data);
+		explicit ConstantBufferData(SafetyVoidPtr&& data);
 		~ConstantBufferData();
 
 		ConstantBufferData(const ConstantBufferData& other) = delete;
@@ -31,18 +31,65 @@ namespace tktk
 
 		// 定数バッファに入れる予定のデータのポインタを取得する
 		template <class BufferType>
-		BufferType* getTempBufferPtr() const;
+		BufferType* getTempBufferPtr() const
+		{
+			if (m_tempBufferPtr.canCast<BufferType>())
+			{
+				return m_tempBufferPtr.castPtr<BufferType>();
+			}
+			throw std::runtime_error("getTempBufferPtr error BufferType Invalid type");
 
-		// 定数バッファに入れる予定のデータの特定の値にアクセスするための設定を行う
-		void addParamLocation(int locationType, unsigned int locationFromBufferTop);
+			return nullptr;
+		}
 
-		// 「addParamLocation」で設定を行った値を更新する（テンプレート使用版）
-		template <class BufferParamType>
-		void setBufferParam(int locationType, const BufferParamType& param);
+		// 定数バッファに入れる予定のデータの特定の値にアクセスするための設定を行う（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template<class LocationType, std::enable_if_t<is_idType_v<LocationType>>* = nullptr>
+		void addParamLocation(LocationType locationType, unsigned int locationFromBufferTop)
+		{
+			addParamLocationImpl(static_cast<int>(locationType), locationFromBufferTop);
+		}
+		template<class LocationType, std::enable_if_t<!is_idType_v<LocationType>>* = nullptr>
+		void addParamLocation(LocationType locationType, unsigned int locationFromBufferTop) { static_assert(false, "LocationType Fraud Type"); }
 
-		// 「addParamLocation」で設定を行った値を更新する（テンプレート使用＆配列版）
-		template <class BufferParamType>
-		void setBufferParamArray(int locationType, BufferParamType * arrayFrontPtr, unsigned int arraySize);
+		// 「addParamLocation」で設定を行った値を更新する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template<class LocationType, class BufferParamType, std::enable_if_t<is_idType_v<LocationType>>* = nullptr>
+		void setBufferParam(LocationType locationType, const BufferParamType& param)
+		{
+			if (m_paramLocationMap.find(static_cast<int>(locationType)) == std::end(m_paramLocationMap)) return;
+
+			char* tempBufferPtr = (char*)(m_tempBufferPtr.voidPtr());
+			memcpy(tempBufferPtr + m_paramLocationMap.at(static_cast<int>(locationType)), &param, sizeof(BufferParamType));
+		}
+		template<class LocationType, class BufferParamType, std::enable_if_t<!is_idType_v<LocationType>>* = nullptr>
+		void setBufferParam(LocationType locationType, const BufferParamType& param) { static_assert(false, "LocationType Fraud Type"); }
+
+		// 「addParamLocation」で設定を行った値を更新する（SafetyVoidPtr版）（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template<class LocationType, std::enable_if_t<is_idType_v<LocationType>>* = nullptr>
+		void setBufferParam(LocationType locationType, const SafetyVoidPtr& param)
+		{
+			if (m_paramLocationMap.find(static_cast<int>(locationType)) == std::end(m_paramLocationMap)) return;
+
+			char* tempBufferPtr = (char*)(m_tempBufferPtr.voidPtr());
+			memcpy(tempBufferPtr + m_paramLocationMap.at(static_cast<int>(locationType)), param.voidPtr(), param.getClassSize());
+		}
+		template<class LocationType, std::enable_if_t<!is_idType_v<LocationType>>* = nullptr>
+		void setBufferParam(LocationType locationType, const SafetyVoidPtr& param) { static_assert(false, "LocationType Fraud Type"); }
+
+		// 「addParamLocation」で設定を行った値を更新する（配列版）
+		template<class LocationType, class BufferParamType, std::enable_if_t<is_idType_v<LocationType>>* = nullptr>
+		void setBufferParamArray(LocationType locationType, BufferParamType * arrayFrontPtr, unsigned int arraySize)
+		{
+			if (m_paramLocationMap.find(static_cast<int>(locationType)) == std::end(m_paramLocationMap)) return;
+
+			char* tempBufferPtr = (char*)(m_tempBufferPtr.voidPtr());
+			memcpy(tempBufferPtr + m_paramLocationMap.at(static_cast<int>(locationType)), arrayFrontPtr, sizeof(BufferParamType) * arraySize);
+		}
+		template<class LocationType, class BufferParamType, std::enable_if_t<!is_idType_v<LocationType>>* = nullptr>
+		void setBufferParamArray(LocationType locationType, BufferParamType * arrayFrontPtr, unsigned int arraySize) { static_assert(false, "LocationType Fraud Type"); }
+
+	private:
+
+		void addParamLocationImpl(int locationType, unsigned int locationFromBufferTop);
 
 	private:
 
@@ -58,63 +105,5 @@ namespace tktk
 		// 定数バッファに入れる予定のデータの特定の値にアクセスするための情報
 		std::unordered_map<int, unsigned int> m_paramLocationMap{};
 	};
-
-	template<class T>
-	inline ConstantBufferData::ConstantBufferData(T * data)
-		: m_bufferSize(sizeof(T))
-		, m_tempBufferPtr(data)
-	{
-		D3D11_BUFFER_DESC bufferDesc;
-		bufferDesc.ByteWidth = sizeof(T) + (sizeof(T) % 16U == 0U ? 0U : 16U - sizeof(T) % 16U); // バッファサイズは１６の倍数である必要があるため
-		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		bufferDesc.MiscFlags = 0;
-		bufferDesc.StructureByteStride = 0;
-		Screen::getDevicePtr()->CreateBuffer(&bufferDesc, NULL, &m_bufferPtr);
-	}
-
-	// 定数バッファに入れる予定のデータを取得する
-	template<class BufferType>
-	inline BufferType* ConstantBufferData::getTempBufferPtr() const
-	{
-		if (m_tempBufferPtr.canCast<BufferType>())
-		{
-			return m_tempBufferPtr.castPtr<BufferType>();
-		}
-		throw std::runtime_error("getTempBufferPtr error BufferType Invalid type");
-
-		return nullptr;
-	}
-
-	// 「addParamLocation」で設定を行った値を更新する（テンプレート使用版）
-	template<class BufferParamType>
-	inline void ConstantBufferData::setBufferParam(int locationType, const BufferParamType & param)
-	{
-		if (m_paramLocationMap.find(locationType) == std::end(m_paramLocationMap)) return;
-
-		char* tempBufferPtr = (char*)(m_tempBufferPtr.voidPtr());
-		memcpy(tempBufferPtr + m_paramLocationMap.at(locationType), &param, sizeof(BufferParamType));
-	}
-
-	// 「addParamLocation」で設定を行った値を更新する（SafetyVoidPtr版）
-	template<>
-	inline void ConstantBufferData::setBufferParam(int locationType, const SafetyVoidPtr & param)
-	{
-		if (m_paramLocationMap.find(locationType) == std::end(m_paramLocationMap)) return;
-
-		char* tempBufferPtr = (char*)(m_tempBufferPtr.voidPtr());
-		memcpy(tempBufferPtr + m_paramLocationMap.at(locationType), param.voidPtr(), param.getClassSize());
-	}
-
-	// 「addParamLocation」で設定を行った値を更新する（テンプレート使用＆配列版）
-	template<class BufferParamType>
-	inline void ConstantBufferData::setBufferParamArray(int locationType, BufferParamType * arrayFrontPtr, unsigned int arraySize)
-	{
-		if (m_paramLocationMap.find(locationType) == std::end(m_paramLocationMap)) return;
-
-		char* tempBufferPtr = (char*)(m_tempBufferPtr.voidPtr());
-		memcpy(tempBufferPtr + m_paramLocationMap.at(locationType), arrayFrontPtr, sizeof(BufferParamType) * arraySize);
-	}
 }
 #endif // !CONSTANT_BUFFER_DATA_H_

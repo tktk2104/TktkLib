@@ -20,8 +20,7 @@ namespace tktk
 	public:
 
 		// 新たな定数バッファを作成する
-		template<class BufferDataType>
-		void create(int id, BufferDataType* data);
+		void create(int id, SafetyVoidPtr&& data);
 
 		// 指定した定数バッファを削除する
 		void erase(int id);
@@ -40,14 +39,5 @@ namespace tktk
 		// 定数バッファを管理するクラスの連想配列
 		std::unordered_map<int, ConstantBufferData> m_assets;
 	};
-
-	// 新たな定数バッファを作成する（テンプレート使用版）
-	template<class BufferDataType>
-	inline void ConstantBufferAssets::create(int id, BufferDataType* data)
-	{
-		erase(id);
-
-		m_assets.emplace(id, data);
-	}
 }
 #endif // !CONSTANT_BUFFER_ASSETS_H_

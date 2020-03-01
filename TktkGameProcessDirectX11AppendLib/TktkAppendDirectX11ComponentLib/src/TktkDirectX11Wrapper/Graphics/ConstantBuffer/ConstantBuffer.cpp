@@ -5,7 +5,16 @@
 
 namespace tktk
 {
-	void ConstantBuffer::erase(int id)
+	void ConstantBuffer::createImpl(int id, SafetyVoidPtr && data)
+	{
+		if (id <= 0)
+		{
+			throw std::runtime_error("ConstantBufferId Fraud Value");
+		}
+		ConstantBufferManager::createImpl(id, std::move(data));
+	}
+
+	void ConstantBuffer::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -14,12 +23,12 @@ namespace tktk
 		ConstantBufferManager::erase(id);
 	}
 
-	ConstantBufferData * ConstantBuffer::getDataPtr(int id)
+	ConstantBufferData * ConstantBuffer::getDataPtrImpl(int id)
 	{
 		return ConstantBufferManager::getDataPtr(id);
 	}
 
-	void ConstantBuffer::addParamLocation(int id, int locationType, unsigned int locationFromBufferTop)
+	void ConstantBuffer::addParamLocationImpl(int id, int locationType, unsigned int locationFromBufferTop)
 	{
 		return ConstantBufferManager::addParamLocation(id, locationType, locationFromBufferTop);
 	}
