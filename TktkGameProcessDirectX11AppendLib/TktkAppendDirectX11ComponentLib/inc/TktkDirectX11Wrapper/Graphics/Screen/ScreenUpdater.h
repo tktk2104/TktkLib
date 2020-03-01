@@ -46,6 +46,9 @@ namespace tktk
 		// 深度ステンシルビューとレンダーターゲットを設定する
 		void setDepthStencilViewAndRenderTargets(int depthStencilViewId, const std::vector<int>& renderTargetIdArray);
 
+		// ビューポートを設定する
+		void setViewport(int viewPortId);
+
 	private:
 
 		// スワップチェインのポインタ

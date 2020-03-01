@@ -37,10 +37,22 @@ namespace tktk
 			static_assert(false, "Id Fraud Type");
 		}
 
+		// ビューポートを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		static void setViewport(IdType viewPortId)
+		{
+			setViewportImpl(static_cast<int>(viewPortId));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		static void setViewport(IdType viewPortId) { static_assert(false, "ViewportId Fraud Type"); }
+
 	private:
 
 		// setDepthStencilViewAndRenderTargets()の実装
 		static void setDepthStencilViewAndRenderTargetsImpl(int depthStencilViewId, const std::vector<int>& renderTargetIdArray);
+	
+		// setViewport()の実装
+		static void setViewportImpl(int viewPortId);
 	};
 }
 #endif // !SCREEN_H_

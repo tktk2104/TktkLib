@@ -28,4 +28,9 @@ namespace tktk
 	{
 		ScreenManager::setDepthStencilViewAndRenderTargetsImpl(depthStencilViewId, renderTargetIdArray);
 	}
+
+	void Screen::setViewportImpl(int viewPortId)
+	{
+		ScreenManager::setViewport(viewPortId);
+	}
 }

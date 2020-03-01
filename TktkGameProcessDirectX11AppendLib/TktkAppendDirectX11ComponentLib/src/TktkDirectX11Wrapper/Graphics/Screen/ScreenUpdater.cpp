@@ -6,6 +6,7 @@
 #include "TktkDirectX11Wrapper/Graphics/Window/Window.h"
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilView/DepthStencilView.h"
 #include "TktkDirectX11Wrapper/Graphics/RenderTarget/RenderTarget.h"
+#include "TktkDirectX11Wrapper/Graphics/ViewPort/ViewPort.h"
 
 namespace tktk
 {
@@ -63,6 +64,7 @@ namespace tktk
 	void ScreenUpdater::start()
 	{
 		setDepthStencilViewAndRenderTargets(static_cast<int>(SystemRenderTargetId::Basic), { static_cast<int>(SystemDepthStencilViewId::Basic)});
+		setViewport(static_cast<int>(SystemViewPortId::Default));
 	}
 
 	void ScreenUpdater::frameBegin()
@@ -152,5 +154,10 @@ namespace tktk
 		const DepthStencilViewData & depthStencilData = DepthStencilView::getData(depthStencilViewId);
 
 		m_deviceContextPtr->OMSetRenderTargets(renderTargetViewArray.size(), renderTargetViewArray.data(), depthStencilData.getViewPtr());
+	}
+
+	void ScreenUpdater::setViewport(int viewPortId)
+	{
+		m_deviceContextPtr->RSSetViewports(1, &ViewPort::getData(viewPortId).getViewPort());
 	}
 }

@@ -37,4 +37,9 @@ namespace tktk
 	{
 		m_updaterPtr->setDepthStencilViewAndRenderTargets(depthStencilViewId, renderTargetIdArray);
 	}
+
+	void ScreenManager::setViewportImpl(int viewPortId)
+	{
+		m_updaterPtr->setViewport(viewPortId);
+	}
 }
