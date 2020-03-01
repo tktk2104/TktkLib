@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void Sound::load(int id, const std::string & fileName)
+	void Sound::loadImpl(int id, const std::string & fileName)
 	{
 		if (id <= 0)
 		{
@@ -14,23 +14,25 @@ namespace tktk
 		SoundManager::load(id, fileName);
 	}
 
-	void Sound::play(int id, bool loopPlay)
-	{
-		SoundManager::play(id, loopPlay);
-	}
-
-	void Sound::stop(int id)
-	{
-		SoundManager::stop(id);
-	}
-
-	void Sound::pause(int id)
-	{
-		SoundManager::pause(id);
-	}
-
 	void Sound::setMasterVolume(float volume)
 	{
 		SoundManager::setMasterVolume(volume);
 	}
+
+	void Sound::playImpl(int id, bool loopPlay)
+	{
+		SoundManager::play(id, loopPlay);
+	}
+
+	void Sound::stopImpl(int id)
+	{
+		SoundManager::stop(id);
+	}
+
+	void Sound::pauseImpl(int id)
+	{
+		SoundManager::pause(id);
+	}
+
+	
 }
