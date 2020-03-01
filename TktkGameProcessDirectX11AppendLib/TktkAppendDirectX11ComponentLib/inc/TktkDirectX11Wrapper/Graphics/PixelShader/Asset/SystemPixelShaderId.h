@@ -3,13 +3,13 @@
 
 namespace tktk
 {
-	enum SystemPixelShaderId
+	enum class SystemPixelShaderId
 	{
-		SYSTEM_PIXEL_SHADER_SPRITE = -100,
-		SYSTEM_PIXEL_SHADER_MESH = -200,
-		SYSTEM_PIXEL_SHADER_PBR_MESH = -300,
-		SYSTEM_PIXEL_SHADER_IBL_MESH = -400,
-		SYSTEM_PIXEL_SHADER_PBR_IBL_MESH = -500,
+		Sprite		= -100,
+		Mesh		= -200,
+		PbrMesh		= -300,
+		IblMesh		= -400,
+		PbrIblMesh	= -500,
 	};
 }
 #endif // !SYSTEM_PIXEL_SHADER_ID_H_

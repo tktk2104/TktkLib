@@ -11,22 +11,22 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new PixelShaderAssets());
 	}
 
-	void PixelShaderManager::load(int id, int useConstantBufferId, const std::string & fileName)
-	{
-		m_assetsPtr->load(id, useConstantBufferId, fileName);
-	}
-
-	void PixelShaderManager::erase(int id)
-	{
-		m_assetsPtr->erase(id);
-	}
-
 	void PixelShaderManager::clear()
 	{
 		m_assetsPtr->clear();
 	}
 
-	const PixelShaderData & PixelShaderManager::getData(int id)
+	void PixelShaderManager::loadImpl(int id, int useConstantBufferId, const std::string & fileName)
+	{
+		m_assetsPtr->load(id, useConstantBufferId, fileName);
+	}
+
+	void PixelShaderManager::eraseImpl(int id)
+	{
+		m_assetsPtr->erase(id);
+	}
+
+	const PixelShaderData & PixelShaderManager::getDataImpl(int id)
 	{
 		return m_assetsPtr->getData(id);
 	}

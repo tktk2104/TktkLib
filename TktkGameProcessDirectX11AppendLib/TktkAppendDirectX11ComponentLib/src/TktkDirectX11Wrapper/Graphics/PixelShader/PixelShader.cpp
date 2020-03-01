@@ -5,7 +5,7 @@
 
 namespace tktk
 {
-	void PixelShader::load(int id, int useConstantBufferId, const std::string & fileName)
+	void PixelShader::loadImpl(int id, int useConstantBufferId, const std::string & fileName)
 	{
 		if (id <= 0)
 		{
@@ -14,7 +14,7 @@ namespace tktk
 		PixelShaderManager::load(id, useConstantBufferId, fileName);
 	}
 
-	void PixelShader::erase(int id)
+	void PixelShader::eraseImpl(int id)
 	{
 		if (id <= 0)
 		{
@@ -23,7 +23,7 @@ namespace tktk
 		PixelShaderManager::erase(id);
 	}
 
-	const PixelShaderData & PixelShader::getData(int id)
+	const PixelShaderData & PixelShader::getDataImpl(int id)
 	{
 		return PixelShaderManager::getData(id);
 	}
