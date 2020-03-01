@@ -8,5 +8,4 @@ namespace tktk
 		Basic = -100,
 	};
 }
-
 #endif // !SYSTEM_BLEND_STATE_ID_H_
