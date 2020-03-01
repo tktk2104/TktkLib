@@ -12,7 +12,7 @@ namespace tktk
 		dtd.Height = static_cast<int>(useTextureSize.y);
 		dtd.MipLevels = 1;
 		dtd.ArraySize = 1;
-		dtd.Format = DXGI_FORMAT_D32_FLOAT;
+		dtd.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		dtd.SampleDesc.Count = 1;
 		dtd.SampleDesc.Quality = 0;
 		dtd.Usage = D3D11_USAGE_DEFAULT;
