@@ -111,10 +111,4 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="res\shader\meshShader\MeshPixelShader.hlsl" />
-    <FxCompile Include="res\shader\meshShader\MeshVertexShader.hlsl" />
-    <FxCompile Include="res\shader\PbrMeshShader\PbrMeshPixelShader.hlsl" />
-    <FxCompile Include="res\shader\PbrMeshShader\PbrMeshVertexShader.hlsl" />
-  </ItemGroup>
 </Project>

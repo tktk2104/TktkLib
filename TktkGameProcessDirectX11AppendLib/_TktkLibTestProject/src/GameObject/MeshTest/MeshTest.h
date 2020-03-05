@@ -21,12 +21,13 @@ struct MeshTest
 			.cameraId(CAMERA_BASIC)
 			.meshId(MESH_ROBOT_KYLE)
 			.skeltonId(SKELETON_YBot)
-			.materialIdArray(std::vector<int>({ MATERIAL_ROBOT_KYLE }))
+			.materialIdArray(MATERIAL_ROBOT_KYLE)
+			//.blendRate(Color(0.5f, 0.5f, 0.5f, 0.5f))
 			.create();
 
-		tktk::MeshAnimatorMaker::makeStart(gameObject)
+		/*tktk::MeshAnimatorMaker::makeStart(gameObject)
 			.animationId(ANIMATION_YBot_kicking_1)
-			.create();
+			.create();*/
 
 		gameObject->createComponent<MeshTestScript>();
 	}

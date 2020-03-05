@@ -19,7 +19,7 @@ struct IBLTest
 			.cameraId(CAMERA_BASIC)
 			.meshId(MESH_PISTOL)
 			.skeltonId(-10)
-			.materialIdArray(std::vector<int>({ MATERIAL_IBL_PISTOL }))
+			.materialIdArray(MATERIAL_IBL_PISTOL)
 			.create();
 	}
 };
