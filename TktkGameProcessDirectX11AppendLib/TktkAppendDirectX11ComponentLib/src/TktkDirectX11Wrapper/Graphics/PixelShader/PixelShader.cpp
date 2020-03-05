@@ -5,13 +5,13 @@
 
 namespace tktk
 {
-	void PixelShader::loadImpl(int id, int useConstantBufferId, const std::string & fileName)
+	void PixelShader::loadImpl(int id, const std::vector<int>& useConstantBufferIdArray, const std::string& fileName)
 	{
 		if (id <= 0)
 		{
 			throw std::runtime_error("PixelShaderId Fraud Value");
 		}
-		PixelShaderManager::load(id, useConstantBufferId, fileName);
+		PixelShaderManager::loadImpl(id, useConstantBufferIdArray, fileName);
 	}
 
 	void PixelShader::eraseImpl(int id)

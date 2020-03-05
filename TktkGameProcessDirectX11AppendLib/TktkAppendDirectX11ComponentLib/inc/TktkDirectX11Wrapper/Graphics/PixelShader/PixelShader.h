@@ -14,13 +14,13 @@ namespace tktk
 
 		// 新たなピクセルシェーダーをロードする
 		// ※この関数でシェーダーをロードする場合、idは1以上でなければならない
-		template <class ShaderIdType, class ConstantBufferIdType, std::enable_if_t<is_idType_all_v<ShaderIdType, ConstantBufferIdType>>* = nullptr>
-		static void load(ShaderIdType id, ConstantBufferIdType useConstantBufferId, const std::string& fileName)
+		template <class ShaderIdType, class... ConstantBufferIdTypes, std::enable_if_t<is_idType_all_v<ShaderIdType, ConstantBufferIdTypes...>>* = nullptr>
+		static void load(const std::string& fileName, ShaderIdType id, ConstantBufferIdTypes... useConstantBufferIds)
 		{
-			loadImpl(static_cast<int>(id), static_cast<int>(useConstantBufferId), fileName);
+			loadImpl(static_cast<int>(id), { static_cast<int>(useConstantBufferIds)... }, fileName);
 		}
-		template <class ShaderIdType, class ConstantBufferIdType, std::enable_if_t<!is_idType_all_v<ShaderIdType, ConstantBufferIdType>>* = nullptr>
-		static void load(ShaderIdType id, ConstantBufferIdType useConstantBufferId, const std::string& fileName) { static_assert(false, "Id Fraud Type"); }
+		template <class ShaderIdType, class... ConstantBufferIdTypes, std::enable_if_t<!is_idType_all_v<ShaderIdType, ConstantBufferIdTypes...>>* = nullptr>
+		static void load(const std::string& fileName, ShaderIdType id, ConstantBufferIdTypes... useConstantBufferIds) { static_assert(false, "Id Fraud Type"); }
 
 		// 指定したピクセルシェーダーを削除する
 		// ※この関数でシェーダーを削除する場合、idは1以上でなければならない
@@ -44,7 +44,7 @@ namespace tktk
 	private:
 
 		// 各種id指定系の関数の実装
-		static void loadImpl(int id, int useConstantBufferId, const std::string& fileName);
+		static void loadImpl(int id, const std::vector<int>& useConstantBufferIdArray, const std::string& fileName);
 		static void eraseImpl(int id);
 		static const PixelShaderData& getDataImpl(int id);
 	};

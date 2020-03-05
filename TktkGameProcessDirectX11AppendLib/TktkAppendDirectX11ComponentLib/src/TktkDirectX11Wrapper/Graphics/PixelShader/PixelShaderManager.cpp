@@ -16,9 +16,9 @@ namespace tktk
 		m_assetsPtr->clear();
 	}
 
-	void PixelShaderManager::loadImpl(int id, int useConstantBufferId, const std::string & fileName)
+	void PixelShaderManager::loadImpl(int id, const std::vector<int>& useConstantBufferIdArray, const std::string& fileName)
 	{
-		m_assetsPtr->load(id, useConstantBufferId, fileName);
+		m_assetsPtr->load(id, useConstantBufferIdArray, fileName);
 	}
 
 	void PixelShaderManager::eraseImpl(int id)

@@ -2,6 +2,7 @@
 #define PIXEL_SHADER_DATA_H_
 
 #include <string>
+#include <vector>
 #include <d3d11.h>
 
 namespace tktk
@@ -11,7 +12,7 @@ namespace tktk
 	{
 	public:
 
-		PixelShaderData(int useConstantBufferId, const std::string& fileName);
+		PixelShaderData(const std::vector<int>& useConstantBufferIdArray, const std::string& fileName);
 		~PixelShaderData();
 
 		PixelShaderData(const PixelShaderData& other) = delete;
@@ -22,16 +23,16 @@ namespace tktk
 		// ピクセルシェーダーに定数バッファを設定してデバイスコンテキストに設定する
 		void beginShader() const;
 
-		// このピクセルシェーダーが使用する定数バッファのIdを取得
-		int getUseConstantBufferId() const;
+		// このピクセルシェーダーが使用する定数バッファのIdの配列を取得
+		const std::vector<int>& getUseConstantBufferIdArray() const;
 
 		// ピクセルシェーダーのポインタを取得する
 		ID3D11PixelShader* getShaderPtr() const;
 
 	private:
 
-		// このピクセルシェーダーが使用する定数バッファのId
-		int m_useConstantBufferId;
+		// このピクセルシェーダーが使用する定数バッファのIdの配列
+		std::vector<int> m_useConstantBufferIdArray;
 
 		// ピクセルシェーダーのポインタ
 		ID3D11PixelShader* m_shaderPtr{ nullptr };

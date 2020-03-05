@@ -21,7 +21,7 @@ namespace tktk
 	public:
 
 		// 新たなピクセルシェーダーをロードする
-		void load(int id, int useConstantBufferId, const std::string& fileName);
+		void load(int id, const std::vector<int>& useConstantBufferIdArray, const std::string& fileName);
 
 		// 指定したピクセルシェーダーを削除する
 		void erase(int id);

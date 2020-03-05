@@ -12,14 +12,14 @@ namespace tktk
 		clear();
 	}
 
-	void PixelShaderAssets::load(int id, int useConstantBufferId, const std::string& fileName)
+	void PixelShaderAssets::load(int id, const std::vector<int>& useConstantBufferIdArray, const std::string& fileName)
 	{
 		erase(id);
 
 		m_assets.emplace(
 			std::piecewise_construct,
 			std::forward_as_tuple(id),
-			std::forward_as_tuple(useConstantBufferId, fileName)
+			std::forward_as_tuple(useConstantBufferIdArray, fileName)
 		);
 	}
 
