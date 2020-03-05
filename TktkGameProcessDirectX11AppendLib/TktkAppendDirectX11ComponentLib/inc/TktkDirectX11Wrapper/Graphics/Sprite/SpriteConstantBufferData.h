@@ -27,7 +27,7 @@ namespace tktk
 
 		Vector2 center{ Vector2::zero };
 
-		Vector2 screen{ 640.0f, 480.0f };
+		Vector2 screenSize{ 640.0f, 480.0f };
 	};
 }
 #endif // !SPRITE_CONSTANT_BUFFER_DATA_H_

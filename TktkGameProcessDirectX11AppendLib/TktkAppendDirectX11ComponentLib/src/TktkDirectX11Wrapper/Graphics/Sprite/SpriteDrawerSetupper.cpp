@@ -17,27 +17,8 @@ namespace tktk
 		const std::string & useVertexShaderFileName
 	)
 	{
-		SpriteConstantBufferData* spriteConstantBufferData = new SpriteConstantBufferData();
-		ConstantBufferManager::create(SystemConstantBufferId::Sprite, spriteConstantBufferData);
-		unsigned int location = 0U;
-		ConstantBufferManager::addParamLocation(SystemConstantBufferId::Sprite, SystemConstantBufferParamLocationType::texturePosition, location);
-		location += sizeof(Vector2);
-		ConstantBufferManager::addParamLocation(SystemConstantBufferId::Sprite, SystemConstantBufferParamLocationType::textureSize, location);
-		location += sizeof(Vector2);
-		ConstantBufferManager::addParamLocation(SystemConstantBufferId::Sprite, SystemConstantBufferParamLocationType::size, location);
-		location += sizeof(Vector2);
-		ConstantBufferManager::addParamLocation(SystemConstantBufferId::Sprite, SystemConstantBufferParamLocationType::position, location);
-		location += sizeof(Vector2);
-		ConstantBufferManager::addParamLocation(SystemConstantBufferId::Sprite, SystemConstantBufferParamLocationType::scaleRate, location);
-		location += sizeof(Vector2);
-		ConstantBufferManager::addParamLocation(SystemConstantBufferId::Sprite, SystemConstantBufferParamLocationType::angleDeg, location);
-		location += sizeof(float) * 2;
-		ConstantBufferManager::addParamLocation(SystemConstantBufferId::Sprite, SystemConstantBufferParamLocationType::color, location);
-		location += sizeof(Color);
-		ConstantBufferManager::addParamLocation(SystemConstantBufferId::Sprite, SystemConstantBufferParamLocationType::center, location);
-		location += sizeof(Vector2);
-		ConstantBufferManager::addParamLocation(SystemConstantBufferId::Sprite, SystemConstantBufferParamLocationType::screenSize, location);
-
+		ConstantBufferManager::create(SystemConstantBufferId::Sprite, new SpriteConstantBufferData());
+		
 		std::array<SpriteVertexBufferData, 4U> vertices = std::array<SpriteVertexBufferData, 4U>({
 			Vector2(0.0f, 0.0f),
 			Vector2(1.0f, 0.0f),
@@ -53,14 +34,17 @@ namespace tktk
 
 		IndexBufferInitParams indexBufferParams;
 		indexBufferParams.indices = std::vector<unsigned int>({ 0U, 1U, 2U, 3U });
+
+		MaterialSlotsInitParams materialSlotsParams;
+		materialSlotsParams.subsets.push_back({ 0, 4 });
 		
-		MeshManager::create(SYSTEM_MESH_SPRITE, vertexBufferParams, indexBufferParams);
+		MeshManager::create(SYSTEM_MESH_SPRITE, vertexBufferParams, indexBufferParams, materialSlotsParams);
 
 		std::vector<D3D11_INPUT_ELEMENT_DESC> layout = std::vector<D3D11_INPUT_ELEMENT_DESC>({
 			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			});
-		VertexShaderManager::load(SystemVertexShaderId::Sprite, SystemConstantBufferId::Sprite, useVertexShaderFileName, layout);
+		VertexShaderManager::load(SystemVertexShaderId::Sprite, useVertexShaderFileName, layout, SystemConstantBufferId::Sprite);
 
-		PixelShaderManager::load(SystemPixelShaderId::Sprite, SystemConstantBufferId::Sprite, usePixelShaderFileName);
+		PixelShaderManager::load(usePixelShaderFileName, SystemPixelShaderId::Sprite, SystemConstantBufferId::Sprite);
 	}
 }
