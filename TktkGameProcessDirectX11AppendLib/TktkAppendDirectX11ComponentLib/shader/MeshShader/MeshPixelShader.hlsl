@@ -1,23 +1,21 @@
-cbuffer ConstantBuffer : register(b0)
+cbuffer MaterialConstantBuffer : register(b0)
 {
-	float4x4    WorldMatrix;
-	float4x4    ViewMatrix;
-	float4x4    ProjectionMatrix;
-	float4x4    BoneMatrices[256];
-
 	float4		MatAmbient;
 	float4		MatDiffuse;
 	float4		MatSpecular;
 	float4		MatEmissive;
 	float		MatShiniess;
 	float3		padThree;
+}
 
-	float4		ligntAmbient;
+cbuffer LightConstantBuffer : register(b1)
+{
+	float4		lightAmbient;
 	float4		lightDiffuse;
 	float4		lightSpeqular;
 	float3		lightPosition;
 	float		padOneOne;
-};
+}
 
 struct PS_INPUT
 {
@@ -31,17 +29,9 @@ struct PS_INPUT
 SamplerState g_AlbedoMapSampler  : register(s0);
 Texture2D	 g_AlbedoMapTexture  : register(t0);
 
-// メタリックスムースネスマップ
-SamplerState g_MetallicSmoothnessMapSampler : register(s1);
-Texture2D	 g_MetallicSmoothnessMapTexture : register(t1);
-
 // 法線マップ
-SamplerState g_NormalMapSampler  : register(s2);
-Texture2D    g_NormalMapTexture  : register(t2);
-
-// アンビエントオクルージョンマップ
-SamplerState g_AmbientOcclusionMapSampler : register(s3);
-Texture2D	 g_AmbientOcclusionMapTexture : register(t3);
+SamplerState g_NormalMapSampler  : register(s1);
+Texture2D    g_NormalMapTexture  : register(t1);
 
 float4 main(PS_INPUT Input) : SV_TARGET
 {
@@ -56,7 +46,7 @@ float4 main(PS_INPUT Input) : SV_TARGET
 	float4 baseColor = g_AlbedoMapTexture.Sample(g_AlbedoMapSampler, Input.TexCoord);
 	
 	float4 resultColor
-		= MatAmbient * ligntAmbient * baseColor
+		= MatAmbient * lightAmbient * baseColor
 		+ MatDiffuse * lightDiffuse * diffuse * baseColor
 		+ MatSpecular * lightSpeqular * specular
 		+ MatEmissive * baseColor;

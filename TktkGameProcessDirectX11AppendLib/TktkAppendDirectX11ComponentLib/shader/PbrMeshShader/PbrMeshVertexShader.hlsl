@@ -1,21 +1,19 @@
-cbuffer ConstantBuffer : register(b0)
+cbuffer MeshConstantBuffer : register(b0)
 {
 	float4x4    WorldMatrix;
 	float4x4    ViewMatrix;
 	float4x4    ProjectionMatrix;
 	float4x4    BoneMatrices[256];
+};
 
-	float4		albedoColor;
-	float		metallic;
-	float		smoothness;
-	float2		padTwo;
-
-	float4		ligntAmbient;
+cbuffer LightConstantBuffer : register(b1)
+{
+	float4		lightAmbient;
 	float4		lightDiffuse;
 	float4		lightSpeqular;
 	float3		lightPosition;
 	float		padOneOne;
-};
+}
 
 struct VS_INPUT
 {
