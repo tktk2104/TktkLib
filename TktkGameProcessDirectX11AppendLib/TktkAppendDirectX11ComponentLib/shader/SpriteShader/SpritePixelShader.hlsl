@@ -1,15 +1,15 @@
 cbuffer ConstantBuffer : register(b0)
 {
-	float2 texturePosition;
+	float2 textureUvOffset;
+	float2 textureUvMulRate;
 	float2 textureSize;
-	float2 size;
-	float2 position;
-	float2 scale;
-	float angle;
+	float2 spritePosition;
+	float2 spriteScaleRate;
+	float spriteAngleDeg;
 	float padding;
-	float4 color;
-	float2 center;
-	float2 screen;
+	float4 blendRate;
+	float2 spriteCenterRate;
+	float2 screenSize;
 };
 
 struct PS_INPUT
@@ -23,5 +23,5 @@ SamplerState TextureMapSampler : register(s0);
 
 float4 main(PS_INPUT input) : SV_Target
 {
-	return TextureMapTexture.Sample(TextureMapSampler, input.texcoord) * color;
+	return TextureMapTexture.Sample(TextureMapSampler, input.texcoord) * blendRate;
 }
