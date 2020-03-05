@@ -17,8 +17,11 @@ namespace tktk
 			m_drawPriority,
 			m_textureId,
 			m_blendStateId,
+			m_depthStencilStateId,
+			m_textureUvOffset,
+			m_textureUvMulRate,
 			m_blendRate,
-			m_depthStencilStateId
+			m_spriteCenterRate
 			);
 	}
 
@@ -28,9 +31,27 @@ namespace tktk
 		return *this;
 	}
 
+	SpriteDrawerMaker & SpriteDrawerMaker::textureUvOffset(const Vector2 & value)
+	{
+		m_textureUvOffset = value;
+		return *this;
+	}
+
+	SpriteDrawerMaker & SpriteDrawerMaker::textureUvMulRate(const Vector2 & value)
+	{
+		m_textureUvMulRate = value;
+		return *this;
+	}
+
 	SpriteDrawerMaker & SpriteDrawerMaker::blendRate(const Color & value)
 	{
 		m_blendRate = value;
+		return *this;
+	}
+
+	SpriteDrawerMaker & SpriteDrawerMaker::spriteCenterRate(const Vector2 & value)
+	{
+		m_spriteCenterRate = value;
 		return *this;
 	}
 

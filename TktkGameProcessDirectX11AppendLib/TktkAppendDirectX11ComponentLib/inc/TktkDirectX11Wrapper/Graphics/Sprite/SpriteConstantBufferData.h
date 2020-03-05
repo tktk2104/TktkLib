@@ -9,23 +9,23 @@ namespace tktk
 	// デフォルトのスプライト描画の定数バッファの形式
 	struct SpriteConstantBufferData
 	{
-		Vector2 texturePosition{ Vector2::zero };
+		Vector2 textureUvOffset{ 0.0f, 0.0f };
 
-		Vector2 textureSize{ Vector2::zero };
+		Vector2 textureUvMulRate{ 0.0f, 0.0f };
 
-		Vector2 size{ Vector2::one };
+		Vector2 textureSize{ Vector2::one };
 
-		Vector2 position{ Vector2::zero };
+		Vector2 spritePosition{ Vector2::zero };
 
-		Vector2 scaleRate{ Vector2::one };
+		Vector2 spriteScaleRate{ Vector2::one };
 
-		float	angleDeg{ 0.0f };
+		float	spriteAngleDeg{ 0.0f };
 
 		float	padding{ 0.0f };
 
-		Color	color{ Color::white };
+		Color	blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };
 
-		Vector2 center{ Vector2::zero };
+		Vector2 spriteCenterRate{ 0.0f, 0.0f };
 
 		Vector2 screenSize{ 640.0f, 480.0f };
 	};

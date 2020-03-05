@@ -36,8 +36,17 @@ namespace tktk
 		// 描画優先度を設定する
 		SpriteDrawerMaker& drawPriority(float value);
 
+		// テクスチャ座標に足す値を設定する
+		SpriteDrawerMaker& textureUvOffset(const Vector2& value);
+
+		// テクスチャ座標にかける値を設定する
+		SpriteDrawerMaker& textureUvMulRate(const Vector2& value);
+
 		// 描画先画像に描画結果をどれぐらいの比率でブレンドするかを設定する
 		SpriteDrawerMaker& blendRate(const Color& value);
+
+		// スプライトの中心位置を設定する
+		SpriteDrawerMaker& spriteCenterRate(const Vector2& value);
 
 		// テクスチャIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
@@ -80,8 +89,11 @@ namespace tktk
 		float m_drawPriority{ 0.0f };
 		int m_textureId{ 0 };
 		int m_blendStateId{ static_cast<int>(SystemBlendStateId::Alpha) };
-		Color m_blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };
 		int m_depthStencilStateId{ static_cast<int>(SystemDepthStencilStateId::NotUseDepth) };
+		Vector2 m_textureUvOffset{ 0.0f, 0.0f };
+		Vector2 m_textureUvMulRate{ 1.0f, 1.0f };
+		Color m_blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };
+		Vector2 m_spriteCenterRate{ 0.5f, 0.5f };
 	};
 }
 #endif // !SPRITE_DRAWER_MAKER_H_
