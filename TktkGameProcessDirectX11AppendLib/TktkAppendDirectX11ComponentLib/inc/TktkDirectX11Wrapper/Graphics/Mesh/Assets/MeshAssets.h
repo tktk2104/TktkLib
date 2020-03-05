@@ -21,7 +21,8 @@ namespace tktk
 		void create(
 			int id,
 			const VertexBufferInitParams& vertexBufferParams,
-			const IndexBufferInitParams& indexBufferParams
+			const IndexBufferInitParams& indexBufferParams,
+			const MaterialSlotsInitParams& materialSlotsParams
 		);
 
 		// 指定したメッシュデータを削除する

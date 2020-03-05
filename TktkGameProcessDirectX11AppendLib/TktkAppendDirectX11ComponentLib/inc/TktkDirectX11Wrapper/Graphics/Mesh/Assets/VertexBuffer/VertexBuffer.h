@@ -14,20 +14,14 @@ namespace tktk
 		VertexBuffer(const VertexBufferInitParams& params);
 		~VertexBuffer();
 
+		// コピー禁止
 		VertexBuffer(const VertexBuffer& other) = delete;
 		VertexBuffer& operator = (const VertexBuffer& other) = delete;
 
 	public:
 
-		// 頂点バッファのポインタを取得する
-		ID3D11Buffer* getVertexBufferPtr() const;
-
-		// ストライドを取得する
-		unsigned int getStride() const;
-
-		// オフセットを取得する
-		unsigned int getOffset() const;
-
+		// 頂点バッファをレンダリングパイルラインに設定する
+		void setBuffer() const;
 
 	private:
 

@@ -96,6 +96,14 @@ namespace tktk
 			texturePath = meshPath.parent_path().string() + "/";
 		}
 
+		// 頂点バッファを作る上で必要なパラメータ
+		VertexBufferInitParams vertexBufferParams = { sizeof(VertexDataType), 0U, sizeof(VertexDataType) * vertices.size(), vertices.data() };
+		// インデックスバッファを作る上で必要なパラメータ
+		IndexBufferInitParams indexBufferParams = { indices };
+		// マテリアルスロットを作る上で必要なパラメータ
+		MaterialSlotsInitParams materialSlotsParams;
+		materialSlotsParams.subsets.reserve(materials.size());
+
 		for (unsigned int i = 0; i < materials.size(); i++)
 		{
 			// マテリアルから読み込んだテクスチャはマテリアルIDを100倍した値に何番目のテクスチャかを足したの値の負の数のIDで管理される
@@ -107,33 +115,23 @@ namespace tktk
 			// 法線テクスチャをロードする
 			Texture2DManager::load(baseMaterialTextureId - 2, texturePath + materials.at(i).normalFileName);
 
-			std::unordered_map<unsigned int, int> useTextureIdMap;
-			useTextureIdMap.insert(std::make_pair(0U, baseMaterialTextureId - 1));
-			useTextureIdMap.insert(std::make_pair(1U, baseMaterialTextureId - 2));
-
 			// マテリアルを作成
 			Material::create(
 				materialIdArray.at(i),
-				subsets.at(i).start,
-				subsets.at(i).count,
 				SystemVertexShaderId::Mesh,
 				SystemPixelShaderId::Mesh,
-				useTextureIdMap,
+				{ baseMaterialTextureId - 1, baseMaterialTextureId - 2 },
 				materials.at(i).ambient,
 				materials.at(i).diffuse,
 				materials.at(i).specular,
 				materials.at(i).emission,
 				materials.at(i).shiniess
 			);
+
+			materialSlotsParams.subsets.push_back({ subsets.at(i).start, subsets.at(i).count });
 		}
 
-		// 頂点バッファを作る上で必要なパラメータ
-		VertexBufferInitParams vertexBufferParams = { sizeof(VertexDataType), 0U, sizeof(VertexDataType) * vertices.size(), vertices.data() };
-
-		// インデックスバッファを作る上で必要なパラメータ
-		IndexBufferInitParams indexBufferParams = { indices };
-
 		// メッシュデータを作成
-		Mesh::create(meshId, vertexBufferParams, indexBufferParams);
+		Mesh::create(meshId, vertexBufferParams, indexBufferParams, materialSlotsParams);
 	}
 }

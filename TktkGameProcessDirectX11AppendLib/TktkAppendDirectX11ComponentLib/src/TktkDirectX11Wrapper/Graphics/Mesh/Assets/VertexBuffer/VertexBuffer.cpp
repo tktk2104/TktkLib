@@ -30,18 +30,14 @@ namespace tktk
 		}
 	}
 
-	ID3D11Buffer * VertexBuffer::getVertexBufferPtr() const
+	void VertexBuffer::setBuffer() const
 	{
-		return m_vertexBufferPtr;
-	}
-
-	unsigned int VertexBuffer::getStride() const
-	{
-		return m_stride;
-	}
-
-	unsigned int VertexBuffer::getOffset() const
-	{
-		return m_offset;
+		Screen::getDeviceContextPtr()->IASetVertexBuffers(
+			0,
+			1,
+			&m_vertexBufferPtr,
+			&m_stride,
+			&m_offset
+		);
 	}
 }

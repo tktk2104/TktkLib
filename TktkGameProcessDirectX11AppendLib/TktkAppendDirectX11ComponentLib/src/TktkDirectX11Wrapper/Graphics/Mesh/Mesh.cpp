@@ -8,7 +8,8 @@ namespace tktk
 	void Mesh::createImpl(
 		int id,
 		const VertexBufferInitParams & vertexBufferParams,
-		const IndexBufferInitParams & indexBufferParams
+		const IndexBufferInitParams & indexBufferParams,
+		const MaterialSlotsInitParams & materialSlotsParams
 	)
 	{
 		if (id <= 0)
@@ -18,7 +19,8 @@ namespace tktk
 		MeshManager::create(
 			id,
 			vertexBufferParams,
-			indexBufferParams
+			indexBufferParams,
+			materialSlotsParams
 		);
 	}
 

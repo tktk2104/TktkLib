@@ -20,12 +20,6 @@ namespace tktk
 			const std::string& pbrIblPixelShaderFileName,
 			const std::string& pbrIblVertexShaderFileName
 		);
-
-	private:
-
-		static void createMeshConstantBufferData();
-
-		static void createPbrMeshConstantBufferData();
 	};
 }
 #endif // !MESH_DRAWER_SETUPPER_H_

@@ -6,24 +6,28 @@ namespace tktk
 {
 	MeshData::MeshData(
 		const VertexBufferInitParams & vertexBufferParams,
-		const IndexBufferInitParams & indexBufferParams
+		const IndexBufferInitParams & indexBufferParams,
+		const MaterialSlotsInitParams & materialSlotsParams
 	)
 		: m_vertexBuffer(vertexBufferParams)
 		, m_indexBuffer(indexBufferParams)
+		, m_materialSlots(materialSlotsParams)
 	{
 	}
 
-	MeshData::~MeshData()
+	void MeshData::setVertexAndIndexBuffer() const
 	{
+		m_vertexBuffer.setBuffer();
+		m_indexBuffer.setBuffer();
 	}
 
-	const VertexBuffer & MeshData::getVertexBuffer() const
+	unsigned int MeshData::getMaterialSlotCount() const
 	{
-		return m_vertexBuffer;
+		return m_materialSlots.getSlotsCount();
 	}
 
-	const IndexBuffer & MeshData::getIndexBuffer() const
+	const Subset & MeshData::getSubset(unsigned int slotIndex) const
 	{
-		return m_indexBuffer;
+		return m_materialSlots.getSubset(slotIndex);
 	}
 }

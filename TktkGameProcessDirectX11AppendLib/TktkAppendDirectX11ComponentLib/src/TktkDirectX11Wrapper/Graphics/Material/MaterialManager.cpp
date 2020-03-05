@@ -18,11 +18,9 @@ namespace tktk
 
 	void MaterialManager::createImpl(
 		int id,
-		int indexBufferStartPos,
-		int indexBufferUseCount,
 		int useVertexShaderId,
 		int usePixelShaderId,
-		const std::unordered_map<unsigned int, int>& useTextureIdMap,
+		const std::vector<int>& useTextureIdArray,
 		const Color & ambientColor,
 		const Color & diffuseColor,
 		const Color & specularColor,
@@ -32,11 +30,9 @@ namespace tktk
 	{
 		m_assetsPtr->create(
 			id,
-			indexBufferStartPos,
-			indexBufferUseCount,
 			useVertexShaderId,
 			usePixelShaderId,
-			useTextureIdMap,
+			useTextureIdArray,
 			ambientColor,
 			diffuseColor,
 			specularColor,

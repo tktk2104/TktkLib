@@ -15,13 +15,14 @@ namespace tktk
 		IndexBuffer(const IndexBufferInitParams& params);
 		~IndexBuffer();
 
+		// コピー禁止
 		IndexBuffer(const IndexBuffer& other) = delete;
 		IndexBuffer& operator = (const IndexBuffer& other) = delete;
 
 	public:
 
-		// インデックスバッファのポインタを取得する
-		ID3D11Buffer* getBufferPtr() const;
+		// インデックスバッファをレンダリングパイプラインに設定する
+		void setBuffer() const;
 
 	private:
 

@@ -315,6 +315,12 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\DepthStencilView\Asset\DepthStencilViewData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Assets\MaterialSlots\MaterialSlots.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialParameters.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\SpriteShader\SpritePixelShader.hlsl" />
@@ -372,9 +378,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\SystemConstantBufferId.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\Asset\SystemConstantBufferParamLocationType.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\ConstantBuffer\ConstantBuffer.h">
@@ -638,9 +641,6 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxLoadDataParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\PbrMeshConstantBufferData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\MeshConstantBufferData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -705,6 +705,27 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\DepthStencilState\Asset\SystemDepthStencilStateId.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\MaterialConstantBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\LightConstantBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\MaterialSlots\MaterialSlots.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\MaterialSlots\Subset.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\_MeshInitParams\MaterialSlotsInitParams.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialParameters.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\PbrConstantBufferData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

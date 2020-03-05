@@ -28,8 +28,8 @@ namespace tktk
 		}
 	}
 
-	ID3D11Buffer * IndexBuffer::getBufferPtr() const
+	void IndexBuffer::setBuffer() const
 	{
-		return m_bufferPtr;
+		Screen::getDeviceContextPtr()->IASetIndexBuffer(m_bufferPtr, DXGI_FORMAT_R32_UINT, 0);
 	}
 }

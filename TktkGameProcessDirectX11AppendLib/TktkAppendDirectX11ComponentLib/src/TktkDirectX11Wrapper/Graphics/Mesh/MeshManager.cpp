@@ -11,9 +11,9 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new MeshAssets());
 	}
 
-	void MeshManager::createImpl(int id, const VertexBufferInitParams & vertexBufferParams, const IndexBufferInitParams & indexBufferParams)
+	void MeshManager::createImpl(int id, const VertexBufferInitParams & vertexBufferParams, const IndexBufferInitParams & indexBufferParams, const MaterialSlotsInitParams& materialSlotsParams)
 	{
-		m_assetsPtr->create(id, vertexBufferParams, indexBufferParams);
+		m_assetsPtr->create(id, vertexBufferParams, indexBufferParams, materialSlotsParams);
 	}
 
 	void MeshManager::eraseImpl(int id)

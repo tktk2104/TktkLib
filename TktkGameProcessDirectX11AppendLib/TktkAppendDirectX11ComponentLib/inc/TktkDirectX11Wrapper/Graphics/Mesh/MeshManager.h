@@ -18,12 +18,12 @@ namespace tktk
 
 		// 新たなメッシュデータを作成する
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
-		static void create(IdType id, const VertexBufferInitParams& vertexBufferParams, const IndexBufferInitParams& indexBufferParams)
+		static void create(IdType id, const VertexBufferInitParams& vertexBufferParams, const IndexBufferInitParams& indexBufferParams, const MaterialSlotsInitParams& materialSlotsParams)
 		{
-			createImpl(static_cast<int>(id), vertexBufferParams, indexBufferParams);
+			createImpl(static_cast<int>(id), vertexBufferParams, indexBufferParams, materialSlotsParams);
 		}
 		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
-		static void create(IdType id, const VertexBufferInitParams& vertexBufferParams, const IndexBufferInitParams& indexBufferParams)
+		static void create(IdType id, const VertexBufferInitParams& vertexBufferParams, const IndexBufferInitParams& indexBufferParams, const MaterialSlotsInitParams& materialSlotsParams)
 			{ static_assert(false, "MeshId Fraud Type"); }
 
 		// 指定したメッシュデータを削除する
@@ -50,7 +50,7 @@ namespace tktk
 	private:
 
 		// 各種id指定系の関数の実装
-		static void createImpl(int id, const VertexBufferInitParams& vertexBufferParams, const IndexBufferInitParams& indexBufferParams);
+		static void createImpl(int id, const VertexBufferInitParams& vertexBufferParams, const IndexBufferInitParams& indexBufferParams, const MaterialSlotsInitParams& materialSlotsParams);
 		static void eraseImpl(int id);
 		static MeshData* getDataPtrImpl(int id);
 

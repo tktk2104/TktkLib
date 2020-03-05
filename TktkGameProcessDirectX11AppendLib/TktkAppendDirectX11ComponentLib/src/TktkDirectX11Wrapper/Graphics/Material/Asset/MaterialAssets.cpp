@@ -9,11 +9,9 @@ namespace tktk
 
 	void MaterialAssets::create(
 		int id,
-		int indexBufferStartPos,
-		int indexBufferUseCount,
 		int useVertexShaderId,
 		int usePixelShaderId,
-		const std::unordered_map<unsigned int, int>& useTextureIdMap,
+		const std::vector<int>& useTextureIdArray,
 		const Color & ambientColor,
 		const Color & diffuseColor,
 		const Color & specularColor,
@@ -27,11 +25,9 @@ namespace tktk
 			std::piecewise_construct,
 			std::forward_as_tuple(id),
 			std::forward_as_tuple(
-				indexBufferStartPos,
-				indexBufferUseCount,
 				useVertexShaderId,
 				usePixelShaderId,
-				useTextureIdMap,
+				useTextureIdArray,
 				ambientColor,
 				diffuseColor,
 				specularColor,
@@ -47,16 +43,14 @@ namespace tktk
 
 		create(
 			id,
-			originalDataPtr->getIndexBufferStartPos(),
-			originalDataPtr->getIndexBufferUseCount(),
 			originalDataPtr->getUseVertexShaderId(),
 			originalDataPtr->getUseVertexShaderId(),
-			originalDataPtr->getUseTextureIdMap(),
-			*originalDataPtr->getAmbientColorPtr(),
-			*originalDataPtr->getDiffuseColorPtr(),
-			*originalDataPtr->getSpecularColorPtr(),
-			*originalDataPtr->getEmissionColorPtr(),
-			*originalDataPtr->getShininessPtr()
+			originalDataPtr->getParametersRef().getUseTextureIdArray(),
+			originalDataPtr->getParametersRef().getAmbientColor(),
+			originalDataPtr->getParametersRef().getDiffuseColor(),
+			originalDataPtr->getParametersRef().getSpecularColor(),
+			originalDataPtr->getParametersRef().getEmissionColor(),
+			originalDataPtr->getParametersRef().getShininess()
 		);
 	}
 

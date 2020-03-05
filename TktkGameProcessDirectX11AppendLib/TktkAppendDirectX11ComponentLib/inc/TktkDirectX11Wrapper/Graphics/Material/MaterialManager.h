@@ -21,11 +21,9 @@ namespace tktk
 		template <class MaterialIdType, class VertexShaderIdType, class PixelShaderIdType, std::enable_if_t<is_idType_all_v<MaterialIdType, VertexShaderIdType, PixelShaderIdType>>* = nullptr>
 		static void create(
 			MaterialIdType id,
-			int indexBufferStartPos,
-			int indexBufferUseCount,
 			VertexShaderIdType useVertexShaderId,
 			PixelShaderIdType usePixelShaderId,
-			const std::unordered_map<unsigned int, int>& useTextureIdMap,
+			const std::vector<int>& useTextureIdArray,
 			const Color& ambientColor,
 			const Color& diffuseColor,
 			const Color& specularColor,
@@ -35,11 +33,9 @@ namespace tktk
 		{
 			createImpl(
 				static_cast<int>(id),
-				indexBufferStartPos,
-				indexBufferUseCount,
 				static_cast<int>(useVertexShaderId),
 				static_cast<int>(usePixelShaderId),
-				useTextureIdMap,
+				useTextureIdArray,
 				ambientColor,
 				diffuseColor,
 				specularColor,
@@ -50,11 +46,9 @@ namespace tktk
 		template <class MaterialIdType, class VertexShaderIdType, class PixelShaderIdType, std::enable_if_t<!is_idType_all_v<MaterialIdType, VertexShaderIdType, PixelShaderIdType>>* = nullptr>
 		static void create(
 			MaterialIdType id,
-			int indexBufferStartPos,
-			int indexBufferUseCount,
 			VertexShaderIdType useVertexShaderId,
 			PixelShaderIdType usePixelShaderId,
-			const std::unordered_map<unsigned int, int>& useTextureIdMap,
+			const std::vector<int>& useTextureIdArray,
 			const Color& ambientColor,
 			const Color& diffuseColor,
 			const Color& specularColor,
@@ -97,11 +91,9 @@ namespace tktk
 		// äeéÌidéwíËånÇÃä÷êîÇÃé¿ëï
 		static void createImpl(
 			int id,
-			int indexBufferStartPos,
-			int indexBufferUseCount,
 			int useVertexShaderId,
 			int usePixelShaderId,
-			const std::unordered_map<unsigned int, int>& useTextureIdMap,
+			const std::vector<int>& useTextureIdArray,
 			const Color& ambientColor,
 			const Color& diffuseColor,
 			const Color& specularColor,

@@ -100,6 +100,14 @@ namespace tktk
 			texturePath = meshPath.parent_path().string() + "/";
 		}
 
+		// 頂点バッファを作る上で必要なパラメータ
+		VertexBufferInitParams vertexBufferParams = { sizeof(FbxVertexDataParam), 0U, sizeof(FbxVertexDataParam) * loadDataParam.vertexDataArray.size(), loadDataParam.vertexDataArray.data() };
+		// インデックスバッファを作る上で必要なパラメータ
+		IndexBufferInitParams indexBufferParams = { loadDataParam.indexDataArray };
+		// マテリアルスロットを作る上で必要なパラメータ
+		MaterialSlotsInitParams materialSlotsParams;
+		materialSlotsParams.subsets.reserve(loadDataParam.materialDataArray.size());
+
 		for (unsigned int i = 0; i < loadDataParam.materialDataArray.size(); i++)
 		{
 			// マテリアルから読み込んだテクスチャはマテリアルIDを100倍した値に何番目のテクスチャかを足したの値の負の数のIDで管理される
@@ -111,34 +119,23 @@ namespace tktk
 			// 法線テクスチャをロードする
 			Texture2DManager::load(baseMaterialTextureId - 2, texturePath + loadDataParam.materialDataArray.at(i).normalFileName);
 
-			std::unordered_map<unsigned int, int> useTextureIdMap;
-			useTextureIdMap.insert(std::make_pair(0U, baseMaterialTextureId - 1));
-			useTextureIdMap.insert(std::make_pair(1U, baseMaterialTextureId - 2));
-
 			// マテリアルを作成
 			Material::create(
 				materialIdArray.at(i),
-				loadDataParam.subsetDataArray.at(i).start,
-				loadDataParam.subsetDataArray.at(i).count,
 				SystemVertexShaderId::Mesh,
 				SystemPixelShaderId::Mesh,
-				useTextureIdMap,
+				{ baseMaterialTextureId - 1, baseMaterialTextureId - 2 },
 				loadDataParam.materialDataArray.at(i).ambient,
 				loadDataParam.materialDataArray.at(i).diffuse,
 				loadDataParam.materialDataArray.at(i).specular,
 				loadDataParam.materialDataArray.at(i).emission,
 				loadDataParam.materialDataArray.at(i).shiniess
 			);
+
+			materialSlotsParams.subsets.push_back({ loadDataParam.subsetDataArray.at(i).start, loadDataParam.subsetDataArray.at(i).count });
 		}
-
-		// 頂点バッファを作る上で必要なパラメータ
-		VertexBufferInitParams vertexBufferParams = { sizeof(FbxVertexDataParam), 0U, sizeof(FbxVertexDataParam) * loadDataParam.vertexDataArray.size(), loadDataParam.vertexDataArray.data() };
-
-		// インデックスバッファを作る上で必要なパラメータ
-		IndexBufferInitParams indexBufferParams = { loadDataParam.indexDataArray };
-
 		// メッシュデータを作成
-		Mesh::create(meshId, vertexBufferParams, indexBufferParams);
+		Mesh::create(meshId, vertexBufferParams, indexBufferParams, materialSlotsParams);
 	}
 
 	void FbxLoader::initSdkObjects(fbxsdk::FbxScene** scenePtr)

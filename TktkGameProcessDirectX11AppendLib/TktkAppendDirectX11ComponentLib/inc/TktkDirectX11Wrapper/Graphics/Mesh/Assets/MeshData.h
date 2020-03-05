@@ -3,6 +3,7 @@
 
 #include "VertexBuffer/VertexBuffer.h"
 #include "IndexBuffer/IndexBuffer.h"
+#include "MaterialSlots/MaterialSlots.h"
 
 #include "SystemMeshId.h"
 
@@ -14,23 +15,31 @@ namespace tktk
 
 		MeshData(
 			const VertexBufferInitParams& vertexBufferParams,
-			const IndexBufferInitParams& indexBufferParams
+			const IndexBufferInitParams& indexBufferParams,
+			const MaterialSlotsInitParams& materialSlotsParams
 		);
-		~MeshData();
+		~MeshData() = default;
 
+		// コピー禁止
 		MeshData(const MeshData& other) = delete;
 		MeshData& operator = (const MeshData& other) = delete;
 
 	public:
 
-		const VertexBuffer& getVertexBuffer() const;
+		// 頂点バッファとインデックスバッファをレンダリングパイプラインに設定する
+		void setVertexAndIndexBuffer() const;
 
-		const IndexBuffer& getIndexBuffer() const;
+		// マテリアルスロットが何個あるか取得する
+		unsigned int getMaterialSlotCount() const;
+
+		// 指定したマテリアルスロットのサブセットを取得する
+		const Subset& getSubset(unsigned int slotIndex) const;
 
 	private:
 
 		VertexBuffer m_vertexBuffer;
 		IndexBuffer m_indexBuffer;
+		MaterialSlots m_materialSlots;
 	};
 }
 #endif // !MESH_DATA_H_
