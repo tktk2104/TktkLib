@@ -5,7 +5,6 @@
 #include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include "Asset/ConstantBufferAssets.h"
 #include "Asset/SystemConstantBufferId.h"
-#include "Asset/SystemConstantBufferParamLocationType.h"
 
 namespace tktk
 {
@@ -46,15 +45,6 @@ namespace tktk
 		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
 		static ConstantBufferData* getDataPtr(IdType id) { static_assert(false, "ConstantBufferId Fraud Type"); }
 
-		// 指定した定数バッファに入れる予定のデータの特定の値にアクセスするための設定を行う（列挙型を含む整数型のidが渡された場合のみビルド可）
-		template <class IdType, class LocationType, std::enable_if_t<(is_idType_v<IdType> && is_idType_v<LocationType>)>* = nullptr>
-		static void addParamLocation(IdType id, LocationType locationType, unsigned int locationFromBufferTop)
-		{
-			addParamLocationImpl(static_cast<int>(id), static_cast<int>(locationType), locationFromBufferTop);
-		}
-		template <class IdType, class LocationType, std::enable_if_t<!(is_idType_v<IdType> && is_idType_v<LocationType>)>* = nullptr>
-		static void addParamLocation(IdType id, LocationType locationType, unsigned int locationFromBufferTop) { static_assert(false, "Id Fraud Type"); }
-
 		// 全ての定数バッファを削除する
 		static void clear();
 
@@ -63,7 +53,6 @@ namespace tktk
 	private:
 		static void eraseImpl(int id);
 		static ConstantBufferData* getDataPtrImpl(int id);
-		static void addParamLocationImpl(int id, int locationType, unsigned int locationFromBufferTop);
 
 	private:
 

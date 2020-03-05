@@ -31,9 +31,6 @@ namespace tktk
 		// 指定した定数バッファを管理するクラスのポインタを取得する
 		ConstantBufferData* getDataPtr(int id);
 
-		// 指定した定数バッファに入れる予定のデータの特定の値にアクセスするための設定を行う
-		void addParamLocation(int id, int locationType, unsigned int locationFromBufferTop);
-
 	private:
 
 		// 定数バッファを管理するクラスの連想配列

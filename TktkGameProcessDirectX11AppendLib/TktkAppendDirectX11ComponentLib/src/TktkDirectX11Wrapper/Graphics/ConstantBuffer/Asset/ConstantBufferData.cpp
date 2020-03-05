@@ -37,8 +37,13 @@ namespace tktk
 		return m_bufferPtr;
 	}
 
-	void ConstantBufferData::addParamLocationImpl(int locationType, unsigned int locationFromBufferTop)
+	void ConstantBufferData::setBufferData(const SafetyVoidPtr & bufferData)
 	{
-		m_paramLocationMap.insert(std::make_pair(locationType, locationFromBufferTop));
+		if (m_tempBufferPtr.getClassId() == bufferData.getClassId())
+		{
+			memcpy(m_tempBufferPtr.voidPtr(), bufferData.voidPtr(), bufferData.getClassSize());
+			return;
+		}
+		throw std::runtime_error("getTempBufferPtr error BufferType Invalid type");
 	}
 }

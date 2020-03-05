@@ -30,9 +30,4 @@ namespace tktk
 	{
 		return &(m_assets.at(id));
 	}
-
-	void ConstantBufferAssets::addParamLocation(int id, int locationType, unsigned int locationFromBufferTop)
-	{
-		m_assets.at(id).addParamLocation(locationType, locationFromBufferTop);
-	}
 }

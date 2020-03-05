@@ -27,9 +27,4 @@ namespace tktk
 	{
 		return ConstantBufferManager::getDataPtr(id);
 	}
-
-	void ConstantBuffer::addParamLocationImpl(int id, int locationType, unsigned int locationFromBufferTop)
-	{
-		return ConstantBufferManager::addParamLocation(id, locationType, locationFromBufferTop);
-	}
 }

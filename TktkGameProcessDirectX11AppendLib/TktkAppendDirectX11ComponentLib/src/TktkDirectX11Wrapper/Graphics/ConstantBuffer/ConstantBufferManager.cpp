@@ -30,9 +30,4 @@ namespace tktk
 	{
 		return m_assetsPtr->getDataPtr(id);
 	}
-
-	void ConstantBufferManager::addParamLocationImpl(int id, int locationType, unsigned int locationFromBufferTop)
-	{
-		m_assetsPtr->addParamLocation(id, locationType, locationFromBufferTop);
-	}
 }
