@@ -1,11 +1,14 @@
 #include "TktkAppendDirectX11Component/Graphics/Sprite/SpriteDrawer.h"
 
 #include <stdexcept>
+#include <array>
 #include <d3d11.h>
 #include "TktkDirectX11Wrapper/Graphics/Window/Window.h"
 #include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
 #include "TktkDirectX11Wrapper/Graphics/Texture2D/Texture2D.h"
 #include "TktkDirectX11Wrapper/Graphics/ConstantBuffer/ConstantBuffer.h"
+#include "TktkDirectX11Wrapper/Graphics/BlendState/BlendState.h"
+#include "TktkDirectX11Wrapper/Graphics/DepthStencilState/DepthStencilState.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/Mesh.h"
 #include "TktkDirectX11Wrapper/Graphics/VertexShader/VertexShader.h"
 #include "TktkDirectX11Wrapper/Graphics/PixelShader/PixelShader.h"
@@ -13,9 +16,18 @@
 
 namespace tktk
 {
-	SpriteDrawer::SpriteDrawer(float drawPriority, int textureId)
+	SpriteDrawer::SpriteDrawer(
+		float drawPriority,
+		int textureId,
+		int blendStateId,
+		const Color & blendRate,
+		int depthStencilStateId
+	)
 		: ComponentBase(drawPriority)
 		, m_textureId(textureId)
+		, m_blendStateId(blendStateId)
+		, m_blendRate(blendRate)
+		, m_depthStencilStateId(depthStencilStateId)
 	{
 	}
 
@@ -35,21 +47,28 @@ namespace tktk
 		ID3D11ShaderResourceView* shaderResourceView = texture2DData.getShaderResourceViewPtr();
 		ID3D11SamplerState* samplerState = texture2DData.getSamplerStatePtr();
 
+		std::array<float, 4> factor = { m_blendRate.r, m_blendRate.g, m_blendRate.b, m_blendRate.a };
+		Screen::getDeviceContextPtr()->OMSetBlendState(BlendState::getDataPtr(m_blendStateId)->getStatePtr(), factor.data(), 0xffffffff);
+		Screen::getDeviceContextPtr()->OMSetDepthStencilState(DepthStencilState::getDataPtr(m_depthStencilStateId)->getStatePtr(), 0);
+
 		Screen::getDeviceContextPtr()->PSSetShaderResources(0, 1, &shaderResourceView);
 		Screen::getDeviceContextPtr()->PSSetSamplers(0, 1, &samplerState);
 
 		// 定数バッファに値を詰め詰めする
 		ConstantBufferData* constantBufferData = ConstantBuffer::getDataPtr(SystemConstantBufferId::Sprite);
 
-		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::texturePosition,	Vector2::zero);
-		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::textureSize,		Vector2::one);
-		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::size,				Vector2(static_cast<float>(texture2DData.width()), static_cast<float>(texture2DData.height())));
-		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::position,			m_transform->getWorldPosition());
-		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::scaleRate,		m_transform->getWorldScaleRate());
-		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::angleDeg,			m_transform->getWorldRotationDeg());
-		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::color,			Color::white);
-		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::center,			Vector2::one);
-		constantBufferData->setBufferParam(SystemConstantBufferParamLocationType::screenSize,		Window::getWindowSize());
+		SpriteConstantBufferData spriteConstantBufferData;
+		spriteConstantBufferData.texturePosition = Vector2::zero;
+		spriteConstantBufferData.textureSize = Vector2::one;
+		spriteConstantBufferData.size = Vector2(static_cast<float>(texture2DData.width()), static_cast<float>(texture2DData.height()));
+		spriteConstantBufferData.position = m_transform->getWorldPosition();
+		spriteConstantBufferData.scaleRate = m_transform->getWorldScaleRate();
+		spriteConstantBufferData.angleDeg = m_transform->getWorldRotationDeg();
+		spriteConstantBufferData.color = Color::white;
+		spriteConstantBufferData.center = Vector2::one;
+		spriteConstantBufferData.screenSize = Window::getWindowSize();
+		constantBufferData->setBufferData(std::move(spriteConstantBufferData));
+
 		constantBufferData->updateBuffer();
 
 		// シェーダーをセット
@@ -58,16 +77,8 @@ namespace tktk
 
 		MeshData* meshDataPtr = Mesh::getDataPtr(SYSTEM_MESH_SPRITE);
 
-		// 頂点バッファをセット
-		const VertexBuffer& vertexBuffer = meshDataPtr->getVertexBuffer();
-		ID3D11Buffer* rawVertexBuffer = vertexBuffer.getVertexBufferPtr();
-		unsigned int stride = vertexBuffer.getStride();
-		unsigned int offset = vertexBuffer.getOffset();
-		Screen::getDeviceContextPtr()->IASetVertexBuffers(0, 1, &rawVertexBuffer, &stride, &offset);
-
-		// インデックスバッファをセット
-		const IndexBuffer& indexBuffer = meshDataPtr->getIndexBuffer();
-		Screen::getDeviceContextPtr()->IASetIndexBuffer(indexBuffer.getBufferPtr(), DXGI_FORMAT_R32_UINT, 0);
+		// 頂点バッファとインデックスバッファをレンダリングパイプラインに設定する
+		meshDataPtr->setVertexAndIndexBuffer();
 
 		// ドローコール
 		Screen::getDeviceContextPtr()->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

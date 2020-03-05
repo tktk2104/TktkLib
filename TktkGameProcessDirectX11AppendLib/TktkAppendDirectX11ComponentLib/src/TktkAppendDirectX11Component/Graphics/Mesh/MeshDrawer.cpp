@@ -6,9 +6,15 @@
 #include <TktkMath/Color.h>
 #include <TktkMath/Vector3.h>
 #include <TktkMath/Matrix4.h>
+#include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/MeshConstantBufferData.h"
+#include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/MaterialConstantBufferData.h"
+#include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/LightConstantBufferData.h"
+
 #include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
 #include "TktkDirectX11Wrapper/Graphics/Texture2D/Texture2D.h"
 #include "TktkDirectX11Wrapper/Graphics/ConstantBuffer/ConstantBuffer.h"
+#include "TktkDirectX11Wrapper/Graphics/BlendState/BlendState.h"
+#include "TktkDirectX11Wrapper/Graphics/DepthStencilState/DepthStencilState.h"
 #include "TktkDirectX11Wrapper/Graphics/VertexShader/VertexShader.h"
 #include "TktkDirectX11Wrapper/Graphics/PixelShader/PixelShader.h"
 #include "TktkDirectX11Wrapper/Graphics/Skeleton/Skeleton.h"
@@ -24,23 +30,21 @@ namespace tktk
 		int cameraId,
 		int meshId,
 		int skeltonId,
-		const std::vector<int> & materialIdArray
+		const std::vector<int> & materialIdArray,
+		int blendStateId,
+		const Color& blendRate,
+		int depthStencilStateId
 	)
 		: ComponentBase(drawPriority)
 		, m_cameraId(cameraId)
 		, m_meshId(meshId)
 		, m_skeltonId(skeltonId)
 		, m_materialIdArray(materialIdArray)
+		, m_blendStateId(blendStateId)
+		, m_blendRate(blendRate)
+		, m_depthStencilStateId(depthStencilStateId)
 	{
-		std::fill(
-			std::begin(m_localBoneMatrices),
-			std::end(m_localBoneMatrices),
-			Matrix4::identity
-		);
-	}
-
-	MeshDrawer::~MeshDrawer()
-	{
+		std::fill(std::begin(m_localBoneMatrices), std::end(m_localBoneMatrices), Matrix4::identity);
 	}
 
 	void MeshDrawer::start()
@@ -55,21 +59,28 @@ namespace tktk
 
 	void MeshDrawer::draw() const
 	{
+		// 描画するメッシュデータを取得
 		MeshData* meshDataPtr = Mesh::getDataPtr(m_meshId);
 
-		setVertexBuffer(meshDataPtr->getVertexBuffer());
-		setIndexBuffer(meshDataPtr->getIndexBuffer());
+		// 頂点バッファとインデックスバッファをレンダリングパイプラインに設定する
+		meshDataPtr->setVertexAndIndexBuffer();
 
+		// ブレンドステートと深度ステンシルを設定する
+		std::array<float, 4> factor = { m_blendRate.r, m_blendRate.g, m_blendRate.b, m_blendRate.a };
+		Screen::getDeviceContextPtr()->OMSetBlendState(BlendState::getDataPtr(m_blendStateId)->getStatePtr(), factor.data(), 0xffffffff);
+		Screen::getDeviceContextPtr()->OMSetDepthStencilState(DepthStencilState::getDataPtr(m_depthStencilStateId)->getStatePtr(), 0);
+
+		// ワールド行列を取得する
 		Matrix4 worldMat = m_transform3D->calculateWorldMatrix();
 
+		// スキニング行列を計算する
 		std::array<Matrix4, 256U> skinnedBoneMat;
 		calculateSkinnedBoneMatrices(&skinnedBoneMat, m_skeltonId, worldMat);
 
-		std::for_each(
-			std::begin(m_materialIdArray),
-			std::end(m_materialIdArray),
-			[this, &worldMat, &skinnedBoneMat](int materialId) { drawUseMaterial(materialId, worldMat, skinnedBoneMat); }
-		);
+		for (unsigned int i = 0; i < meshDataPtr->getMaterialSlotCount(); i++)
+		{
+			drawUseMaterial(i, meshDataPtr->getSubset(i), worldMat, skinnedBoneMat);
+		}
 	}
 
 	int MeshDrawer::getSkeltonId() const
@@ -83,30 +94,6 @@ namespace tktk
 			std::begin(boneMatrices),
 			boneCount,
 			std::begin(m_localBoneMatrices)
-		);
-	}
-
-	void MeshDrawer::setVertexBuffer(const VertexBuffer& vertexBuffer) const
-	{
-		ID3D11Buffer* rawVertexBuffer = vertexBuffer.getVertexBufferPtr();
-		unsigned int stride = vertexBuffer.getStride();
-		unsigned int offset = vertexBuffer.getOffset();
-
-		Screen::getDeviceContextPtr()->IASetVertexBuffers(
-			0,
-			1,
-			&rawVertexBuffer,
-			&stride,
-			&offset
-		);
-	}
-
-	void MeshDrawer::setIndexBuffer(const IndexBuffer& indexBuffer) const
-	{
-		Screen::getDeviceContextPtr()->IASetIndexBuffer(
-			indexBuffer.getBufferPtr(),
-			DXGI_FORMAT_R32_UINT,
-			0
 		);
 	}
 
@@ -134,92 +121,105 @@ namespace tktk
 		);
 	}
 
-	void MeshDrawer::drawUseMaterial(int materialId, const Matrix4 & worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat) const
+	void MeshDrawer::drawUseMaterial(unsigned int materialSlot, const Subset& subset, const Matrix4 & worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat) const
 	{
+		int materialId = m_materialIdArray.at(materialSlot);
+
+		// マテリアル情報を取得
 		MaterialData* materialDataPtr = Material::getDataPtr(materialId);
 
-		std::for_each(
-			std::begin(materialDataPtr->getUseTextureIdMap()),
-			std::end(materialDataPtr->getUseTextureIdMap()),
-			[this](const auto& node) { applyTexture(node.first, node.second); }
-		);
+		const auto& useTextureIdArray = materialDataPtr->getParametersRef().getUseTextureIdArray();
 
-		// 頂点シェーダーで使用する定数バッファに情報を詰め詰め
-		const VertexShaderData& vsData = VertexShader::getData(materialDataPtr->getUseVertexShaderId());
-		updateConstantBuffer(
-			vsData.getUseConstantBufferId(),
-			worldMat,
-			skinnedBoneMat,
-			materialDataPtr,
-			materialDataPtr->getSetVSConstantBufferParamMap()
-		);
-		vsData.beginVertexShader();
-
-		const PixelShaderData& psData = PixelShader::getData(materialDataPtr->getUsePixelShaderId());
-		// 頂点シェーダーとピクセルシェーダーで使用する定数バッファが違ったら
-		if (materialDataPtr->getUseVertexShaderId() != materialDataPtr->getUsePixelShaderId())
+		// 描画で使用するテクスチャをシェーダーに登録する
+		for (unsigned int i = 0; i < useTextureIdArray.size(); i++)
 		{
-			// ピクセルシェーダーで使用する定数バッファに情報を詰め詰め
-			updateConstantBuffer(
-				psData.getUseConstantBufferId(),
-				worldMat,
-				skinnedBoneMat,
-				materialDataPtr,
-				materialDataPtr->getSetPSConstantBufferParamMap()
-			);
+			const Texture2DData& texture2D = Texture2D::getData(useTextureIdArray.at(i));
+
+			ID3D11ShaderResourceView* shaderResourceView = texture2D.getShaderResourceViewPtr();
+			ID3D11SamplerState* samplerState = texture2D.getSamplerStatePtr();
+
+			Screen::getDeviceContextPtr()->PSSetShaderResources(i, 1, &shaderResourceView);
+			Screen::getDeviceContextPtr()->PSSetSamplers(i, 1, &samplerState);
 		}
-		psData.beginShader();
+
+		for (const auto& node : materialDataPtr->getParametersRef().getConstantBufferSetData())
+		{
+			auto bufferPtr = ConstantBuffer::getDataPtr(node.first);
+			bufferPtr->setBufferData(node.second);
+			bufferPtr->updateBuffer();
+		}
+
+		// メッシュ情報用の定数バッファを更新する
+		updateMeshBuffer(worldMat, skinnedBoneMat);
+		// マテリアル情報用の定数バッファを更新する
+		updateMaterialBuffer(materialDataPtr);
+		// ライト情報用の定数バッファを更新する
+		updateLightBuffer();
+
+		// 描画に使用するシェーダーの設定を行う
+		VertexShader::getData(materialDataPtr->getUseVertexShaderId()).beginVertexShader();
+		PixelShader::getData(materialDataPtr->getUsePixelShaderId()).beginShader();
 
 		// ドローコール
 		Screen::getDeviceContextPtr()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		Screen::getDeviceContextPtr()->DrawIndexed(materialDataPtr->getIndexBufferUseCount(), materialDataPtr->getIndexBufferStartPos(), 0U);
+		Screen::getDeviceContextPtr()->DrawIndexed(subset.indexBufferUseCount, subset.indexBufferStartPos, 0U);
 	}
 
-	void MeshDrawer::applyTexture(unsigned int slot, int textureId) const
+	void MeshDrawer::updateMeshBuffer(const Matrix4 & worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat) const
 	{
-		const Texture2DData& texture2D = Texture2D::getData(textureId);
+		// メッシュ情報用の定数バッファを取得
+		ConstantBufferData * meshBufferData = ConstantBuffer::getDataPtr(SystemConstantBufferId::Mesh);
 
-		ID3D11ShaderResourceView* shaderResourceView = texture2D.getShaderResourceViewPtr();
-		ID3D11SamplerState* samplerState = texture2D.getSamplerStatePtr();
-
-		Screen::getDeviceContextPtr()->PSSetShaderResources(slot, 1, &shaderResourceView);
-		Screen::getDeviceContextPtr()->PSSetSamplers(slot, 1, &samplerState);
-	}
-
-	void MeshDrawer::updateConstantBuffer(int constantBufferId, const Matrix4 & worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat, MaterialData* materialDataPtr, const std::unordered_map<int, SafetyVoidPtr>& setConstantBufferParamMap) const
-	{
-		ConstantBufferData * bufferData = ConstantBuffer::getDataPtr(constantBufferId);
+		// 描画に使用するカメラ情報を取得
 		CameraData* cameraData = Camera::getDataPtr(m_cameraId);
 
-		bufferData->setBufferParam(SystemConstantBufferParamLocationType::worldMatrix,			worldMat);
-		bufferData->setBufferParamArray(SystemConstantBufferParamLocationType::boneMatrices,	skinnedBoneMat.data(), skinnedBoneMat.size());
-		bufferData->setBufferParam(SystemConstantBufferParamLocationType::viewMatrix,			*cameraData->getViewMatrixPtr());
-		bufferData->setBufferParam(SystemConstantBufferParamLocationType::projectionMatrix,		*cameraData->getProjectionMatrixPtr());
+		// メッシュ情報を定数バッファに登録
+		MeshConstantBufferData meshConstantBufferData;
+		meshConstantBufferData.worldMatrix = worldMat;
+		memcpy(meshConstantBufferData.boneMatrices, skinnedBoneMat.data(), sizeof(Matrix4) * skinnedBoneMat.size());
+		meshConstantBufferData.viewMatrix = *cameraData->getViewMatrixPtr();
+		meshConstantBufferData.projectionMatrix = *cameraData->getProjectionMatrixPtr();
+		meshBufferData->setBufferData(std::move(meshConstantBufferData));
 
+		meshBufferData->updateBuffer();
+	}
+
+	void MeshDrawer::updateMaterialBuffer(MaterialData* materialDataPtr) const
+	{
+		// マテリアル情報用の定数バッファを取得
+		ConstantBufferData * materialBufferData = ConstantBuffer::getDataPtr(SystemConstantBufferId::Material);
+		MaterialConstantBufferData materialConstantBufferData;
+		materialConstantBufferData.materialAmbientColor = materialDataPtr->getParametersRef().getAmbientColor();
+		materialConstantBufferData.materialDiffuseColor = materialDataPtr->getParametersRef().getDiffuseColor();
+		materialConstantBufferData.materialSpecularColor = materialDataPtr->getParametersRef().getSpecularColor();
+		materialConstantBufferData.materialEmissionColor = materialDataPtr->getParametersRef().getEmissionColor();
+		materialConstantBufferData.materialShininess = materialDataPtr->getParametersRef().getShininess();
+		materialBufferData->setBufferData(std::move(materialConstantBufferData));
+
+		materialBufferData->updateBuffer();
+	}
+
+	void MeshDrawer::updateLightBuffer() const
+	{
+		// ライト情報用の定数バッファを取得
+		ConstantBufferData * lightBufferData = ConstantBuffer::getDataPtr(SystemConstantBufferId::Light);
+
+		// 有効なライトのリストを取得
 		const auto& enableLightList = Light::createEnableLightList();
 		int count = std::count_if(std::begin(enableLightList), std::end(enableLightList), [](const auto&) { return true; });
 
 		if (count != 0)
 		{
+			// ライト情報を定数バッファに登録
 			LightData* lightDataPtr = *(std::begin(enableLightList));
+			LightConstantBufferData lightConstantBufferData;
+			lightConstantBufferData.lightAmbientColor = *lightDataPtr->getAmbientColorPtr();
+			lightConstantBufferData.lightDiffuseColor = *lightDataPtr->getDiffuseColorPtr();
+			lightConstantBufferData.lightSpecularColor = *lightDataPtr->getSpecularColorPtr();
+			lightConstantBufferData.lightPosition = *lightDataPtr->getPositionPtr();
+			lightBufferData->setBufferData(std::move(lightConstantBufferData));
 
-			bufferData->setBufferParam(SystemConstantBufferParamLocationType::lightAmbientColor,	*lightDataPtr->getAmbientColorPtr());
-			bufferData->setBufferParam(SystemConstantBufferParamLocationType::lightDiffuseColor,	*lightDataPtr->getDiffuseColorPtr());
-			bufferData->setBufferParam(SystemConstantBufferParamLocationType::lightSpecularColor,	*lightDataPtr->getSpecularColorPtr());
-			bufferData->setBufferParam(SystemConstantBufferParamLocationType::lightPosition,		*lightDataPtr->getPositionPtr());
+			lightBufferData->updateBuffer();
 		}
-
-		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialAmbientColor,		*materialDataPtr->getAmbientColorPtr());
-		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialDiffuseColor,		*materialDataPtr->getDiffuseColorPtr());
-		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialSpecularColor,	*materialDataPtr->getSpecularColorPtr());
-		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialEmissionColor,	*materialDataPtr->getEmissionColorPtr());
-		bufferData->setBufferParam(SystemConstantBufferParamLocationType::materialShininess,		*materialDataPtr->getShininessPtr());
-
-		/*std::for_each(
-			std::begin(setConstantBufferParamMap),
-			std::end(setConstantBufferParamMap),
-			[&bufferData](const auto& pair) { bufferData->setBufferParam(pair.first, pair.second); }
-		);*/
-		bufferData->updateBuffer();
 	}
 }

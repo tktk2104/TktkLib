@@ -6,7 +6,7 @@ namespace tktk
 
 	SpriteDrawerMaker & SpriteDrawerMaker::makeStart(GameObjectPtr user)
 	{
-		reset();
+		m_self = SpriteDrawerMaker();
 		m_self.m_user = user;
 		return m_self;
 	}
@@ -15,7 +15,10 @@ namespace tktk
 	{
 		return m_user->createComponent<SpriteDrawer>(
 			m_drawPriority,
-			m_textureId
+			m_textureId,
+			m_blendStateId,
+			m_blendRate,
+			m_depthStencilStateId
 			);
 	}
 
@@ -25,15 +28,29 @@ namespace tktk
 		return *this;
 	}
 
-	SpriteDrawerMaker & SpriteDrawerMaker::textureId(int value)
+	SpriteDrawerMaker & SpriteDrawerMaker::blendRate(const Color & value)
+	{
+		m_blendRate = value;
+		return *this;
+	}
+
+	SpriteDrawerMaker & SpriteDrawerMaker::textureIdImpl(int value)
 	{
 		m_textureId = value;
 		return *this;
 	}
 
-	void SpriteDrawerMaker::reset()
+	SpriteDrawerMaker & SpriteDrawerMaker::blendStateIdImpl(int value)
 	{
-		m_self.m_drawPriority = 0.0f;
-		m_self.m_textureId = 0;
+		m_blendStateId = value;
+		return *this;
 	}
+
+	SpriteDrawerMaker & SpriteDrawerMaker::depthStencilStateIdImpl(int value)
+	{
+		m_depthStencilStateId = value;
+		return *this;
+	}
+
+	
 }

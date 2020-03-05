@@ -1,7 +1,7 @@
 #ifndef SPRITE_DRAWER_H_
 #define SPRITE_DRAWER_H_
 
-#include <memory>
+#include <TktkMath/Color.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend2DComponent/Transform2D.h>
 
@@ -16,7 +16,10 @@ namespace tktk
 
 		SpriteDrawer(
 			float drawPriority,
-			int textureId
+			int textureId,
+			int blendStateId,
+			const Color& blendRate,
+			int depthStencilStateId
 		);
 
 	public:
@@ -27,6 +30,9 @@ namespace tktk
 	private:
 
 		int m_textureId;
+		int m_blendStateId;
+		Color m_blendRate;
+		int m_depthStencilStateId;
 
 		CfpPtr<Transform2D> m_transform;
 	};

@@ -6,7 +6,7 @@ namespace tktk
 
 	MeshDrawerMaker & MeshDrawerMaker::makeStart(GameObjectPtr user)
 	{
-		reset();
+		m_self = MeshDrawerMaker();
 		m_self.m_user = user;
 		return m_self;
 	}
@@ -18,7 +18,10 @@ namespace tktk
 			m_cameraId,
 			m_meshId,
 			m_skeltonId,
-			m_materialIdArray
+			m_materialIdArray,
+			m_blendStateId,
+			m_blendRate,
+			m_depthStencilStateId
 			);
 	}
 
@@ -28,36 +31,47 @@ namespace tktk
 		return *this;
 	}
 
-	MeshDrawerMaker & MeshDrawerMaker::cameraId(int value)
+	MeshDrawerMaker & MeshDrawerMaker::blendRate(const Color & value)
+	{
+		m_blendRate = value;
+		return *this;
+	}
+
+	MeshDrawerMaker & MeshDrawerMaker::cameraIdImpl(int value)
 	{
 		m_cameraId = value;
 		return *this;
 	}
 
-	MeshDrawerMaker & MeshDrawerMaker::meshId(int value)
+	MeshDrawerMaker & MeshDrawerMaker::meshIdImpl(int value)
 	{
 		m_meshId = value;
 		return *this;
 	}
 
-	MeshDrawerMaker & MeshDrawerMaker::skeltonId(int value)
+	MeshDrawerMaker & MeshDrawerMaker::skeltonIdImpl(int value)
 	{
 		m_skeltonId = value;
 		return *this;
 	}
 
-	MeshDrawerMaker & MeshDrawerMaker::materialIdArray(const std::vector<int>& value)
+	MeshDrawerMaker & MeshDrawerMaker::materialIdArrayImpl(const std::vector<int>& value)
 	{
 		m_materialIdArray = value;
 		return *this;
 	}
 
-	void MeshDrawerMaker::reset()
+	MeshDrawerMaker & MeshDrawerMaker::blendStateIdImpl(int value)
 	{
-		m_self.m_drawPriority = 0.0f;
-		m_self.m_cameraId = 0;
-		m_self.m_meshId = 0;
-		m_self.m_skeltonId = 0;
-		m_self.m_materialIdArray = {};
+		m_blendStateId = value;
+		return *this;
 	}
+
+	MeshDrawerMaker & MeshDrawerMaker::depthStencilStateIdImpl(int value)
+	{
+		m_depthStencilStateId = value;
+		return *this;
+	}
+
+	
 }
