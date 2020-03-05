@@ -10,11 +10,11 @@ namespace tktk
 	inline ID3D11InputLayout* createVertexLayout(const std::vector<char>& byteArray, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout);
 
 	VertexShaderData::VertexShaderData(
-		int useConstantBufferId,
+		const std::vector<int> & useConstantBufferIdArray,
 		const std::string & fileName,
 		const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout
 	)
-		: m_useConstantBufferId(useConstantBufferId)
+		: m_useConstantBufferIdArray(useConstantBufferIdArray)
 	{
 		std::vector<char> byteArray;
 		getShaderByteArray(&byteArray, fileName);
@@ -38,17 +38,22 @@ namespace tktk
 
 	void VertexShaderData::beginVertexShader() const
 	{
-		ConstantBufferData* constantBufferData = ConstantBuffer::getDataPtr(m_useConstantBufferId);
-		ID3D11Buffer* constantBuffer = constantBufferData->getBufferPtr();
+		std::vector<ID3D11Buffer*> useConstantBufferDataArray;
+		useConstantBufferDataArray.reserve(m_useConstantBufferIdArray.size());
 
-		Screen::getDeviceContextPtr()->VSSetConstantBuffers(0, 1, &constantBuffer);
+		for (int useConstantBufferId : m_useConstantBufferIdArray)
+		{
+			useConstantBufferDataArray.push_back(ConstantBuffer::getDataPtr(useConstantBufferId)->getBufferPtr());
+		}
+
+		Screen::getDeviceContextPtr()->VSSetConstantBuffers(0, useConstantBufferDataArray.size(), useConstantBufferDataArray.data());
 		Screen::getDeviceContextPtr()->VSSetShader(m_vertexShaderPtr, NULL, 0);
 		Screen::getDeviceContextPtr()->IASetInputLayout(m_vertexLayoutPtr);
 	}
 
-	int VertexShaderData::getUseConstantBufferId() const
+	const std::vector<int>& VertexShaderData::getUseConstantBufferIdArray() const
 	{
-		return m_useConstantBufferId;
+		return m_useConstantBufferIdArray;
 	}
 
 	ID3D11VertexShader * VertexShaderData::getShaderPtr() const

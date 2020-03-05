@@ -13,7 +13,7 @@ namespace tktk
 	public:
 
 		VertexShaderData(
-			int useConstantBufferId,
+			const std::vector<int>& useConstantBufferIdArray,
 			const std::string& fileName,
 			const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout
 		);
@@ -27,8 +27,8 @@ namespace tktk
 		// 頂点シェーダーに定数バッファを設定してデバイスコンテキストに設定する
 		void beginVertexShader() const;
 
-		// この頂点シェーダーが使用する定数バッファのIdを取得
-		int getUseConstantBufferId() const;
+		// この頂点シェーダーが使用する定数バッファのIdの配列を取得
+		const std::vector<int>& getUseConstantBufferIdArray() const;
 
 		// 頂点シェーダーのポインタを取得する
 		ID3D11VertexShader* getShaderPtr() const;
@@ -38,8 +38,8 @@ namespace tktk
 
 	private:
 
-		// この頂点シェーダーが使用する定数バッファのId
-		int m_useConstantBufferId;
+		// この頂点シェーダーが使用する定数バッファのIdの配列
+		std::vector<int> m_useConstantBufferIdArray;
 
 		// 頂点シェーダーのポインタ
 		ID3D11VertexShader* m_vertexShaderPtr{ nullptr };

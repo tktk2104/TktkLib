@@ -22,7 +22,7 @@ namespace tktk
 		// 新たな頂点シェーダーをロードする
 		void load(
 			int id,
-			int useConstantBufferId,
+			const std::vector<int>& useConstantBufferIdArray,
 			const std::string& fileName,
 			const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout
 		);

@@ -14,13 +14,13 @@ namespace tktk
 
 		// 新たな頂点シェーダーをロードする（列挙型を含む整数型のidが渡された場合のみビルド可）
 		// ※この関数でシェーダーをロードする場合、idは1以上でなければならない
-		template <class ShaderIdType, class ConstantBufferIdType, std::enable_if_t<is_idType_all_v<ShaderIdType, ConstantBufferIdType>>* = nullptr>
-		static void load(ShaderIdType id, ConstantBufferIdType useConstantBufferId, const std::string& fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout)
+		template <class ShaderIdType, class... ConstantBufferIdTypes, std::enable_if_t<is_idType_all_v<ShaderIdType, ConstantBufferIdTypes...>>* = nullptr>
+		static void load(ShaderIdType id, const std::string& fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout, ConstantBufferIdTypes... useConstantBufferIds)
 		{
-			loadImpl(static_cast<int>(id), static_cast<int>(useConstantBufferId), fileName, vertexLayout);
+			loadImpl(static_cast<int>(id), { static_cast<int>(useConstantBufferIds)... }, fileName, vertexLayout);
 		}
-		template <class ShaderIdType, class ConstantBufferIdType, std::enable_if_t<!is_idType_all_v<ShaderIdType, ConstantBufferIdType>>* = nullptr>
-		static void load(ShaderIdType id, ConstantBufferIdType useConstantBufferId, const std::string& fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout)
+		template <class ShaderIdType, class... ConstantBufferIdTypes, std::enable_if_t<!is_idType_all_v<ShaderIdType, ConstantBufferIdTypes...>>* = nullptr>
+		static void load(ShaderIdType id, const std::string& fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout, ConstantBufferIdTypes... useConstantBufferIds)
 		{ static_assert(false, "Id Fraud Type"); }
 
 		// 指定した頂点シェーダーを削除する（列挙型を含む整数型のidが渡された場合のみビルド可）
@@ -45,7 +45,7 @@ namespace tktk
 	private:
 
 		// 各種id指定系の関数の実装
-		static void loadImpl(int id, int useConstantBufferId, const std::string& fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout);
+		static void loadImpl(int id, const std::vector<int>& useConstantBufferIdArray, const std::string& fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout);
 		static void eraseImpl(int id);
 		static const VertexShaderData& getDataImpl(int id);
 	};

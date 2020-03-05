@@ -16,9 +16,9 @@ namespace tktk
 		m_assetsPtr->clear();
 	}
 
-	void VertexShaderManager::loadImpl(int id, int useConstantBufferId, const std::string & fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout)
+	void VertexShaderManager::loadImpl(int id, const std::vector<int>& useConstantBufferIdArray, const std::string & fileName, const std::vector<D3D11_INPUT_ELEMENT_DESC>& vertexLayout)
 	{
-		m_assetsPtr->load(id, useConstantBufferId, fileName, vertexLayout);
+		m_assetsPtr->load(id, useConstantBufferIdArray, fileName, vertexLayout);
 	}
 
 	void VertexShaderManager::eraseImpl(int id)

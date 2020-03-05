@@ -13,7 +13,7 @@ namespace tktk
 
 	void VertexShaderAssets::load(
 		int id,
-		int useConstantBufferId,
+		const std::vector<int>& useConstantBufferIdArray,
 		const std::string & fileName,
 		const std::vector<D3D11_INPUT_ELEMENT_DESC> & vertexLayout
 	)
@@ -23,7 +23,7 @@ namespace tktk
 		m_assets.emplace(
 			std::piecewise_construct,
 			std::forward_as_tuple(id),
-			std::forward_as_tuple(useConstantBufferId, fileName, vertexLayout)
+			std::forward_as_tuple(useConstantBufferIdArray, fileName, vertexLayout)
 		);
 	}
 
