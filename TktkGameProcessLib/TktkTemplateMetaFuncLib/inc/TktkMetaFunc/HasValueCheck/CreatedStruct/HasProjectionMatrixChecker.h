@@ -1,0 +1,7 @@
+#ifndef HAS_PROJECTION_MATRIX_CHECKER_H_
+#define HAS_PROJECTION_MATRIX_CHECKER_H_
+
+#include "../HasValueCheckMacro.h"
+HAS_VALUE_CHECK(projectionMatrix)
+
+#endif // !HAS_PROJECTION_MATRIX_CHECKER_H_

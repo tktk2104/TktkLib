@@ -1,0 +1,7 @@
+#ifndef HAS_MATERIAL_AMBIENT_COLOR_CHECKER_H_
+#define HAS_MATERIAL_AMBIENT_COLOR_CHECKER_H_
+
+#include "../HasValueCheckMacro.h"
+HAS_VALUE_CHECK(materialAmbientColor)
+
+#endif // !HAS_MATERIAL_AMBIENT_COLOR_CHECKER_H_

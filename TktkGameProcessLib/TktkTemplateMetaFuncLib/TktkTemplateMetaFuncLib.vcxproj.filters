@@ -114,5 +114,83 @@
     <ClInclude Include="inc\TktkMetaFunc\TypeCheck\isIdType.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\HasValueCheckMacro.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasAlbedoColorChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasAngleDegChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasBoneMatricesChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasCenterChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasColorChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasLightAmbientColorChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasLightDiffuseColorChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasLightPositionChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasLightSpecularColorChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasMaterialAmbientColorChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasMaterialDiffuseColorChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasMaterialEmissionColorChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasMaterialShininessChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasMaterialSpecularColorChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasMetallicChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasPositionChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasProjectionMatrixChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasScaleRateChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasScreenSizeChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasSizeChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasSmoothnessChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasTexturePositionChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasTextureSizeChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasViewMatrixChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkMetaFunc\HasValueCheck\CreatedStruct\HasWorldMatrixChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
