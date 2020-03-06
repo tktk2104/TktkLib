@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 
 #include "GameObject/SpriteTest/SpriteTest.h"
+#include "GameObject/SpriteAnimTest/SpriteAnimTest.h"
 #include "GameObject/SoundTest/SoundTest.h"
 #include "GameObject/CameLightTest/CameLightTest.h"
 #include "GameObject/CameraTest/CameraTest.h"
@@ -10,7 +11,8 @@
 
 void TitleScene::sceneStart()
 {
-	//SpriteTest::create();
+	SpriteTest::create();
+	SpriteAnimTest::create();
 	//SoundTest::create();
 
 	CameLightTest::create();

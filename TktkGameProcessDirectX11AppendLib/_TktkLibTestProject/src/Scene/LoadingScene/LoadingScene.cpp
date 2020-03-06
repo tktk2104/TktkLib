@@ -29,6 +29,7 @@ void LoadingScene::sceneStart()
 	tktk::Sound::load(SOUND_SE_TEST,	"res/sound/damage.wav");
 
 	tktk::Texture2D::load(TEXTURE_2D_SPRITE_TEST, "res/texture/test.png");
+	tktk::Texture2D::load(TEXTURE_2D_SPRITE_ANIM_TEST, "res/texture/testAnim.png");
 	tktk::Texture2D::load(TEXTURE_2D_SPRITE_CUBE, "res/texture/cubemap/TestEnvHDR.dds");
 	tktk::Texture2D::load(TEXTURE_2D_SPRITE_ENV, "res/texture/EnvBrdf.png");
 

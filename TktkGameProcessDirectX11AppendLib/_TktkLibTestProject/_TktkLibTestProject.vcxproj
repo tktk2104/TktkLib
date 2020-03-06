@@ -151,6 +151,7 @@
     <ClInclude Include="src\GameObject\MeshTest\MeshTestScript.h" />
     <ClInclude Include="src\GameObject\SoundTest\SoundTest.h" />
     <ClInclude Include="src\GameObject\SoundTest\SoundTestScript.h" />
+    <ClInclude Include="src\GameObject\SpriteAnimTest\SpriteAnimTest.h" />
     <ClInclude Include="src\GameObject\SpriteTest\SpriteTest.h" />
     <ClInclude Include="src\GameObject\SpriteTest\SpriteTestScript.h" />
     <ClInclude Include="src\Scene\LoadingScene\LoadingScene.h" />

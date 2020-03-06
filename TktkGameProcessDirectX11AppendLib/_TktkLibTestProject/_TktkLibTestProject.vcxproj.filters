@@ -110,5 +110,8 @@
     <ClInclude Include="src\Scene\LoadingScene\ObjectLoad\LoadPistolPbrIblMaterial.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\SpriteAnimTest\SpriteAnimTest.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
