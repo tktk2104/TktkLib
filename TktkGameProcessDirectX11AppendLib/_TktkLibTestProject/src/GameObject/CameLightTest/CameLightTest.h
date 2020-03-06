@@ -23,8 +23,8 @@ struct CameLightTest
 			.create();
 
 		tktk::FirstPersonModuleMaker::makeStart(gameObject)
-			.moveSpeedPerSec(360.0f)
-			.rotateDegSpeedPerSec(500.0f)
+			.moveSpeedPerSec(180.0f)
+			.rotateDegSpeedPerSec(250.0f)
 			.alwaysMoveForward(false)
 			.enableUpDownKey(true)
 			.create();

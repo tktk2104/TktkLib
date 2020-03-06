@@ -2,6 +2,7 @@
 
 #include "CommonIncludePaths.h"
 #include <TktkAppendDirectX11Component/Graphics/Sprite/SpriteClippingDrawerMaker.h>
+#include <TktkAppendDirectX11Component/Graphics/Sprite/SpriteClippingAnimatorMaker.h>
 
 struct SpriteAnimTest
 {
@@ -18,7 +19,17 @@ struct SpriteAnimTest
 			.drawPriority(1.0f)
 			.textureId(TEXTURE_2D_SPRITE_ANIM_TEST)
 			.textureClippingLeftTopPos(Vector2(64.0f * 1, 0.0f))
-			.textureClippingRightBotPos(Vector2(64.0f * 2, 64.0f))
+			.textureClippingSize(Vector2(64.0f))
+			.create();
+
+		tktk::SpriteClippingAnimatorMaker::makeStart(gameObject)
+			.animationIntervalSec(1.0f)
+			.animFrameTextureLeftTopPosArray({
+				{ 0.0f, 0.0f },
+				{ 64.0f, 0.0f },
+				{ 64.0f * 2, 0.0f },
+				{ 64.0f * 3, 0.0f }
+				})
 			.create();
 	}
 };
