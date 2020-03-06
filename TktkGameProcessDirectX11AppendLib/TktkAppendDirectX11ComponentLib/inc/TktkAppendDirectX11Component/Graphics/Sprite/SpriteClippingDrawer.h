@@ -22,7 +22,7 @@ namespace tktk
 			int blendStateId,
 			int depthStencilStateId,
 			const Vector2& textureClippingLeftTopPos,
-			const Vector2& textureClippingRightBotPos,
+			const Vector2& textureClippingSize,
 			const Vector2& textureUvMulRate,
 			const Color& blendRate,
 			const Vector2& spriteCenterRate
@@ -65,8 +65,8 @@ namespace tktk
 		// テクスチャリソースの描画する範囲の左上座標を再設定する（テクスチャ座標）
 		void setTextureClippingLeftTopPos(const Vector2& leftTopPos);
 
-		// テクスチャリソースの描画する範囲の右下座標を再設定する（テクスチャ座標）
-		void setTextureClippingRightBotPos(const Vector2& rightBotPos);
+		// テクスチャリソースの描画する範囲を再設定する（テクスチャ座標）
+		void setTextureClippingSize(const Vector2& size);
 
 		// テクスチャ座標にかける値を再設定する
 		void setTextureUvMulRate(const Vector2& offset);
@@ -90,7 +90,7 @@ namespace tktk
 		int m_blendStateId{ -1 };
 		int m_depthStencilStateId{ -1 };
 		Vector2 m_textureClippingLeftTopPos{ 0.0f, 0.0f };
-		Vector2 m_textureClippingRightBotPos{ 1.0f, 1.0f };
+		Vector2 m_textureClippingSize{ 1.0f, 1.0f };
 		Vector2 m_textureUvMulRate{ 1.0f, 1.0f };
 		Color m_blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };
 		Vector2 m_spriteCenterRate{ 0.5f, 0.5f };

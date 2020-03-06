@@ -39,8 +39,8 @@ namespace tktk
 		// テクスチャリソースの描画する範囲の左上座標を設定する（テクスチャ座標）
 		SpriteClippingDrawerMaker& textureClippingLeftTopPos(const Vector2& value);
 
-		// テクスチャリソースの描画する範囲の右下座標を設定する（テクスチャ座標）
-		SpriteClippingDrawerMaker& textureClippingRightBotPos(const Vector2& value);
+		// テクスチャリソースの描画する範囲を設定する（テクスチャ座標）
+		SpriteClippingDrawerMaker& textureClippingSize(const Vector2& value);
 
 		// テクスチャ座標にかける値を設定する
 		SpriteClippingDrawerMaker& textureUvMulRate(const Vector2& value);
@@ -94,7 +94,7 @@ namespace tktk
 		int m_blendStateId{ static_cast<int>(SystemBlendStateId::Alpha) };
 		int m_depthStencilStateId{ static_cast<int>(SystemDepthStencilStateId::NotUseDepth) };
 		Vector2 m_textureClippingLeftTopPos{ 0.0f, 0.0f };
-		Vector2 m_textureClippingRightBotPos{ 1.0f, 1.0f };
+		Vector2 m_textureClippingSize{ 1.0f, 1.0f };
 		Vector2 m_textureUvMulRate{ 1.0f, 1.0f };
 		Color m_blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };
 		Vector2 m_spriteCenterRate{ 0.5f, 0.5f };

@@ -19,7 +19,7 @@ namespace tktk
 			m_blendStateId,
 			m_depthStencilStateId,
 			m_textureClippingLeftTopPos,
-			m_textureClippingRightBotPos,
+			m_textureClippingSize,
 			m_textureUvMulRate,
 			m_blendRate,
 			m_spriteCenterRate
@@ -38,9 +38,9 @@ namespace tktk
 		return *this;
 	}
 
-	SpriteClippingDrawerMaker & SpriteClippingDrawerMaker::textureClippingRightBotPos(const Vector2 & value)
+	SpriteClippingDrawerMaker & SpriteClippingDrawerMaker::textureClippingSize(const Vector2 & value)
 	{
-		m_textureClippingRightBotPos = value;
+		m_textureClippingSize = value;
 		return *this;
 	}
 

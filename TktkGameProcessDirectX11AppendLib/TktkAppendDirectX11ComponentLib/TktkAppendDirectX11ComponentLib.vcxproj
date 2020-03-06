@@ -142,6 +142,8 @@
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimatorMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawer.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingAnimator.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingAnimatorMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingDrawer.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingDrawerMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawer.cpp" />
@@ -334,6 +336,8 @@
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimatorMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawer.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingAnimator.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingAnimatorMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingDrawer.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingDrawerMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawer.h" />

@@ -22,7 +22,7 @@ namespace tktk
 		int blendStateId,
 		int depthStencilStateId,
 		const Vector2 & textureClippingLeftTopPos,
-		const Vector2 & textureClippingRightBotPos,
+		const Vector2 & textureClippingSize,
 		const Vector2 & textureUvMulRate,
 		const Color & blendRate,
 		const Vector2 & spriteCenterRate
@@ -32,7 +32,7 @@ namespace tktk
 		, m_blendStateId(blendStateId)
 		, m_depthStencilStateId(depthStencilStateId)
 		, m_textureClippingLeftTopPos(textureClippingLeftTopPos)
-		, m_textureClippingRightBotPos(textureClippingRightBotPos)
+		, m_textureClippingSize(textureClippingSize)
 		, m_textureUvMulRate(textureUvMulRate)
 		, m_blendRate(blendRate)
 		, m_spriteCenterRate(spriteCenterRate)
@@ -41,7 +41,7 @@ namespace tktk
 
 	void SpriteClippingDrawer::start()
 	{
-		m_transform = getComponent<tktk::Transform2D>();
+		m_transform = getComponent<Transform2D>();
 
 		if (m_transform.isNull())
 		{
@@ -65,12 +65,10 @@ namespace tktk
 		// 定数バッファに値を詰め詰めする
 		ConstantBufferData* constantBufferData = ConstantBuffer::getDataPtr(SystemConstantBufferId::Sprite);
 
-		Vector2 spriteSize = (m_textureClippingRightBotPos - m_textureClippingLeftTopPos);
-
 		SpriteConstantBufferData spriteConstantBufferData;
 		spriteConstantBufferData.textureUvOffset = Vector2(m_textureClippingLeftTopPos.x / texture2DData.width(), m_textureClippingLeftTopPos.y / texture2DData.height());
-		spriteConstantBufferData.textureUvMulRate = Vector2(spriteSize.x / texture2DData.width() * m_textureUvMulRate.x, spriteSize.y / texture2DData.height() * m_textureUvMulRate.y);
-		spriteConstantBufferData.textureSize = spriteSize;
+		spriteConstantBufferData.textureUvMulRate = Vector2(m_textureClippingSize.x / texture2DData.width() * m_textureUvMulRate.x, m_textureClippingSize.y / texture2DData.height() * m_textureUvMulRate.y);
+		spriteConstantBufferData.textureSize = m_textureClippingSize;
 		spriteConstantBufferData.spritePosition = m_transform->getWorldPosition();
 		spriteConstantBufferData.spriteScaleRate = m_transform->getWorldScaleRate();
 		spriteConstantBufferData.spriteAngleDeg = m_transform->getWorldRotationDeg();
@@ -100,9 +98,9 @@ namespace tktk
 		m_textureClippingLeftTopPos = leftTopPos;
 	}
 
-	void SpriteClippingDrawer::setTextureClippingRightBotPos(const Vector2 & rightBotPos)
+	void SpriteClippingDrawer::setTextureClippingSize(const Vector2 & size)
 	{
-		m_textureClippingRightBotPos = rightBotPos;
+		m_textureClippingSize = size;
 	}
 
 	void SpriteClippingDrawer::setTextureUvMulRate(const Vector2 & offset)
