@@ -83,7 +83,35 @@ namespace tktk
 			switch (m_msg.message)
 			{
 			case WM_MOUSEMOVE:
+			case WM_LBUTTONDOWN:
+			case WM_LBUTTONUP:
+			case WM_LBUTTONDBLCLK:
+			case WM_RBUTTONDOWN:
+			case WM_RBUTTONUP:
+			case WM_RBUTTONDBLCLK:
+			case WM_MBUTTONDOWN:
+			case WM_MBUTTONUP:
+			case WM_MBUTTONDBLCLK:
+			case WM_XBUTTONDOWN:
+			case WM_XBUTTONUP:
+			case WM_XBUTTONDBLCLK:
+			case WM_MOUSEWHEEL:
+			case WM_MOUSEHWHEEL:
 			case WM_NCMOUSEMOVE:
+			case WM_NCLBUTTONDOWN:
+			case WM_NCLBUTTONUP:
+			case WM_NCLBUTTONDBLCLK:
+			case WM_NCRBUTTONDOWN:
+			case WM_NCRBUTTONUP:
+			case WM_NCRBUTTONDBLCLK:
+			case WM_NCMBUTTONDOWN:
+			case WM_NCMBUTTONUP:
+			case WM_NCMBUTTONDBLCLK:
+			case WM_NCXBUTTONDOWN:
+			case WM_NCXBUTTONUP:
+			case WM_NCXBUTTONDBLCLK:
+			case WM_KEYFIRST:
+			case WM_KEYUP:
 
 				break;
 
