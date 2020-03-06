@@ -14,8 +14,6 @@ namespace tktk
 
 		static void reset();
 
-		static void update();
-
 		// ‘OƒtƒŒ[ƒ€‚Æ‚ÌŠÔ‚Ì·‚ğ‹‚ß‚é
 		static float deltaTime();
 

@@ -20,8 +20,6 @@ namespace tktk
 	
 		while (!m_isExit)
 		{
-			TimeManager::update();
-	
 			m_classFuncProcessor.processing();
 			m_gameObjectList.removeExpandPtr();
 		}

@@ -27,15 +27,6 @@ namespace tktk
 		m_elapsedTimer->reset();
 	}
 
-	void TimeManager::update()
-	{
-#ifdef _DEBUG
-		tempErrorFunc();
-#endif // _DEBUG
-
-		m_elapsedTimer->update();
-	}
-
 	// ‘OƒtƒŒ[ƒ€‚Æ‚ÌŠÔ‚Ì·‚ğ‹‚ß‚é
 	float TimeManager::deltaTime()
 	{

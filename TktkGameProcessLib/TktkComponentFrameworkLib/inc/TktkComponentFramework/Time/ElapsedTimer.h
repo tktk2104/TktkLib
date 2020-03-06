@@ -19,7 +19,7 @@ namespace tktk
 
 		void reset();
 
-		void update();
+		void frameBegin();
 
 		// ‘OƒtƒŒ[ƒ€‚Æ‚ÌŠÔ‚Ì·‚ğ‹‚ß‚é
 		float deltaTime() const;

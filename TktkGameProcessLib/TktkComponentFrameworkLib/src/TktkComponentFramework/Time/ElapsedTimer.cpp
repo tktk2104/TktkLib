@@ -15,7 +15,7 @@ namespace tktk
 		m_totalTime = 0.0f;
 	}
 
-	void ElapsedTimer::update()
+	void ElapsedTimer::frameBegin()
 	{
 		auto curTime = std::clock();
 		long timeDist = (curTime - m_preTime);
