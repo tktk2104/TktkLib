@@ -15,10 +15,10 @@ struct SpriteAnimTest
 			//.scaleRate(Vector2(20.0f))
 			.create();
 
-		tktk::SpriteClippingDrawerMaker::makeStart(gameObject)
+		auto a = tktk::SpriteClippingDrawerMaker::makeStart(gameObject)
 			.drawPriority(1.0f)
 			.textureId(TEXTURE_2D_SPRITE_ANIM_TEST)
-			.textureClippingLeftTopPos(Vector2(64.0f * 1, 0.0f))
+			.textureClippingLeftTopPos(Vector2(64.0f * 0, 0.0f))
 			.textureClippingSize(Vector2(64.0f))
 			.create();
 
@@ -28,7 +28,9 @@ struct SpriteAnimTest
 				{ 0.0f, 0.0f },
 				{ 64.0f, 0.0f },
 				{ 64.0f * 2, 0.0f },
-				{ 64.0f * 3, 0.0f }
+				{ 64.0f * 3, 0.0f },
+				{ 64.0f * 2, 0.0f },
+				{ 64.0f * 1, 0.0f },
 				})
 			.create();
 	}

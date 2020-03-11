@@ -113,5 +113,8 @@
     <ClInclude Include="src\GameObject\SpriteAnimTest\SpriteAnimTest.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\Line2DTest\Line2DTest.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

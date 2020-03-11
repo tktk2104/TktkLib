@@ -1,6 +1,7 @@
 #include "SpriteTestScript.h"
 
 #include <TktkDirectX11Wrapper/Input/Keyboard/Keyboard.h>
+#include <TktkDirectX11Wrapper/Input/Mouse/Mouse.h>
 
 SpriteTestScript::SpriteTestScript()
 {
@@ -27,7 +28,12 @@ void SpriteTestScript::update()
 		transform->addLocalPosition(Vector2( 1.0f,  0.0f));
 	}
 
-	/*transform.lock()->addLocalRotationDeg(0.1f);
+	transform->addLocalRotationDeg(0.1f);
 
-	transform.lock()->addLocalScaleRate(Vector2(0.01f));*/
+	transform->addLocalScaleRate(Vector2(0.01f));
+
+	if (tktk::Mouse::isTrigger(tktk::MouseButtonType::leftBtn))
+	{
+		transform->setLocalPosition(tktk::Mouse::mousePos());
+	}
 }
