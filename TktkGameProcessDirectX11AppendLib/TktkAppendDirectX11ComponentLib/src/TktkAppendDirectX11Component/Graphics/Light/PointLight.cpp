@@ -29,7 +29,7 @@ namespace tktk
 
 	void PointLight::afterCollide()
 	{
-		*m_lightDataPtr->getPositionPtr() = m_transform->getWorldPosition();
+		m_lightDataPtr->setPosition(m_transform->getWorldPosition());
 	}
 
 	void PointLight::enable()
@@ -42,18 +42,33 @@ namespace tktk
 		Light::disableLight(m_lightId);
 	}
 
-	Color * PointLight::getAmbientColor()
+	Color PointLight::getAmbientColor() const
 	{
-		return m_lightDataPtr->getAmbientColorPtr();
+		return m_lightDataPtr->getAmbientColor();
 	}
 
-	Color * PointLight::getDiffuseColor()
+	void PointLight::setAmbientColor(const Color & ambient)
 	{
-		return m_lightDataPtr->getDiffuseColorPtr();
+		m_lightDataPtr->setAmbientColor(ambient);
 	}
 
-	Color * PointLight::getSpecularColor()
+	Color PointLight::getDiffuseColor() const
 	{
-		return m_lightDataPtr->getSpecularColorPtr();
+		return m_lightDataPtr->getDiffuseColor();
+	}
+
+	void PointLight::setDiffuseColor(const Color & diffuse)
+	{
+		m_lightDataPtr->setDiffuseColor(diffuse);
+	}
+
+	Color PointLight::getSpecularColor() const
+	{
+		return m_lightDataPtr->getSpecularColor();
+	}
+
+	void PointLight::setSpecularColor(const Color & specular)
+	{
+		m_lightDataPtr->setSpecularColor(specular);
 	}
 }

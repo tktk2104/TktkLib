@@ -6,7 +6,7 @@ namespace tktk
 
 	PointLightMaker & PointLightMaker::makeStart(GameObjectPtr user)
 	{
-		reset();
+		m_self = PointLightMaker();
 		m_self.m_user = user;
 		return m_self;
 	}
@@ -19,12 +19,6 @@ namespace tktk
 			m_diffuseColor,
 			m_specularColor
 			);
-	}
-
-	PointLightMaker & PointLightMaker::lightId(int value)
-	{
-		m_lightId = value;
-		return *this;
 	}
 
 	PointLightMaker & PointLightMaker::ambientColor(const Color & value)
@@ -45,11 +39,9 @@ namespace tktk
 		return *this;
 	}
 
-	void PointLightMaker::reset()
+	PointLightMaker & PointLightMaker::lightIdImpl(int value)
 	{
-		m_self.m_lightId = 0;
-		m_self.m_ambientColor = Color(0.3f, 0.3f, 0.3f, 1.0f);
-		m_self.m_diffuseColor = Color::white;
-		m_self.m_specularColor = Color::white;
+		m_lightId = value;
+		return *this;
 	}
 }

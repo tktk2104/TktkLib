@@ -28,11 +28,23 @@ namespace tktk
 
 		void disable();
 
-		Color* getAmbientColor();
+		// 環境光の色を取得する
+		Color getAmbientColor() const;
 
-		Color* getDiffuseColor();
+		// 環境光の色を設定する
+		void setAmbientColor(const Color& ambient);
 
-		Color* getSpecularColor();
+		// 拡散反射光の色を取得する
+		Color getDiffuseColor() const;
+
+		// 拡散反射光の色を設定する
+		void setDiffuseColor(const Color& diffuse);
+
+		// 鏡面反射光の色を取得する
+		Color getSpecularColor() const;
+
+		// 鏡面反射光の色を設定する
+		void setSpecularColor(const Color& specular);
 
 	private:
 
