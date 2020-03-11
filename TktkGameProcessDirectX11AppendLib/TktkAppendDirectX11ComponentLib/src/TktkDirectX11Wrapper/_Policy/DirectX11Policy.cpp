@@ -5,6 +5,7 @@
 
 #include <TktkDirectX11Wrapper/Graphics/ViewPort/ViewPortManager.h>
 #include <TktkDirectX11Wrapper/Input/Keyboard/KeyboardManager.h>
+#include <TktkDirectX11Wrapper/Input/Mouse/MouseManager.h>
 #include <TktkDirectX11Wrapper/Sound/SoundManager.h>
 
 #include <TktkDirectX11Wrapper/Graphics/ConstantBuffer/ConstantBufferManager.h>
@@ -60,6 +61,7 @@ namespace tktk
 		ViewPortManager::setUp();
 
 		KeyboardManager::setUp(hInstance);
+		MouseManager::setUp();
 
 		SoundManager::setUp();
 

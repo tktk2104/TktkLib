@@ -229,6 +229,9 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Input\Keyboard\Keyboard.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Input\Keyboard\KeyboardManager.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Input\Keyboard\KeyboardUpdater.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Input\Mouse\Mouse.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Input\Mouse\MouseManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Input\Mouse\MouseUpdater.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Sound\Asset\CSoundCallback.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Sound\Asset\SoundAssets.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Sound\Asset\SoundData.cpp" />
@@ -450,6 +453,10 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Keyboard\KeyboardManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Keyboard\KeyboardUpdater.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Keyboard\KeybordKeyType.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Mouse\Mouse.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Mouse\MouseButtonType.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Mouse\MouseManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Mouse\MouseUpdater.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\Asset\CSoundCallback.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\Asset\SoundAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Sound\Asset\SoundData.h" />

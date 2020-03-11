@@ -333,6 +333,15 @@
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingAnimatorMaker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Input\Mouse\MouseUpdater.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Input\Mouse\MouseManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Input\Mouse\Mouse.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\SpriteShader\SpritePixelShader.hlsl" />
@@ -750,6 +759,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingAnimatorMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Mouse\MouseButtonType.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Mouse\MouseUpdater.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Mouse\MouseManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Mouse\Mouse.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
