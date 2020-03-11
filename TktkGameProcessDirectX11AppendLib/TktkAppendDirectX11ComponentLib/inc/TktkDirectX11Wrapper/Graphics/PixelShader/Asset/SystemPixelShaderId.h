@@ -5,11 +5,12 @@ namespace tktk
 {
 	enum class SystemPixelShaderId
 	{
-		Sprite		= -100,
-		Mesh		= -200,
-		PbrMesh		= -300,
-		IblMesh		= -400,
-		PbrIblMesh	= -500,
+		Line2D		= -100,
+		Sprite		= -200,
+		Mesh		= -300,
+		PbrMesh		= -400,
+		IblMesh		= -500,
+		PbrIblMesh	= -600,
 	};
 }
 #endif // !SYSTEM_PIXEL_SHADER_ID_H_

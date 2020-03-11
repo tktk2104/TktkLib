@@ -5,11 +5,13 @@ namespace tktk
 {
 	enum class SystemConstantBufferId
 	{
-		Sprite		= -100,
-		Mesh		= -200,
-		Light		= -300,
-		Material	= -400,
-		Pbr			= -500,
+		Line2DVertex	= -100,
+		Line2DPixel		= -200,
+		Sprite			= -300,
+		Mesh			= -400,
+		Light			= -500,
+		Material		= -600,
+		Pbr				= -700,
 	};
 }
 #endif // !SYSTEM_CONSTANT_BUFFER_ID_H_
