@@ -83,18 +83,83 @@ namespace tktk
 		}
 	}
 
-	int MeshDrawer::getSkeltonId() const
+	const std::array<Matrix4, 256U>& MeshDrawer::getLocalBoneMatrices() const
 	{
-		return m_skeltonId;
+		return m_localBoneMatrices;
 	}
 
-	void MeshDrawer::setLocalBoneMatrices(std::array<Matrix4, 256U> boneMatrices, unsigned int boneCount)
+	void MeshDrawer::setLocalBoneMatrices(const std::array<Matrix4, 256U>& boneMatrices, unsigned int boneCount)
 	{
 		std::copy_n(
 			std::begin(boneMatrices),
 			boneCount,
 			std::begin(m_localBoneMatrices)
 		);
+	}
+
+	int MeshDrawer::getCameraId() const
+	{
+		return m_cameraId;
+	}
+
+	int MeshDrawer::getMeshId() const
+	{
+		return m_meshId;
+	}
+
+	int MeshDrawer::getSkeltonId() const
+	{
+		return m_skeltonId;
+	}
+
+	const std::vector<int>& MeshDrawer::getMaterialIdArray() const
+	{
+		return m_materialIdArray;
+	}
+
+	int MeshDrawer::getBlendStateId() const
+	{
+		return m_blendStateId;
+	}
+
+	const Color & MeshDrawer::getBlendRate() const
+	{
+		return m_blendRate;
+	}
+
+	void MeshDrawer::setBlendRate(const Color & rate)
+	{
+		m_blendRate = rate;
+	}
+
+	void MeshDrawer::setCameraIdImpl(int id)
+	{
+		m_cameraId = id;
+	}
+
+	void MeshDrawer::setMeshIdImpl(int id)
+	{
+		m_meshId = id;
+	}
+
+	void MeshDrawer::setSkeltonIdImpl(int id)
+	{
+		m_skeltonId = id;
+	}
+
+	void MeshDrawer::setMaterialIdArrayImpl(const std::vector<int>& idArray)
+	{
+		m_materialIdArray = idArray;
+	}
+
+	void MeshDrawer::setBlendStateIdImpl(int id)
+	{
+		m_blendStateId = id;
+	}
+
+	void MeshDrawer::setDepthStencilStateIdImpl(int id)
+	{
+		m_depthStencilStateId = id;
 	}
 
 	void MeshDrawer::calculateSkinnedBoneMatrices(std::array<Matrix4, 256U>* result, int skeltonId, const Matrix4 & worldMat) const
@@ -213,10 +278,10 @@ namespace tktk
 			// ライト情報を定数バッファに登録
 			LightData* lightDataPtr = *(std::begin(enableLightList));
 			LightConstantBufferData lightConstantBufferData;
-			lightConstantBufferData.lightAmbientColor = *lightDataPtr->getAmbientColorPtr();
-			lightConstantBufferData.lightDiffuseColor = *lightDataPtr->getDiffuseColorPtr();
-			lightConstantBufferData.lightSpecularColor = *lightDataPtr->getSpecularColorPtr();
-			lightConstantBufferData.lightPosition = *lightDataPtr->getPositionPtr();
+			lightConstantBufferData.lightAmbientColor = lightDataPtr->getAmbientColor();
+			lightConstantBufferData.lightDiffuseColor = lightDataPtr->getDiffuseColor();
+			lightConstantBufferData.lightSpecularColor = lightDataPtr->getSpecularColor();
+			lightConstantBufferData.lightPosition = lightDataPtr->getPosition();
 			lightBufferData->setBufferData(std::move(lightConstantBufferData));
 
 			lightBufferData->updateBuffer();

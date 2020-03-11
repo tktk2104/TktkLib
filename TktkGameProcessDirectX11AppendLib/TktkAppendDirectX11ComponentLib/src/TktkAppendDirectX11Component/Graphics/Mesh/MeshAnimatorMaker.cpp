@@ -6,7 +6,7 @@ namespace tktk
 
 	MeshAnimatorMaker & MeshAnimatorMaker::makeStart(GameObjectPtr user)
 	{
-		reset();
+		m_self = MeshAnimatorMaker();
 		m_self.m_user = user;
 		return m_self;
 	}
@@ -27,12 +27,6 @@ namespace tktk
 		return *this;
 	}
 
-	MeshAnimatorMaker & MeshAnimatorMaker::animationId(int value)
-	{
-		m_animationId = value;
-		return *this;
-	}
-
 	MeshAnimatorMaker & MeshAnimatorMaker::animFrameIntervalPerSec(float value)
 	{
 		m_animFrameIntervalPerSec = value;
@@ -45,11 +39,9 @@ namespace tktk
 		return *this;
 	}
 
-	void MeshAnimatorMaker::reset()
+	MeshAnimatorMaker & MeshAnimatorMaker::animationIdImpl(int value)
 	{
-		m_self.m_meshDrawer = CfpPtr<MeshDrawer>();
-		m_self.m_animationId = 0;
-		m_self.m_animFrameIntervalPerSec = 60.0f;
-		m_self.m_animSpeedRate = 1.0f;
+		m_animationId = value;
+		return *this;
 	}
 }

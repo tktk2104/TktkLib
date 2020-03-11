@@ -57,4 +57,24 @@ namespace tktk
 			skeletonData.getSize()
 		);
 	}
+
+	int MeshAnimator::getAnimationId() const
+	{
+		return m_animationId;
+	}
+
+	float MeshAnimator::getAnimSpeedRate() const
+	{
+		return m_animSpeedRate;
+	}
+
+	void MeshAnimator::setAnimSpeedRate(float rate)
+	{
+		m_animSpeedRate = rate;
+	}
+
+	void MeshAnimator::setAnimationIdImpl(int id)
+	{
+		m_animationId = id;
+	}
 }

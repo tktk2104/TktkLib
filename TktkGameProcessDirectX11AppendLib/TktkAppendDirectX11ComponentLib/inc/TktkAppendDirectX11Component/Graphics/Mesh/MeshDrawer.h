@@ -3,6 +3,7 @@
 
 #include <array>
 #include <vector>
+#include <TktkMetaFunc/TypeCheck/isIdType.h>
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend3DComponent/Transform3D.h>
 #include "TktkDirectX11Wrapper/Graphics/Material/Asset/MaterialData.h"
@@ -38,12 +39,99 @@ namespace tktk
 
 	public:
 
+		const std::array<Matrix4, 256U>& getLocalBoneMatrices() const;
+
+		// ローカルボーン行列を設定する
+		void setLocalBoneMatrices(const std::array<Matrix4, 256U>& boneMatrices, unsigned int boneCount);
+
+		// カメラIDを取得する
+		int getCameraId() const;
+
+		// カメラIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setCameraId(IdType id)
+		{
+			setCameraIdImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setCameraId(IdType id) { static_assert(false, "CameraId Fraud Type"); }
+
+		// メッシュIDを取得する
+		int getMeshId() const;
+
+		// メッシュIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setMeshId(IdType id)
+		{
+			setMeshIdImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setMeshId(IdType id) { static_assert(false, "MeshId Fraud Type"); }
+
+		// スケルトンIDを取得する
 		int getSkeltonId() const;
 
-		void setLocalBoneMatrices(std::array<Matrix4, 256U> boneMatrices, unsigned int boneCount);
+		// スケルトンIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setSkeltonId(IdType id)
+		{
+			setSkeltonIdImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setSkeltonId(IdType id) { static_assert(false, "SkeltonId Fraud Type"); }
+
+		// マテリアルIDの配列を取得する
+		const std::vector<int>& getMaterialIdArray() const;
+
+		// マテリアルIDを指定数設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class... IdTypes, std::enable_if_t<is_idType_all_v<IdTypes...>>* = nullptr>
+		void setMaterialIdArray(IdTypes... ids)
+		{
+			setMaterialIdArrayImpl({ static_cast<int>(ids)... });
+		}
+		template <class... IdTypes, std::enable_if_t<!is_idType_all_v<IdTypes...>>* = nullptr>
+		void setMaterialIdArray(IdTypes... ids) { static_assert(false, "MaterialId Fraud Type"); }
+
+		// ブレンドステートIDを取得する
+		int getBlendStateId() const;
+
+		// ブレンドステートIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setBlendStateId(IdType id)
+		{
+			setBlendStateIdImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setBlendStateId(IdType id) { static_assert(false, "BlendStateId Fraud Type"); }
+
+		// 描画先画像に描画結果をどれぐらいの比率でブレンドするかを取得する
+		const Color& getBlendRate() const;
+
+		// 描画先画像に描画結果をどれぐらいの比率でブレンドするかを設定する
+		void setBlendRate(const Color& rate);
+
+		// 深度ステンシルステートIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setDepthStencilStateId(IdType id)
+		{
+			setDepthStencilStateIdImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setDepthStencilStateId(IdType id) { static_assert(false, "DepthStencilStateId Fraud Type"); }
 
 	private:
 
+		// 各種id指定系の関数の実装
+		void setCameraIdImpl(int id);
+		void setMeshIdImpl(int id);
+		void setSkeltonIdImpl(int id);
+		void setMaterialIdArrayImpl(const std::vector<int>& idArray);
+		void setBlendStateIdImpl(int id);
+		void setDepthStencilStateIdImpl(int id);
+
+	private:
+
+		// スキニードボーン行列を計算する
 		void calculateSkinnedBoneMatrices(std::array<Matrix4, 256U>* result, int skeltonId, const Matrix4& worldMat) const;
 
 		// マテリアルごとに描画を行う
