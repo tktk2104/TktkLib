@@ -351,6 +351,12 @@
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawerMaker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\SpriteShader\SpritePixelShader.hlsl" />
@@ -800,6 +806,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawerMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

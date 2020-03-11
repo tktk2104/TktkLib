@@ -136,6 +136,8 @@
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModuleMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\SimpleCamera.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\SimpleCameraMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Light\PointLight.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Light\PointLightMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawer.cpp" />
@@ -352,6 +354,8 @@
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\Module\FirstPersonModuleMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\SimpleCamera.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\SimpleCameraMaker.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Light\PointLight.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Light\PointLightMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawer.h" />
