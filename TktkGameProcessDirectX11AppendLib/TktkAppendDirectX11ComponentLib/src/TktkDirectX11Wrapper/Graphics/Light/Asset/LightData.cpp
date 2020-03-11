@@ -19,23 +19,43 @@ namespace tktk
 	{
 	}
 
-	Color * LightData::getAmbientColorPtr()
+	const Color & LightData::getAmbientColor() const
 	{
-		return &m_ambientColor;
+		return m_ambientColor;
 	}
 
-	Color * LightData::getDiffuseColorPtr()
+	void LightData::setAmbientColor(const Color & ambient)
 	{
-		return &m_diffuseColor;
+		m_ambientColor = ambient;
 	}
 
-	Color * LightData::getSpecularColorPtr()
+	const Color & LightData::getDiffuseColor() const
 	{
-		return &m_specularColor;
+		return m_diffuseColor;
 	}
 
-	Vector3 * LightData::getPositionPtr()
+	void LightData::setDiffuseColor(const Color & diffuse)
 	{
-		return &m_position;
+		m_diffuseColor = diffuse;
+	}
+
+	const Color & LightData::getSpecularColor() const
+	{
+		return m_specularColor;
+	}
+
+	void LightData::setSpecularColor(const Color & specular)
+	{
+		m_specularColor = specular;
+	}
+
+	const Vector3 & LightData::getPosition() const
+	{
+		return m_position;
+	}
+
+	void LightData::setPosition(const Vector3 & pos)
+	{
+		m_position = pos;
 	}
 }

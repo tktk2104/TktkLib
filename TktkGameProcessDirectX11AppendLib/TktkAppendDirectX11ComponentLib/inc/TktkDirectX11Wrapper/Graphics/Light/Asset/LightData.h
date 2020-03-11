@@ -24,17 +24,29 @@ namespace tktk
 
 	public:
 
-		// ライトの環境光の値のポインタを取得
-		Color* getAmbientColorPtr();
+		// ライトの環境光の値を取得
+		const Color& getAmbientColor() const;
 
-		// ライトの拡散反射光の値のポインタを取得
-		Color* getDiffuseColorPtr();
+		// ライトの環境光の値を設定
+		void setAmbientColor(const Color& ambient);
 
-		// ライトの鏡面反射光の値のポインタを取得
-		Color* getSpecularColorPtr();
+		// ライトの拡散反射光の値を取得
+		const Color& getDiffuseColor() const;
 
-		// ライトの座標の値のポインタを取得
-		Vector3* getPositionPtr();
+		// ライトの拡散反射光の値を設定
+		void setDiffuseColor(const Color& diffuse);
+
+		// ライトの鏡面反射光の値を取得
+		const Color& getSpecularColor() const;
+
+		// ライトの鏡面反射光の値を設定
+		void setSpecularColor(const Color& specular);
+
+		// ライトの座標の値を取得
+		const Vector3& getPosition() const;
+
+		// ライトの座標の値を設定
+		void setPosition(const Vector3& pos);
 
 	private:
 
