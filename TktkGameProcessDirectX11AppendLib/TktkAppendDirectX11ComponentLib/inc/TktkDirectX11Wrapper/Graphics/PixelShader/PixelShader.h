@@ -15,12 +15,12 @@ namespace tktk
 		// 新たなピクセルシェーダーをロードする
 		// ※この関数でシェーダーをロードする場合、idは1以上でなければならない
 		template <class ShaderIdType, class... ConstantBufferIdTypes, std::enable_if_t<is_idType_all_v<ShaderIdType, ConstantBufferIdTypes...>>* = nullptr>
-		static void load(const std::string& fileName, ShaderIdType id, ConstantBufferIdTypes... useConstantBufferIds)
+		static void load(ShaderIdType id, const std::string& fileName, ConstantBufferIdTypes... useConstantBufferIds)
 		{
 			loadImpl(static_cast<int>(id), { static_cast<int>(useConstantBufferIds)... }, fileName);
 		}
 		template <class ShaderIdType, class... ConstantBufferIdTypes, std::enable_if_t<!is_idType_all_v<ShaderIdType, ConstantBufferIdTypes...>>* = nullptr>
-		static void load(const std::string& fileName, ShaderIdType id, ConstantBufferIdTypes... useConstantBufferIds) { static_assert(false, "Id Fraud Type"); }
+		static void load(ShaderIdType id, const std::string& fileName, ConstantBufferIdTypes... useConstantBufferIds) { static_assert(false, "Id Fraud Type"); }
 
 		// 指定したピクセルシェーダーを削除する
 		// ※この関数でシェーダーを削除する場合、idは1以上でなければならない

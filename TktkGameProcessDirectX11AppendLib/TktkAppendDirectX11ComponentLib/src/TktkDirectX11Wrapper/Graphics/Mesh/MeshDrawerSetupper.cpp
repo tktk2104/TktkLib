@@ -28,24 +28,24 @@ namespace tktk
 		ConstantBufferManager::create(SystemConstantBufferId::Pbr, new PbrConstantBufferData());
 
 		PixelShaderManager::load(
-			basicPixelShaderFileName,
 			SystemPixelShaderId::Mesh,
+			basicPixelShaderFileName,
 			SystemConstantBufferId::Material,
 			SystemConstantBufferId::Light
 		);
 		PixelShaderManager::load(
-			pbrPixelShaderFileName,
 			SystemPixelShaderId::PbrMesh,
+			pbrPixelShaderFileName,
 			SystemConstantBufferId::Pbr
 		);
 		PixelShaderManager::load(
-			iblMeshPixelShaderFileName,
 			SystemPixelShaderId::IblMesh,
+			iblMeshPixelShaderFileName,
 			SystemConstantBufferId::Pbr
 		);
 		PixelShaderManager::load(
-			pbrIblPixelShaderFileName,
-			SystemPixelShaderId::PbrIblMesh
+			SystemPixelShaderId::PbrIblMesh,
+			pbrIblPixelShaderFileName
 		);
 
 		std::vector<D3D11_INPUT_ELEMENT_DESC> meshVertexLayout = std::vector<D3D11_INPUT_ELEMENT_DESC>({

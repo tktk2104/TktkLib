@@ -45,6 +45,6 @@ namespace tktk
 			});
 		VertexShaderManager::load(SystemVertexShaderId::Sprite, useVertexShaderFileName, layout, SystemConstantBufferId::Sprite);
 
-		PixelShaderManager::load(usePixelShaderFileName, SystemPixelShaderId::Sprite, SystemConstantBufferId::Sprite);
+		PixelShaderManager::load(SystemPixelShaderId::Sprite, usePixelShaderFileName, SystemConstantBufferId::Sprite);
 	}
 }
