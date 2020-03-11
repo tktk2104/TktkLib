@@ -22,11 +22,14 @@ namespace tktk
 
 	public:
 
-		float* getCameraFovPtr();
+		float getCameraFov();
+		void setCameraFov(float fov);
 
-		float* getCameraNearPtr();
+		float getCameraNear();
+		void setCameraNear(float n);
 
-		float* getCameraFarPtr();
+		float getCameraFar();
+		void setCameraFar(float f);
 
 	private:
 

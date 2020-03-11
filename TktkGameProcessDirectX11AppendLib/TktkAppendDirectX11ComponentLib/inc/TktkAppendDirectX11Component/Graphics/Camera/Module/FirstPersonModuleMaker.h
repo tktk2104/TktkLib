@@ -13,6 +13,18 @@ namespace tktk
 		// インスタンス作成開始
 		static FirstPersonModuleMaker& makeStart(GameObjectPtr user);
 
+	private:
+
+		// 自身のポインタ
+		static FirstPersonModuleMaker m_self;
+
+	private:
+
+		// プライベートコンストラクタ達
+		FirstPersonModuleMaker() = default;
+		FirstPersonModuleMaker(const FirstPersonModuleMaker& other) = default;
+		FirstPersonModuleMaker& operator = (const FirstPersonModuleMaker& other) = default;
+
 	public:
 
 		// 作成する
@@ -25,14 +37,6 @@ namespace tktk
 		FirstPersonModuleMaker& alwaysMoveForward(bool value);
 
 		FirstPersonModuleMaker& enableUpDownKey(bool value);
-
-	private:
-
-		// 自身のポインタを初期化する
-		static void reset();
-
-		// 自身のポインタ
-		static FirstPersonModuleMaker m_self;
 
 	private:
 

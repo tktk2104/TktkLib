@@ -6,7 +6,7 @@ namespace tktk
 
 	SimpleCameraMaker & SimpleCameraMaker::makeStart(GameObjectPtr user)
 	{
-		reset();
+		m_self = SimpleCameraMaker();
 		m_self.m_user = user;
 		return m_self;
 	}
@@ -19,12 +19,6 @@ namespace tktk
 			m_cameraNear,
 			m_cameraFar
 			);
-	}
-
-	SimpleCameraMaker & SimpleCameraMaker::cameraId(int value)
-	{
-		m_cameraId = value;
-		return *this;
 	}
 
 	SimpleCameraMaker & SimpleCameraMaker::cameraFov(float value)
@@ -45,11 +39,9 @@ namespace tktk
 		return *this;
 	}
 
-	void SimpleCameraMaker::reset()
+	SimpleCameraMaker & SimpleCameraMaker::cameraIdImpl(int value)
 	{
-		m_self.m_cameraId = 0;
-		m_self.m_cameraFov = 45.0f;
-		m_self.m_cameraNear = 0.01f;
-		m_self.m_cameraFar = 1000.0f;
+		m_cameraId = value;
+		return *this;
 	}
 }

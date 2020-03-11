@@ -17,7 +17,7 @@ namespace tktk
 			bool alwaysMoveForward,			// 常に前方に移動するか
 			bool enableUpDownKey			// スペース、シフトキーで上下に移動するか
 		);
-		~FirstPersonModule();
+		~FirstPersonModule() = default;
 
 	public:
 
@@ -26,13 +26,17 @@ namespace tktk
 
 	public:
 
-		float* getRotateDegSpeedPerSecPtr();
+		float getRotateDegSpeedPerSec();
+		void setRotateDegSpeedPerSec(float deg);
 
-		float* getMoveSpeedPerSecPtr();
+		float getMoveSpeedPerSec();
+		void setMoveSpeedPerSec(float speed);
 
-		bool* getAlwaysMoveForwardPtr();
+		bool getAlwaysMoveForward();
+		void setAlwaysMoveForward(bool flag);
 
-		bool* getEnableUpDownKeyPtr();
+		bool getEnableUpDownKey();
+		void setEnableUpDownKey(bool flag);
 
 	private:
 

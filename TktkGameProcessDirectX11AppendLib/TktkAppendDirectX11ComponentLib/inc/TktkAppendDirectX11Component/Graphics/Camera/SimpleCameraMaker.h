@@ -1,6 +1,7 @@
 #ifndef SIMPLE_CAMERA_MAKER_H_
 #define SIMPLE_CAMERA_MAKER_H_
 
+#include <TktkMetaFunc/TypeCheck/isIdType.h>
 #include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "SimpleCamera.h"
 
@@ -13,26 +14,45 @@ namespace tktk
 		// インスタンス作成開始
 		static SimpleCameraMaker& makeStart(GameObjectPtr user);
 
+	private:
+
+		// 自身のポインタ
+		static SimpleCameraMaker m_self;
+
+	private:
+
+		// プライベートコンストラクタ達
+		SimpleCameraMaker() = default;
+		SimpleCameraMaker(const SimpleCameraMaker& other) = default;
+		SimpleCameraMaker& operator = (const SimpleCameraMaker& other) = default;
+
 	public:
 
 		// 作成する
 		CfpPtr<SimpleCamera> create();
 
-		SimpleCameraMaker& cameraId(int value);
+		// 作成するカメラのIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template<class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		SimpleCameraMaker& cameraId(IdType value)
+		{
+			return cameraIdImpl(static_cast<int>(value));
+		}
+		template<class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		SimpleCameraMaker& cameraId(IdType value) { static_assert(false, "CameraId Fraud Type"); }
 
+		// カメラの射角を設定する
 		SimpleCameraMaker& cameraFov(float value);
 
+		// カメラのニアクリップを設定する
 		SimpleCameraMaker& cameraNear(float value);
 
+		// カメラのファークリップを設定する
 		SimpleCameraMaker& cameraFar(float value);
 
 	private:
 
-		// 自身のポインタを初期化する
-		static void reset();
-
-		// 自身のポインタ
-		static SimpleCameraMaker m_self;
+		// 各種id指定系の関数の実装
+		SimpleCameraMaker& cameraIdImpl(int value);
 
 	private:
 

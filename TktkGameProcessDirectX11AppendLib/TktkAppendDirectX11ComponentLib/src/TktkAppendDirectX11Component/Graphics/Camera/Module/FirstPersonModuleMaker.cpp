@@ -6,7 +6,7 @@ namespace tktk
 
 	FirstPersonModuleMaker & FirstPersonModuleMaker::makeStart(GameObjectPtr user)
 	{
-		reset();
+		m_self = FirstPersonModuleMaker();
 		m_self.m_user = user;
 		return m_self;
 	}
@@ -43,13 +43,5 @@ namespace tktk
 	{
 		m_enableUpDownKey = value;
 		return *this;
-	}
-
-	void FirstPersonModuleMaker::reset()
-	{
-		m_self.m_rotateDegSpeedPerSec = 100.0f;
-		m_self.m_moveSpeedPerSec = 100.0f;
-		m_self.m_alwaysMoveForward = false;
-		m_self.m_enableUpDownKey = false;
 	}
 }

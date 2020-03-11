@@ -64,18 +64,33 @@ namespace tktk
 		);
 	}
 
-	float * SimpleCamera::getCameraFovPtr()
+	float SimpleCamera::getCameraFov()
 	{
-		return &m_cameraFov;
+		return m_cameraFov;
 	}
 
-	float * SimpleCamera::getCameraNearPtr()
+	void SimpleCamera::setCameraFov(float fov)
 	{
-		return &m_cameraNear;
+		m_cameraFov = fov;
 	}
 
-	float * SimpleCamera::getCameraFarPtr()
+	float SimpleCamera::getCameraNear()
 	{
-		return &m_cameraFar;
+		return m_cameraNear;
+	}
+
+	void SimpleCamera::setCameraNear(float n)
+	{
+		m_cameraNear = n;
+	}
+
+	float SimpleCamera::getCameraFar()
+	{
+		return m_cameraFar;
+	}
+
+	void SimpleCamera::setCameraFar(float f)
+	{
+		m_cameraFar = f;
 	}
 }

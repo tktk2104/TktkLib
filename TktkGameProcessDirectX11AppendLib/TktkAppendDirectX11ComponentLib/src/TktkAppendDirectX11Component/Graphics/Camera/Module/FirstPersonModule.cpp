@@ -18,10 +18,6 @@ namespace tktk
 	{
 	}
 
-	FirstPersonModule::~FirstPersonModule()
-	{
-	}
-
 	void FirstPersonModule::start()
 	{
 		m_transform = getComponent<Transform3D>();
@@ -41,24 +37,44 @@ namespace tktk
 		moveHorizontal();
 	}
 
-	float * FirstPersonModule::getRotateDegSpeedPerSecPtr()
+	float FirstPersonModule::getRotateDegSpeedPerSec()
 	{
-		return &m_rotateDegSpeedPerSec;
+		return m_rotateDegSpeedPerSec;
 	}
 
-	float * FirstPersonModule::getMoveSpeedPerSecPtr()
+	void FirstPersonModule::setRotateDegSpeedPerSec(float deg)
 	{
-		return &m_moveSpeedPerSec;
+		m_rotateDegSpeedPerSec = deg;
 	}
 
-	bool * FirstPersonModule::getAlwaysMoveForwardPtr()
+	float FirstPersonModule::getMoveSpeedPerSec()
 	{
-		return &m_alwaysMoveForward;
+		return m_moveSpeedPerSec;
 	}
 
-	bool * FirstPersonModule::getEnableUpDownKeyPtr()
+	void FirstPersonModule::setMoveSpeedPerSec(float speed)
 	{
-		return &m_enableUpDownKey;
+		m_moveSpeedPerSec = speed;
+	}
+
+	bool FirstPersonModule::getAlwaysMoveForward()
+	{
+		return m_alwaysMoveForward;
+	}
+
+	void FirstPersonModule::setAlwaysMoveForward(bool flag)
+	{
+		m_alwaysMoveForward = flag;
+	}
+
+	bool FirstPersonModule::getEnableUpDownKey()
+	{
+		return m_enableUpDownKey;
+	}
+
+	void FirstPersonModule::setEnableUpDownKey(bool flag)
+	{
+		m_enableUpDownKey = flag;
 	}
 
 	void FirstPersonModule::rotate()
