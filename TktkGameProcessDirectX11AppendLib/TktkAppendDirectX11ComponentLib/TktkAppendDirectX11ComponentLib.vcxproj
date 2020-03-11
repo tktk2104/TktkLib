@@ -138,6 +138,8 @@
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Camera\SimpleCameraMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Light\PointLight.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Light\PointLightMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawerMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimator.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimatorMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawer.cpp" />
@@ -178,6 +180,7 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Light\Light.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Light\LightManager.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Light\LightUpdater.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Line2D\Line2DDrawerSetupper.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialAssets.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialData.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialParameters.cpp" />
@@ -259,6 +262,22 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\IblMeshShader\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\IblMeshShader\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
+    <FxCompile Include="shader\Line2DShader\Line2DPixelShader.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\Line2DShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\Line2DShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\Line2DShader\Line2DVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\Line2DShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\Line2DShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="shader\MeshShader\MeshPixelShader.hlsl">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
@@ -335,6 +354,8 @@
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Camera\SimpleCameraMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Light\PointLight.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Light\PointLightMaker.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawerMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimator.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshAnimatorMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Mesh\MeshDrawer.h" />
@@ -381,6 +402,10 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Light\Light.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Light\LightManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Light\LightUpdater.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Line2D\ConstantBufferData\Line2DPixelConstantBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Line2D\ConstantBufferData\Line2DVertexConstantBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Line2D\Line2DDrawerSetupper.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Line2D\VertexBufferData\Line2DVertexBufferData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialParameters.h" />

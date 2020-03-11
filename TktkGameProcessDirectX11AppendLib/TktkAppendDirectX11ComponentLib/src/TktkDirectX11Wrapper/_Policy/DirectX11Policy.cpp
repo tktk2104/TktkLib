@@ -14,8 +14,6 @@
 #include <TktkDirectX11Wrapper/Graphics/Texture2D/Texture2DManager.h>
 #include <TktkDirectX11Wrapper/Graphics/VertexShader/VertexShaderManager.h>
 
-#include <TktkDirectX11Wrapper/Graphics/Sprite/SpriteDrawerSetupper.h>
-
 #include "TktkDirectX11Wrapper/Graphics/BlendState/BlendStateManager.h"
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilView/DepthStencilViewManager.h"
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilState/DepthStencilStateManager.h"
@@ -26,6 +24,8 @@
 #include "TktkDirectX11Wrapper/Graphics/Skeleton/SkeletonManager.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/MeshManager.h"
 
+#include "TktkDirectX11Wrapper/Graphics/Line2D/Line2DDrawerSetupper.h"
+#include "TktkDirectX11Wrapper/Graphics/Sprite/SpriteDrawerSetupper.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/MeshDrawerSetupper.h"
 
 namespace tktk
@@ -36,6 +36,8 @@ namespace tktk
 		const std::string & windowName,
 		const Vector2 & gameScreenSize,
 		bool fullScreenFlag,
+		const std::string & line2DPixelShaderFileName,
+		const std::string & line2DVertexShaderFileName,
 		const std::string & spritePixelShaderFileName,
 		const std::string & spriteVertexShaderFileName,
 		const std::string & basicMeshPixelShaderFileName,
@@ -79,6 +81,7 @@ namespace tktk
 		MeshManager::setUp();
 
 		SpriteDrawerSetupper::setUp(spritePixelShaderFileName, spriteVertexShaderFileName);
+		Line2DDrawerSetupper::setUp(line2DPixelShaderFileName, line2DVertexShaderFileName);
 		MeshDrawerSetupper::setUp(
 			basicMeshPixelShaderFileName,
 			basicMeshVertexShaderFileName,

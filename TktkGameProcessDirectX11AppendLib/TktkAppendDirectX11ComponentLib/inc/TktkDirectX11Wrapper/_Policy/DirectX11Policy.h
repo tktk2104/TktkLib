@@ -17,6 +17,8 @@ namespace tktk
 			const std::string & windowName,
 			const Vector2& gameScreenSize,						// ゲームウィンドウの大きさ
 			bool fullScreenFlag,								// フルスクリーンにするか
+			const std::string& line2DPixelShaderFileName,		// デフォルトの2次元線分表示用のピクセルシェーダーのファイルパス
+			const std::string& line2DVertexShaderFileName,		// デフォルトの2次元線分表示用の頂点シェーダーのファイルパス
 			const std::string& spritePixelShaderFileName,		// デフォルトのスプライト表示用のピクセルシェーダーのファイルパス
 			const std::string& spriteVertexShaderFileName,		// デフォルトのスプライト表示用の頂点シェーダーのファイルパス
 			const std::string& basicMeshPixelShaderFileName,	// デフォルトのメッシュ表示用のピクセルシェーダーのファイルパス

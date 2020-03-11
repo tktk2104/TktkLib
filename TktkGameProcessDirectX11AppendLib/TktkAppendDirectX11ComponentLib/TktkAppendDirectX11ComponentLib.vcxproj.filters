@@ -342,6 +342,15 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Input\Mouse\Mouse.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Line2D\Line2DDrawerSetupper.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawerMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\SpriteShader\SpritePixelShader.hlsl" />
@@ -354,6 +363,8 @@
     <FxCompile Include="shader\PbrMeshShader\PbrMeshVertexShader.hlsl" />
     <FxCompile Include="shader\IblMeshShader\IblMeshPixelShader.hlsl" />
     <FxCompile Include="shader\IblMeshShader\IblMeshVertexShader.hlsl" />
+    <FxCompile Include="shader\Line2DShader\Line2DPixelShader.hlsl" />
+    <FxCompile Include="shader\Line2DShader\Line2DVertexShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\TktkDirectX11Wrapper\DirectX11LibDefinition.h">
@@ -771,6 +782,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Input\Mouse\Mouse.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Line2D\ConstantBufferData\Line2DVertexConstantBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Line2D\ConstantBufferData\Line2DPixelConstantBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Line2D\Line2DDrawerSetupper.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Line2D\VertexBufferData\Line2DVertexBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Line2D\Line2DDrawerMaker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
