@@ -86,8 +86,9 @@ namespace tktk
 		// 頂点バッファとインデックスバッファをレンダリングパイプラインに設定する
 		meshDataPtr->setVertexAndIndexBuffer();
 
+		meshDataPtr->setPrimitiveTopology();
+
 		// ドローコール
-		Screen::getDeviceContextPtr()->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 		Screen::getDeviceContextPtr()->DrawIndexed(4, 0, 0);
 	}
 
