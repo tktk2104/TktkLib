@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <assert.h>
+#include <TktkBinaryProcessing/BinaryFileReader.h>
 
 namespace tktk
 {
@@ -16,18 +17,6 @@ namespace tktk
 #pragma pack(push, 1)
 
 #define DDS_MAGIC 0x20534444
-
-	struct DDS_PIXELFORMAT
-	{
-		unsigned int size;
-		unsigned int flags;
-		unsigned int fourCC;
-		unsigned int RGBBitCount;
-		unsigned int RBitMask;
-		unsigned int GBitMask;
-		unsigned int BBitMask;
-		unsigned int ABitMask;
-	};
 
 #define DDS_FOURCC      0x00000004	// DDPF_FOURCC
 #define DDS_RGB         0x00000040	// DDPF_RGB
@@ -65,24 +54,7 @@ namespace tktk
 
 #define DDS_FLAGS_VOLUME 0x00200000 // DDSCAPS2_VOLUME
 
-	typedef struct
-	{
-		unsigned int size;
-		unsigned int flags;
-		unsigned int height;
-		unsigned int width;
-		unsigned int pitchOrLinearSize;
-		unsigned int depth;
-		unsigned int mipMapCount;
-		unsigned int reserved1[11];
-		DDS_PIXELFORMAT ddspf;
-		unsigned int caps;
-		unsigned int caps2;
-		unsigned int caps3;
-		unsigned int caps4;
-		unsigned int reserved2;
-	} DDS_HEADER;
-
+	// 「DX10」形式のDDSファイルの追加ヘッダー形式
 	typedef struct
 	{
 		DXGI_FORMAT dxgiFormat;
@@ -94,6 +66,7 @@ namespace tktk
 
 #pragma pack(pop)
 
+	// 画像データの形式毎に「１ピクセル毎に何ビットのデータを使用しているか」を取得する
 	static unsigned int bitsPerPixel(DXGI_FORMAT fmt)
 	{
 		switch (fmt)
@@ -219,109 +192,6 @@ namespace tktk
 		default:
 			return 0U;
 		}
-	}
-
-	static void getSurfaceInfo(
-		unsigned int width,
-		unsigned int height,
-		DXGI_FORMAT fmt,
-		unsigned int* outNumBytes,
-		unsigned int* outRowBytes,
-		unsigned int* outNumRows
-	)
-	{
-		unsigned int numBytes = 0U;
-		unsigned int rowBytes = 0U;
-		unsigned int numRows = 0U;
-
-		bool bc = false;
-		bool packed = false;
-		unsigned int bcnumBytesPerBlock = 0U;
-
-		switch (fmt)
-		{
-		case DXGI_FORMAT_BC1_TYPELESS:
-		case DXGI_FORMAT_BC1_UNORM:
-		case DXGI_FORMAT_BC1_UNORM_SRGB:
-		case DXGI_FORMAT_BC4_TYPELESS:
-		case DXGI_FORMAT_BC4_UNORM:
-		case DXGI_FORMAT_BC4_SNORM:
-			bc = true;
-			bcnumBytesPerBlock = 8U;
-			break;
-
-		case DXGI_FORMAT_BC2_TYPELESS:
-		case DXGI_FORMAT_BC2_UNORM:
-		case DXGI_FORMAT_BC2_UNORM_SRGB:
-		case DXGI_FORMAT_BC3_TYPELESS:
-		case DXGI_FORMAT_BC3_UNORM:
-		case DXGI_FORMAT_BC3_UNORM_SRGB:
-		case DXGI_FORMAT_BC5_TYPELESS:
-		case DXGI_FORMAT_BC5_UNORM:
-		case DXGI_FORMAT_BC5_SNORM:
-		case DXGI_FORMAT_BC6H_TYPELESS:
-		case DXGI_FORMAT_BC6H_UF16:
-		case DXGI_FORMAT_BC6H_SF16:
-		case DXGI_FORMAT_BC7_TYPELESS:
-		case DXGI_FORMAT_BC7_UNORM:
-		case DXGI_FORMAT_BC7_UNORM_SRGB:
-			bc = true;
-			bcnumBytesPerBlock = 16U;
-			break;
-
-		case DXGI_FORMAT_R8G8_B8G8_UNORM:
-		case DXGI_FORMAT_G8R8_G8B8_UNORM:
-			packed = true;
-			break;
-		}
-
-		if (bc)
-		{
-			unsigned int numBlocksWide = 0U;
-
-			if (width > 0U)
-			{
-				numBlocksWide = std::max<unsigned int>(1U, (width + 3U) / 4U);
-			}
-
-			unsigned int numBlocksHigh = 0U;
-
-			if (height > 0U)
-			{
-				numBlocksHigh = std::max<unsigned int>(1U, (height + 3U) / 4U);
-			}
-			rowBytes = numBlocksWide * bcnumBytesPerBlock;
-			numRows = numBlocksHigh;
-		}
-		else if (packed)
-		{
-			rowBytes = ((width + 1) >> 1) * 4;
-			numRows = height;
-		}
-		else
-		{
-			unsigned int bpp = bitsPerPixel(fmt);
-			rowBytes = (width * bpp + 7) / 8;
-			numRows = height;
-		}
-
-		numBytes = rowBytes * numRows;
-
-		if (outNumBytes)
-		{
-			*outNumBytes = numBytes;
-		}
-
-		if (outRowBytes)
-		{
-			*outRowBytes = rowBytes;
-		}
-
-		if (outNumRows)
-		{
-			*outNumRows = numRows;
-		}
-
 	}
 
 #define ISBITMASK(r, g, b, a) (ddpf.RBitMask == r && ddpf.GBitMask == g && ddpf.BBitMask == b && ddpf.ABitMask == a)
@@ -529,107 +399,7 @@ namespace tktk
 		return DXGI_FORMAT_UNKNOWN;
 	}
 
-
-	static void fillInitData(
-		unsigned int width,
-		unsigned int height,
-		unsigned int depth,
-		unsigned int mipCount,
-		unsigned int arraySize,
-		DXGI_FORMAT format,
-		unsigned int maxSize,
-		unsigned int bitSize,
-		const unsigned char* bitData,
-		unsigned int* twidth,
-		unsigned int* theight,
-		unsigned int* tdepth,
-		unsigned int* skipMip,
-		D3D11_SUBRESOURCE_DATA* initData
-	)
-	{
-		if (!bitData || !initData)
-		{
-			throw std::runtime_error("lode dds file error");
-		}
-
-		*skipMip = 0U;
-		*twidth = 0U;
-		*theight = 0U;
-		*tdepth = 0U;
-
-		unsigned int NumBytes = 0U;
-		unsigned int RowBytes = 0U;
-		unsigned int NumRows = 0U;
-		const unsigned char* pSrcBits = bitData;
-		const unsigned char* pEndBits = bitData + bitSize;
-
-		unsigned int index = 0U;
-
-		for (unsigned int i = 0U; i < arraySize; i++)
-		{
-			unsigned int w = width;
-			unsigned int h = height;
-			unsigned int d = depth;
-
-			for (unsigned int j = 0U; j < mipCount; j++)
-			{
-				getSurfaceInfo(w, h, format, &NumBytes, &RowBytes, &NumRows);
-
-				if ((mipCount <= 1) || !maxSize || (w <= maxSize && h <= maxSize && d <= maxSize))
-				{
-					if (!*twidth)
-					{
-						*twidth = w;
-						*theight = h;
-						*tdepth = d;
-					}
-
-					initData[index].pSysMem = (const void*)pSrcBits;
-					initData[index].SysMemPitch = static_cast<unsigned int>(RowBytes);
-					initData[index].SysMemSlicePitch = static_cast<unsigned int>(NumBytes);
-
-					++index;
-				}
-				else
-				{
-					++skipMip;
-				}
-
-				if (pSrcBits + (NumBytes * d) > pEndBits)
-				{
-					throw std::runtime_error("lode dds file error");
-				}
-
-				pSrcBits += NumBytes * d;
-
-				w = w >> 1;
-				h = h >> 1;
-				d = d >> 1;
-
-				if (w == 0)
-				{
-					w = 1;
-				}
-
-				if (h == 0)
-				{
-					h = 1;
-				}
-
-				if (d == 0)
-				{
-					d = 1;
-				}
-			}
-		}
-
-		if (!index)
-		{
-			throw std::runtime_error("lode dds file error");
-		}
-	}
-
-	static HRESULT createD3DResources(
+	/*static HRESULT createD3DResources(
 		ID3D11Device* device,
 		unsigned int resDim,
 		unsigned int width,
@@ -828,186 +598,208 @@ namespace tktk
 			break;
 		}
 		return hr;
+	}*/
+
+	void lodedds::load(loadData* outData, const std::string & fileName)
+	{
+		// 生のDDSファイルデータを読み込む
+		BinaryFileReader::fileRead(fileName, &outData->rawDdsFileData);
+
+		if (outData->rawDdsFileData.size() < (sizeof(unsigned int) + sizeof(DDS_HEADER)))
+		{
+			throw std::runtime_error("lode dds file error");
+		}
+
+		// バイナリデータの先頭にDDSファイルを意味するデータが無かったらエラー
+		unsigned int dwMagicNumber = *(const unsigned int*)(outData->rawDdsFileData.data());
+		if (dwMagicNumber != DDS_MAGIC)
+		{
+			throw std::runtime_error("lode dds file error");
+		}
+
+		// DDSデータのヘッダ部分のデータ構造を取得する
+		const DDS_HEADER* header = reinterpret_cast<const DDS_HEADER*>(outData->rawDdsFileData.data() + sizeof(unsigned int));
+
+		if (header->size != sizeof(DDS_HEADER) ||
+			header->ddspf.size != sizeof(DDS_PIXELFORMAT))
+		{
+			throw std::runtime_error("lode dds file error");
+		}
+
+		bool bDXT10Header = false;
+		if ((header->ddspf.flags & DDS_FOURCC) &&
+			(header->ddspf.fourCC == MAKEFOURCC('D', 'X', '1', '0')))
+		{
+			if (outData->rawDdsFileData.size() < (sizeof(DDS_HEADER) + sizeof(unsigned int) + sizeof(DDS_HEADER_DXT10)))
+			{
+				throw std::runtime_error("lode dds file error");
+			}
+			bDXT10Header = true;
+		}
+
+		int offset = static_cast<int>(sizeof(unsigned int) + sizeof(DDS_HEADER) + (bDXT10Header ? sizeof(DDS_HEADER_DXT10) : 0));
+
+		// TODO : 最後の引数の意味を調べる
+		createTextureFromDDS(outData, header, outData->rawDdsFileData.data() + offset, outData->rawDdsFileData.size() - offset, 0);
 	}
 
-	static void createTextureFromDDS(
-		ID3D11Device* device,
-		const DDS_HEADER* header,
-		const unsigned char* bitData,
-		unsigned int bitSize,
-		ID3D11Resource** outTexture,
-		ID3D11ShaderResourceView** outTextureView,
-		unsigned int maxSize
-	)
+	void lodedds::createTextureFromDDS(loadData* outData, const DDS_HEADER * header, const unsigned char * bitData, unsigned int bitSize, unsigned int maxSize)
 	{
-		HRESULT hr = S_OK;
-
+		// DDSファイルから画像データの横の長さを読み込む
 		unsigned int width = header->width;
+		// DDSファイルから画像データの縦の長さを読み込む
 		unsigned int height = header->height;
+		// DDSファイルから画像データの奥の長さ（3D画像データのみ）を読み込む
 		unsigned int depth = header->depth;
 
+		// DDSファイルからミップマップの数を読み込む（0個はありえないので0個だったら1個にする）
+		unsigned int mipCount = header->mipMapCount;
+		if (mipCount == 0U) mipCount = 1U;
+		// ミップマップの数が扱える最大値を超えていたらエラー
+		if (mipCount > D3D11_REQ_MIP_LEVELS) throw std::runtime_error("lode dds file error");
+
+		// 画像データの情報を格納する変数を初期化
 		unsigned int resDim = D3D11_RESOURCE_DIMENSION_UNKNOWN;
 		unsigned int arraySize = 1;
 		DXGI_FORMAT format = DXGI_FORMAT_UNKNOWN;
 		bool isCubeMap = false;
 
-		unsigned int mipCount = header->mipMapCount;
-
-		if (mipCount == 0U)
-		{
-			mipCount = 1U;
-		}
-
+		// DDSファイルの形式が「DX10」だったら
 		if ((header->ddspf.flags & DDS_FOURCC) && header->ddspf.fourCC == (MAKEFOURCC('D', 'X', '1', '0')))
 		{
+			// 「DX10」形式の追加ヘッダー情報を取得
 			const DDS_HEADER_DXT10* d3d10dxt = reinterpret_cast<const DDS_HEADER_DXT10*>((const char*)header + sizeof(DDS_HEADER));
 
+			// 何個の画像データが存在するかを取得する（データが存在しなければエラー）
 			arraySize = d3d10dxt->arraySize;
+			if (arraySize == 0) throw std::runtime_error("lode dds file error");
 
-			if (arraySize == 0)
-			{
-				throw std::runtime_error("lode dds file error");
-			}
-
-			if (bitsPerPixel(d3d10dxt->dxgiFormat) == 0)
-			{
-				throw std::runtime_error("lode dds file error");
-			}
-
+			// 画像データのフォーマットを取得する（正しくないフォーマットならばエラー）
 			format = d3d10dxt->dxgiFormat;
+			if (bitsPerPixel(format) == 0) throw std::runtime_error("lode dds file error");
 
-			switch (d3d10dxt->resourceDimension)
+			// 何次元のテクスチャかを取得し、分岐する
+			resDim = d3d10dxt->resourceDimension;
+			switch (resDim)
 			{
+				// １次元テクスチャならば
 			case D3D11_RESOURCE_DIMENSION_TEXTURE1D:
 
-				if ((header->flags & DDS_HEIGHT) && height != 1)
-				{
-					throw std::runtime_error("lode dds file error");
-				}
-				height = depth = 1;
-				break;
+				// 画像の高さの情報が存在するならばエラー
+				if ((header->flags & DDS_HEIGHT) && height != 1) throw std::runtime_error("lode dds file error");
 
-			case D3D11_RESOURCE_DIMENSION_TEXTURE2D:
-
-				if (d3d10dxt->miscFlag & D3D11_RESOURCE_MISC_TEXTURECUBE)
-				{
-					arraySize *= 6;
-					isCubeMap = true;
-				}
+				// 画像の高さの値と奥行きの値は常に１
+				height = 1;
 				depth = 1;
 				break;
 
-			case D3D11_RESOURCE_DIMENSION_TEXTURE3D:
+				// ２次元テクスチャならば
+			case D3D11_RESOURCE_DIMENSION_TEXTURE2D:
 
-				if (!(header->flags & DDS_HEADER_FLAGS_VOLUME))
+				// キューブマップテクスチャならば
+				if (d3d10dxt->miscFlag & D3D11_RESOURCE_MISC_TEXTURECUBE)
 				{
-					throw std::runtime_error("lode dds file error");
+					// 立方体の各面分（６面）のデータサイズを指定する
+					arraySize *= 6;
+					// キューブマップフラグを立てる
+					isCubeMap = true;
 				}
-
-				if (arraySize > 1)
-				{
-					throw std::runtime_error("lode dds file error");
-				}
+				// 画像の奥行きの値は常に１
+				depth = 1;
 				break;
 
-			default:
+				// ３次元テクスチャならば
+			case D3D11_RESOURCE_DIMENSION_TEXTURE3D:
 
-				throw std::runtime_error("lode dds file error");
+				// 「DDS_HEADER_FLAGS_VOLUME」が立っていなければエラー
+				if (!(header->flags & DDS_HEADER_FLAGS_VOLUME)) throw std::runtime_error("lode dds file error");
+
+				// ３次元テクスチャは常に単一のテクスチャデータを持つ
+				if (arraySize > 1) throw std::runtime_error("lode dds file error");
+				break;
+
+				// 謎な形式だったらエラー
+			default: throw std::runtime_error("lode dds file error");
 			}
-
-			resDim = d3d10dxt->resourceDimension;
 		}
 		else
 		{
+			// 画像データのフォーマットを取得する（正しくないフォーマットならばエラー）
 			format = getDXGIFormat(header->ddspf);
+			if (format == DXGI_FORMAT_UNKNOWN) throw std::runtime_error("lode dds file error");
 
-			if (format == DXGI_FORMAT_UNKNOWN)
-			{
-				throw std::runtime_error("lode dds file error");
-			}
-
+			// 「DDS_HEADER_FLAGS_VOLUME」が立っていたら
 			if (header->flags & DDS_HEADER_FLAGS_VOLUME)
 			{
+				// ３次元テクスチャとして扱う
 				resDim = D3D11_RESOURCE_DIMENSION_TEXTURE3D;
 			}
 			else
 			{
+				// キューブマップテクスチャフラグが立っていたら
 				if (header->caps2 & DDS_CUBEMAP)
 				{
-					if ((header->caps2 & DDS_CUBEMAP_ALLFACES) != DDS_CUBEMAP_ALLFACES)
-					{
-						throw std::runtime_error("lode dds file error");
-					}
+					// キューブマップとして必要なフラグが立っていなかったらエラー
+					if ((header->caps2 & DDS_CUBEMAP_ALLFACES) != DDS_CUBEMAP_ALLFACES) throw std::runtime_error("lode dds file error");
 
-					arraySize = 6;
+					// 立方体の各面分（６面）のデータサイズを指定する
+					arraySize *= 6;
+					// キューブマップフラグを立てる
 					isCubeMap = true;
 				}
 
+				// 画像の奥行きの値は常に１
 				depth = 1;
+				// ２次元テクスチャとして扱う
 				resDim = D3D11_RESOURCE_DIMENSION_TEXTURE2D;
 			}
 
+			// TODO : 意味を理解する
+			// なんだかよく分からんが、フォーマットが正しくなければエラー
 			assert(bitsPerPixel(format) != 0U);
 		}
 
-		if (mipCount > D3D11_REQ_MIP_LEVELS)
-		{
-			throw std::runtime_error("lode dds file error");
-		}
-
+		// 何次元のテクスチャかで分岐する
 		switch (resDim)
 		{
+			// １次元テクスチャならば
 		case D3D11_RESOURCE_DIMENSION_TEXTURE1D:
 
-			if ((arraySize > D3D11_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION) ||
-				(width > D3D11_REQ_TEXTURE1D_U_DIMENSION))
-			{
-				throw std::runtime_error("lode dds file error");
-			}
+			// 画像データの数か横幅が最大値を超えていたらエラー
+			if ((arraySize > D3D11_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION) || (width > D3D11_REQ_TEXTURE1D_U_DIMENSION)) throw std::runtime_error("lode dds file error");
 			break;
 
+			// ２次元テクスチャならば
 		case D3D11_RESOURCE_DIMENSION_TEXTURE2D:
 
+			// キューブマップテクスチャの場合
 			if (isCubeMap)
 			{
-				if ((arraySize > D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION) ||
-					(width > D3D11_REQ_TEXTURECUBE_DIMENSION) ||
-					(height > D3D11_REQ_TEXTURECUBE_DIMENSION))
-				{
-					throw std::runtime_error("lode dds file error");
-				}
+				// 画像データの数、横幅、立幅いずれかが最大値を超えていたらエラー
+				if ((arraySize > D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION) || (width > D3D11_REQ_TEXTURECUBE_DIMENSION) || (height > D3D11_REQ_TEXTURECUBE_DIMENSION)) throw std::runtime_error("lode dds file error");
 			}
-			else if ((arraySize > D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION) ||
-				(width > D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION) ||
-				(height > D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION))
-			{
-				throw std::runtime_error("lode dds file error");
-			}
+			// キューブマップテクスチャではない場合の画像データの数、横幅、立幅いずれかが最大値を超えていたらエラー
+			else if ((arraySize > D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION) || (width > D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION) || (height > D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION)) throw std::runtime_error("lode dds file error");
 			break;
 
+			// ３次元テクスチャならば
 		case D3D11_RESOURCE_DIMENSION_TEXTURE3D:
 
-			if ((arraySize > 1U) ||
-				(width > D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION) ||
-				(height > D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION) ||
-				(depth > D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION))
-			{
-				throw std::runtime_error("lode dds file error");
-			}
+			// 画像データの数、横幅、立幅、奥行きいずれかが最大値を超えていたらエラー
+			if ((arraySize > 1U) || (width > D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION) || (height > D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION) || (depth > D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION)) throw std::runtime_error("lode dds file error");
 			break;
 		}
 
-		std::unique_ptr<D3D11_SUBRESOURCE_DATA> initData(new D3D11_SUBRESOURCE_DATA[mipCount * arraySize]);
+		fillInitData(outData, width, height, depth, mipCount, arraySize, format, maxSize, bitSize, bitData);
 
-		unsigned int skipMip = 0U;
-		unsigned int twidth = 0U;
-		unsigned int theight = 0U;
-		unsigned int tdepth = 0U;
+		(*outData).resourceDimension = static_cast<D3D11_RESOURCE_DIMENSION>(resDim);
+		(*outData).mipCount = mipCount - outData->skipMip;
+		(*outData).arraySize = arraySize;
+		(*outData).format = format;
+		(*outData).isCubeMap = isCubeMap;
 
-		fillInitData(width, height, depth, mipCount, arraySize, format, maxSize, bitSize, bitData, &twidth, &theight, &tdepth, &skipMip, initData.get());
-
-		hr = createD3DResources(device, resDim, twidth, theight, tdepth, mipCount - skipMip, arraySize, format, isCubeMap, initData.get(), outTexture, outTextureView);
-
+		/*
+		// TODO : この1行の意味を考える
 		if (FAILED(hr) && !maxSize && (mipCount > 1))
 		{
 			switch (device->GetFeatureLevel())
@@ -1045,62 +837,193 @@ namespace tktk
 			fillInitData(width, height, depth, mipCount, arraySize, format, maxSize, bitSize, bitData, &twidth, &theight, &tdepth, &skipMip, initData.get());
 
 			hr = createD3DResources(device, resDim, twidth, theight, tdepth, mipCount - skipMip, arraySize, format, isCubeMap, initData.get(), outTexture, outTextureView);
-		}
-
-		// TODO : どのヘッダーに定義があるのか調べる
-		//DX::ThrowIfFailed(hr);
-		if (FAILED(hr))
-		{
-			throw std::runtime_error("lode dds file error");
-		}
+		}*/
 	}
 
-	void lodedds::load(
-		ID3D11Device * device,
-		const unsigned char * ddsData,
-		unsigned int ddsDataSize,
-		ID3D11Resource ** outTexture,
-		ID3D11ShaderResourceView ** outTextureView,
-		unsigned int maxSize
+	void lodedds::fillInitData(
+		loadData* outData,
+		unsigned int width,
+		unsigned int height,
+		unsigned int depth,
+		unsigned int mipCount,
+		unsigned int arraySize,
+		DXGI_FORMAT format,
+		unsigned int maxSize,
+		unsigned int bitSize,
+		const unsigned char * bitData
 	)
 	{
-		if (!device || !ddsData || (!outTexture && !outTextureView))
-		{
-			throw std::runtime_error("lode dds file error");
-		}
+		// 結果出力用変数を初期化する
+		(*outData).width = 0U;
+		(*outData).height = 0U;
+		(*outData).depth = 0U;
+		(*outData).skipMip = 0U;
+		(*outData).subrescorceDataArray.reserve(mipCount * arraySize);
 
-		if (ddsDataSize < (sizeof(unsigned int) + sizeof(DDS_HEADER)))
-		{
-			throw std::runtime_error("lode dds file error");
-		}
+		// 画像データの総バイト数
+		unsigned int NumBytes = 0U;
+		// 画像データ横一列のバイト数
+		unsigned int RowBytes = 0U;
+		// 画像データ縦の長さ（列が何列あるか？）
+		unsigned int NumRows = 0U;
 
-		unsigned int dwMagicNumber = *(const unsigned int*)(ddsData);
-		if (dwMagicNumber != DDS_MAGIC)
-		{
-			throw std::runtime_error("lode dds file error");
-		}
+		// 使用する画像データの開始位置
+		const unsigned char* pSrcBits = bitData;
 
-		const DDS_HEADER* header = reinterpret_cast<const DDS_HEADER*>(ddsData + sizeof(unsigned int));
+		// 使用する画像データの終了位置
+		const unsigned char* pEndBits = bitData + bitSize;
 
-		if (header->size != sizeof(DDS_HEADER) ||
-			header->ddspf.size != sizeof(DDS_PIXELFORMAT))
+		// 画像データの数だけループする
+		for (unsigned int i = 0U; i < arraySize; i++)
 		{
-			throw std::runtime_error("lode dds file error");
-		}
+			// 横幅、立幅、奥行きの一時保存変数
+			unsigned int w = width;
+			unsigned int h = height;
+			unsigned int d = depth;
 
-		bool bDXT10Header = false;
-		if ((header->ddspf.flags & DDS_FOURCC) &&
-			(header->ddspf.fourCC == MAKEFOURCC('D', 'X', '1', '0')))
-		{
-			if (ddsDataSize < (sizeof(DDS_HEADER) + sizeof(unsigned int) + sizeof(DDS_HEADER_DXT10)))
+			// ミップマップの数だけループする
+			for (unsigned int j = 0U; j < mipCount; j++)
 			{
-				throw std::runtime_error("lode dds file error");
+				// フォーマットに対応した読み込むデータの幅を取得
+				getSurfaceInfo(w, h, format, &NumBytes, &RowBytes, &NumRows);
+
+				if ((mipCount <= 1) || !maxSize || (w <= maxSize && h <= maxSize && d <= maxSize))
+				{
+					//  結果出力用変数の横幅が0だったら画像サイズのデータを入力する
+					if (!(*outData).width)
+					{
+						(*outData).width = w;
+						(*outData).height = h;
+						(*outData).depth = d;
+					}
+
+					// 結果出力用変数の画像データのデータを追加する
+					D3D11_SUBRESOURCE_DATA subrescorceData{};
+					subrescorceData.pSysMem = (const void*)pSrcBits;
+					subrescorceData.SysMemPitch = RowBytes;
+					subrescorceData.SysMemSlicePitch = NumBytes;
+					(*outData).subrescorceDataArray.push_back(subrescorceData);
+				}
+				else
+				{
+					++(*outData).skipMip;
+				}
+
+				// 使用する画像データの範囲を超過して使用しようとしている場合エラー
+				if (pSrcBits + (NumBytes * d) > pEndBits)
+				{
+					throw std::runtime_error("lode dds file error");
+				}
+
+				// 使用する画像データの開始位置を画像データの大きさ分だけ移動
+				pSrcBits += NumBytes * d;
+
+				// 横幅、立幅、奥行きの一時保存変数を右に１つビットシフトする
+				w = w >> 1;
+				h = h >> 1;
+				d = d >> 1;
+
+				// 0になっていたら1にする
+				if (w == 0U) w = 1U;
+				if (h == 0U) h = 1U;
+				if (d == 0U) d = 1U;
 			}
-			bDXT10Header = true;
 		}
 
-		int offset = static_cast<int>(sizeof(unsigned int) + sizeof(DDS_HEADER) + (bDXT10Header ? sizeof(DDS_HEADER_DXT10) : 0));
+		// 画像データが１つも読み込めていなければエラー
+		if ((*outData).subrescorceDataArray.empty()) throw std::runtime_error("lode dds file error");
+	}
 
-		createTextureFromDDS(device, header, ddsData + offset, ddsDataSize - offset, outTexture, outTextureView, maxSize);
+	void lodedds::getSurfaceInfo(unsigned int width, unsigned int height, DXGI_FORMAT format, unsigned int * outNumBytes, unsigned int * outRowBytes, unsigned int * outNumRows)
+	{
+		// 画像データの総バイト数
+		unsigned int numBytes = 0U;
+		// 画像データ横一列のバイト数
+		unsigned int rowBytes = 0U;
+		// 画像データ縦の長さ（列が何列あるか？）
+		unsigned int numRows = 0U;
+
+		// BCフォーマットかを表すフラグ
+		bool bc = false;
+		// パックされているかを表すフラグ
+		bool packed = false;
+
+		// BCフォーマットの時に使用する１ピクセル当たりのビット数
+		unsigned int bcnumBytesPerBlock = 0U;
+
+		// フォーマット毎に分岐する
+		switch (format)
+		{
+		case DXGI_FORMAT_BC1_TYPELESS:
+		case DXGI_FORMAT_BC1_UNORM:
+		case DXGI_FORMAT_BC1_UNORM_SRGB:
+		case DXGI_FORMAT_BC4_TYPELESS:
+		case DXGI_FORMAT_BC4_UNORM:
+		case DXGI_FORMAT_BC4_SNORM:
+			bc = true;
+			bcnumBytesPerBlock = 8U;
+			break;
+
+		case DXGI_FORMAT_BC2_TYPELESS:
+		case DXGI_FORMAT_BC2_UNORM:
+		case DXGI_FORMAT_BC2_UNORM_SRGB:
+		case DXGI_FORMAT_BC3_TYPELESS:
+		case DXGI_FORMAT_BC3_UNORM:
+		case DXGI_FORMAT_BC3_UNORM_SRGB:
+		case DXGI_FORMAT_BC5_TYPELESS:
+		case DXGI_FORMAT_BC5_UNORM:
+		case DXGI_FORMAT_BC5_SNORM:
+		case DXGI_FORMAT_BC6H_TYPELESS:
+		case DXGI_FORMAT_BC6H_UF16:
+		case DXGI_FORMAT_BC6H_SF16:
+		case DXGI_FORMAT_BC7_TYPELESS:
+		case DXGI_FORMAT_BC7_UNORM:
+		case DXGI_FORMAT_BC7_UNORM_SRGB:
+			bc = true;
+			bcnumBytesPerBlock = 16U;
+			break;
+
+		case DXGI_FORMAT_R8G8_B8G8_UNORM:
+		case DXGI_FORMAT_G8R8_G8B8_UNORM:
+			packed = true;
+			break;
+		}
+
+		// BCフォーマットだったら
+		if (bc)
+		{
+			// 画像データの横の長さを求める
+			unsigned int numBlocksWide = 0U;
+			if (width > 0U) numBlocksWide = std::max<unsigned int>(1U, (width + 3U) / 4U);
+
+			// 画像データの縦の長さを求める
+			unsigned int numBlocksHigh = 0U;
+			if (height > 0U) numBlocksHigh = std::max<unsigned int>(1U, (height + 3U) / 4U);
+
+			rowBytes = numBlocksWide * bcnumBytesPerBlock;
+			numRows = numBlocksHigh;
+		}
+		// パックされていたら
+		else if (packed)
+		{
+			rowBytes = ((width + 1) >> 1) * 4;
+			numRows = height;
+		}
+		// それ以外なら
+		else
+		{
+			// １ピクセル当たりのビット数を取得する
+			unsigned int bpp = bitsPerPixel(format);
+			rowBytes = (width * bpp + 7) / 8;
+			numRows = height;
+		}
+
+		// 画像データの総バイトを計算する
+		numBytes = rowBytes * numRows;
+
+		// 各値を出力用変数に代入する
+		if (outNumBytes) *outNumBytes = numBytes;
+		if (outRowBytes) *outRowBytes = rowBytes;
+		if (outNumRows) *outNumRows = numRows;
 	}
 }

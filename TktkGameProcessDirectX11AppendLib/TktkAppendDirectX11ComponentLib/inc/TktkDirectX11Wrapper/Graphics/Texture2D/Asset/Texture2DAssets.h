@@ -20,6 +20,19 @@ namespace tktk
 
 	public:
 
+		// 新たな2Dテクスチャを作成する
+		void create(
+			int id,
+			Texture2DBindFlag bindFlag,
+			const std::vector<unsigned char>& textureData,
+			unsigned int width,
+			unsigned int height,
+			unsigned int mipCount,
+			unsigned int arraySize,
+			DXGI_FORMAT format,
+			bool isCubeMap
+		);
+
 		// 新たな2Dテクスチャをロードする
 		void load(int id, const std::string& fileName);
 

@@ -10,58 +10,83 @@
 namespace tktk
 {
 	Texture2DData::Texture2DData(
-		unsigned char * data,
-		unsigned int dataSize
+		Texture2DBindFlag bindFlag,
+		const std::vector<D3D11_SUBRESOURCE_DATA> & subrescorceDataArray,
+		unsigned int width,
+		unsigned int height,
+		unsigned int mipCount,
+		unsigned int arraySize,
+		DXGI_FORMAT format,
+		bool isCubeMap
 	)
+		: m_width(width)
+		, m_height(height)
 	{
-		ID3D11Resource* resource;
+		D3D11_TEXTURE2D_DESC texture2dDesc{};
+		texture2dDesc.Width = width;
+		texture2dDesc.Height = height;
+		texture2dDesc.MipLevels = mipCount;
+		texture2dDesc.ArraySize = arraySize;
+		texture2dDesc.Format = format;
+		texture2dDesc.SampleDesc.Count = 1U;
+		texture2dDesc.SampleDesc.Quality = 0U;
+		texture2dDesc.Usage = D3D11_USAGE_DEFAULT;
+		texture2dDesc.BindFlags = static_cast<unsigned int>(bindFlag);
+		texture2dDesc.CPUAccessFlags = 0U;
+		texture2dDesc.MiscFlags = (isCubeMap) ? D3D11_RESOURCE_MISC_TEXTURECUBE : 0U;
 
-		lodedds::load(
-			Screen::getDevicePtr(),
-			data,
-			dataSize,
-			&resource,
-			&m_shaderResouceViewPtr,
-			0
-		);
-	}
+		Screen::getDevicePtr()->CreateTexture2D(&texture2dDesc, subrescorceDataArray.data(), &m_texturePtr);
 
-	Texture2DData::Texture2DData(const std::string & fileName)
-	{
-		std::string extension;
-		ExtensionGetter::get(fileName, &extension);
+		D3D11_SHADER_RESOURCE_VIEW_DESC shaderResouceViewDesc{};
+		shaderResouceViewDesc.Format = format;
 
-		if (extension == "png")
+		if (isCubeMap)
 		{
-			std::vector<unsigned char> image;
-			auto error = lodepng::decode(image, m_width, m_height, fileName);
-			if (error != 0)
+			if (arraySize > 6U)
 			{
-				throw std::runtime_error("can not open" + fileName);
+				shaderResouceViewDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBEARRAY;
+				shaderResouceViewDesc.TextureCubeArray.MipLevels = mipCount;
+				shaderResouceViewDesc.TextureCubeArray.NumCubes = arraySize / 6U;
 			}
-			createTextrue2D(image);
-
-			createShaderResourceView();
-
-			createSamplerState();
+			else
+			{
+				shaderResouceViewDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURECUBE;
+				shaderResouceViewDesc.TextureCube.MipLevels = mipCount;
+			}
 		}
-		else if (extension == "dds")
+		else
 		{
-			std::vector<unsigned char> image;
-
-			BinaryFileReader::fileRead(fileName, &image);
-
-			ID3D11Resource* resource;
-
-			lodedds::load(
-				Screen::getDevicePtr(),
-				image.data(),
-				image.size(),
-				&resource,
-				&m_shaderResouceViewPtr,
-				0
-			);
+			if (arraySize > 1U)
+			{
+				shaderResouceViewDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURE2DARRAY;
+				shaderResouceViewDesc.Texture2DArray.MipLevels = mipCount;
+				shaderResouceViewDesc.Texture2DArray.ArraySize = arraySize;
+			}
+			else
+			{
+				shaderResouceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+				shaderResouceViewDesc.Texture2D.MipLevels = mipCount;
+			}
 		}
+
+		Screen::getDevicePtr()->CreateShaderResourceView(m_texturePtr, &shaderResouceViewDesc, &m_shaderResouceViewPtr);
+
+		D3D11_SAMPLER_DESC samplerDesc{};
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		samplerDesc.MipLODBias = 0.0f;
+		samplerDesc.MaxAnisotropy = 1;
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		samplerDesc.BorderColor[0] = 0;
+		samplerDesc.BorderColor[1] = 0;
+		samplerDesc.BorderColor[2] = 0;
+		samplerDesc.BorderColor[3] = 0;
+		samplerDesc.MinLOD = 0;
+		samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+		Screen::getDevicePtr()->CreateSamplerState(&samplerDesc, &m_samplerPtr);
 	}
 
 	Texture2DData::~Texture2DData()
@@ -105,59 +130,5 @@ namespace tktk
 	unsigned int Texture2DData::height() const
 	{
 		return m_height;
-	}
-
-	void Texture2DData::createTextrue2D(const std::vector<unsigned char> & image)
-	{
-		D3D11_TEXTURE2D_DESC texture2dDesc{};
-		texture2dDesc.Width = m_width;
-		texture2dDesc.Height = m_height;
-		texture2dDesc.MipLevels = 1;
-		texture2dDesc.ArraySize = 1;
-		texture2dDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		texture2dDesc.SampleDesc.Count = 1;
-		texture2dDesc.SampleDesc.Quality = 0;
-		texture2dDesc.Usage = D3D11_USAGE_DEFAULT;
-		texture2dDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-		texture2dDesc.CPUAccessFlags = 0;
-		texture2dDesc.MiscFlags = 0;
-
-		D3D11_SUBRESOURCE_DATA subrescorceData{};
-		subrescorceData.pSysMem = image.data();
-		subrescorceData.SysMemPitch = m_width * 4;
-		subrescorceData.SysMemSlicePitch = m_width * m_height * 4;
-
-		Screen::getDevicePtr()->CreateTexture2D(&texture2dDesc, &subrescorceData, &m_texturePtr);
-
-	}
-
-	void Texture2DData::createShaderResourceView()
-	{
-		D3D11_SHADER_RESOURCE_VIEW_DESC shaderResouceViewDesc{};
-		shaderResouceViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		shaderResouceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-		shaderResouceViewDesc.Texture2D.MipLevels = 1;
-		
-		Screen::getDevicePtr()->CreateShaderResourceView(m_texturePtr, &shaderResouceViewDesc, &m_shaderResouceViewPtr);
-	}
-
-	void Texture2DData::createSamplerState()
-	{
-		D3D11_SAMPLER_DESC samplerDesc{};
-		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-		samplerDesc.MipLODBias = 0.0f;
-		samplerDesc.MaxAnisotropy = 1;
-		samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
-		samplerDesc.BorderColor[0] = 0;
-		samplerDesc.BorderColor[1] = 0;
-		samplerDesc.BorderColor[2] = 0;
-		samplerDesc.BorderColor[3] = 0;
-		samplerDesc.MinLOD = 0;
-		samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
-		Screen::getDevicePtr()->CreateSamplerState(&samplerDesc, &m_samplerPtr);
 	}
 }

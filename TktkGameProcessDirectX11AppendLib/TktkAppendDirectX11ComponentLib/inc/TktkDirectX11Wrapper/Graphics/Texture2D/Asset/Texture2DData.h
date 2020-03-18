@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <d3d11.h>
+#include "Texture2DBindFlag.h"
 
 namespace tktk
 {
@@ -12,8 +13,17 @@ namespace tktk
 	{
 	public:
 
-		Texture2DData(unsigned char* data, unsigned int dataSize);
-		explicit Texture2DData(const std::string& fileName);
+		Texture2DData(
+			Texture2DBindFlag bindFlag,
+			const std::vector<D3D11_SUBRESOURCE_DATA>& subrescorceDataArray,
+			unsigned int width,
+			unsigned int height,
+			unsigned int mipCount,
+			unsigned int arraySize,
+			DXGI_FORMAT format,
+			bool isCubeMap
+		);
+
 		~Texture2DData();
 
 		Texture2DData(const Texture2DData& other) = delete;
@@ -35,12 +45,6 @@ namespace tktk
 
 		// 2Dテクスチャの立幅を取得する
 		unsigned int height() const;
-
-	private:
-
-		void createTextrue2D(const std::vector<unsigned char>& image);
-		void createShaderResourceView();
-		void createSamplerState();
 
 	private:
 

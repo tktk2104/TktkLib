@@ -5,6 +5,15 @@
 
 namespace tktk
 {
+	void Texture2D::createImpl(int id, Texture2DBindFlag bindFlag, const std::vector<unsigned char>& textureData, unsigned int width, unsigned int height, unsigned int mipCount, unsigned int arraySize, DXGI_FORMAT format, bool isCubeMap)
+	{
+		if (id <= 0)
+		{
+			throw std::runtime_error("Texture2DId Fraud Value");
+		}
+		Texture2DManager::create(id, bindFlag, textureData, width, height, mipCount, arraySize, format, isCubeMap);
+	}
+
 	void Texture2D::loadImpl(int id, const std::string & fileName)
 	{
 		if (id <= 0)

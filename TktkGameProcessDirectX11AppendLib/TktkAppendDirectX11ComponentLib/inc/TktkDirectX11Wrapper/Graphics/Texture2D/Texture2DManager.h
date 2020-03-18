@@ -4,6 +4,7 @@
 #include <TktkMetaFunc/TypeCheck/isIdType.h>
 #include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include "Asset/Texture2DAssets.h"
+#include "Asset/SystemTexture2DId.h"
 
 namespace tktk
 {
@@ -16,6 +17,35 @@ namespace tktk
 		static void setUp();
 
 	public:
+
+		// 新たな2Dテクスチャを作成する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		static void create(
+			IdType id,
+			Texture2DBindFlag bindFlag,
+			const std::vector<unsigned char>& textureData,
+			unsigned int width,
+			unsigned int height,
+			unsigned int mipCount,
+			unsigned int arraySize,
+			DXGI_FORMAT format,
+			bool isCubeMap
+		)
+		{
+			createImpl(static_cast<int>(id), bindFlag, textureData, width, height, mipCount, arraySize, format, isCubeMap);
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		static void create(
+			IdType id,
+			Texture2DBindFlag bindFlag,
+			const std::vector<unsigned char>& textureData,
+			unsigned int width,
+			unsigned int height,
+			unsigned int mipCount,
+			unsigned int arraySize,
+			DXGI_FORMAT format,
+			bool isCubeMap
+		) { static_assert(false, "Texture2DId Fraud Type"); }
 
 		// 新たな2Dテクスチャをロードする（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
@@ -50,6 +80,17 @@ namespace tktk
 	private:
 
 		// 各種id指定系の関数の実装
+		static void createImpl(
+			int id,
+			Texture2DBindFlag bindFlag,
+			const std::vector<unsigned char>& textureData,
+			unsigned int width,
+			unsigned int height,
+			unsigned int mipCount,
+			unsigned int arraySize,
+			DXGI_FORMAT format,
+			bool isCubeMap
+		);
 		static void loadImpl(int id, const std::string& fileName);
 		static void eraseImpl(int id);
 		static const Texture2DData& getDataImpl(int id);
