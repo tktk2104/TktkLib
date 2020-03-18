@@ -9,9 +9,10 @@ namespace tktk
 		Line2DPixel		= -200,
 		Sprite			= -300,
 		Mesh			= -400,
-		Light			= -500,
-		Material		= -600,
-		Pbr				= -700,
+		MonoColor		= -500,
+		Light			= -600,
+		Material		= -700,
+		Pbr				= -800,
 	};
 }
 #endif // !SYSTEM_CONSTANT_BUFFER_ID_H_
