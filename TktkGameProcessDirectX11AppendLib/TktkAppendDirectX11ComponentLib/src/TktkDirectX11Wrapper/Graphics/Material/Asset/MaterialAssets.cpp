@@ -11,12 +11,12 @@ namespace tktk
 		int id,
 		int useVertexShaderId,
 		int usePixelShaderId,
-		const std::vector<int>& useTextureIdArray,
 		const Color & ambientColor,
 		const Color & diffuseColor,
 		const Color & specularColor,
 		const Color & emissionColor,
-		float shiniess
+		float shiniess,
+		const std::vector<int>& useTextureIdArray
 	)
 	{
 		erase(id);
@@ -27,12 +27,12 @@ namespace tktk
 			std::forward_as_tuple(
 				useVertexShaderId,
 				usePixelShaderId,
-				useTextureIdArray,
 				ambientColor,
 				diffuseColor,
 				specularColor,
 				emissionColor,
-				shiniess
+				shiniess,
+				useTextureIdArray
 			)
 		);
 	}
@@ -45,12 +45,12 @@ namespace tktk
 			id,
 			originalDataPtr->getUseVertexShaderId(),
 			originalDataPtr->getUseVertexShaderId(),
-			originalDataPtr->getParametersRef().getUseTextureIdArray(),
 			originalDataPtr->getParametersRef().getAmbientColor(),
 			originalDataPtr->getParametersRef().getDiffuseColor(),
 			originalDataPtr->getParametersRef().getSpecularColor(),
 			originalDataPtr->getParametersRef().getEmissionColor(),
-			originalDataPtr->getParametersRef().getShininess()
+			originalDataPtr->getParametersRef().getShininess(),
+			originalDataPtr->getParametersRef().getUseTextureIdArray()
 		);
 	}
 

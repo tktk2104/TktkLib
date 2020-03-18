@@ -14,12 +14,12 @@ namespace tktk
 		MaterialData(
 			int useVertexShaderId,
 			int usePixelShaderId,
-			const std::vector<int>& useTextureIdArray,
 			const Color& ambientColor,
 			const Color& diffuseColor,
 			const Color& specularColor,
 			const Color& emissionColor,
-			float shininess
+			float shininess,
+			const std::vector<int>& useTextureIdArray
 		);
 		~MaterialData() = default;
 

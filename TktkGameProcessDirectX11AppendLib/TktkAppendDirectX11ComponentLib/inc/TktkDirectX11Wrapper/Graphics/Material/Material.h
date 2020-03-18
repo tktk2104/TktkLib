@@ -13,45 +13,14 @@ namespace tktk
 
 		// 新たなマテリアルを生成する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		// ※この関数でマテリアルを作る場合、idは1以上でなければならない
-		template <class MaterialIdType, class VertexShaderIdType, class PixelShaderIdType, std::enable_if_t<is_idType_all_v<MaterialIdType, VertexShaderIdType, PixelShaderIdType>>* = nullptr>
-		static void create(
-			MaterialIdType id,
-			VertexShaderIdType useVertexShaderId,
-			PixelShaderIdType usePixelShaderId,
-			const std::vector<int>& useTextureIdArray,
-			const Color& ambientColor,
-			const Color& diffuseColor,
-			const Color& specularColor,
-			const Color& emissionColor,
-			float shiniess
-		)
+		template <class MaterialIdType, class VSIdType, class PSIdType, class... TextureIds, std::enable_if_t<is_idType_all_v<MaterialIdType, VSIdType, PSIdType, TextureIds...>>* = nullptr>
+		static void create(MaterialIdType id, VSIdType useVSId, PSIdType usePSId, const Color& ambient, const Color& diffuse, const Color& specular, const Color& emission, float shiniess, TextureIds... useTextureIds)
 		{
-			createImpl(
-				static_cast<int>(id),
-				static_cast<int>(useVertexShaderId),
-				static_cast<int>(usePixelShaderId),
-				useTextureIdArray,
-				ambientColor,
-				diffuseColor,
-				specularColor,
-				emissionColor,
-				shiniess
-			);
+			createImpl(static_cast<int>(id), static_cast<int>(useVSId), static_cast<int>(usePSId), ambient, diffuse, specular, emission, shiniess, { static_cast<int>(useTextureIds)... });
 		}
-		template <class MaterialIdType, class VertexShaderIdType, class PixelShaderIdType, std::enable_if_t<!is_idType_all_v<MaterialIdType, VertexShaderIdType, PixelShaderIdType>>* = nullptr>
-		static void create(
-			MaterialIdType id,
-			VertexShaderIdType useVertexShaderId,
-			PixelShaderIdType usePixelShaderId,
-			const std::vector<int>& useTextureIdArray,
-			const Color& ambientColor,
-			const Color& diffuseColor,
-			const Color& specularColor,
-			const Color& emissionColor,
-			float shiniess
-		) {
-			static_assert(false, "Id Fraud Type");
-		}
+		template <class MaterialIdType, class VSIdType, class PSIdType, class... TextureIds, std::enable_if_t<!is_idType_all_v<MaterialIdType, VSIdType, PSIdType, TextureIds...>>* = nullptr>
+		static void create(MaterialIdType id, VSIdType useVSId, PSIdType usePSId, const Color& ambient, const Color& diffuse, const Color& specular, const Color& emission, float shiniess, TextureIds... useTextureIds)
+		{ static_assert(false, "Id Fraud Type"); }
 
 		// マテリアルを複製する
 		// ※この関数でマテリアルを作る場合、idは1以上でなければならない（複製元のidの値の制限はない）
@@ -85,17 +54,7 @@ namespace tktk
 	private:
 
 		// 各種id指定系の関数の実装
-		static void createImpl(
-			int id,
-			int useVertexShaderId,
-			int usePixelShaderId,
-			const std::vector<int>& useTextureIdArray,
-			const Color& ambientColor,
-			const Color& diffuseColor,
-			const Color& specularColor,
-			const Color& emissionColor,
-			float shiniess
-		);
+		static void createImpl(int id, int useVSId, int usePSId, const Color& ambient, const Color& diffuse, const Color& specular, const Color& emission, float shiniess, const std::vector<int>& useTextureIdArray);
 		static void duplicateImpl(int id, int originalId);
 		static void eraseImpl(int id);
 		static MaterialData* getDataPtrImpl(int id);

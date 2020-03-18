@@ -16,29 +16,9 @@ namespace tktk
 		m_assetsPtr->clear();
 	}
 
-	void MaterialManager::createImpl(
-		int id,
-		int useVertexShaderId,
-		int usePixelShaderId,
-		const std::vector<int>& useTextureIdArray,
-		const Color & ambientColor,
-		const Color & diffuseColor,
-		const Color & specularColor,
-		const Color & emissionColor,
-		float shiniess
-	)
+	void MaterialManager::createImpl(int id, int useVSId, int usePSId, const Color& ambient, const Color& diffuse, const Color& specular, const Color& emission, float shiniess, const std::vector<int>& useTextureIdArray)
 	{
-		m_assetsPtr->create(
-			id,
-			useVertexShaderId,
-			usePixelShaderId,
-			useTextureIdArray,
-			ambientColor,
-			diffuseColor,
-			specularColor,
-			emissionColor,
-			shiniess
-		);
+		m_assetsPtr->create(id, useVSId, usePSId, ambient, diffuse, specular, emission, shiniess, useTextureIdArray);
 	}
 
 	void MaterialManager::duplicateImpl(int id, int originalId)
