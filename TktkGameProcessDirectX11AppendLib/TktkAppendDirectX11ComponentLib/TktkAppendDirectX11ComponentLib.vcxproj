@@ -195,6 +195,7 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Assets\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoader.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxMeshLoader.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Maker\SphereMeshMaker.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Mesh.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\MeshDrawerSetupper.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\MeshLoader.cpp" />
@@ -248,6 +249,22 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\_Policy\DirectX11Policy.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="shader\BasicMonoColorMeshShader\BasicMonoColorMeshPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\BasicMonoColorMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\BasicMonoColorMeshShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\BasicMonoColorMeshShader\BasicMonoColorMeshVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\BasicMonoColorMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\BasicMonoColorMeshShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="shader\IblMeshShader\IblMeshPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
@@ -427,18 +444,21 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\_MeshInitParams\VertexBufferInitParams.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\LightConstantBufferData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\MaterialConstantBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\MonoColorConstantBufferData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxLoadDataParam.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoader.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxMaterialDataParam.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxMeshLoader.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxSubsetDataParam.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxVertexDataParam.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Maker\SphereMeshMaker.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Mesh.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\MeshConstantBufferData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\MeshDrawerSetupper.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\MeshLoader.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\MeshManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\PbrConstantBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\MeshVertexBufferData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\PixelShaderAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\PixelShaderData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\SystemPixelShaderId.h" />
@@ -461,7 +481,9 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Sprite\SpriteConstantBufferData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Sprite\SpriteDrawerSetupper.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Sprite\SpriteVertexBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\SystemTexture2DId.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DBindFlag.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2D.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2DManager.h" />
