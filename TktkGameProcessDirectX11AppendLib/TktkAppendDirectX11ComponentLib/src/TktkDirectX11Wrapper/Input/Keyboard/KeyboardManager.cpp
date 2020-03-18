@@ -8,7 +8,7 @@ namespace tktk
 
 	void KeyboardManager::setUp(HINSTANCE hInstance)
 	{
-		m_updaterPtr = ComponentFrameworkProcessor::addClass(true, new KeyboardUpdater(hInstance));
+		m_updaterPtr = ComponentFrameworkProcessor::createClass<KeyboardUpdater>(true, hInstance);
 	}
 
 	bool KeyboardManager::isPush(KeybordKeyType keyType)
