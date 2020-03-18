@@ -36,18 +36,7 @@ namespace tktk
 		const std::string & windowName,
 		const Vector2 & gameScreenSize,
 		bool fullScreenFlag,
-		const std::string & line2DPixelShaderFileName,
-		const std::string & line2DVertexShaderFileName,
-		const std::string & spritePixelShaderFileName,
-		const std::string & spriteVertexShaderFileName,
-		const std::string & basicMeshPixelShaderFileName,
-		const std::string & basicMeshVertexShaderFileName,
-		const std::string & pbrMeshPixelShaderFileName,
-		const std::string & pbrMeshVertexShaderFileName,
-		const std::string & iblMeshPixelShaderFileName,
-		const std::string & iblMeshVertexShaderFileName,
-		const std::string & pbrIblMeshPixelShaderFileName,
-		const std::string & pbrIblMeshVertexShaderFileName
+		const std::string& libResPath
 	)
 	{
 		WindowManager::setUp(hInstance, nCmdShow, windowName, gameScreenSize);
@@ -80,17 +69,25 @@ namespace tktk
 		SkeletonManager::setUp();
 		MeshManager::setUp();
 
-		SpriteDrawerSetupper::setUp(spritePixelShaderFileName, spriteVertexShaderFileName);
-		Line2DDrawerSetupper::setUp(line2DPixelShaderFileName, line2DVertexShaderFileName);
+		SpriteDrawerSetupper::setUp(
+			libResPath + "TktkLibRes/shader/SpritePixelShader.cso",
+			libResPath + "TktkLibRes/shader/SpriteVertexShader.cso"
+		);
+		Line2DDrawerSetupper::setUp(
+			libResPath + "TktkLibRes/shader/Line2DPixelShader.cso",
+			libResPath + "TktkLibRes/shader/Line2DVertexShader.cso"
+		);
 		MeshDrawerSetupper::setUp(
-			basicMeshPixelShaderFileName,
-			basicMeshVertexShaderFileName,
-			pbrMeshPixelShaderFileName,
-			pbrMeshVertexShaderFileName,
-			iblMeshPixelShaderFileName,
-			iblMeshVertexShaderFileName,
-			pbrIblMeshPixelShaderFileName,
-			pbrIblMeshVertexShaderFileName
+			libResPath + "TktkLibRes/shader/MeshPixelShader.cso",
+			libResPath + "TktkLibRes/shader/MeshVertexShader.cso",
+			libResPath + "TktkLibRes/shader/BasicMonoColorMeshPixelShader.cso",
+			libResPath + "TktkLibRes/shader/BasicMonoColorMeshVertexShader.cso",
+			libResPath + "TktkLibRes/shader/PbrMeshPixelShader.cso",
+			libResPath + "TktkLibRes/shader/PbrMeshVertexShader.cso",
+			libResPath + "TktkLibRes/shader/IblMeshPixelShader.cso",
+			libResPath + "TktkLibRes/shader/IblMeshVertexShader.cso",
+			libResPath + "TktkLibRes/shader/PbrIblMeshPixelShader.cso",
+			libResPath + "TktkLibRes/shader/PbrIblMeshVertexShader.cso"
 		);
 
 		setUpdatePriority();
