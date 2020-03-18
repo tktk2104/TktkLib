@@ -115,6 +115,8 @@ namespace tktk
 		int m_blendStateId{ static_cast<int>(SystemBlendStateId::Basic) };
 		Color m_blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };
 		int m_depthStencilStateId{ static_cast<int>(SystemDepthStencilStateId::Basic) };
+
+
 	};
 }
 

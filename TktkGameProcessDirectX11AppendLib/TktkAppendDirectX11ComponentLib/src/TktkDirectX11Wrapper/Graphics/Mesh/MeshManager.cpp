@@ -11,9 +11,9 @@ namespace tktk
 		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new MeshAssets());
 	}
 
-	void MeshManager::createImpl(int id, const VertexBufferInitParams & vertexBufferParams, const IndexBufferInitParams & indexBufferParams, const MaterialSlotsInitParams& materialSlotsParams)
+	void MeshManager::createImpl(int id, D3D_PRIMITIVE_TOPOLOGY primitiveTopology, const VertexBufferInitParams & vertexBufferParams, const IndexBufferInitParams & indexBufferParams, const MaterialSlotsInitParams& materialSlotsParams)
 	{
-		m_assetsPtr->create(id, vertexBufferParams, indexBufferParams, materialSlotsParams);
+		m_assetsPtr->create(id, primitiveTopology, vertexBufferParams, indexBufferParams, materialSlotsParams);
 	}
 
 	void MeshManager::eraseImpl(int id)

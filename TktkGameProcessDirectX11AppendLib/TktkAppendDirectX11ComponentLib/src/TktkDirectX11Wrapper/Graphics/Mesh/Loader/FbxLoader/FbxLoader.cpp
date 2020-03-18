@@ -124,18 +124,19 @@ namespace tktk
 				materialIdArray.at(i),
 				SystemVertexShaderId::Mesh,
 				SystemPixelShaderId::Mesh,
-				{ baseMaterialTextureId - 1, baseMaterialTextureId - 2 },
 				loadDataParam.materialDataArray.at(i).ambient,
 				loadDataParam.materialDataArray.at(i).diffuse,
 				loadDataParam.materialDataArray.at(i).specular,
 				loadDataParam.materialDataArray.at(i).emission,
-				loadDataParam.materialDataArray.at(i).shiniess
+				loadDataParam.materialDataArray.at(i).shiniess,
+				baseMaterialTextureId - 1,
+				baseMaterialTextureId - 2
 			);
 
 			materialSlotsParams.subsets.push_back({ loadDataParam.subsetDataArray.at(i).start, loadDataParam.subsetDataArray.at(i).count });
 		}
 		// メッシュデータを作成
-		Mesh::create(meshId, vertexBufferParams, indexBufferParams, materialSlotsParams);
+		Mesh::create(meshId, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, vertexBufferParams, indexBufferParams, materialSlotsParams);
 	}
 
 	void FbxLoader::initSdkObjects(fbxsdk::FbxScene** scenePtr)

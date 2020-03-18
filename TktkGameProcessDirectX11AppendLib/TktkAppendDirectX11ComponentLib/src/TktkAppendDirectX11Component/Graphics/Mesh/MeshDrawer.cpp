@@ -79,7 +79,7 @@ namespace tktk
 
 		for (unsigned int i = 0; i < meshDataPtr->getMaterialSlotCount(); i++)
 		{
-			drawUseMaterial(i, meshDataPtr->getSubset(i), worldMat, skinnedBoneMat);
+			drawUseMaterial(i, meshDataPtr, worldMat, skinnedBoneMat);
 		}
 	}
 
@@ -186,7 +186,7 @@ namespace tktk
 		);
 	}
 
-	void MeshDrawer::drawUseMaterial(unsigned int materialSlot, const Subset& subset, const Matrix4 & worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat) const
+	void MeshDrawer::drawUseMaterial(unsigned int materialSlot, const MeshData* meshDataPtr, const Matrix4 & worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat) const
 	{
 		int materialId = m_materialIdArray.at(materialSlot);
 
@@ -225,9 +225,10 @@ namespace tktk
 		VertexShader::getData(materialDataPtr->getUseVertexShaderId()).beginVertexShader();
 		PixelShader::getData(materialDataPtr->getUsePixelShaderId()).beginShader();
 
+		meshDataPtr->setPrimitiveTopology();
+
 		// ドローコール
-		Screen::getDeviceContextPtr()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		Screen::getDeviceContextPtr()->DrawIndexed(subset.indexBufferUseCount, subset.indexBufferStartPos, 0U);
+		Screen::getDeviceContextPtr()->DrawIndexed(meshDataPtr->getSubset(materialSlot).indexBufferUseCount, meshDataPtr->getSubset(materialSlot).indexBufferStartPos, 0U);
 	}
 
 	void MeshDrawer::updateMeshBuffer(const Matrix4 & worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat) const

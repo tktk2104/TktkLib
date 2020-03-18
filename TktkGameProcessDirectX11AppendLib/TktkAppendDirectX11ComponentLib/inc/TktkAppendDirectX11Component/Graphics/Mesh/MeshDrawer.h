@@ -7,6 +7,7 @@
 #include <TktkComponentFramework/Component/ComponentBase.h>
 #include <TktkAppend3DComponent/Transform3D.h>
 #include "TktkDirectX11Wrapper/Graphics/Material/Asset/MaterialData.h"
+#include "TktkDirectX11Wrapper/Graphics/Mesh/Assets/MeshData.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/Assets/VertexBuffer/VertexBuffer.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/Assets/IndexBuffer/IndexBuffer.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/Assets/MaterialSlots/Subset.h"
@@ -135,7 +136,7 @@ namespace tktk
 		void calculateSkinnedBoneMatrices(std::array<Matrix4, 256U>* result, int skeltonId, const Matrix4& worldMat) const;
 
 		// マテリアルごとに描画を行う
-		void drawUseMaterial(unsigned int materialSlot, const Subset& subset, const Matrix4& worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat) const;
+		void drawUseMaterial(unsigned int materialSlot, const MeshData* meshDataPtrt, const Matrix4& worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat) const;
 
 		// メッシュ情報用の定数バッファを更新する
 		void updateMeshBuffer(const Matrix4& worldMat, const std::array<Matrix4, 256U>& skinnedBoneMat) const;

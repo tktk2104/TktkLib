@@ -20,6 +20,7 @@ namespace tktk
 		// 新たなメッシュデータを作成する
 		void create(
 			int id,
+			D3D_PRIMITIVE_TOPOLOGY primitiveTopology,
 			const VertexBufferInitParams& vertexBufferParams,
 			const IndexBufferInitParams& indexBufferParams,
 			const MaterialSlotsInitParams& materialSlotsParams

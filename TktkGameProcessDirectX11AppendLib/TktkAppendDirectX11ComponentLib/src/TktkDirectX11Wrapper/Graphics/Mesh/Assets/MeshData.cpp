@@ -1,18 +1,26 @@
 #include "TktkDirectX11Wrapper/Graphics/Mesh/Assets/MeshData.h"
 
 #include <algorithm>
+#include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
 
 namespace tktk
 {
 	MeshData::MeshData(
+		D3D_PRIMITIVE_TOPOLOGY primitiveTopology,
 		const VertexBufferInitParams & vertexBufferParams,
 		const IndexBufferInitParams & indexBufferParams,
 		const MaterialSlotsInitParams & materialSlotsParams
 	)
-		: m_vertexBuffer(vertexBufferParams)
+		: m_primitiveTopology(primitiveTopology)
+		, m_vertexBuffer(vertexBufferParams)
 		, m_indexBuffer(indexBufferParams)
 		, m_materialSlots(materialSlotsParams)
 	{
+	}
+
+	void MeshData::setPrimitiveTopology() const
+	{
+		Screen::getDeviceContextPtr()->IASetPrimitiveTopology(m_primitiveTopology);
 	}
 
 	void MeshData::setVertexAndIndexBuffer() const

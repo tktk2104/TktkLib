@@ -7,6 +7,7 @@ namespace tktk
 {
 	void Mesh::createImpl(
 		int id,
+		D3D_PRIMITIVE_TOPOLOGY primitiveTopology,
 		const VertexBufferInitParams & vertexBufferParams,
 		const IndexBufferInitParams & indexBufferParams,
 		const MaterialSlotsInitParams & materialSlotsParams
@@ -18,6 +19,7 @@ namespace tktk
 		}
 		MeshManager::create(
 			id,
+			primitiveTopology,
 			vertexBufferParams,
 			indexBufferParams,
 			materialSlotsParams

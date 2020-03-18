@@ -9,6 +9,7 @@ namespace tktk
 
 	void MeshAssets::create(
 		int id,
+		D3D_PRIMITIVE_TOPOLOGY primitiveTopology,
 		const VertexBufferInitParams & vertexBufferParams,
 		const IndexBufferInitParams & indexBufferParams,
 		const MaterialSlotsInitParams & materialSlotsParams
@@ -19,7 +20,7 @@ namespace tktk
 		m_assets.emplace(
 			std::piecewise_construct,
 			std::forward_as_tuple(id),
-			std::forward_as_tuple(vertexBufferParams, indexBufferParams, materialSlotsParams)
+			std::forward_as_tuple(primitiveTopology, vertexBufferParams, indexBufferParams, materialSlotsParams)
 		);
 	}
 

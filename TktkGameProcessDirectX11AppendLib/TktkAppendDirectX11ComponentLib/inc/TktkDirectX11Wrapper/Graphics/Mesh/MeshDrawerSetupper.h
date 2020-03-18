@@ -13,6 +13,8 @@ namespace tktk
 		static void setUp(
 			const std::string& basicPixelShaderFileName,
 			const std::string& basicVertexShaderFileName,
+			const std::string& monoColorMeshPixelShaderFileName,
+			const std::string& monoColorMeshVertexShaderFileName,
 			const std::string& pbrPixelShaderFileName,
 			const std::string& pbrVertexShaderFileName,
 			const std::string& iblMeshPixelShaderFileName,

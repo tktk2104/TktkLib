@@ -14,6 +14,7 @@ namespace tktk
 	public:
 
 		MeshData(
+			D3D_PRIMITIVE_TOPOLOGY primitiveTopology,
 			const VertexBufferInitParams& vertexBufferParams,
 			const IndexBufferInitParams& indexBufferParams,
 			const MaterialSlotsInitParams& materialSlotsParams
@@ -26,6 +27,9 @@ namespace tktk
 
 	public:
 
+		// どういう頂点の並びで描画命令を行うかをレンダリングパイプラインに設定する
+		void setPrimitiveTopology() const;
+
 		// 頂点バッファとインデックスバッファをレンダリングパイプラインに設定する
 		void setVertexAndIndexBuffer() const;
 
@@ -37,6 +41,7 @@ namespace tktk
 
 	private:
 
+		D3D_PRIMITIVE_TOPOLOGY m_primitiveTopology;
 		VertexBuffer m_vertexBuffer;
 		IndexBuffer m_indexBuffer;
 		MaterialSlots m_materialSlots;

@@ -10,19 +10,9 @@
 #include "TktkDirectX11Wrapper/Graphics/Texture2D/Texture2DManager.h"
 #include "TktkDirectX11Wrapper/Graphics/Material/Material.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/Mesh.h"
+#include "TktkDirectX11Wrapper/Graphics/Mesh/MeshVertexBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/VertexShader/Asset/SystemVertexShaderId.h"
 #include "TktkDirectX11Wrapper/Graphics/PixelShader/Asset/SystemPixelShaderId.h"
-
-struct VertexDataType
-{
-	Vector3 point;
-	Vector3 normal;
-	Vector2 texcoord;
-	unsigned char bones[4];
-	float weight[4];
-	Vector3 tangent;
-	Vector3 binormal;
-};
 
 struct MaterialDataType
 {
@@ -79,12 +69,12 @@ namespace tktk
 			file.read(reinterpret_cast<char*>(indices.data()), sizeof(unsigned int) * indicesSize);
 		}
 
-		std::vector<VertexDataType> vertices;
+		std::vector<MeshVertexBufferData> vertices;
 		{
 			unsigned int verticesSize = 0;
 			file.read(reinterpret_cast<char*>(&verticesSize), sizeof(verticesSize));
 			vertices.resize(verticesSize);
-			file.read(reinterpret_cast<char*>(vertices.data()), sizeof(VertexDataType) * verticesSize);
+			file.read(reinterpret_cast<char*>(vertices.data()), sizeof(MeshVertexBufferData) * verticesSize);
 		}
 
 		std::experimental::filesystem::path meshPath(fileName);
@@ -97,7 +87,7 @@ namespace tktk
 		}
 
 		// 頂点バッファを作る上で必要なパラメータ
-		VertexBufferInitParams vertexBufferParams = { sizeof(VertexDataType), 0U, sizeof(VertexDataType) * vertices.size(), vertices.data() };
+		VertexBufferInitParams vertexBufferParams = { sizeof(MeshVertexBufferData), 0U, sizeof(MeshVertexBufferData) * vertices.size(), vertices.data() };
 		// インデックスバッファを作る上で必要なパラメータ
 		IndexBufferInitParams indexBufferParams = { indices };
 		// マテリアルスロットを作る上で必要なパラメータ
@@ -120,18 +110,19 @@ namespace tktk
 				materialIdArray.at(i),
 				SystemVertexShaderId::Mesh,
 				SystemPixelShaderId::Mesh,
-				{ baseMaterialTextureId - 1, baseMaterialTextureId - 2 },
 				materials.at(i).ambient,
 				materials.at(i).diffuse,
 				materials.at(i).specular,
 				materials.at(i).emission,
-				materials.at(i).shiniess
+				materials.at(i).shiniess,
+				baseMaterialTextureId - 1,
+				baseMaterialTextureId - 2
 			);
 
 			materialSlotsParams.subsets.push_back({ subsets.at(i).start, subsets.at(i).count });
 		}
 
 		// メッシュデータを作成
-		Mesh::create(meshId, vertexBufferParams, indexBufferParams, materialSlotsParams);
+		Mesh::create(meshId, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, vertexBufferParams, indexBufferParams, materialSlotsParams);
 	}
 }

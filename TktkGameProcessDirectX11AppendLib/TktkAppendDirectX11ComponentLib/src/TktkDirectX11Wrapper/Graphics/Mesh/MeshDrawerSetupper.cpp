@@ -1,10 +1,12 @@
 #include "TktkDirectX11Wrapper/Graphics/Mesh/MeshDrawerSetupper.h"
 
 #include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
+#include "TktkDirectX11Wrapper/Graphics/Texture2D/Texture2DManager.h"
 #include "TktkDirectX11Wrapper/Graphics/ConstantBuffer/ConstantBufferManager.h"
 #include "TktkDirectX11Wrapper/Graphics/PixelShader/PixelShaderManager.h"
 #include "TktkDirectX11Wrapper/Graphics/VertexShader/VertexShaderManager.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/MeshConstantBufferData.h"
+#include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/MonoColorConstantBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/LightConstantBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/MaterialConstantBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/PbrConstantBufferData.h"
@@ -14,6 +16,8 @@ namespace tktk
 	void MeshDrawerSetupper::setUp(
 		const std::string & basicPixelShaderFileName,
 		const std::string & basicVertexShaderFileName,
+		const std::string & monoColorMeshPixelShaderFileName,
+		const std::string & monoColorMeshVertexShaderFileName,
 		const std::string & pbrPixelShaderFileName,
 		const std::string & pbrVertexShaderFileName,
 		const std::string & iblMeshPixelShaderFileName,
@@ -22,7 +26,92 @@ namespace tktk
 		const std::string & pbrIblVertexShaderFileName
 	)
 	{
+		Texture2DManager::create(
+			SystemTexture2DId::whiteShaderRes,
+			Texture2DBindFlag::ShaderResource,
+			std::vector<unsigned char>({ 0, 0, 0, 255 }),
+			1,
+			1,
+			1,
+			1,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			false
+		);
+
+		Texture2DManager::create(
+			SystemTexture2DId::redShaderRes,
+			Texture2DBindFlag::ShaderResource,
+			std::vector<unsigned char>({ 255, 0, 0, 255 }),
+			1,
+			1,
+			1,
+			1,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			false
+		);
+
+		Texture2DManager::create(
+			SystemTexture2DId::greenShaderRes,
+			Texture2DBindFlag::ShaderResource,
+			std::vector<unsigned char>({ 0, 255, 0, 255 }),
+			1,
+			1,
+			1,
+			1,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			false
+		);
+
+		Texture2DManager::create(
+			SystemTexture2DId::blueShaderRes,
+			Texture2DBindFlag::ShaderResource,
+			std::vector<unsigned char>({ 0, 0, 255, 255 }),
+			1,
+			1,
+			1,
+			1,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			false
+		);
+
+		Texture2DManager::create(
+			SystemTexture2DId::blackShaderRes,
+			Texture2DBindFlag::ShaderResource,
+			std::vector<unsigned char>({ 255, 255, 255, 255 }),
+			1,
+			1,
+			1,
+			1,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			false
+		);
+
+		Texture2DManager::create(
+			SystemTexture2DId::maxAlphaShaderRes,
+			Texture2DBindFlag::ShaderResource,
+			std::vector<unsigned char>({ 0, 0, 0, 255 }),
+			1,
+			1,
+			1,
+			1,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			false
+		);
+
+		Texture2DManager::create(
+			SystemTexture2DId::minAlphaShaderRes,
+			Texture2DBindFlag::ShaderResource,
+			std::vector<unsigned char>({ 0, 0, 0, 0 }),
+			1,
+			1,
+			1,
+			1,
+			DXGI_FORMAT_R8G8B8A8_UNORM,
+			false
+		);
+
 		ConstantBufferManager::create(SystemConstantBufferId::Mesh, new MeshConstantBufferData());
+		ConstantBufferManager::create(SystemConstantBufferId::MonoColor, new MonoColorConstantBufferData());
 		ConstantBufferManager::create(SystemConstantBufferId::Material, new MaterialConstantBufferData());
 		ConstantBufferManager::create(SystemConstantBufferId::Light, new LightConstantBufferData());
 		ConstantBufferManager::create(SystemConstantBufferId::Pbr, new PbrConstantBufferData());
@@ -32,6 +121,13 @@ namespace tktk
 			basicPixelShaderFileName,
 			SystemConstantBufferId::Material,
 			SystemConstantBufferId::Light
+		);
+		PixelShaderManager::load(
+			SystemPixelShaderId::MonoColorMesh,
+			monoColorMeshPixelShaderFileName,
+			SystemConstantBufferId::Material,
+			SystemConstantBufferId::Light,
+			SystemConstantBufferId::MonoColor
 		);
 		PixelShaderManager::load(
 			SystemPixelShaderId::PbrMesh,
@@ -61,6 +157,13 @@ namespace tktk
 		VertexShaderManager::load(
 			SystemVertexShaderId::Mesh,
 			basicVertexShaderFileName,
+			meshVertexLayout,
+			SystemConstantBufferId::Mesh,
+			SystemConstantBufferId::Light
+		);
+		VertexShaderManager::load(
+			SystemVertexShaderId::MonoColorMesh,
+			monoColorMeshVertexShaderFileName,
 			meshVertexLayout,
 			SystemConstantBufferId::Mesh,
 			SystemConstantBufferId::Light
