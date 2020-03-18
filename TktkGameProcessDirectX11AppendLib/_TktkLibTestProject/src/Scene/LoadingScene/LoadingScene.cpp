@@ -17,9 +17,12 @@
 #include <TktkDirectX11Wrapper/Graphics/Material/Material.h>
 
 #include <TktkDirectX11Wrapper/Graphics/Mesh/Loader/FbxLoader/FbxLoader.h>
+#include <TktkDirectX11Wrapper/Graphics/Mesh/Maker/SphereMeshMaker.h>
 #include "ObjectLoad/LoadPistolPbrMaterial.h"
 #include "ObjectLoad/LoadPistolIblMaterial.h"
 #include "ObjectLoad/LoadPistolPbrIblMaterial.h"
+
+#include <TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/MonoColorConstantBufferData.h>
 
 void LoadingScene::sceneStart()
 {
@@ -27,6 +30,29 @@ void LoadingScene::sceneStart()
 
 	tktk::Sound::load(SOUND_BGM_TEST,	"res/sound/kendo.wav");
 	tktk::Sound::load(SOUND_SE_TEST,	"res/sound/damage.wav");
+
+	tktk::Texture2D::create(
+		1000000,
+		tktk::Texture2DBindFlag::ShaderResource,
+		{ 0, 0, 0, 255 },
+		1,
+		1,
+		1,
+		1,
+		DXGI_FORMAT_R8G8B8A8_UNORM,
+		false
+	);
+
+	tktk::SphereMeshMaker::make(MESH_SPHERE, MATERIAL_SPHERE);
+
+	tktk::MonoColorConstantBufferData data;
+	data.albedoColor = Color::blue;
+	tktk::Material::getDataPtr(MATERIAL_SPHERE)->getParametersRef().setConstantBufferSetData(
+		tktk::SystemConstantBufferId::MonoColor,
+		std::move(data)
+	);
+
+	//tktk::Texture2D::load(1000000, "res/texture/dotTest.png");
 
 	tktk::Texture2D::load(TEXTURE_2D_SPRITE_TEST, "res/texture/test.png");
 	tktk::Texture2D::load(TEXTURE_2D_SPRITE_ANIM_TEST, "res/texture/testAnim.png");

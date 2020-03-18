@@ -3,6 +3,7 @@
 #include "CommonIncludePaths.h"
 #include <TktkAppendDirectX11Component/Graphics/Sprite/SpriteClippingDrawerMaker.h>
 #include <TktkAppendDirectX11Component/Graphics/Sprite/SpriteClippingAnimatorMaker.h>
+#include <TktkAppendDirectX11Component/Graphics/ColliderWireFrameDrawer2D/ColliderWireFrameDrawer2DMaker.h>
 
 struct SpriteAnimTest
 {
@@ -12,14 +13,29 @@ struct SpriteAnimTest
 
 		tktk::Transform2DMaker::makeStart(gameObject)
 			.position(Vector2(100.0f, 100.0f))
-			//.scaleRate(Vector2(20.0f))
+			.scaleRate(Vector2(20.0f))
 			.create();
 
-		auto a = tktk::SpriteClippingDrawerMaker::makeStart(gameObject)
+		tktk::SpriteClippingDrawerMaker::makeStart(gameObject)
 			.drawPriority(1.0f)
 			.textureId(TEXTURE_2D_SPRITE_ANIM_TEST)
 			.textureClippingLeftTopPos(Vector2(64.0f * 0, 0.0f))
 			.textureClippingSize(Vector2(64.0f))
+			.create();
+
+		tktk::CircleColliderMaker::makeStart(gameObject)
+			.collisionGroupType(1)
+			.radius(32.0f)
+			.create();
+
+		/*tktk::RectColliderMaker::makeStart(gameObject)
+			.collisionGroupType(1)
+			.rectSize(Vector2(64.0f, 64.0f))
+			.create();*/
+
+		tktk::ColliderWireFrameDrawer2DMaker::makeStart(gameObject)
+			.drawPriority(10.0f)
+			.lineColor(Color::red)
 			.create();
 
 		tktk::SpriteClippingAnimatorMaker::makeStart(gameObject)

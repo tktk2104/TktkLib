@@ -11,15 +11,23 @@ struct IBLTest
 
 		tktk::Transform3DMaker::makeStart(gameObject)
 			.position(position)
-			.scaleRate(Vector3(0.5f))
+			.scaleRate(Vector3(10.5f))
 			.create();
 
-		tktk::MeshDrawerMaker::makeStart(gameObject)
+		/*tktk::MeshDrawerMaker::makeStart(gameObject)
 			.drawPriority(0.0f)
 			.cameraId(CAMERA_BASIC)
 			.meshId(MESH_PISTOL)
 			.skeltonId(-10)
-			.materialIdArray(MATERIAL_IBL_PISTOL)
+			.materialIdArray(MATERIAL_PBR_IBL_PISTOL)
+			.create();*/
+
+		tktk::MeshDrawerMaker::makeStart(gameObject)
+			.drawPriority(0.0f)
+			.cameraId(CAMERA_BASIC)
+			.meshId(MESH_SPHERE)
+			.skeltonId(-10)
+			.materialIdArray(MATERIAL_SPHERE)
 			.create();
 	}
 };

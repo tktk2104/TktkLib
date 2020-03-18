@@ -12,12 +12,12 @@
 
 void TitleScene::sceneStart()
 {
-	Line2DTest::create();
-	//SpriteTest::create();
-	SpriteAnimTest::create();
+	//Line2DTest::create();
+	SpriteTest::create();
+	//SpriteAnimTest::create();
 	//SoundTest::create();
 
-	//CameLightTest::create();
+	CameLightTest::create();
 
 	//CameraTest::create();
 	//LightTest::create();
@@ -27,7 +27,7 @@ void TitleScene::sceneStart()
 	MeshTest::create(Vector3(0.0f, 0.0f, -10.0f));
 	MeshTest::create(Vector3(0.0f, 0.0f, 10.0f));*/
 
-	//IBLTest::create(Vector3(5.0f, 0.0f, 0.0f));
+	IBLTest::create(Vector3(5.0f, 0.0f, 0.0f));
 }
 
 void TitleScene::sceneEnd()

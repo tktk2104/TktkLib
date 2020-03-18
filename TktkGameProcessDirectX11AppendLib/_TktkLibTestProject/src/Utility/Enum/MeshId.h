@@ -6,5 +6,6 @@ enum MeshId
 	MESH_ROBOT_KYLE = 1,
 	MESH_PISTOL = 2,
 	MESH_KNIGHT = 3,
+	MESH_SPHERE = 4,
 };
 #endif // !MESH_ID_H

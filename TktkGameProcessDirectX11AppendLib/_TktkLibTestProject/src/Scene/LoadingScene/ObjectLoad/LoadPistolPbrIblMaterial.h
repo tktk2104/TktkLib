@@ -12,7 +12,12 @@ static void LoadPistolPbrIblMaterial()
 
 	tktk::MaterialData* pistolPbrIblMaterial = tktk::Material::getDataPtr(MATERIAL_PBR_IBL_PISTOL);
 
-	pistolPbrIblMaterial->getParametersRef().addUseTextureId(TEXTURE_2D_SPRITE_MeSm);
+	pistolPbrIblMaterial->getParametersRef().setUseTextureId(
+		-(MATERIAL_PISTOL * 100 + 1),
+		-(MATERIAL_PISTOL * 100 + 2)
+	);
+
+	pistolPbrIblMaterial->getParametersRef().addUseTextureId(1000000);//TEXTURE_2D_SPRITE_MeSm
 	pistolPbrIblMaterial->getParametersRef().addUseTextureId(TEXTURE_2D_SPRITE_AmOc);
 	pistolPbrIblMaterial->getParametersRef().addUseTextureId(TEXTURE_2D_SPRITE_CUBE);
 	pistolPbrIblMaterial->getParametersRef().addUseTextureId(TEXTURE_2D_SPRITE_ENV);

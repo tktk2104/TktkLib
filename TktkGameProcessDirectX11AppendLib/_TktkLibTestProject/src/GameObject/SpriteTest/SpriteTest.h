@@ -2,6 +2,7 @@
 
 #include "CommonIncludePaths.h"
 #include <TktkAppendDirectX11Component/Graphics/Sprite/SpriteDrawerMaker.h>
+#include <TktkDirectX11Wrapper/Graphics/Texture2D/Asset/SystemTexture2DId.h>
 
 #include "SpriteTestScript.h"
 
@@ -17,7 +18,7 @@ struct SpriteTest
 
 		tktk::SpriteDrawerMaker::makeStart(gameObject)
 			.drawPriority(0.0f)
-			.textureId(TEXTURE_2D_SPRITE_TEST)
+			.textureId(tktk::SystemTexture2DId::blueShaderRes)//.textureId(1000000)
 			//.blendRate({ 0.5f, 0.5f, 0.5f, 0.5f })
 			.create();
 

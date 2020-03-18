@@ -14,19 +14,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		nCmdShow,
 		"TestWindow",
 		Vector2(1920.0f, 1080.0f),//Vector2(640.0f, 480.0f),
-		false,
-		"res/shader/line2DShader/Line2DPixelShader.cso",
-		"res/shader/line2DShader/Line2DVertexShader.cso",
-		"res/shader/spriteShader/SpritePixelShader.cso",
-		"res/shader/spriteShader/SpriteVertexShader.cso",
-		"res/shader/meshShader/MeshPixelShader.cso",
-		"res/shader/meshShader/MeshVertexShader.cso",
-		"res/shader/PbrMeshShader/PbrMeshPixelShader.cso",
-		"res/shader/PbrMeshShader/PbrMeshVertexShader.cso",
-		"res/shader/iblMeshShader/IblMeshPixelShader.cso",
-		"res/shader/iblMeshShader/IblMeshVertexShader.cso",
-		"res/shader/pbrIblMeshShader/PbrIblMeshPixelShader.cso",
-		"res/shader/pbrIblMeshShader/PbrIblMeshVertexShader.cso"
+		false
 	);
 	
 	tktk::SceneManager::createScene<LoadingScene>();

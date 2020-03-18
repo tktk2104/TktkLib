@@ -147,6 +147,7 @@
     <ClInclude Include="src\GameObject\IBLTest\IBLTest.h" />
     <ClInclude Include="src\GameObject\LightTest\LightTest.h" />
     <ClInclude Include="src\GameObject\LightTest\LightTestScript.h" />
+    <ClInclude Include="src\GameObject\Line2DTest\Line2DTest.h" />
     <ClInclude Include="src\GameObject\MeshTest\MeshTest.h" />
     <ClInclude Include="src\GameObject\MeshTest\MeshTestScript.h" />
     <ClInclude Include="src\GameObject\SoundTest\SoundTest.h" />
