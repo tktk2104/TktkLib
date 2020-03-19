@@ -152,6 +152,8 @@
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingDrawerMaker.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawer.cpp" />
     <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawerMaker.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Text\TextDrawer.cpp" />
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Text\TextDrawerMaker.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\Animation.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\AnimationLoader.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Animation\AnimationManager.cpp" />
@@ -217,10 +219,12 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Skeleton\SkeletonLoader.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Skeleton\SkeletonManager.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Sprite\SpriteDrawerSetupper.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\MaterialLoadTextureIdManager.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DAssets.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DData.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2D.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2DManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Text\FontLoader.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\VertexShaderAssets.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\VertexShaderData.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\VertexShader\VertexShader.cpp" />
@@ -387,6 +391,8 @@
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteClippingDrawerMaker.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawer.h" />
     <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Sprite\SpriteDrawerMaker.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Text\TextDrawer.h" />
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Text\TextDrawerMaker.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\DirectX11LibDefinition.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\Animation.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Animation\AnimationLoader.h" />
@@ -481,12 +487,16 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Sprite\SpriteConstantBufferData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Sprite\SpriteDrawerSetupper.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Sprite\SpriteVertexBufferData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\MaterialLoadTextureIdManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\SystemTexture2DId.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DBindFlag.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DCpuAccessFlag.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DUsage.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2D.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Texture2DManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Text\FontLoader.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\SystemVertexShaderId.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\VertexShaderAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\VertexShader\Asset\VertexShaderData.h" />

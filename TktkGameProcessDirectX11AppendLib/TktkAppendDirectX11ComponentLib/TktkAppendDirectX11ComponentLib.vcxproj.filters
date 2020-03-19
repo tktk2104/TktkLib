@@ -360,6 +360,18 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Maker\SphereMeshMaker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Text\TextDrawer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\MaterialLoadTextureIdManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Text\FontLoader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkAppendDirectX11Component\Graphics\Text\TextDrawerMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\SpriteShader\SpritePixelShader.hlsl" />
@@ -832,6 +844,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\MonoColorConstantBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Text\FontLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DCpuAccessFlag.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\Texture2DUsage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Text\TextDrawer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Texture2D\Asset\MaterialLoadTextureIdManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkAppendDirectX11Component\Graphics\Text\TextDrawerMaker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
