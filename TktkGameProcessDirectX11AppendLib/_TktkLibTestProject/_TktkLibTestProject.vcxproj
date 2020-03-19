@@ -155,6 +155,7 @@
     <ClInclude Include="src\GameObject\SpriteAnimTest\SpriteAnimTest.h" />
     <ClInclude Include="src\GameObject\SpriteTest\SpriteTest.h" />
     <ClInclude Include="src\GameObject\SpriteTest\SpriteTestScript.h" />
+    <ClInclude Include="src\GameObject\TextTest\TextTest.h" />
     <ClInclude Include="src\Scene\LoadingScene\LoadingScene.h" />
     <ClInclude Include="src\Scene\LoadingScene\ObjectLoad\LoadPistolIblMaterial.h" />
     <ClInclude Include="src\Scene\LoadingScene\ObjectLoad\LoadPistolPbrIblMaterial.h" />

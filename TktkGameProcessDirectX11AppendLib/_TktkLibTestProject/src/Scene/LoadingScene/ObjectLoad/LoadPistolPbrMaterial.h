@@ -2,6 +2,7 @@
 
 #include "CommonIncludePaths.h"
 
+#include <TktkDirectX11Wrapper/Graphics/Texture2D/Asset/MaterialLoadTextureIdManager.h>
 #include <TktkDirectX11Wrapper/Graphics/VertexShader/Asset/SystemVertexShaderId.h>
 #include <TktkDirectX11Wrapper/Graphics/PixelShader/Asset/SystemPixelShaderId.h>
 #include <TktkDirectX11Wrapper/Graphics/Material/Material.h>
@@ -14,7 +15,9 @@ static void LoadPistolPbrMaterial()
 
 	tktk::MaterialData* pistolPbrMaterial = tktk::Material::getDataPtr(MATERIAL_PBR_PISTOL);
 
-	pistolPbrMaterial->getParametersRef().setUseTextureId(-(MATERIAL_PISTOL * 100 + 2));
+	pistolPbrMaterial->getParametersRef().setUseTextureId(
+		tktk::MaterialLoadTextureIdManager::getMaterialTextureId(MATERIAL_PISTOL, 1)
+	);
 
 	pistolPbrMaterial->setUseVertexShaderId(tktk::SystemVertexShaderId::PbrMesh);
 	pistolPbrMaterial->setUsePixelShaderId(tktk::SystemPixelShaderId::PbrMesh);

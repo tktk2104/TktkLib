@@ -2,6 +2,7 @@
 
 #include "CommonIncludePaths.h"
 
+#include <TktkDirectX11Wrapper/Graphics/Texture2D/Asset/MaterialLoadTextureIdManager.h>
 #include <TktkDirectX11Wrapper/Graphics/VertexShader/Asset/SystemVertexShaderId.h>
 #include <TktkDirectX11Wrapper/Graphics/PixelShader/Asset/SystemPixelShaderId.h>
 #include <TktkDirectX11Wrapper/Graphics/Material/Material.h>
@@ -13,8 +14,8 @@ static void LoadPistolPbrIblMaterial()
 	tktk::MaterialData* pistolPbrIblMaterial = tktk::Material::getDataPtr(MATERIAL_PBR_IBL_PISTOL);
 
 	pistolPbrIblMaterial->getParametersRef().setUseTextureId(
-		-(MATERIAL_PISTOL * 100 + 1),
-		-(MATERIAL_PISTOL * 100 + 2)
+		tktk::MaterialLoadTextureIdManager::getMaterialTextureId(MATERIAL_PISTOL, 0),
+		tktk::MaterialLoadTextureIdManager::getMaterialTextureId(MATERIAL_PISTOL, 1)
 	);
 
 	pistolPbrIblMaterial->getParametersRef().addUseTextureId(1000000);//TEXTURE_2D_SPRITE_MeSm

@@ -3,6 +3,7 @@
 #include "GameObject/Line2DTest/Line2DTest.h"
 #include "GameObject/SpriteTest/SpriteTest.h"
 #include "GameObject/SpriteAnimTest/SpriteAnimTest.h"
+#include "GameObject/TextTest/TextTest.h"
 #include "GameObject/SoundTest/SoundTest.h"
 #include "GameObject/CameLightTest/CameLightTest.h"
 #include "GameObject/CameraTest/CameraTest.h"
@@ -14,7 +15,8 @@ void TitleScene::sceneStart()
 {
 	//Line2DTest::create();
 	SpriteTest::create();
-	//SpriteAnimTest::create();
+	SpriteAnimTest::create();
+	TextTest::create();
 	//SoundTest::create();
 
 	CameLightTest::create();

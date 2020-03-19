@@ -13,7 +13,8 @@ struct SpriteAnimTest
 
 		tktk::Transform2DMaker::makeStart(gameObject)
 			.position(Vector2(100.0f, 100.0f))
-			.scaleRate(Vector2(20.0f))
+			.scaleRate(Vector2(10.0f))
+			.rotationDeg(-45.0f)
 			.create();
 
 		tktk::SpriteClippingDrawerMaker::makeStart(gameObject)
@@ -25,6 +26,7 @@ struct SpriteAnimTest
 
 		tktk::CircleColliderMaker::makeStart(gameObject)
 			.collisionGroupType(1)
+			.localPosition(Vector2(30.0, 30.0f))
 			.radius(32.0f)
 			.create();
 

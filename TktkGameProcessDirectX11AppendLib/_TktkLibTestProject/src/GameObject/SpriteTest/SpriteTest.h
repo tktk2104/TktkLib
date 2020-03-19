@@ -18,7 +18,7 @@ struct SpriteTest
 
 		tktk::SpriteDrawerMaker::makeStart(gameObject)
 			.drawPriority(0.0f)
-			.textureId(tktk::SystemTexture2DId::blueShaderRes)//.textureId(1000000)
+			.textureId(tktk::SystemTexture2DId::blueShaderRes)
 			//.blendRate({ 0.5f, 0.5f, 0.5f, 0.5f })
 			.create();
 
