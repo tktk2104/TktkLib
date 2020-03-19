@@ -35,6 +35,8 @@ namespace tktk
 			1,
 			1,
 			DXGI_FORMAT_R8G8B8A8_UNORM,
+			Texture2DUsage::Default,
+			Texture2DCpuAccessFlag::Not,
 			false
 		);
 
@@ -47,6 +49,8 @@ namespace tktk
 			1,
 			1,
 			DXGI_FORMAT_R8G8B8A8_UNORM,
+			Texture2DUsage::Default,
+			Texture2DCpuAccessFlag::Not,
 			false
 		);
 
@@ -59,6 +63,8 @@ namespace tktk
 			1,
 			1,
 			DXGI_FORMAT_R8G8B8A8_UNORM,
+			Texture2DUsage::Default,
+			Texture2DCpuAccessFlag::Not,
 			false
 		);
 
@@ -71,6 +77,8 @@ namespace tktk
 			1,
 			1,
 			DXGI_FORMAT_R8G8B8A8_UNORM,
+			Texture2DUsage::Default,
+			Texture2DCpuAccessFlag::Not,
 			false
 		);
 
@@ -83,6 +91,8 @@ namespace tktk
 			1,
 			1,
 			DXGI_FORMAT_R8G8B8A8_UNORM,
+			Texture2DUsage::Default,
+			Texture2DCpuAccessFlag::Not,
 			false
 		);
 
@@ -95,6 +105,8 @@ namespace tktk
 			1,
 			1,
 			DXGI_FORMAT_R8G8B8A8_UNORM,
+			Texture2DUsage::Default,
+			Texture2DCpuAccessFlag::Not,
 			false
 		);
 
@@ -107,6 +119,8 @@ namespace tktk
 			1,
 			1,
 			DXGI_FORMAT_R8G8B8A8_UNORM,
+			Texture2DUsage::Default,
+			Texture2DCpuAccessFlag::Not,
 			false
 		);
 

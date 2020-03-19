@@ -8,6 +8,7 @@
 #include <TktkMath/Vector2.h>
 #include <TktkMath/Vector3.h>
 #include "TktkDirectX11Wrapper/Graphics/Texture2D/Texture2DManager.h"
+#include "TktkDirectX11Wrapper/Graphics/Texture2D/Asset/MaterialLoadTextureIdManager.h"
 #include "TktkDirectX11Wrapper/Graphics/Material/Material.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/Mesh.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/MeshVertexBufferData.h"
@@ -96,14 +97,14 @@ namespace tktk
 
 		for (unsigned int i = 0; i < materials.size(); i++)
 		{
-			// マテリアルから読み込んだテクスチャはマテリアルIDを100倍した値に何番目のテクスチャかを足したの値の負の数のIDで管理される
-			int baseMaterialTextureId = -(materialIdArray.at(i) * 100) ;
+			int firstMaterialTextureId = MaterialLoadTextureIdManager::getMaterialTextureId(materialIdArray.at(i), 0);
+			int secondMaterialTextureId = MaterialLoadTextureIdManager::getMaterialTextureId(materialIdArray.at(i), 1);
 
 			// アルベドテクスチャをロードする
-			Texture2DManager::load(baseMaterialTextureId - 1, texturePath + materials.at(i).textureFileName);
+			Texture2DManager::load(firstMaterialTextureId, texturePath + materials.at(i).textureFileName);
 
 			// 法線テクスチャをロードする
-			Texture2DManager::load(baseMaterialTextureId - 2, texturePath + materials.at(i).normalFileName);
+			Texture2DManager::load(secondMaterialTextureId, texturePath + materials.at(i).normalFileName);
 
 			// マテリアルを作成
 			Material::create(
@@ -115,8 +116,8 @@ namespace tktk
 				materials.at(i).specular,
 				materials.at(i).emission,
 				materials.at(i).shiniess,
-				baseMaterialTextureId - 1,
-				baseMaterialTextureId - 2
+				firstMaterialTextureId,
+				secondMaterialTextureId
 			);
 
 			materialSlotsParams.subsets.push_back({ subsets.at(i).start, subsets.at(i).count });
