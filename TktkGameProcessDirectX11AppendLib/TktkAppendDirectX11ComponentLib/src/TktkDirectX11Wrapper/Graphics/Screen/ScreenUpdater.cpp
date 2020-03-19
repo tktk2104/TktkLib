@@ -112,6 +112,13 @@ namespace tktk
 			case WM_NCXBUTTONDBLCLK:
 			case WM_KEYFIRST:
 			case WM_KEYUP:
+			case WM_CHAR:
+			case WM_DEADCHAR:
+			case WM_SYSKEYDOWN:
+			case WM_SYSKEYUP:
+			case WM_SYSCHAR:
+			case WM_SYSDEADCHAR:
+			case WM_UNICHAR:
 
 				break;
 
