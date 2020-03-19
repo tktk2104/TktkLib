@@ -31,11 +31,13 @@ namespace tktk
 
 			for (unsigned int i = 0; i < 20U; i++)
 			{
-				vertexArray.emplace_back(MathHelper::cos(baseAngle * i) * boundingCircle.calculateLocalRadius(), MathHelper::sin(baseAngle * i) * boundingCircle.calculateLocalRadius());
+				vertexArray.push_back(
+					Vector2(MathHelper::cos(baseAngle * i) * boundingCircle.calculateLocalRadius(), MathHelper::sin(baseAngle * i) * boundingCircle.calculateLocalRadius()) + boundingCircle.getLocalMatrix().calculateTranslation()
+				);
 			}
 
-			vertexArray.emplace_back(MathHelper::cos(0) * boundingCircle.calculateLocalRadius(), MathHelper::sin(0) * boundingCircle.calculateLocalRadius());
-
+			vertexArray.push_back(Vector2(MathHelper::cos(0) * boundingCircle.calculateLocalRadius(), MathHelper::sin(0) * boundingCircle.calculateLocalRadius()) + boundingCircle.getLocalMatrix().calculateTranslation());
+			
 			m_wireFrameDrawerArray.push_back(
 				getGameObject()->createComponent<Line2DDrawer>(
 					m_drawPriority,
