@@ -17,6 +17,7 @@
 #include "TktkDirectX11Wrapper/Graphics/BlendState/BlendStateManager.h"
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilView/DepthStencilViewManager.h"
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilState/DepthStencilStateManager.h"
+#include "TktkDirectX11Wrapper/Graphics/RasterizerState/RasterizerStateManager.h"
 #include "TktkDirectX11Wrapper/Graphics/Animation/AnimationManager.h"
 #include "TktkDirectX11Wrapper/Graphics/Camera/CameraManager.h"
 #include "TktkDirectX11Wrapper/Graphics/Light/LightManager.h"
@@ -48,6 +49,8 @@ namespace tktk
 		DepthStencilViewManager::setUp();
 
 		DepthStencilStateManager::setUp();
+
+		RasterizerStateManager::setUp();
 
 		ViewPortManager::setUp();
 

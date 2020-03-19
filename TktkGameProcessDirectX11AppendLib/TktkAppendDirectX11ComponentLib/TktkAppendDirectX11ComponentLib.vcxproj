@@ -206,6 +206,10 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\PixelShaderData.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\PixelShader\PixelShader.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\PixelShader\PixelShaderManager.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RasterizerState\Asset\RasterizerStateAssets.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RasterizerState\Asset\RasterizerStateData.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RasterizerState\RasterizerState.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RasterizerState\RasterizerStateManager.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\RenderTargetAssets.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\RenderTargetData.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RenderTarget\RenderTarget.cpp" />
@@ -470,6 +474,11 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\Asset\SystemPixelShaderId.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\PixelShader.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\PixelShader\PixelShaderManager.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RasterizerState\Asset\RasterizerStateAssets.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RasterizerState\Asset\RasterizerStateData.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RasterizerState\Asset\SystemRasterizerStateId.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RasterizerState\RasterizerState.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RasterizerState\RasterizerStateManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\RenderTargetAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\RenderTargetData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RenderTarget\Asset\SystemRenderTargetId.h" />
