@@ -16,9 +16,9 @@ namespace tktk
 		m_assetsPtr->clear();
 	}
 
-	void Texture2DManager::createImpl(int id, Texture2DBindFlag bindFlag, const std::vector<unsigned char>& textureData, unsigned int width, unsigned int height, unsigned int mipCount, unsigned int arraySize, DXGI_FORMAT format, bool isCubeMap)
+	void Texture2DManager::createImpl(int id, Texture2DBindFlag bindFlag, const std::vector<unsigned char>& textureData, unsigned int width, unsigned int height, unsigned int mipCount, unsigned int arraySize, DXGI_FORMAT format, Texture2DUsage usage, Texture2DCpuAccessFlag cpuAccessFlag, bool isCubeMap)
 	{
-		m_assetsPtr->create(id, bindFlag, textureData, width, height, mipCount, arraySize, format, isCubeMap);
+		m_assetsPtr->create(id, bindFlag, textureData, width, height, mipCount, arraySize, format, usage, cpuAccessFlag, isCubeMap);
 	}
 
 	void Texture2DManager::loadImpl(int id, const std::string & fileName)

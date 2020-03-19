@@ -24,10 +24,12 @@ namespace tktk
 			unsigned int mipCount,
 			unsigned int arraySize,
 			DXGI_FORMAT format,
+			Texture2DUsage usage,
+			Texture2DCpuAccessFlag cpuAccessFlag,
 			bool isCubeMap
 		)
 		{
-			createImpl(static_cast<int>(id), bindFlag, textureData, width, height, mipCount, arraySize, format, isCubeMap);
+			createImpl(static_cast<int>(id), bindFlag, textureData, width, height, mipCount, arraySize, format, usage, cpuAccessFlag, isCubeMap);
 		}
 		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
 		static void create(
@@ -39,6 +41,8 @@ namespace tktk
 			unsigned int mipCount,
 			unsigned int arraySize,
 			DXGI_FORMAT format,
+			Texture2DUsage usage,
+			Texture2DCpuAccessFlag cpuAccessFlag,
 			bool isCubeMap
 		) {
 			static_assert(false, "Texture2DId Fraud Type");
@@ -85,6 +89,8 @@ namespace tktk
 			unsigned int mipCount,
 			unsigned int arraySize,
 			DXGI_FORMAT format,
+			Texture2DUsage usage,
+			Texture2DCpuAccessFlag cpuAccessFlag,
 			bool isCubeMap
 		);
 		static void loadImpl(int id, const std::string& fileName);

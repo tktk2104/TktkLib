@@ -30,6 +30,8 @@ namespace tktk
 			unsigned int mipCount,
 			unsigned int arraySize,
 			DXGI_FORMAT format,
+			Texture2DUsage usage,
+			Texture2DCpuAccessFlag cpuAccessFlag,
 			bool isCubeMap
 		);
 

@@ -20,6 +20,8 @@ namespace tktk
 		unsigned int mipCount,
 		unsigned int arraySize,
 		DXGI_FORMAT format,
+		Texture2DUsage usage,
+		Texture2DCpuAccessFlag cpuAccessFlag,
 		bool isCubeMap
 	)
 	{
@@ -47,6 +49,8 @@ namespace tktk
 				mipCount,
 				arraySize,
 				format,
+				usage,
+				cpuAccessFlag,
 				isCubeMap
 			)
 		);
@@ -88,6 +92,8 @@ namespace tktk
 					1,
 					1,
 					DXGI_FORMAT_R8G8B8A8_UNORM,
+					Texture2DUsage::Default,
+					Texture2DCpuAccessFlag::Not,
 					false
 				)
 			);
@@ -112,6 +118,8 @@ namespace tktk
 					outData.mipCount,
 					outData.arraySize,
 					outData.format,
+					Texture2DUsage::Default,
+					Texture2DCpuAccessFlag::Not,
 					outData.isCubeMap
 				)
 			);

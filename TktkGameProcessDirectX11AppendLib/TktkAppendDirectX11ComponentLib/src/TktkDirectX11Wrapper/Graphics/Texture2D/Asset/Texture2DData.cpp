@@ -17,10 +17,16 @@ namespace tktk
 		unsigned int mipCount,
 		unsigned int arraySize,
 		DXGI_FORMAT format,
+		Texture2DUsage usage,
+		Texture2DCpuAccessFlag cpuAccessFlag,
 		bool isCubeMap
 	)
 		: m_width(width)
 		, m_height(height)
+		, m_isAfterChange(
+			(usage == Texture2DUsage::Dynamic) &&
+			(cpuAccessFlag == Texture2DCpuAccessFlag::Write || cpuAccessFlag == Texture2DCpuAccessFlag::WriteAndReade)
+		)
 	{
 		D3D11_TEXTURE2D_DESC texture2dDesc{};
 		texture2dDesc.Width = width;
@@ -30,9 +36,9 @@ namespace tktk
 		texture2dDesc.Format = format;
 		texture2dDesc.SampleDesc.Count = 1U;
 		texture2dDesc.SampleDesc.Quality = 0U;
-		texture2dDesc.Usage = D3D11_USAGE_DEFAULT;
+		texture2dDesc.Usage = static_cast<D3D11_USAGE>(usage);
 		texture2dDesc.BindFlags = static_cast<unsigned int>(bindFlag);
-		texture2dDesc.CPUAccessFlags = 0U;
+		texture2dDesc.CPUAccessFlags = static_cast<unsigned int>(cpuAccessFlag);
 		texture2dDesc.MiscFlags = (isCubeMap) ? D3D11_RESOURCE_MISC_TEXTURECUBE : 0U;
 
 		Screen::getDevicePtr()->CreateTexture2D(&texture2dDesc, subrescorceDataArray.data(), &m_texturePtr);
@@ -130,5 +136,36 @@ namespace tktk
 	unsigned int Texture2DData::height() const
 	{
 		return m_height;
+	}
+
+	D3D11_MAPPED_SUBRESOURCE Texture2DData::mapSubResource() const
+	{
+		if (!m_isAfterChange)
+		{
+			throw std::runtime_error("texture2DData cant afterChange");
+		}
+
+		D3D11_MAPPED_SUBRESOURCE mappedRes;
+		Screen::getDeviceContextPtr()->Map(
+			m_texturePtr,
+			0,
+			D3D11_MAP_WRITE_DISCARD,
+			0,
+			&mappedRes
+		);
+
+		return mappedRes;
+	}
+
+	void Texture2DData::unMapSubResource() const
+	{
+		if (!m_isAfterChange)
+		{
+			throw std::runtime_error("texture2DData cant afterChange");
+		}
+		Screen::getDeviceContextPtr()->Unmap(
+			m_texturePtr,
+			0
+		);
 	}
 }

@@ -5,6 +5,8 @@
 #include <vector>
 #include <d3d11.h>
 #include "Texture2DBindFlag.h"
+#include "Texture2DUsage.h"
+#include "Texture2DCpuAccessFlag.h"
 
 namespace tktk
 {
@@ -21,6 +23,8 @@ namespace tktk
 			unsigned int mipCount,
 			unsigned int arraySize,
 			DXGI_FORMAT format,
+			Texture2DUsage usage,
+			Texture2DCpuAccessFlag cpuAccessFlag,
 			bool isCubeMap
 		);
 
@@ -46,6 +50,13 @@ namespace tktk
 		// 2Dテクスチャの立幅を取得する
 		unsigned int height() const;
 
+		// マップされたサブリソースを取得する
+		// ※この関数の戻り値の使用が終わった後は必ず「unMapSubResource()」を呼んでください
+		D3D11_MAPPED_SUBRESOURCE mapSubResource() const;
+
+		// 「mapSubResource()」でMapしたリソースをUnmapする
+		void unMapSubResource() const;
+
 	private:
 
 		ID3D11Texture2D* m_texturePtr{ nullptr };
@@ -53,6 +64,7 @@ namespace tktk
 		ID3D11SamplerState* m_samplerPtr{ nullptr };
 		unsigned int m_width;
 		unsigned int m_height;
+		bool m_isAfterChange;
 	};
 }
 #endif // !TEXTURE_2D_DATA_H_
