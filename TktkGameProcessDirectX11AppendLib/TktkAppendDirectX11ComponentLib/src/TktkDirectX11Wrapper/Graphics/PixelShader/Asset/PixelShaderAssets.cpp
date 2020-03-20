@@ -1,7 +1,5 @@
 #include "TktkDirectX11Wrapper/Graphics/PixelShader/Asset/PixelShaderAssets.h"
 
-#include <stdexcept>
-#include <vector>
 #include <algorithm>
 #include "TktkDirectX11Wrapper/Graphics/Screen/Screen.h"
 

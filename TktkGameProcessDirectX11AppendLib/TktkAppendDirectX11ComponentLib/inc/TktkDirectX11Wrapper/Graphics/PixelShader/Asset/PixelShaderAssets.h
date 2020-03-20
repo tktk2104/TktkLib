@@ -3,7 +3,6 @@
 
 #include <unordered_map>
 #include "PixelShaderData.h"
-#include "SystemPixelShaderId.h"
 
 namespace tktk
 {
@@ -15,6 +14,7 @@ namespace tktk
 		PixelShaderAssets() = default;
 		~PixelShaderAssets();
 
+		// ÉRÉsÅ[ã÷é~
 		PixelShaderAssets(const PixelShaderAssets& other) = delete;
 		PixelShaderAssets& operator = (const PixelShaderAssets& other) = delete;
 

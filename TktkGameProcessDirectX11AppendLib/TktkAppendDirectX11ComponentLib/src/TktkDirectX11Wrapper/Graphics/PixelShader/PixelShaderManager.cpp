@@ -8,7 +8,7 @@ namespace tktk
 
 	void PixelShaderManager::setUp()
 	{
-		m_assetsPtr = ComponentFrameworkProcessor::addClass(true, new PixelShaderAssets());
+		m_assetsPtr = ComponentFrameworkProcessor::createClass<PixelShaderAssets>(true);
 	}
 
 	void PixelShaderManager::clear()

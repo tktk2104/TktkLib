@@ -15,6 +15,7 @@ namespace tktk
 		PixelShaderData(const std::vector<int>& useConstantBufferIdArray, const std::string& fileName);
 		~PixelShaderData();
 
+		// ÉRÉsÅ[ã÷é~
 		PixelShaderData(const PixelShaderData& other) = delete;
 		PixelShaderData& operator = (const PixelShaderData& other) = delete;
 
