@@ -3,6 +3,7 @@
 
 #include <TktkMetaFunc/TypeCheck/isIdType.h>
 #include "Asset/MaterialData.h"
+#include "Asset/SystemMaterialId.h"
 
 namespace tktk
 {

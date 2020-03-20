@@ -4,6 +4,7 @@
 #include <TktkMetaFunc/TypeCheck/isIdType.h>
 #include <TktkClassFuncProcessor/ProcessingClass/CfpPtr.h>
 #include "Asset/MaterialAssets.h"
+#include "Asset/SystemMaterialId.h"
 
 namespace tktk
 {
