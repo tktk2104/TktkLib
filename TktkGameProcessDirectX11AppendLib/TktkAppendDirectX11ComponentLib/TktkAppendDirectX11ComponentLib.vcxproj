@@ -440,6 +440,7 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialAssets.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\MaterialParameters.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\SystemMaterialId.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Material.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\MaterialManager.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Assets\IndexBuffer\IndexBuffer.h" />

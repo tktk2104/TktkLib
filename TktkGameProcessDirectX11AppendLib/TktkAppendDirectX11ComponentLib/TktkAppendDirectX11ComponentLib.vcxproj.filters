@@ -891,5 +891,8 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\RasterizerState\Asset\SystemRasterizerStateId.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\SystemMaterialId.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
