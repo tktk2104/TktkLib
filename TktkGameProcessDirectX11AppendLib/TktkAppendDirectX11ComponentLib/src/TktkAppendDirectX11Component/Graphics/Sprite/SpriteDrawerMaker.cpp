@@ -18,6 +18,7 @@ namespace tktk
 			m_textureId,
 			m_blendStateId,
 			m_depthStencilStateId,
+			m_rasterizerStateId,
 			m_textureUvOffset,
 			m_textureUvMulRate,
 			m_blendRate,
@@ -73,5 +74,9 @@ namespace tktk
 		return *this;
 	}
 
-	
+	SpriteDrawerMaker & SpriteDrawerMaker::rasterizerStateIdImpl(int value)
+	{
+		m_rasterizerStateId = value;
+		return *this;
+	}
 }

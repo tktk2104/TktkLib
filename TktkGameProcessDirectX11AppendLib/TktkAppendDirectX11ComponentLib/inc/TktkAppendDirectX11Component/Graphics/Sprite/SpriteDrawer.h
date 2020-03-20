@@ -21,6 +21,7 @@ namespace tktk
 			int textureId,
 			int blendStateId,
 			int depthStencilStateId,
+			int rasterizerStateId,
 			const Vector2& textureUvOffset,
 			const Vector2& textureUvMulRate,
 			const Color& blendRate,
@@ -33,6 +34,9 @@ namespace tktk
 		void draw() const;
 
 	public:
+
+		// テクスチャIDを取得する
+		int getTextureId() const;
 
 		// テクスチャIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
@@ -61,6 +65,14 @@ namespace tktk
 		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
 		void setDepthStencilStateId(IdType id) { static_assert(false, "DepthStencilStateId Fraud Type"); }
 
+		// ラスタライザステートIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setRasterizerStateId(IdType id)
+		{
+			setRasterizerStateIdImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setRasterizerStateId(IdType id) { static_assert(false, "RasterizerStateId Fraud Type"); }
 
 		// テクスチャ座標に足す値を再設定する
 		void setTextureUvOffset(const Vector2& offset);
@@ -80,12 +92,14 @@ namespace tktk
 		void setTextureIdImpl(int id);
 		void setBlendStateIdImpl(int id);
 		void setDepthStencilStateIdImpl(int id);
+		void setRasterizerStateIdImpl(int id);
 
 	private:
 
 		int m_textureId{ -1 };
 		int m_blendStateId{ -1 };
 		int m_depthStencilStateId{ -1 };
+		int m_rasterizerStateId{ -1 };
 		Vector2 m_textureUvOffset{ 0.0f, 0.0f };
 		Vector2 m_textureUvMulRate{ 1.0f, 1.0f };
 		Color m_blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };

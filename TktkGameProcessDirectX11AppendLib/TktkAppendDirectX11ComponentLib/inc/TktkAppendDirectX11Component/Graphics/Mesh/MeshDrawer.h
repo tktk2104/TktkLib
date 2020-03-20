@@ -29,7 +29,8 @@ namespace tktk
 			const std::vector<int>& materialIdArray,
 			int blendStateId,
 			const Color& blendRate,
-			int depthStencilStateId
+			int depthStencilStateId,
+			int rasterizerStateId
 		);
 		~MeshDrawer() = default;
 
@@ -42,13 +43,13 @@ namespace tktk
 
 		const std::array<Matrix4, 256U>& getLocalBoneMatrices() const;
 
-		// ローカルボーン行列を設定する
+		// ローカルボーン行列を再設定する
 		void setLocalBoneMatrices(const std::array<Matrix4, 256U>& boneMatrices, unsigned int boneCount);
 
 		// カメラIDを取得する
 		int getCameraId() const;
 
-		// カメラIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		// カメラIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
 		void setCameraId(IdType id)
 		{
@@ -60,7 +61,7 @@ namespace tktk
 		// メッシュIDを取得する
 		int getMeshId() const;
 
-		// メッシュIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		// メッシュIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
 		void setMeshId(IdType id)
 		{
@@ -72,7 +73,7 @@ namespace tktk
 		// スケルトンIDを取得する
 		int getSkeltonId() const;
 
-		// スケルトンIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		// スケルトンIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
 		void setSkeltonId(IdType id)
 		{
@@ -84,7 +85,7 @@ namespace tktk
 		// マテリアルIDの配列を取得する
 		const std::vector<int>& getMaterialIdArray() const;
 
-		// マテリアルIDを指定数設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		// マテリアルIDを指定数再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template <class... IdTypes, std::enable_if_t<is_idType_all_v<IdTypes...>>* = nullptr>
 		void setMaterialIdArray(IdTypes... ids)
 		{
@@ -96,7 +97,7 @@ namespace tktk
 		// ブレンドステートIDを取得する
 		int getBlendStateId() const;
 
-		// ブレンドステートIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		// ブレンドステートIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
 		void setBlendStateId(IdType id)
 		{
@@ -108,10 +109,10 @@ namespace tktk
 		// 描画先画像に描画結果をどれぐらいの比率でブレンドするかを取得する
 		const Color& getBlendRate() const;
 
-		// 描画先画像に描画結果をどれぐらいの比率でブレンドするかを設定する
+		// 描画先画像に描画結果をどれぐらいの比率でブレンドするかを再設定する
 		void setBlendRate(const Color& rate);
 
-		// 深度ステンシルステートIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		// 深度ステンシルステートIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
 		void setDepthStencilStateId(IdType id)
 		{
@@ -119,6 +120,15 @@ namespace tktk
 		}
 		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
 		void setDepthStencilStateId(IdType id) { static_assert(false, "DepthStencilStateId Fraud Type"); }
+
+		// ラスタライザステートIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setRasterizerStateId(IdType id)
+		{
+			setRasterizerStateIdImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setRasterizerStateId(IdType id) { static_assert(false, "RasterizerStateId Fraud Type"); }
 
 	private:
 
@@ -129,6 +139,7 @@ namespace tktk
 		void setMaterialIdArrayImpl(const std::vector<int>& idArray);
 		void setBlendStateIdImpl(int id);
 		void setDepthStencilStateIdImpl(int id);
+		void setRasterizerStateIdImpl(int id);
 
 	private:
 
@@ -160,6 +171,7 @@ namespace tktk
 		int m_blendStateId{ -1 };
 		Color m_blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };
 		int m_depthStencilStateId{ -1 };
+		int m_rasterizerStateId{ -1 };
 	};
 }
 #endif // !MESH_DRAWER_H_

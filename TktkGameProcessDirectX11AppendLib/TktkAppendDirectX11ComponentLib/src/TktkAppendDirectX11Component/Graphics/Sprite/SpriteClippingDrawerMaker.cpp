@@ -18,6 +18,7 @@ namespace tktk
 			m_textureId,
 			m_blendStateId,
 			m_depthStencilStateId,
+			m_rasterizerStateId,
 			m_textureClippingLeftTopPos,
 			m_textureClippingSize,
 			m_textureUvMulRate,
@@ -77,6 +78,12 @@ namespace tktk
 	SpriteClippingDrawerMaker & SpriteClippingDrawerMaker::depthStencilStateIdImpl(int value)
 	{
 		m_depthStencilStateId = value;
+		return *this;
+	}
+
+	SpriteClippingDrawerMaker & SpriteClippingDrawerMaker::rasterizerStateIdImpl(int value)
+	{
+		m_rasterizerStateId = value;
 		return *this;
 	}
 }

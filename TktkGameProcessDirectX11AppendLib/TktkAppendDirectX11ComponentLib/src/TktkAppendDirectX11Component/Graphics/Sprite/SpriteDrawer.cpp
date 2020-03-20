@@ -10,6 +10,7 @@
 #include "TktkDirectX11Wrapper/Graphics/BlendState/BlendState.h"
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilState/DepthStencilState.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/Mesh.h"
+#include "TktkDirectX11Wrapper/Graphics/RasterizerState/RasterizerState.h"
 #include "TktkDirectX11Wrapper/Graphics/VertexShader/VertexShader.h"
 #include "TktkDirectX11Wrapper/Graphics/PixelShader/PixelShader.h"
 #include "TktkDirectX11Wrapper/Graphics/Sprite/SpriteConstantBufferData.h"
@@ -21,6 +22,7 @@ namespace tktk
 		int textureId,
 		int blendStateId,
 		int depthStencilStateId,
+		int rasterizerStateId,
 		const Vector2 & textureUvOffset,
 		const Vector2 & textureUvMulRate,
 		const Color & blendRate,
@@ -30,6 +32,7 @@ namespace tktk
 		, m_textureId(textureId)
 		, m_blendStateId(blendStateId)
 		, m_depthStencilStateId(depthStencilStateId)
+		, m_rasterizerStateId(rasterizerStateId)
 		, m_textureUvOffset(textureUvOffset)
 		, m_textureUvMulRate(textureUvMulRate)
 		, m_blendRate(blendRate)
@@ -77,11 +80,14 @@ namespace tktk
 
 		constantBufferData->updateBuffer();
 
+		// ラスタライザステートをセット
+		RasterizerState::getData(m_rasterizerStateId).setState();
+
 		// シェーダーをセット
 		VertexShader::getData(SystemVertexShaderId::Sprite).beginVertexShader();
 		PixelShader::getData(SystemPixelShaderId::Sprite).beginShader();
 
-		MeshData* meshDataPtr = Mesh::getDataPtr(SYSTEM_MESH_SPRITE);
+		MeshData* meshDataPtr = Mesh::getDataPtr(SystemMeshId::Sprite);
 
 		// 頂点バッファとインデックスバッファをレンダリングパイプラインに設定する
 		meshDataPtr->setVertexAndIndexBuffer();
@@ -90,6 +96,11 @@ namespace tktk
 
 		// ドローコール
 		Screen::getDeviceContextPtr()->DrawIndexed(4, 0, 0);
+	}
+
+	int SpriteDrawer::getTextureId() const
+	{
+		return m_textureId;
 	}
 
 	void SpriteDrawer::setTextureUvOffset(const Vector2 & offset)
@@ -125,5 +136,10 @@ namespace tktk
 	void SpriteDrawer::setDepthStencilStateIdImpl(int id)
 	{
 		m_depthStencilStateId = id;
+	}
+
+	void SpriteDrawer::setRasterizerStateIdImpl(int id)
+	{
+		m_rasterizerStateId = id;
 	}
 }

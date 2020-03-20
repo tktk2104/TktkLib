@@ -5,6 +5,7 @@
 #include <TktkComponentFramework/GameObject/GameObjectPtr.h>
 #include "TktkDirectX11Wrapper/Graphics/BlendState/Asset/SystemBlendStateId.h"
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilState/Asset/SystemDepthStencilStateId.h"
+#include "TktkDirectX11Wrapper/Graphics/RasterizerState/Asset/SystemRasterizerStateId.h"
 #include "SpriteDrawer.h"
 
 namespace tktk
@@ -75,12 +76,22 @@ namespace tktk
 		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
 		SpriteDrawerMaker& depthStencilStateId(IdType value) { static_assert(false, "DepthStencilStateId Fraud Type"); }
 
+		// ラスタライザステートIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		SpriteDrawerMaker& rasterizerStateId(IdType id)
+		{
+			return rasterizerStateIdImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		SpriteDrawerMaker& rasterizerStateId(IdType id) { static_assert(false, "RasterizerStateId Fraud Type"); }
+
 	private:
 
 		// 各種id指定系の関数の実装
 		SpriteDrawerMaker& textureIdImpl(int value);
 		SpriteDrawerMaker& blendStateIdImpl(int value);
 		SpriteDrawerMaker& depthStencilStateIdImpl(int value);
+		SpriteDrawerMaker& rasterizerStateIdImpl(int value);
 
 	private:
 
@@ -90,6 +101,7 @@ namespace tktk
 		int m_textureId{ 0 };
 		int m_blendStateId{ static_cast<int>(SystemBlendStateId::Alpha) };
 		int m_depthStencilStateId{ static_cast<int>(SystemDepthStencilStateId::NotUseDepth) };
+		int m_rasterizerStateId{ static_cast<int>(SystemRasterizerStateId::Basic) };
 		Vector2 m_textureUvOffset{ 0.0f, 0.0f };
 		Vector2 m_textureUvMulRate{ 1.0f, 1.0f };
 		Color m_blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };

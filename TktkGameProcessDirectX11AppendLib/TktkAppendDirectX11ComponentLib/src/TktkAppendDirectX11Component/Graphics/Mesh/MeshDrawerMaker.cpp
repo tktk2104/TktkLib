@@ -21,7 +21,8 @@ namespace tktk
 			m_materialIdArray,
 			m_blendStateId,
 			m_blendRate,
-			m_depthStencilStateId
+			m_depthStencilStateId,
+			m_rasterizerStateId
 			);
 	}
 
@@ -73,5 +74,9 @@ namespace tktk
 		return *this;
 	}
 
-	
+	MeshDrawerMaker & MeshDrawerMaker::rasterizerStateIdImpl(int value)
+	{
+		m_rasterizerStateId = value;
+		return *this;
+	}
 }

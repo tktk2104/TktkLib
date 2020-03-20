@@ -15,6 +15,7 @@
 #include "TktkDirectX11Wrapper/Graphics/ConstantBuffer/ConstantBuffer.h"
 #include "TktkDirectX11Wrapper/Graphics/BlendState/BlendState.h"
 #include "TktkDirectX11Wrapper/Graphics/DepthStencilState/DepthStencilState.h"
+#include "TktkDirectX11Wrapper/Graphics/RasterizerState/RasterizerState.h"
 #include "TktkDirectX11Wrapper/Graphics/VertexShader/VertexShader.h"
 #include "TktkDirectX11Wrapper/Graphics/PixelShader/PixelShader.h"
 #include "TktkDirectX11Wrapper/Graphics/Skeleton/Skeleton.h"
@@ -33,7 +34,8 @@ namespace tktk
 		const std::vector<int> & materialIdArray,
 		int blendStateId,
 		const Color& blendRate,
-		int depthStencilStateId
+		int depthStencilStateId,
+		int rasterizerStateId
 	)
 		: ComponentBase(drawPriority)
 		, m_cameraId(cameraId)
@@ -43,6 +45,7 @@ namespace tktk
 		, m_blendStateId(blendStateId)
 		, m_blendRate(blendRate)
 		, m_depthStencilStateId(depthStencilStateId)
+		, m_rasterizerStateId(rasterizerStateId)
 	{
 		std::fill(std::begin(m_localBoneMatrices), std::end(m_localBoneMatrices), Matrix4::identity);
 	}
@@ -162,6 +165,11 @@ namespace tktk
 		m_depthStencilStateId = id;
 	}
 
+	void MeshDrawer::setRasterizerStateIdImpl(int id)
+	{
+		m_rasterizerStateId;
+	}
+
 	void MeshDrawer::calculateSkinnedBoneMatrices(std::array<Matrix4, 256U>* result, int skeltonId, const Matrix4 & worldMat) const
 	{
 		if (skeltonId == -10)
@@ -220,6 +228,9 @@ namespace tktk
 		updateMaterialBuffer(materialDataPtr);
 		// ライト情報用の定数バッファを更新する
 		updateLightBuffer();
+
+		// ラスタライザステートをセット
+		RasterizerState::getData(m_rasterizerStateId).setState();
 
 		// 描画に使用するシェーダーの設定を行う
 		VertexShader::getData(materialDataPtr->getUseVertexShaderId()).beginVertexShader();

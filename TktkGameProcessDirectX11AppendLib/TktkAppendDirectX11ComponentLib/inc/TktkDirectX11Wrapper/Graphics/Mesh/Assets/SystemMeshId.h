@@ -1,10 +1,12 @@
 #ifndef SYSTEM_MESH_ID_H_
+#define SYSTEM_MESH_ID_H_
 
 namespace tktk
 {
-	enum SystemMeshId
+	enum class SystemMeshId
 	{
-		SYSTEM_MESH_SPRITE = -100,
+		Sprite = -100,
+		Sphere = -200,
 	};
 }
 #endif // !SYSTEM_MESH_ID_H_

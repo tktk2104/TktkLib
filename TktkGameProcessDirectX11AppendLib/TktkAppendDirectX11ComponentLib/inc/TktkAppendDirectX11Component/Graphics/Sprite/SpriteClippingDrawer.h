@@ -21,6 +21,7 @@ namespace tktk
 			int textureId,
 			int blendStateId,
 			int depthStencilStateId,
+			int rasterizerStateId,
 			const Vector2& textureClippingLeftTopPos,
 			const Vector2& textureClippingSize,
 			const Vector2& textureUvMulRate,
@@ -62,6 +63,15 @@ namespace tktk
 		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
 		void setDepthStencilStateId(IdType id) { static_assert(false, "DepthStencilStateId Fraud Type"); }
 
+		// ラスタライザステートIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		void setRasterizerStateId(IdType id)
+		{
+			setRasterizerStateIdImpl(static_cast<int>(id));
+		}
+		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		void setRasterizerStateId(IdType id) { static_assert(false, "RasterizerStateId Fraud Type"); }
+
 		// テクスチャリソースの描画する範囲の左上座標を再設定する（テクスチャ座標）
 		void setTextureClippingLeftTopPos(const Vector2& leftTopPos);
 
@@ -83,12 +93,14 @@ namespace tktk
 		void setTextureIdImpl(int id);
 		void setBlendStateIdImpl(int id);
 		void setDepthStencilStateIdImpl(int id);
+		void setRasterizerStateIdImpl(int id);
 
 	private:
 
 		int m_textureId{ -1 };
 		int m_blendStateId{ -1 };
 		int m_depthStencilStateId{ -1 };
+		int m_rasterizerStateId{ -1 };
 		Vector2 m_textureClippingLeftTopPos{ 0.0f, 0.0f };
 		Vector2 m_textureClippingSize{ 1.0f, 1.0f };
 		Vector2 m_textureUvMulRate{ 1.0f, 1.0f };

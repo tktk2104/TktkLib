@@ -12,6 +12,7 @@
 #include "TktkDirectX11Wrapper/Graphics/Line2D/ConstantBufferData/Line2DVertexConstantBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/Line2D/ConstantBufferData/Line2DPixelConstantBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/Line2D/VertexBufferData/Line2DVertexBufferData.h"
+#include "TktkDirectX11Wrapper/Graphics/RasterizerState/RasterizerState.h"
 
 namespace tktk
 {
@@ -70,6 +71,9 @@ namespace tktk
 		line2DPixelConstantBufferData.lineColor = m_lineColor;
 		pixelConstantBufferData->setBufferData(std::move(line2DPixelConstantBufferData));
 		pixelConstantBufferData->updateBuffer();
+
+		// ラスタライザステートをセット
+		RasterizerState::getData(SystemRasterizerStateId::Basic).setState();
 
 		// シェーダーをセット
 		VertexShader::getData(SystemVertexShaderId::Line2D).beginVertexShader();

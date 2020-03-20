@@ -38,7 +38,7 @@ namespace tktk
 		MaterialSlotsInitParams materialSlotsParams;
 		materialSlotsParams.subsets.push_back({ 0, 4 });
 		
-		MeshManager::create(SYSTEM_MESH_SPRITE, D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, vertexBufferParams, indexBufferParams, materialSlotsParams);
+		MeshManager::create(SystemMeshId::Sprite, D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, vertexBufferParams, indexBufferParams, materialSlotsParams);
 
 		std::vector<D3D11_INPUT_ELEMENT_DESC> layout = std::vector<D3D11_INPUT_ELEMENT_DESC>({
 			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
