@@ -10,6 +10,9 @@
 #include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/LightConstantBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/MaterialConstantBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/PbrConstantBufferData.h"
+#include "TktkDirectX11Wrapper/Graphics/Mesh/Assets/SystemMeshId.h"
+#include "TktkDirectX11Wrapper/Graphics/Mesh/Maker/SphereMeshMaker.h"
+#include "TktkDirectX11Wrapper/Graphics/Material/Asset/SystemMaterialId.h"
 
 namespace tktk
 {
@@ -202,6 +205,11 @@ namespace tktk
 			meshVertexLayout,
 			SystemConstantBufferId::Mesh,
 			SystemConstantBufferId::Light
+		);
+
+		SphereMeshMaker::make(
+			SystemMeshId::Sphere,
+			SystemMaterialId::Sphere
 		);
 	}
 }
