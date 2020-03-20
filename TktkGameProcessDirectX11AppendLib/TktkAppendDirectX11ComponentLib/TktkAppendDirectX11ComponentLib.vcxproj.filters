@@ -384,6 +384,9 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\RasterizerState\Asset\RasterizerStateData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Maker\SystemSphereMeshMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\SpriteShader\SpritePixelShader.hlsl" />
@@ -892,6 +895,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Material\Asset\SystemMaterialId.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Maker\SystemSphereMeshMaker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

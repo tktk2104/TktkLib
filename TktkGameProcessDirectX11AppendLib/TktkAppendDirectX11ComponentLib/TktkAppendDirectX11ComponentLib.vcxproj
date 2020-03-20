@@ -198,6 +198,7 @@
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoader.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxMeshLoader.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Maker\SphereMeshMaker.cpp" />
+    <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Maker\SystemSphereMeshMaker.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Mesh.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\MeshDrawerSetupper.cpp" />
     <ClCompile Include="src\TktkDirectX11Wrapper\Graphics\Mesh\Loader\MeshLoader.cpp" />
@@ -463,6 +464,7 @@
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxSubsetDataParam.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Loader\FbxLoader\FbxLoadDataParam\FbxVertexDataParam.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Maker\SphereMeshMaker.h" />
+    <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Maker\SystemSphereMeshMaker.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\Mesh.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\ConstantBufferData\MeshConstantBufferData.h" />
     <ClInclude Include="inc\TktkDirectX11Wrapper\Graphics\Mesh\MeshDrawerSetupper.h" />

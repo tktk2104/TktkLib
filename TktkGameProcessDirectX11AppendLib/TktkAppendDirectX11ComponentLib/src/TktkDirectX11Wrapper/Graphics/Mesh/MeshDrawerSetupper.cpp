@@ -11,7 +11,7 @@
 #include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/MaterialConstantBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/ConstantBufferData/PbrConstantBufferData.h"
 #include "TktkDirectX11Wrapper/Graphics/Mesh/Assets/SystemMeshId.h"
-#include "TktkDirectX11Wrapper/Graphics/Mesh/Maker/SphereMeshMaker.h"
+#include "TktkDirectX11Wrapper/Graphics/Mesh/Maker/SystemSphereMeshMaker.h"
 #include "TktkDirectX11Wrapper/Graphics/Material/Asset/SystemMaterialId.h"
 
 namespace tktk
@@ -207,7 +207,7 @@ namespace tktk
 			SystemConstantBufferId::Light
 		);
 
-		SphereMeshMaker::make(
+		SystemSphereMeshMaker::make(
 			SystemMeshId::Sphere,
 			SystemMaterialId::Sphere
 		);
