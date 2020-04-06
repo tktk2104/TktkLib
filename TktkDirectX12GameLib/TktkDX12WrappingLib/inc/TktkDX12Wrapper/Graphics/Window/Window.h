@@ -18,6 +18,7 @@ namespace tktk
 			WindowInitParam&& initParam
 		);
 
+		// ÉRÉsÅ[ã÷é~
 		Window(const Window& other) = delete;
 		Window& operator = (const Window& other) = delete;
 

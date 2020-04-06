@@ -24,9 +24,15 @@
     <ClInclude Include="inc\TktkDX12WrappingLibDefinition.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\Window\Window.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

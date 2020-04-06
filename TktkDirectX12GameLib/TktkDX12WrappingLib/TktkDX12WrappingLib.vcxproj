@@ -152,11 +152,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\Window\Window.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\Window\WindowInitParam.h" />
     <ClInclude Include="inc\TktkDX12WrappingLibDefinition.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\Window\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
