@@ -1,7 +1,0 @@
-#ifndef HAS_SET_UPDATE_PRIORITY_CHECKER_H_
-#define HAS_SET_UPDATE_PRIORITY_CHECKER_H_
-
-#include "../HasFuncCheckMacro.h"
-HAS_FUNC_CHECK(setUpdatePriority)
-
-#endif // !HAS_SET_UPDATE_PRIORITY_CHECKER_H_
