@@ -17,7 +17,7 @@ namespace tktk
 
 	public:
 
-		void update();
+		void run();
 
 	private:
 

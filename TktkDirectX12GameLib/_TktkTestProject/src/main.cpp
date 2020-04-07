@@ -10,5 +10,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		{ hInstance, nCmdShow, "TestProject", { 1920.0f, 1080.0f } }
 	};
 
+	gameManager.run();
+
 	return 0;
 }
