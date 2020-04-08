@@ -33,6 +33,12 @@ namespace tktk
 
 	private:
 
+		D3D12_VIEWPORT									m_viewport							{};
+		D3D12_RECT										m_scissorrect						{};
+		ID3D12PipelineState*							m_pipeLineState						{ nullptr };
+		ID3D12RootSignature*							m_rootSignature						{ nullptr };
+		D3D12_VERTEX_BUFFER_VIEW						m_vertexBufferView					{};
+
 		ID3D12Device*									m_device							{ nullptr };
 		IDXGIFactory6*									m_factory							{ nullptr };
 		ID3D12CommandAllocator*							m_commandAllocator					{ nullptr };
