@@ -24,6 +24,9 @@
     <ClInclude Include="inc\TktkFileIo\BinaryFileReader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkFileIoLibDefinition.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TktkFileIo\lodedds.cpp">

@@ -1,3 +1,4 @@
+#include <TktkFileIoLibDefinition.h>
 #include <TktkMathLibDefinition.h>
 #include <TktkDX12WrappingLibDefinition.h>
 #include <TktkDX12GameLibDefinition.h>
