@@ -38,7 +38,7 @@ namespace tktk
 		D3D12_RECT										m_scissorrect						{};
 		ID3D12PipelineState*							m_pipeLineState						{ nullptr };
 		ID3D12RootSignature*							m_rootSignature						{ nullptr };
-		ID3D12DescriptorHeap*							m_texDescHeap						{ nullptr };
+		ID3D12DescriptorHeap*							m_basicDescHeap						{ nullptr };
 		D3D12_VERTEX_BUFFER_VIEW						m_vertexBufferView					{};
 		D3D12_INDEX_BUFFER_VIEW							m_indexBufferView					{};
 

@@ -2,6 +2,7 @@
 
 #include <TktkMath/Structs/Vector2.h>
 #include <TktkMath/Structs/Vector3.h>
+#include <TktkMath/Structs/Matrix4.h>
 
 #include <TktkFileIo/lodepng.h>
 
@@ -139,11 +140,11 @@ namespace tktk
 
 			D3D12_RESOURCE_DESC resDesc{};
 			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+			resDesc.Format = DXGI_FORMAT_UNKNOWN;
 			resDesc.Width = sizeof(vertices);
 			resDesc.Height = 1;
 			resDesc.DepthOrArraySize = 1;
 			resDesc.MipLevels = 1;
-			resDesc.Format = DXGI_FORMAT_UNKNOWN;
 			resDesc.SampleDesc.Count = 1;
 			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
 			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
@@ -186,11 +187,11 @@ namespace tktk
 
 			D3D12_RESOURCE_DESC resDesc{};
 			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+			resDesc.Format = DXGI_FORMAT_UNKNOWN;
 			resDesc.Width = sizeof(indices);
 			resDesc.Height = 1;
 			resDesc.DepthOrArraySize = 1;
 			resDesc.MipLevels = 1;
-			resDesc.Format = DXGI_FORMAT_UNKNOWN;
 			resDesc.SampleDesc.Count = 1;
 			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
 			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
@@ -215,18 +216,26 @@ namespace tktk
 		m_indexBufferView.SizeInBytes = sizeof(indices);
 
 		// ディスクリプタレンジを作る
-		D3D12_DESCRIPTOR_RANGE descTblRange{};
-		descTblRange.NumDescriptors = 1;
-		descTblRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-		descTblRange.BaseShaderRegister = 0;
-		descTblRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+		D3D12_DESCRIPTOR_RANGE descTblRange[2]{};
+		descTblRange[0].NumDescriptors = 1;
+		descTblRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+		descTblRange[0].BaseShaderRegister = 0;
+		descTblRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+		descTblRange[1].NumDescriptors = 1;
+		descTblRange[1].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+		descTblRange[1].BaseShaderRegister = 0;
+		descTblRange[1].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 		// ルートパラメーターを作る
-		D3D12_ROOT_PARAMETER rootParam{};
-		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-		rootParam.DescriptorTable.pDescriptorRanges = &descTblRange;
-		rootParam.DescriptorTable.NumDescriptorRanges = 1;
+		D3D12_ROOT_PARAMETER rootParam[2]{};
+		rootParam[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+		rootParam[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+		rootParam[0].DescriptorTable.pDescriptorRanges = &descTblRange[0];
+		rootParam[0].DescriptorTable.NumDescriptorRanges = 1;
+		rootParam[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+		rootParam[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+		rootParam[1].DescriptorTable.pDescriptorRanges = &descTblRange[1];
+		rootParam[1].DescriptorTable.NumDescriptorRanges = 1;
 
 		// サンプラーを作る
 		D3D12_STATIC_SAMPLER_DESC samplerDesc{};
@@ -243,8 +252,8 @@ namespace tktk
 		// ルートシグネチャを作る
 		D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 		rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-		rootSignatureDesc.pParameters = &rootParam;
-		rootSignatureDesc.NumParameters = 1;
+		rootSignatureDesc.pParameters = rootParam;
+		rootSignatureDesc.NumParameters = 2;
 		rootSignatureDesc.pStaticSamplers = &samplerDesc;
 		rootSignatureDesc.NumStaticSamplers = 1;
 		ID3DBlob* rootSigBlob{ nullptr };
@@ -358,16 +367,16 @@ namespace tktk
 			uploadHeapProp.VisibleNodeMask = 0;
 
 			D3D12_RESOURCE_DESC resDesc{};
-			resDesc.Format = DXGI_FORMAT_UNKNOWN;
 			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+			resDesc.Format = DXGI_FORMAT_UNKNOWN;
 			resDesc.Width = textureData.size();
 			resDesc.Height = 1;
 			resDesc.DepthOrArraySize = 1;
 			resDesc.MipLevels = 1;
-			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
 			resDesc.SampleDesc.Count = 1;
 			resDesc.SampleDesc.Quality = 0;
+			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 			ID3D12Resource* uploadBuff{ nullptr };
 			m_device->CreateCommittedResource(
@@ -478,6 +487,7 @@ namespace tktk
 			heapProp.VisibleNodeMask = 0;
 
 			D3D12_RESOURCE_DESC resDesc{};
+			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 			resDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 			resDesc.Width = width;
 			resDesc.Height = height;
@@ -485,9 +495,8 @@ namespace tktk
 			resDesc.SampleDesc.Count = 1;
 			resDesc.SampleDesc.Quality = 0;
 			resDesc.MipLevels = 1;
-			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-			resDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+			resDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 
 			m_device->CreateCommittedResource(
 				&heapProp,
@@ -509,17 +518,55 @@ namespace tktk
 
 #endif
 
-		HRESULT temp;
+		tktkMath::Matrix4 mat = tktkMath::mat4Identity;
 
-		// テクスチャバッファビューを作る
+		ID3D12Resource* constBuff{ nullptr };
+		{
+			D3D12_HEAP_PROPERTIES constBuffHeapProp{};
+			constBuffHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+			constBuffHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+			constBuffHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+			constBuffHeapProp.CreationNodeMask = 0;
+			constBuffHeapProp.VisibleNodeMask = 0;
+
+			D3D12_RESOURCE_DESC resDesc{};
+			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+			resDesc.Format = DXGI_FORMAT_UNKNOWN;
+			resDesc.Width = (sizeof(mat) + 0xff) & ~0xff;
+			resDesc.Height = 1;
+			resDesc.DepthOrArraySize = 1;
+			resDesc.MipLevels = 1;
+			resDesc.SampleDesc.Count = 1;
+			resDesc.SampleDesc.Quality = 0;
+			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+			m_device->CreateCommittedResource(
+				&constBuffHeapProp,
+				D3D12_HEAP_FLAG_NONE,
+				&resDesc,
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				nullptr,
+				IID_PPV_ARGS(&constBuff)
+			);
+
+			tktkMath::Matrix4* mappedMatrix{ nullptr };
+			constBuff->Map(0, nullptr, (void**)&mappedMatrix);
+			*mappedMatrix = mat;
+			constBuff->Unmap(0, nullptr);
+		}
+
+		// ディスクリプタヒープを作る
 		{
 			D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc{};
 			descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 			descHeapDesc.NodeMask = 0;
-			descHeapDesc.NumDescriptors = 1;
+			descHeapDesc.NumDescriptors = 2;
 			descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-			temp = m_device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&m_texDescHeap));
+			m_device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&m_basicDescHeap));
 		}
+
+		auto basicHeapHandle = m_basicDescHeap->GetCPUDescriptorHandleForHeapStart();
 
 		// シェーダーリソースビューを作る
 		{
@@ -532,7 +579,21 @@ namespace tktk
 			m_device->CreateShaderResourceView(
 				textureBuffer,
 				&shaderResouseViewDesc,
-				m_texDescHeap->GetCPUDescriptorHandleForHeapStart()
+				basicHeapHandle
+			);
+		}
+
+		basicHeapHandle.ptr += m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+		// コンスタントバッファービューを作る
+		{
+			D3D12_CONSTANT_BUFFER_VIEW_DESC constantBufferViewDesc{};
+			constantBufferViewDesc.BufferLocation = constBuff->GetGPUVirtualAddress();
+			constantBufferViewDesc.SizeInBytes = static_cast<UINT>(constBuff->GetDesc().Width);
+
+			m_device->CreateConstantBufferView(
+				&constantBufferViewDesc,
+				basicHeapHandle
 			);
 		}
 	}
@@ -615,10 +676,13 @@ namespace tktk
 		m_commandList->SetGraphicsRootSignature(m_rootSignature);
 		
 		// グラフィックパイプラインにディスクリプタヒープを設定する
-		m_commandList->SetDescriptorHeaps(1, &m_texDescHeap);
+		m_commandList->SetDescriptorHeaps(1, &m_basicDescHeap);
 		
 		// ルートパラメーターとディスクリプタヒープを関連付ける
-		m_commandList->SetGraphicsRootDescriptorTable(0, m_texDescHeap->GetGPUDescriptorHandleForHeapStart());
+		auto heapHandle = m_basicDescHeap->GetGPUDescriptorHandleForHeapStart();
+		m_commandList->SetGraphicsRootDescriptorTable(0, heapHandle);
+		heapHandle.ptr += m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+		m_commandList->SetGraphicsRootDescriptorTable(1, heapHandle);
 		
 		// トライアングルリストで描画するように設定する
 		m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

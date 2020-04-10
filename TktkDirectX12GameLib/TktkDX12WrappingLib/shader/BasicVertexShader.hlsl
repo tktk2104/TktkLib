@@ -1,4 +1,9 @@
 
+cbuffer cbuff0 : register(b0)
+{
+	float4x4 mat;
+}
+
 struct VSInput
 {
 	float4 pos	: POSITION;
@@ -14,7 +19,7 @@ struct VSOutput
 VSOutput main(VSInput input)
 {
 	VSOutput output;
-	output.pos = input.pos;
+	output.pos = mul(mat, input.pos);
 	output.uv = input.uv;
 	return output;
 }
