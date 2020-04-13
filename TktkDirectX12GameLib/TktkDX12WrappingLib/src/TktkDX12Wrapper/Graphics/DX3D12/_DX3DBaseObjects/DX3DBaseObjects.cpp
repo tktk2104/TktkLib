@@ -122,227 +122,156 @@ namespace tktk
 		m_commandList->Reset(m_commandAllocator, nullptr);
 
 		// 描画する頂点の配列
-		VertexData vertices[] =
+		std::vector<VertexData> vertices =
 		{
 			{{ -0.4f, -0.7f, 0.0f }, { 0.0f, 1.0f}},
 			{{ -0.4f,  0.7f, 0.0f }, { 0.0f, 0.0f}},
 			{{  0.4f, -0.7f, 0.0f }, { 1.0f, 1.0f}},
 			{{  0.4f,  0.7f, 0.0f }, { 1.0f, 0.0f}}
 		};
-
-		// 頂点バッファを作る
-		ID3D12Resource* vertexBuffer{ nullptr };
-		{
-			D3D12_HEAP_PROPERTIES heapProp{};
-			heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-			heapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-			heapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-
-			D3D12_RESOURCE_DESC resDesc{};
-			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-			resDesc.Format = DXGI_FORMAT_UNKNOWN;
-			resDesc.Width = sizeof(vertices);
-			resDesc.Height = 1;
-			resDesc.DepthOrArraySize = 1;
-			resDesc.MipLevels = 1;
-			resDesc.SampleDesc.Count = 1;
-			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
-			m_device->CreateCommittedResource(
-				&heapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&resDesc,
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				nullptr,
-				IID_PPV_ARGS(&vertexBuffer)
-			);
-
-			VertexData* vertMap{ nullptr };
-			vertexBuffer->Map(0, nullptr, (void**)(&vertMap));
-			std::copy(std::begin(vertices), std::end(vertices), vertMap);
-			vertexBuffer->Unmap(0, nullptr);
-		}
-
-		// 作った頂点バッファを頂点バッファビューに設定する
-		m_vertexBufferView.BufferLocation = vertexBuffer->GetGPUVirtualAddress();
-		m_vertexBufferView.SizeInBytes = sizeof(vertices);
-		m_vertexBufferView.StrideInBytes = sizeof(vertices[0]);
-
+		m_vertexBuffer.create<0>(m_device, vertices);
 
 		// 描画する頂点のインデックス
-		unsigned short indices[] =
+		std::vector<unsigned short> indices =
 		{
 			0, 1, 2,
 			2, 1, 3
 		};
+		m_indexBuffer.create<0>(m_device, indices);
 
-		// インデックスバッファを作る
-		ID3D12Resource* indexBuffer{ nullptr };
 		{
-			D3D12_HEAP_PROPERTIES heapProp{};
-			heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-			heapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-			heapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+			// ディスクリプタレンジを作る
+			D3D12_DESCRIPTOR_RANGE descTblRange[2]{};
+			descTblRange[0].NumDescriptors = 1;
+			descTblRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+			descTblRange[0].BaseShaderRegister = 0;
+			descTblRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-			D3D12_RESOURCE_DESC resDesc{};
-			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-			resDesc.Format = DXGI_FORMAT_UNKNOWN;
-			resDesc.Width = sizeof(indices);
-			resDesc.Height = 1;
-			resDesc.DepthOrArraySize = 1;
-			resDesc.MipLevels = 1;
-			resDesc.SampleDesc.Count = 1;
-			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+			descTblRange[1].NumDescriptors = 1;
+			descTblRange[1].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+			descTblRange[1].BaseShaderRegister = 0;
+			descTblRange[1].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-			m_device->CreateCommittedResource(
-				&heapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&resDesc,
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				nullptr,
-				IID_PPV_ARGS(&indexBuffer)
-			);
+			// ルートパラメーターを作る
+			D3D12_ROOT_PARAMETER rootParam[2]{};
+			rootParam[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+			rootParam[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+			rootParam[0].DescriptorTable.pDescriptorRanges = descTblRange;
+			rootParam[0].DescriptorTable.NumDescriptorRanges = 1;
 
-			unsigned short* mappedIndex{ nullptr };
-			indexBuffer->Map(0, nullptr, (void**)&mappedIndex);
-			std::copy(std::begin(indices), std::end(indices), mappedIndex);
-			indexBuffer->Unmap(0, nullptr);
-		}
-		// 作ったインデックスバッファをインデックスバッファビューに設定する
-		m_indexBufferView.BufferLocation = indexBuffer->GetGPUVirtualAddress();
-		m_indexBufferView.Format = DXGI_FORMAT_R16_UINT;
-		m_indexBufferView.SizeInBytes = sizeof(indices);
+			rootParam[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+			rootParam[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+			rootParam[1].DescriptorTable.pDescriptorRanges = &descTblRange[1];
+			rootParam[1].DescriptorTable.NumDescriptorRanges = 1;
 
-		// ディスクリプタレンジを作る
-		D3D12_DESCRIPTOR_RANGE descTblRange[2]{};
-		descTblRange[0].NumDescriptors = 1;
-		descTblRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-		descTblRange[0].BaseShaderRegister = 0;
-		descTblRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-		descTblRange[1].NumDescriptors = 1;
-		descTblRange[1].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-		descTblRange[1].BaseShaderRegister = 0;
-		descTblRange[1].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+			// サンプラーを作る
+			D3D12_STATIC_SAMPLER_DESC samplerDesc{};
+			samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+			samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+			samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;
+			samplerDesc.MinLOD = 0.0f;
+			samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+			samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 
-		// ルートパラメーターを作る
-		D3D12_ROOT_PARAMETER rootParam[2]{};
-		rootParam[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-		rootParam[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-		rootParam[0].DescriptorTable.pDescriptorRanges = &descTblRange[0];
-		rootParam[0].DescriptorTable.NumDescriptorRanges = 1;
-		rootParam[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-		rootParam[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-		rootParam[1].DescriptorTable.pDescriptorRanges = &descTblRange[1];
-		rootParam[1].DescriptorTable.NumDescriptorRanges = 1;
+			// ルートシグネチャを作る
+			D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+			rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+			rootSignatureDesc.pParameters = rootParam;
+			rootSignatureDesc.NumParameters = 2;
+			rootSignatureDesc.pStaticSamplers = &samplerDesc;
+			rootSignatureDesc.NumStaticSamplers = 1;
 
-		// サンプラーを作る
-		D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-		samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
-		samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-		samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;
-		samplerDesc.MinLOD = 0.0f;
-		samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-		samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+			ID3DBlob* rootSigBlob{ nullptr };
+			ID3DBlob* errorBlob{ nullptr };
+			D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
+			m_device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature));
+			rootSigBlob->Release();
 
-		// ルートシグネチャを作る
-		D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
-		rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-		rootSignatureDesc.pParameters = rootParam;
-		rootSignatureDesc.NumParameters = 2;
-		rootSignatureDesc.pStaticSamplers = &samplerDesc;
-		rootSignatureDesc.NumStaticSamplers = 1;
-		ID3DBlob* rootSigBlob{ nullptr };
-		ID3DBlob* errorBlob{ nullptr };
-		D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
-		auto test = m_device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature));
-		rootSigBlob->Release();
-
-		// 頂点シェーダーを読み込む
-		ID3DBlob* vsBlob{ nullptr };
-		std::vector<char> vsByteArray;
-		{
-			std::FILE* fp;
-
-			int ret = fopen_s(&fp, "res/BasicVertexShader.cso", "rb");
-
-			if (ret != 0)
+			// 頂点シェーダーを読み込む
+			std::vector<char> vsByteArray;
 			{
-				throw std::runtime_error("load vertexShader error");
+				std::FILE* fp;
+
+				int ret = fopen_s(&fp, "res/BasicVertexShader.cso", "rb");
+
+				if (ret != 0)
+				{
+					throw std::runtime_error("load vertexShader error");
+				}
+
+				fseek(fp, 0, SEEK_END);
+				vsByteArray.resize(ftell(fp));
+				fseek(fp, 0, SEEK_SET);
+
+				fread(vsByteArray.data(), vsByteArray.size(), 1, fp);
+				fclose(fp);
 			}
 
-			fseek(fp, 0, SEEK_END);
-			vsByteArray.resize(ftell(fp));
-			fseek(fp, 0, SEEK_SET);
-
-			fread(vsByteArray.data(), vsByteArray.size(), 1, fp);
-			fclose(fp);
-		}
-
-		// ピクセルシェーダーを読み込む
-		ID3DBlob* psBlob{ nullptr };
-		std::vector<char> psByteArray;
-		{
-			std::FILE* fp;
-
-			int ret = fopen_s(&fp, "res/BasicPixelShader.cso", "rb");
-
-			if (ret != 0)
+			// ピクセルシェーダーを読み込む
+			std::vector<char> psByteArray;
 			{
-				throw std::runtime_error("load vertexShader error");
+				std::FILE* fp;
+
+				int ret = fopen_s(&fp, "res/BasicPixelShader.cso", "rb");
+
+				if (ret != 0)
+				{
+					throw std::runtime_error("load vertexShader error");
+				}
+
+				fseek(fp, 0, SEEK_END);
+				psByteArray.resize(ftell(fp));
+				fseek(fp, 0, SEEK_SET);
+
+				fread(psByteArray.data(), psByteArray.size(), 1, fp);
+				fclose(fp);
 			}
 
-			fseek(fp, 0, SEEK_END);
-			psByteArray.resize(ftell(fp));
-			fseek(fp, 0, SEEK_SET);
+			// グラフィックパイプラインを作る
+			{
+				D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipeLineStateDesc{};
+				graphicsPipeLineStateDesc.pRootSignature = m_rootSignature;
+				graphicsPipeLineStateDesc.VS.pShaderBytecode = vsByteArray.data();
+				graphicsPipeLineStateDesc.VS.BytecodeLength = vsByteArray.size();
+				graphicsPipeLineStateDesc.PS.pShaderBytecode = psByteArray.data();
+				graphicsPipeLineStateDesc.PS.BytecodeLength = psByteArray.size();
+				graphicsPipeLineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+				graphicsPipeLineStateDesc.RasterizerState.MultisampleEnable = false;
+				graphicsPipeLineStateDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+				graphicsPipeLineStateDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
+				graphicsPipeLineStateDesc.RasterizerState.DepthClipEnable = true;
+				graphicsPipeLineStateDesc.BlendState.AlphaToCoverageEnable = false;
+				graphicsPipeLineStateDesc.BlendState.IndependentBlendEnable = false;
 
-			fread(psByteArray.data(), psByteArray.size(), 1, fp);
-			fclose(fp);
+				D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
+				renderTargetBlendDesc.BlendEnable = false;
+				renderTargetBlendDesc.LogicOpEnable = false;
+				renderTargetBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+
+				graphicsPipeLineStateDesc.BlendState.RenderTarget[0] = renderTargetBlendDesc;
+
+				D3D12_INPUT_ELEMENT_DESC inputLayout[]{
+					{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+					{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,	  0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
+				};
+
+				graphicsPipeLineStateDesc.InputLayout.pInputElementDescs = inputLayout;
+				graphicsPipeLineStateDesc.InputLayout.NumElements = _countof(inputLayout);
+				graphicsPipeLineStateDesc.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
+				graphicsPipeLineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+				graphicsPipeLineStateDesc.NumRenderTargets = 1;
+				graphicsPipeLineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+				graphicsPipeLineStateDesc.SampleDesc.Count = 1;
+				graphicsPipeLineStateDesc.SampleDesc.Quality = 0;
+
+				m_device->CreateGraphicsPipelineState(&graphicsPipeLineStateDesc, IID_PPV_ARGS(&m_pipeLineState));
+			}
 		}
 
-		// グラフィックパイプラインを作る
-		{
-			D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipeLineStateDesc{};
-			graphicsPipeLineStateDesc.pRootSignature = m_rootSignature;
-			graphicsPipeLineStateDesc.VS.pShaderBytecode = vsByteArray.data();
-			graphicsPipeLineStateDesc.VS.BytecodeLength = vsByteArray.size();
-			graphicsPipeLineStateDesc.PS.pShaderBytecode = psByteArray.data();
-			graphicsPipeLineStateDesc.PS.BytecodeLength = psByteArray.size();
-			graphicsPipeLineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-			graphicsPipeLineStateDesc.RasterizerState.MultisampleEnable = false;
-			graphicsPipeLineStateDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-			graphicsPipeLineStateDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-			graphicsPipeLineStateDesc.RasterizerState.DepthClipEnable = true;
-			graphicsPipeLineStateDesc.BlendState.AlphaToCoverageEnable = false;
-			graphicsPipeLineStateDesc.BlendState.IndependentBlendEnable = false;
-
-			D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
-			renderTargetBlendDesc.BlendEnable = false;
-			renderTargetBlendDesc.LogicOpEnable = false;
-			renderTargetBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-
-			graphicsPipeLineStateDesc.BlendState.RenderTarget[0] = renderTargetBlendDesc;
-
-			D3D12_INPUT_ELEMENT_DESC inputLayout[]{
-				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-				{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,	  0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
-			};
-
-			graphicsPipeLineStateDesc.InputLayout.pInputElementDescs = inputLayout;
-			graphicsPipeLineStateDesc.InputLayout.NumElements = _countof(inputLayout);
-			graphicsPipeLineStateDesc.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
-			graphicsPipeLineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-			graphicsPipeLineStateDesc.NumRenderTargets = 1;
-			graphicsPipeLineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-			graphicsPipeLineStateDesc.SampleDesc.Count = 1;
-			graphicsPipeLineStateDesc.SampleDesc.Quality = 0;
-
-			m_device->CreateGraphicsPipelineState(&graphicsPipeLineStateDesc, IID_PPV_ARGS(&m_pipeLineState));
-		}
+		
 
 		// テクスチャをロードする
 		std::vector<unsigned char> textureData;
@@ -688,10 +617,10 @@ namespace tktk
 		m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		
 		// 頂点バッファ情報を設定する
-		m_commandList->IASetVertexBuffers(0, 1, &m_vertexBufferView);
+		m_vertexBuffer.set<0>(m_commandList);
 		
 		// インデックスバッファ情報を設定する
-		m_commandList->IASetIndexBuffer(&m_indexBufferView);
+		m_indexBuffer.set<0>(m_commandList);
 		
 		// ビューポートを設定する
 		m_commandList->RSSetViewports(1, &m_viewport);

@@ -9,6 +9,9 @@
 #include <TktkMath/Structs/Vector2.h>
 #include "../../Window/Window.h"
 
+#include "../VertexBuffer/VertexBuffer.h"
+#include "../IndexBuffer/IndexBuffer.h"
+
 namespace tktk
 {
 	constexpr unsigned int backBufferCount{ 2 };
@@ -39,8 +42,6 @@ namespace tktk
 		ID3D12PipelineState*							m_pipeLineState						{ nullptr };
 		ID3D12RootSignature*							m_rootSignature						{ nullptr };
 		ID3D12DescriptorHeap*							m_basicDescHeap						{ nullptr };
-		D3D12_VERTEX_BUFFER_VIEW						m_vertexBufferView					{};
-		D3D12_INDEX_BUFFER_VIEW							m_indexBufferView					{};
 
 		ID3D12Device*									m_device							{ nullptr };
 		IDXGIFactory6*									m_factory							{ nullptr };
@@ -53,6 +54,9 @@ namespace tktk
 		ID3D12DescriptorHeap*							m_backBufferRenderTargetViewHeap	{ nullptr };
 		std::array<ID3D12Resource*, backBufferCount>	m_backBuffers						{};
 		unsigned int									m_curBackBufferIndex				{ 0U };
+
+		VertexBuffer<1>		m_vertexBuffer{};
+		IndexBuffer<1>		m_indexBuffer{};
 	};
 }
 #endif // !DX3D_BASE_OBJECTS_H_
