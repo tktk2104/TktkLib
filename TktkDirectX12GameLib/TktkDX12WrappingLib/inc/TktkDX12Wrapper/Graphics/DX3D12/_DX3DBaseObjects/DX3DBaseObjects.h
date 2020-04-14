@@ -11,6 +11,7 @@
 
 #include "../VertexBuffer/VertexBuffer.h"
 #include "../IndexBuffer/IndexBuffer.h"
+#include "../GraphicsPipeLineState/GraphicsPipeLineState.h"
 
 namespace tktk
 {
@@ -20,10 +21,7 @@ namespace tktk
 	{
 	public:
 
-		DX3DBaseObjects(
-			HWND hwnd,
-			const tktkMath::Vector2& windowSize
-		);
+		DX3DBaseObjects(HWND hwnd, const tktkMath::Vector2& windowSize);
 		~DX3DBaseObjects();
 
 	public:
@@ -39,8 +37,6 @@ namespace tktk
 
 		D3D12_VIEWPORT									m_viewport							{};
 		D3D12_RECT										m_scissorrect						{};
-		ID3D12PipelineState*							m_pipeLineState						{ nullptr };
-		ID3D12RootSignature*							m_rootSignature						{ nullptr };
 		ID3D12DescriptorHeap*							m_basicDescHeap						{ nullptr };
 
 		ID3D12Device*									m_device							{ nullptr };
@@ -55,8 +51,9 @@ namespace tktk
 		std::array<ID3D12Resource*, backBufferCount>	m_backBuffers						{};
 		unsigned int									m_curBackBufferIndex				{ 0U };
 
-		VertexBuffer<1>		m_vertexBuffer{};
-		IndexBuffer<1>		m_indexBuffer{};
+		VertexBuffer<1>					m_vertexBuffer{};
+		IndexBuffer<1>					m_indexBuffer{};
+		GraphicsPipeLineState<1, 1>		m_graphicsPipeLineState{};
 	};
 }
 #endif // !DX3D_BASE_OBJECTS_H_

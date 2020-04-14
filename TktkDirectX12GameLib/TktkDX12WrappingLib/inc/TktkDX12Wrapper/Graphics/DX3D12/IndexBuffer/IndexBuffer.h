@@ -23,21 +23,21 @@ namespace tktk
 
 	private:
 
-		std::array<IndexBufferData, IndexBufferNum> m_indexBufferDataMap{};
+		std::array<IndexBufferData, IndexBufferNum> m_indexBufferDataArray{};
 	};
 
 	template<int IndexBufferNum>
 	template<int IndexBufferIndex>
 	inline void IndexBuffer<IndexBufferNum>::create(ID3D12Device* device, const std::vector<unsigned short>& indexDataArray)
 	{
-		m_indexBufferDataMap.at(IndexBufferIndex).initialize(device, indexDataArray);
+		m_indexBufferDataArray.at(IndexBufferIndex).initialize(device, indexDataArray);
 	}
 
 	template<int IndexBufferNum>
 	template<int IndexBufferIndex>
 	inline void IndexBuffer<IndexBufferNum>::set(ID3D12GraphicsCommandList* commandList)
 	{
-		m_indexBufferDataMap.at(IndexBufferIndex).set(commandList);
+		m_indexBufferDataArray.at(IndexBufferIndex).set(commandList);
 	}
 }
 #endif // !INDEX_BUFFER_H_

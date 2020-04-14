@@ -2,6 +2,7 @@
 #define ROOT_SIGNATURE_DATA_H_
 
 #include <d3d12.h>
+#include "RootSignatureInitParam.h"
 
 namespace tktk
 {
@@ -14,9 +15,11 @@ namespace tktk
 
 	public:
 
-		void initialize(ID3D12Device* device);
+		void initialize(ID3D12Device* device, const RootSignatureInitParam& initParam);
 
+		ID3D12RootSignature* getPtr() const;
 
+		void set(ID3D12GraphicsCommandList* commandList) const;
 
 	private:
 

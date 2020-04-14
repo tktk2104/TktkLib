@@ -34,16 +34,13 @@ namespace tktk
 		m_scissorrect.bottom = m_scissorrect.top + static_cast<long>(windowSize.y);
 
 #ifdef _DEBUG
-
 		{
 			ID3D12Debug* debugLayer{ nullptr };
 			D3D12GetDebugInterface(IID_PPV_ARGS(&debugLayer));
 			debugLayer->EnableDebugLayer();
 			debugLayer->Release();
 		}
-
 #endif // _DEBUG
-
 
 		// デバイスを作る
 		D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_12_1, IID_PPV_ARGS(&m_device));
@@ -139,139 +136,75 @@ namespace tktk
 		};
 		m_indexBuffer.create<0>(m_device, indices);
 
+		// ルートシグネチャを作る
 		{
-			// ディスクリプタレンジを作る
-			D3D12_DESCRIPTOR_RANGE descTblRange[2]{};
-			descTblRange[0].NumDescriptors = 1;
-			descTblRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-			descTblRange[0].BaseShaderRegister = 0;
-			descTblRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+			RootSignatureInitParam initParam{};
+			initParam.m_flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
-			descTblRange[1].NumDescriptors = 1;
-			descTblRange[1].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-			descTblRange[1].BaseShaderRegister = 0;
-			descTblRange[1].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
-			// ルートパラメーターを作る
-			D3D12_ROOT_PARAMETER rootParam[2]{};
-			rootParam[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-			rootParam[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			rootParam[0].DescriptorTable.pDescriptorRanges = descTblRange;
-			rootParam[0].DescriptorTable.NumDescriptorRanges = 1;
-
-			rootParam[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-			rootParam[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-			rootParam[1].DescriptorTable.pDescriptorRanges = &descTblRange[1];
-			rootParam[1].DescriptorTable.NumDescriptorRanges = 1;
-
-			// サンプラーを作る
-			D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-			samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-			samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-			samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-			samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
-			samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-			samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;
-			samplerDesc.MinLOD = 0.0f;
-			samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-
-			// ルートシグネチャを作る
-			D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
-			rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-			rootSignatureDesc.pParameters = rootParam;
-			rootSignatureDesc.NumParameters = 2;
-			rootSignatureDesc.pStaticSamplers = &samplerDesc;
-			rootSignatureDesc.NumStaticSamplers = 1;
-
-			ID3DBlob* rootSigBlob{ nullptr };
-			ID3DBlob* errorBlob{ nullptr };
-			D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
-			m_device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&m_rootSignature));
-			rootSigBlob->Release();
-
-			// 頂点シェーダーを読み込む
-			std::vector<char> vsByteArray;
+			initParam.m_rootParamArray.resize(2U);
 			{
-				std::FILE* fp;
-
-				int ret = fopen_s(&fp, "res/BasicVertexShader.cso", "rb");
-
-				if (ret != 0)
+				initParam.m_rootParamArray.at(0).m_shaderVisibility		= D3D12_SHADER_VISIBILITY_PIXEL;
+				initParam.m_rootParamArray.at(0).m_descriptorTableArray.resize(1U);
 				{
-					throw std::runtime_error("load vertexShader error");
+					initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_numDescriptors	= 1;
+					initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_type			= D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 				}
-
-				fseek(fp, 0, SEEK_END);
-				vsByteArray.resize(ftell(fp));
-				fseek(fp, 0, SEEK_SET);
-
-				fread(vsByteArray.data(), vsByteArray.size(), 1, fp);
-				fclose(fp);
 			}
-
-			// ピクセルシェーダーを読み込む
-			std::vector<char> psByteArray;
 			{
-				std::FILE* fp;
-
-				int ret = fopen_s(&fp, "res/BasicPixelShader.cso", "rb");
-
-				if (ret != 0)
+				initParam.m_rootParamArray.at(1).m_shaderVisibility		= D3D12_SHADER_VISIBILITY_VERTEX;
+				initParam.m_rootParamArray.at(1).m_descriptorTableArray.resize(1U);
 				{
-					throw std::runtime_error("load vertexShader error");
+					initParam.m_rootParamArray.at(1).m_descriptorTableArray.at(0).m_numDescriptors	= 1;
+					initParam.m_rootParamArray.at(1).m_descriptorTableArray.at(0).m_type			= D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
 				}
-
-				fseek(fp, 0, SEEK_END);
-				psByteArray.resize(ftell(fp));
-				fseek(fp, 0, SEEK_SET);
-
-				fread(psByteArray.data(), psByteArray.size(), 1, fp);
-				fclose(fp);
 			}
-
-			// グラフィックパイプラインを作る
+			initParam.m_samplerDescArray.resize(1U);
 			{
-				D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipeLineStateDesc{};
-				graphicsPipeLineStateDesc.pRootSignature = m_rootSignature;
-				graphicsPipeLineStateDesc.VS.pShaderBytecode = vsByteArray.data();
-				graphicsPipeLineStateDesc.VS.BytecodeLength = vsByteArray.size();
-				graphicsPipeLineStateDesc.PS.pShaderBytecode = psByteArray.data();
-				graphicsPipeLineStateDesc.PS.BytecodeLength = psByteArray.size();
-				graphicsPipeLineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-				graphicsPipeLineStateDesc.RasterizerState.MultisampleEnable = false;
-				graphicsPipeLineStateDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-				graphicsPipeLineStateDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;
-				graphicsPipeLineStateDesc.RasterizerState.DepthClipEnable = true;
-				graphicsPipeLineStateDesc.BlendState.AlphaToCoverageEnable = false;
-				graphicsPipeLineStateDesc.BlendState.IndependentBlendEnable = false;
-
-				D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
-				renderTargetBlendDesc.BlendEnable = false;
-				renderTargetBlendDesc.LogicOpEnable = false;
-				renderTargetBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-
-				graphicsPipeLineStateDesc.BlendState.RenderTarget[0] = renderTargetBlendDesc;
-
-				D3D12_INPUT_ELEMENT_DESC inputLayout[]{
-					{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-					{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,	  0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
-				};
-
-				graphicsPipeLineStateDesc.InputLayout.pInputElementDescs = inputLayout;
-				graphicsPipeLineStateDesc.InputLayout.NumElements = _countof(inputLayout);
-				graphicsPipeLineStateDesc.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
-				graphicsPipeLineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-				graphicsPipeLineStateDesc.NumRenderTargets = 1;
-				graphicsPipeLineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-				graphicsPipeLineStateDesc.SampleDesc.Count = 1;
-				graphicsPipeLineStateDesc.SampleDesc.Quality = 0;
-
-				m_device->CreateGraphicsPipelineState(&graphicsPipeLineStateDesc, IID_PPV_ARGS(&m_pipeLineState));
+				initParam.m_samplerDescArray.at(0).m_addressU			= D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+				initParam.m_samplerDescArray.at(0).m_addressV			= D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+				initParam.m_samplerDescArray.at(0).m_addressW			= D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+				initParam.m_samplerDescArray.at(0).m_bordercolor		= D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+				initParam.m_samplerDescArray.at(0).m_filter				= D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+				initParam.m_samplerDescArray.at(0).m_maxLod				= D3D12_FLOAT32_MAX;
+				initParam.m_samplerDescArray.at(0).m_minLod				= 0.0f;
+				initParam.m_samplerDescArray.at(0).m_shaderVisibility	= D3D12_SHADER_VISIBILITY_PIXEL;
+				initParam.m_samplerDescArray.at(0).m_comparisonFunc		= D3D12_COMPARISON_FUNC_NEVER;
 			}
+
+			m_graphicsPipeLineState.createRootSignature<0>(m_device, initParam);
 		}
 
-		
+		// グラフィックパイプラインを作る
+		{
+			D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
+			renderTargetBlendDesc.BlendEnable = false;
+			renderTargetBlendDesc.LogicOpEnable = false;
+			renderTargetBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+
+			GraphicsPipeLineStateInitParam initParam{};
+			initParam.m_rasterizerDesc.MultisampleEnable = false;
+			initParam.m_rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
+			initParam.m_rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
+			initParam.m_rasterizerDesc.DepthClipEnable = true;
+			initParam.m_blendDesc.AlphaToCoverageEnable = false;
+			initParam.m_blendDesc.IndependentBlendEnable = false;
+			initParam.m_blendDesc.RenderTarget[0] = renderTargetBlendDesc;
+			initParam.m_inputLayoutArray = {
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,	  0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
+			};
+			initParam.m_primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+			initParam.m_renderTargetFormatArray = {
+				DXGI_FORMAT_R8G8B8A8_UNORM
+			};
+
+			m_graphicsPipeLineState.createGraphicsPipeLineState<0, 0>(
+				m_device,
+				initParam,
+				"res/BasicVertexShader.cso",
+				"res/BasicPixelShader.cso"
+				);
+		}
 
 		// テクスチャをロードする
 		std::vector<unsigned char> textureData;
@@ -529,15 +462,6 @@ namespace tktk
 
 	DX3DBaseObjects::~DX3DBaseObjects()
 	{
-		if (m_pipeLineState != nullptr)
-		{
-			m_pipeLineState->Release();
-		}
-		if (m_rootSignature != nullptr)
-		{
-			m_rootSignature->Release();
-		}
-
 		if (m_device != nullptr)
 		{
 			m_device->Release();
@@ -599,10 +523,7 @@ namespace tktk
 		m_commandList->ClearRenderTargetView(curBackBufferRenderTargetViewHeapHandle, clearColor, 0, nullptr);
 		
 		// レンダリングパイプラインステートを設定する
-		m_commandList->SetPipelineState(m_pipeLineState);
-		
-		// グラフィックパイプラインにルートシグネチャを設定する
-		m_commandList->SetGraphicsRootSignature(m_rootSignature);
+		m_graphicsPipeLineState.set<0>(m_commandList);
 		
 		// グラフィックパイプラインにディスクリプタヒープを設定する
 		m_commandList->SetDescriptorHeaps(1, &m_basicDescHeap);

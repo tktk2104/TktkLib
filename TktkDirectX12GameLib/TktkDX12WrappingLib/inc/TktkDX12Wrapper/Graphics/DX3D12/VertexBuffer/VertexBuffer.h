@@ -23,21 +23,21 @@ namespace tktk
 
 	private:
 
-		std::array<VertexBufferData, VertexBufferNum> m_vertexBufferDataMap{};
+		std::array<VertexBufferData, VertexBufferNum> m_vertexBufferDataArray{};
 	};
 
 	template<int VertexBufferNum>
 	template<int VertexBufferIndex, class VertexData>
 	inline void VertexBuffer<VertexBufferNum>::create(ID3D12Device* device, const std::vector<VertexData>& vertexDataArray)
 	{
-		m_vertexBufferDataMap.at(VertexBufferIndex).initialize(device, vertexDataArray);
+		m_vertexBufferDataArray.at(VertexBufferIndex).initialize(device, vertexDataArray);
 	}
 
 	template<int VertexBufferNum>
 	template<int VertexBufferIndex>
 	inline void VertexBuffer<VertexBufferNum>::set(ID3D12GraphicsCommandList* commandList)
 	{
-		m_vertexBufferDataMap.at(VertexBufferIndex).set(commandList);
+		m_vertexBufferDataArray.at(VertexBufferIndex).set(commandList);
 	}
 }
 #endif // !VERTEX_BUFFER_H_
