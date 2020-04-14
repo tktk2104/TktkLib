@@ -9,6 +9,8 @@
 #include <TktkMath/Structs/Vector2.h>
 #include "../../Window/Window.h"
 
+#include "../Viewport/Viewport.h"
+#include "../ScissorRect/ScissorRect.h"
 #include "../VertexBuffer/VertexBuffer.h"
 #include "../IndexBuffer/IndexBuffer.h"
 #include "../GraphicsPipeLineState/GraphicsPipeLineState.h"
@@ -35,8 +37,6 @@ namespace tktk
 
 	private:
 
-		D3D12_VIEWPORT									m_viewport							{};
-		D3D12_RECT										m_scissorrect						{};
 		ID3D12DescriptorHeap*							m_basicDescHeap						{ nullptr };
 
 		ID3D12Device*									m_device							{ nullptr };
@@ -51,6 +51,8 @@ namespace tktk
 		std::array<ID3D12Resource*, backBufferCount>	m_backBuffers						{};
 		unsigned int									m_curBackBufferIndex				{ 0U };
 
+		Viewport<1>						m_viewport{};
+		ScissorRect<1>					m_scissorRect{};
 		VertexBuffer<1>					m_vertexBuffer{};
 		IndexBuffer<1>					m_indexBuffer{};
 		GraphicsPipeLineState<1, 1>		m_graphicsPipeLineState{};

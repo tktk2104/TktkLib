@@ -160,8 +160,14 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\RootSignature\RootSignatureInitParam.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBuffer.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBufferData.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRect.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectData.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectInitParam.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBufferData.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Viewport\Viewport.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Viewport\ViewportData.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Viewport\ViewportInitParam.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\Window\Window.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\Window\WindowInitParam.h" />
@@ -171,7 +177,9 @@
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineStateData.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\RootSignature\RootSignatureData.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBufferData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectData.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBufferData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\Viewport\ViewportData.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\Window\Window.cpp" />
   </ItemGroup>

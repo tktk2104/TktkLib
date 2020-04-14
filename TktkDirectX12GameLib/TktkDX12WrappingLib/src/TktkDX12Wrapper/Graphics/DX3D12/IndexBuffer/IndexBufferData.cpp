@@ -55,7 +55,7 @@ namespace tktk
 		m_indexBufferView.SizeInBytes = sizeof(unsigned short) * indexDataArray.size();
 	}
 
-	void IndexBufferData::set(ID3D12GraphicsCommandList* commandList)
+	void IndexBufferData::set(ID3D12GraphicsCommandList* commandList) const
 	{
 #ifdef _DEBUG
 		if (m_indexBuffer == nullptr)

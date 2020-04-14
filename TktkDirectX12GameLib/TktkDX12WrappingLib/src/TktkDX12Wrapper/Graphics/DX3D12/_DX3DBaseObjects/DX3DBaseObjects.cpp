@@ -21,18 +21,6 @@ namespace tktk
 
 	DX3DBaseObjects::DX3DBaseObjects(HWND hwnd, const tktkMath::Vector2& windowSize)
 	{
-		m_viewport.Width = windowSize.x;
-		m_viewport.Height = windowSize.y;
-		m_viewport.TopLeftX = 0;
-		m_viewport.TopLeftY = 0;
-		m_viewport.MaxDepth = 1.0f;
-		m_viewport.MinDepth = 0.0f;
-
-		m_scissorrect.top = 0;
-		m_scissorrect.left = 0;
-		m_scissorrect.right = m_scissorrect.left + static_cast<long>(windowSize.x);
-		m_scissorrect.bottom = m_scissorrect.top + static_cast<long>(windowSize.y);
-
 #ifdef _DEBUG
 		{
 			ID3D12Debug* debugLayer{ nullptr };
@@ -51,6 +39,12 @@ namespace tktk
 #else
 		CreateDXGIFactory1(IID_PPV_ARGS(&m_factory));
 #endif
+
+		// ビューポートを作る
+		m_viewport.create<0>({ { windowSize, tktkMath::vec2Zero, 1.0f, 0.0f } });
+
+		// シザー矩形を作る
+		m_scissorRect.create<0>({ { tktkMath::vec2Zero, windowSize } });
 
 		// コマンドアロケータを作る
 		m_device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandAllocator));
@@ -544,10 +538,10 @@ namespace tktk
 		m_indexBuffer.set<0>(m_commandList);
 		
 		// ビューポートを設定する
-		m_commandList->RSSetViewports(1, &m_viewport);
+		m_viewport.set<0>(m_commandList);
 		
 		// シザー矩形を設定する
-		m_commandList->RSSetScissorRects(1, &m_scissorrect);
+		m_scissorRect.set<0>(m_commandList);
 		
 		// 描画
 		m_commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);

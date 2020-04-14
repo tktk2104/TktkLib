@@ -17,7 +17,7 @@ namespace tktk
 
 		void initialize(ID3D12Device* device, const std::vector<unsigned short>& indexDataArray);
 
-		void set(ID3D12GraphicsCommandList* commandList);
+		void set(ID3D12GraphicsCommandList* commandList) const;
 
 	private:
 
