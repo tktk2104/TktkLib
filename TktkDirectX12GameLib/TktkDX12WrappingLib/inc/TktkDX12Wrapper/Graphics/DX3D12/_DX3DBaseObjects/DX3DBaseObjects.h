@@ -14,6 +14,7 @@
 #include "../VertexBuffer/VertexBuffer.h"
 #include "../IndexBuffer/IndexBuffer.h"
 #include "../GraphicsPipeLineState/GraphicsPipeLineState.h"
+#include "../DescriptorHeap/DescriptorHeap.h"
 
 namespace tktk
 {
@@ -31,13 +32,7 @@ namespace tktk
 		void beginDraw();
 		void endDraw();
 
-	public:
-
-
-
 	private:
-
-		ID3D12DescriptorHeap*							m_basicDescHeap						{ nullptr };
 
 		ID3D12Device*									m_device							{ nullptr };
 		IDXGIFactory6*									m_factory							{ nullptr };
@@ -56,6 +51,7 @@ namespace tktk
 		VertexBuffer<1>					m_vertexBuffer{};
 		IndexBuffer<1>					m_indexBuffer{};
 		GraphicsPipeLineState<1, 1>		m_graphicsPipeLineState{};
+		DescriptorHeap<1, 1, 1>			m_descriptorHeap{};
 	};
 }
 #endif // !DX3D_BASE_OBJECTS_H_

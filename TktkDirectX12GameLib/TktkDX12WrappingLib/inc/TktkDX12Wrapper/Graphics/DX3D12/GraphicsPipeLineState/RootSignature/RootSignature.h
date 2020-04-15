@@ -15,16 +15,11 @@ namespace tktk
 
 	public:
 
-		template <int RootSignatureIndex>
-		void create(ID3D12Device* device, const RootSignatureInitParam& initParam);
+		void create(unsigned int id, ID3D12Device* device, const RootSignatureInitParam& initParam);
 
-		template <int RootSignatureIndex>
-		ID3D12RootSignature* getPtr() const;
+		ID3D12RootSignature* getPtr(unsigned int id) const;
 
-		template <int RootSignatureIndex>
-		void set(ID3D12GraphicsCommandList* commandList) const;
-
-		void set(int rootSignatureIndex, ID3D12GraphicsCommandList* commandList) const;
+		void set(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 	private:
 
@@ -32,30 +27,21 @@ namespace tktk
 	};
 
 	template<int RootSignatureNum>
-	template<int RootSignatureIndex>
-	inline void RootSignature<RootSignatureNum>::create(ID3D12Device* device, const RootSignatureInitParam& initParam)
+	inline void RootSignature<RootSignatureNum>::create(unsigned int id, ID3D12Device* device, const RootSignatureInitParam& initParam)
 	{
-		m_rootSignatureDataArray.at(RootSignatureIndex).initialize(device, initParam);
+		m_rootSignatureDataArray.at(id).initialize(device, initParam);
 	}
 
 	template<int RootSignatureNum>
-	template<int RootSignatureIndex>
-	inline ID3D12RootSignature* RootSignature<RootSignatureNum>::getPtr() const
+	inline ID3D12RootSignature* RootSignature<RootSignatureNum>::getPtr(unsigned int id) const
 	{
-		return m_rootSignatureDataArray.at(RootSignatureIndex).getPtr();
+		return m_rootSignatureDataArray.at(id).getPtr();
 	}
 
 	template<int RootSignatureNum>
-	template<int RootSignatureIndex>
-	inline void RootSignature<RootSignatureNum>::set(ID3D12GraphicsCommandList* commandList) const
+	inline void RootSignature<RootSignatureNum>::set(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
-		m_rootSignatureDataArray.at(RootSignatureIndex).set(commandList);
-	}
-
-	template<int RootSignatureNum>
-	inline void RootSignature<RootSignatureNum>::set(int rootSignatureIndex, ID3D12GraphicsCommandList* commandList) const
-	{
-		m_rootSignatureDataArray.at(rootSignatureIndex).set(commandList);
+		m_rootSignatureDataArray.at(id).set(commandList);
 	}
 }
 #endif // !ROOT_SIGNATURE_H_

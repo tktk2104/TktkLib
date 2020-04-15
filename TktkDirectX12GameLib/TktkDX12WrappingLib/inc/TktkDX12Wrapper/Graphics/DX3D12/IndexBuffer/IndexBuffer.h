@@ -15,11 +15,9 @@ namespace tktk
 
 	public:
 
-		template <int IndexBufferIndex>
-		void create(ID3D12Device* device, const std::vector<unsigned short>& indexDataArray);
+		void create(unsigned int id, ID3D12Device* device, const std::vector<unsigned short>& indexDataArray);
 
-		template <int IndexBufferIndex>
-		void set(ID3D12GraphicsCommandList* commandList);
+		void set(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 	private:
 
@@ -27,17 +25,15 @@ namespace tktk
 	};
 
 	template<int IndexBufferNum>
-	template<int IndexBufferIndex>
-	inline void IndexBuffer<IndexBufferNum>::create(ID3D12Device* device, const std::vector<unsigned short>& indexDataArray)
+	inline void IndexBuffer<IndexBufferNum>::create(unsigned int id, ID3D12Device* device, const std::vector<unsigned short>& indexDataArray)
 	{
-		m_indexBufferDataArray.at(IndexBufferIndex).initialize(device, indexDataArray);
+		m_indexBufferDataArray.at(id).initialize(device, indexDataArray);
 	}
 
 	template<int IndexBufferNum>
-	template<int IndexBufferIndex>
-	inline void IndexBuffer<IndexBufferNum>::set(ID3D12GraphicsCommandList* commandList)
+	inline void IndexBuffer<IndexBufferNum>::set(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_indexBufferDataArray.at(IndexBufferIndex).set(commandList);
+		m_indexBufferDataArray.at(id).set(commandList);
 	}
 }
 #endif // !INDEX_BUFFER_H_

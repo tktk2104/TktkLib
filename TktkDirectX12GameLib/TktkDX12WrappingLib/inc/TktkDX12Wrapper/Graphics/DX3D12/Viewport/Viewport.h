@@ -15,11 +15,9 @@ namespace tktk
 
 	public:
 
-		template <int ViewportIndex>
-		void create(const std::vector<ViewportInitParam>& initParamArray);
+		void create(unsigned int id, const std::vector<ViewportInitParam>& initParamArray);
 
-		template <int ViewportIndex>
-		void set(ID3D12GraphicsCommandList* commandList);
+		void set(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 	private:
 
@@ -27,17 +25,15 @@ namespace tktk
 	};
 
 	template<int ViewportNum>
-	template<int ViewportIndex>
-	inline void Viewport<ViewportNum>::create(const std::vector<ViewportInitParam>& initParamArray)
+	inline void Viewport<ViewportNum>::create(unsigned int id, const std::vector<ViewportInitParam>& initParamArray)
 	{
-		m_viewportDataArray.at(ViewportIndex).initialize(initParamArray);
+		m_viewportDataArray.at(id).initialize(initParamArray);
 	}
 
 	template<int ViewportNum>
-	template<int ViewportIndex>
-	inline void Viewport<ViewportNum>::set(ID3D12GraphicsCommandList* commandList)
+	inline void Viewport<ViewportNum>::set(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_viewportDataArray.at(ViewportIndex).set(commandList);
+		m_viewportDataArray.at(id).set(commandList);
 	}
 }
 #endif // !VIEWPORT_H_

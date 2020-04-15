@@ -17,14 +17,11 @@ namespace tktk
 
 	public:
 
-		template <int RootSignatureIndex>
-		void createRootSignature(ID3D12Device* device, const RootSignatureInitParam& initParam);
+		void createRootSignature(unsigned int id, ID3D12Device* device, const RootSignatureInitParam& initParam);
 
-		template <int GraphicsPipeLineIndex, int UseRootSignatureIndex>
-		void createGraphicsPipeLineState(ID3D12Device* device, const GraphicsPipeLineStateInitParam& initParam, const std::string& vsFilePath, const std::string& psFilePath);
+		void createGraphicsPipeLineState(unsigned int graphicsPipeLineId, ID3D12Device* device, const GraphicsPipeLineStateInitParam& initParam, const std::string& vsFilePath, const std::string& psFilePath, unsigned int useRootSignatureId);
 
-		template <int GraphicsPipeLineIndex>
-		void set(ID3D12GraphicsCommandList* commandList) const;
+		void set(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 	private:
 
@@ -34,15 +31,13 @@ namespace tktk
 	};
 
 	template<int GraphicsPipeLineNum, int RootSignatureNum>
-	template<int RootSignatureIndex>
-	inline void GraphicsPipeLineState<GraphicsPipeLineNum, RootSignatureNum>::createRootSignature(ID3D12Device* device, const RootSignatureInitParam& initParam)
+	inline void GraphicsPipeLineState<GraphicsPipeLineNum, RootSignatureNum>::createRootSignature(unsigned int id, ID3D12Device* device, const RootSignatureInitParam& initParam)
 	{
-		m_rootSignatureNum.create<RootSignatureIndex>(device, initParam);
+		m_rootSignatureNum.create(id, device, initParam);
 	}
 
 	template<int GraphicsPipeLineNum, int RootSignatureNum>
-	template<int GraphicsPipeLineIndex, int UseRootSignatureIndex>
-	inline void GraphicsPipeLineState<GraphicsPipeLineNum, RootSignatureNum>::createGraphicsPipeLineState(ID3D12Device* device, const GraphicsPipeLineStateInitParam& initParam, const std::string& vsFilePath, const std::string& psFilePath)
+	inline void GraphicsPipeLineState<GraphicsPipeLineNum, RootSignatureNum>::createGraphicsPipeLineState(unsigned int graphicsPipeLineId, ID3D12Device* device, const GraphicsPipeLineStateInitParam& initParam, const std::string& vsFilePath, const std::string& psFilePath, unsigned int useRootSignatureId)
 	{
 		// 頂点シェーダーを読み込む
 		std::vector<char> vsByteArray;
@@ -73,7 +68,7 @@ namespace tktk
 
 			if (ret != 0)
 			{
-				throw std::runtime_error("load vertexShader error");
+				throw std::runtime_error("load pixelShader error");
 			}
 
 			fseek(fp, 0, SEEK_END);
@@ -84,22 +79,21 @@ namespace tktk
 			fclose(fp);
 		}
 
-		m_graphicsPipeLineStateDataArray.at(GraphicsPipeLineIndex).initialize(
+		m_graphicsPipeLineStateDataArray.at(graphicsPipeLineId).initialize(
 			device,
 			initParam,
 			vsByteArray,
 			psByteArray,
-			m_rootSignatureNum.getPtr<UseRootSignatureIndex>(),
-			UseRootSignatureIndex
+			m_rootSignatureNum.getPtr(useRootSignatureId),
+			useRootSignatureId
 		);
 	}
 
 	template<int GraphicsPipeLineNum, int RootSignatureNum>
-	template<int GraphicsPipeLineIndex>
-	inline void GraphicsPipeLineState<GraphicsPipeLineNum, RootSignatureNum>::set(ID3D12GraphicsCommandList* commandList) const
+	inline void GraphicsPipeLineState<GraphicsPipeLineNum, RootSignatureNum>::set(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
-		m_rootSignatureNum.set(m_graphicsPipeLineStateDataArray.at(GraphicsPipeLineIndex).getUseRootSignatureIndex(), commandList);
-		m_graphicsPipeLineStateDataArray.at(GraphicsPipeLineIndex).set(commandList);
+		m_rootSignatureNum.set(m_graphicsPipeLineStateDataArray.at(id).getUseRootSignatureIndex(), commandList);
+		m_graphicsPipeLineStateDataArray.at(id).set(commandList);
 	}
 }
 #endif // !GRAPHICS_PIPELINE_STATE_H_

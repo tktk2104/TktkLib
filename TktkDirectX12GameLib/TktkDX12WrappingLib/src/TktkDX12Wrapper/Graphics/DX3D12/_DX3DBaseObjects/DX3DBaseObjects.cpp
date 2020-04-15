@@ -41,10 +41,10 @@ namespace tktk
 #endif
 
 		// ビューポートを作る
-		m_viewport.create<0>({ { windowSize, tktkMath::vec2Zero, 1.0f, 0.0f } });
+		m_viewport.create(0, { { windowSize, tktkMath::vec2Zero, 1.0f, 0.0f } });
 
 		// シザー矩形を作る
-		m_scissorRect.create<0>({ { tktkMath::vec2Zero, windowSize } });
+		m_scissorRect.create(0, { { tktkMath::vec2Zero, windowSize } });
 
 		// コマンドアロケータを作る
 		m_device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandAllocator));
@@ -120,7 +120,7 @@ namespace tktk
 			{{  0.4f, -0.7f, 0.0f }, { 1.0f, 1.0f}},
 			{{  0.4f,  0.7f, 0.0f }, { 1.0f, 0.0f}}
 		};
-		m_vertexBuffer.create<0>(m_device, vertices);
+		m_vertexBuffer.create(0, m_device, vertices);
 
 		// 描画する頂点のインデックス
 		std::vector<unsigned short> indices =
@@ -128,7 +128,7 @@ namespace tktk
 			0, 1, 2,
 			2, 1, 3
 		};
-		m_indexBuffer.create<0>(m_device, indices);
+		m_indexBuffer.create(0, m_device, indices);
 
 		// ルートシグネチャを作る
 		{
@@ -165,7 +165,7 @@ namespace tktk
 				initParam.m_samplerDescArray.at(0).m_comparisonFunc		= D3D12_COMPARISON_FUNC_NEVER;
 			}
 
-			m_graphicsPipeLineState.createRootSignature<0>(m_device, initParam);
+			m_graphicsPipeLineState.createRootSignature(0, m_device, initParam);
 		}
 
 		// グラフィックパイプラインを作る
@@ -192,115 +192,33 @@ namespace tktk
 				DXGI_FORMAT_R8G8B8A8_UNORM
 			};
 
-			m_graphicsPipeLineState.createGraphicsPipeLineState<0, 0>(
+			m_graphicsPipeLineState.createGraphicsPipeLineState(
+				0,
 				m_device,
 				initParam,
 				"res/BasicVertexShader.cso",
-				"res/BasicPixelShader.cso"
+				"res/BasicPixelShader.cso",
+				0
 				);
 		}
 
-		// テクスチャをロードする
-		std::vector<unsigned char> textureData;
-		unsigned int width;
-		unsigned int height;
-		auto error = lodepng::decode(textureData, width, height, "res/test.png");
-		if (error != 0)
-		{
-			throw std::runtime_error("can not open res/test.png");
-		}
-
-#if TRUE
-
 		// テクスチャバッファを作る
-		ID3D12Resource* textureBuffer{ nullptr };
 		{
-			D3D12_HEAP_PROPERTIES uploadHeapProp{};
-			uploadHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-			uploadHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-			uploadHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-			uploadHeapProp.CreationNodeMask = 0;
-			uploadHeapProp.VisibleNodeMask = 0;
+			TexBufFormatParam formatParam{};
+			formatParam.resourceDimension	= D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+			formatParam.format				= DXGI_FORMAT_R8G8B8A8_UNORM;
+			formatParam.arraySize			= 1U;
+			formatParam.mipLevels			= 1U;
+			formatParam.sampleDescCount		= 1U;
+			formatParam.sampleDescQuality	= 0U;
 
-			D3D12_RESOURCE_DESC resDesc{};
-			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-			resDesc.Format = DXGI_FORMAT_UNKNOWN;
-			resDesc.Width = textureData.size();
-			resDesc.Height = 1;
-			resDesc.DepthOrArraySize = 1;
-			resDesc.MipLevels = 1;
-			resDesc.SampleDesc.Count = 1;
-			resDesc.SampleDesc.Quality = 0;
-			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+			m_descriptorHeap.gpuPriorityLoadTextureBuffer(0, m_device, m_commandList, formatParam, "res/test.png");
+			//m_textureBuffer.gpuPriorityLoad(0, m_device, m_commandList, formatParam, "res/test.png");
 
-			ID3D12Resource* uploadBuff{ nullptr };
-			m_device->CreateCommittedResource(
-				&uploadHeapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&resDesc,
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				nullptr,
-				IID_PPV_ARGS(&uploadBuff)
-			);
-
-			D3D12_HEAP_PROPERTIES texHeapProp{};
-			texHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
-			texHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-			texHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-			texHeapProp.CreationNodeMask = 0;
-			texHeapProp.VisibleNodeMask = 0;
-
-			resDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-			resDesc.Width = width;
-			resDesc.Height = height;
-			resDesc.DepthOrArraySize = 1;
-			resDesc.MipLevels = 1;
-			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-			resDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
-
-			HRESULT test = m_device->CreateCommittedResource(
-				&texHeapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&resDesc,
-				D3D12_RESOURCE_STATE_COPY_DEST,
-				nullptr,
-				IID_PPV_ARGS(&textureBuffer)
-			);
-
-			uint8_t* mapForImg{ nullptr };
-			uploadBuff->Map(0, nullptr, (void**)&mapForImg);
-			std::copy_n(textureData.data(), textureData.size(), mapForImg);
-			uploadBuff->Unmap(0, nullptr);
-
-			D3D12_TEXTURE_COPY_LOCATION src{};
-			src.pResource = uploadBuff;
-			src.Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT;
-			src.PlacedFootprint.Offset = 0;
-			src.PlacedFootprint.Footprint.Width = width;
-			src.PlacedFootprint.Footprint.Height = height;
-			src.PlacedFootprint.Footprint.Depth = 1;
-			src.PlacedFootprint.Footprint.RowPitch = width * 4;
-			src.PlacedFootprint.Footprint.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-
-			D3D12_TEXTURE_COPY_LOCATION dst{};
-			dst.pResource = textureBuffer;
-			dst.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
-			dst.SubresourceIndex = 0;
-
-			m_commandList->CopyTextureRegion(&dst, 0, 0, 0, &src, nullptr);
-
-			D3D12_RESOURCE_BARRIER barrierDesc{};
-			barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-			barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-			barrierDesc.Transition.pResource = textureBuffer;
-			barrierDesc.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-			barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
-			barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
-			m_commandList->ResourceBarrier(1, &barrierDesc);
-
+			// コマンドリストを閉じる
 			m_commandList->Close();
 
+			// コマンドリストを実行する
 			ID3D12CommandList* commandLists[] = { m_commandList };
 			m_commandQueue->ExecuteCommandLists(1, commandLists);
 
@@ -330,127 +248,26 @@ namespace tktk
 			m_commandList->Reset(m_commandAllocator, nullptr);
 		}
 
-#else
-
-		// テクスチャバッファを作る
-		ID3D12Resource* textureBuffer{ nullptr };
+		// 定数バッファを作る
 		{
-			D3D12_HEAP_PROPERTIES heapProp{};
-			heapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
-			heapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-			heapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
-			heapProp.CreationNodeMask = 0;
-			heapProp.VisibleNodeMask = 0;
-
-			D3D12_RESOURCE_DESC resDesc{};
-			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-			resDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-			resDesc.Width = width;
-			resDesc.Height = height;
-			resDesc.DepthOrArraySize = 1;
-			resDesc.SampleDesc.Count = 1;
-			resDesc.SampleDesc.Quality = 0;
-			resDesc.MipLevels = 1;
-			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-			resDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
-
-			m_device->CreateCommittedResource(
-				&heapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&resDesc,
-				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-				nullptr,
-				IID_PPV_ARGS(&textureBuffer)
-			);
-
-			textureBuffer->WriteToSubresource(
-				0,
-				nullptr,
-				textureData.data(),
-				width * 4, //rowp
-				textureData.size() //slicep
-			);
-		}
-
-#endif
-
-		tktkMath::Matrix4 mat = tktkMath::mat4Identity;
-
-		ID3D12Resource* constBuff{ nullptr };
-		{
-			D3D12_HEAP_PROPERTIES constBuffHeapProp{};
-			constBuffHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-			constBuffHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-			constBuffHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-			constBuffHeapProp.CreationNodeMask = 0;
-			constBuffHeapProp.VisibleNodeMask = 0;
-
-			D3D12_RESOURCE_DESC resDesc{};
-			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-			resDesc.Format = DXGI_FORMAT_UNKNOWN;
-			resDesc.Width = (sizeof(mat) + 0xff) & ~0xff;
-			resDesc.Height = 1;
-			resDesc.DepthOrArraySize = 1;
-			resDesc.MipLevels = 1;
-			resDesc.SampleDesc.Count = 1;
-			resDesc.SampleDesc.Quality = 0;
-			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
-			m_device->CreateCommittedResource(
-				&constBuffHeapProp,
-				D3D12_HEAP_FLAG_NONE,
-				&resDesc,
-				D3D12_RESOURCE_STATE_GENERIC_READ,
-				nullptr,
-				IID_PPV_ARGS(&constBuff)
-			);
-
-			tktkMath::Matrix4* mappedMatrix{ nullptr };
-			constBuff->Map(0, nullptr, (void**)&mappedMatrix);
-			*mappedMatrix = mat;
-			constBuff->Unmap(0, nullptr);
+			tktkMath::Matrix4 mat = tktkMath::mat4Identity;
+			m_descriptorHeap.createConstantBuffer(0, m_device, mat);
+			//m_constantBuffer.create(0, m_device, mat);
 		}
 
 		// ディスクリプタヒープを作る
 		{
-			D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc{};
-			descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-			descHeapDesc.NodeMask = 0;
-			descHeapDesc.NumDescriptors = 2;
-			descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-			m_device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&m_basicDescHeap));
-		}
+			std::vector<DescriptorHeapInitParam> initParamArray;
+			initParamArray.resize(1U);
+			initParamArray.at(0U).m_flag = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+			initParamArray.at(0U).m_type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+			initParamArray.at(0U).m_descriptorParamArray.resize(2U);
+			initParamArray.at(0U).m_descriptorParamArray.at(0U).descriptorType = DescriptorType::textureBuffer;
+			initParamArray.at(0U).m_descriptorParamArray.at(0U).descriptorIndex = 0U;
+			initParamArray.at(0U).m_descriptorParamArray.at(1U).descriptorType = DescriptorType::constantBuffer;
+			initParamArray.at(0U).m_descriptorParamArray.at(1U).descriptorIndex = 0U;
 
-		auto basicHeapHandle = m_basicDescHeap->GetCPUDescriptorHandleForHeapStart();
-
-		// シェーダーリソースビューを作る
-		{
-			D3D12_SHADER_RESOURCE_VIEW_DESC shaderResouseViewDesc{};
-			shaderResouseViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-			shaderResouseViewDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-			shaderResouseViewDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-			shaderResouseViewDesc.Texture2D.MipLevels = 1;
-
-			m_device->CreateShaderResourceView(
-				textureBuffer,
-				&shaderResouseViewDesc,
-				basicHeapHandle
-			);
-		}
-
-		basicHeapHandle.ptr += m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
-		// コンスタントバッファービューを作る
-		{
-			D3D12_CONSTANT_BUFFER_VIEW_DESC constantBufferViewDesc{};
-			constantBufferViewDesc.BufferLocation = constBuff->GetGPUVirtualAddress();
-			constantBufferViewDesc.SizeInBytes = static_cast<UINT>(constBuff->GetDesc().Width);
-
-			m_device->CreateConstantBufferView(
-				&constantBufferViewDesc,
-				basicHeapHandle
-			);
+			m_descriptorHeap.createDescriptorHeap(0, m_device, initParamArray);
 		}
 	}
 
@@ -516,32 +333,26 @@ namespace tktk
 		float clearColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
 		m_commandList->ClearRenderTargetView(curBackBufferRenderTargetViewHeapHandle, clearColor, 0, nullptr);
 		
-		// レンダリングパイプラインステートを設定する
-		m_graphicsPipeLineState.set<0>(m_commandList);
+		// グラフィックパイプラインステートを設定する
+		m_graphicsPipeLineState.set(0, m_commandList);
 		
 		// グラフィックパイプラインにディスクリプタヒープを設定する
-		m_commandList->SetDescriptorHeaps(1, &m_basicDescHeap);
-		
-		// ルートパラメーターとディスクリプタヒープを関連付ける
-		auto heapHandle = m_basicDescHeap->GetGPUDescriptorHandleForHeapStart();
-		m_commandList->SetGraphicsRootDescriptorTable(0, heapHandle);
-		heapHandle.ptr += m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-		m_commandList->SetGraphicsRootDescriptorTable(1, heapHandle);
-		
+		m_descriptorHeap.set(0, m_commandList);
+
 		// トライアングルリストで描画するように設定する
 		m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		
 		// 頂点バッファ情報を設定する
-		m_vertexBuffer.set<0>(m_commandList);
+		m_vertexBuffer.set(0, m_commandList);
 		
 		// インデックスバッファ情報を設定する
-		m_indexBuffer.set<0>(m_commandList);
+		m_indexBuffer.set(0, m_commandList);
 		
 		// ビューポートを設定する
-		m_viewport.set<0>(m_commandList);
+		m_viewport.set(0, m_commandList);
 		
 		// シザー矩形を設定する
-		m_scissorRect.set<0>(m_commandList);
+		m_scissorRect.set(0, m_commandList);
 		
 		// 描画
 		m_commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
