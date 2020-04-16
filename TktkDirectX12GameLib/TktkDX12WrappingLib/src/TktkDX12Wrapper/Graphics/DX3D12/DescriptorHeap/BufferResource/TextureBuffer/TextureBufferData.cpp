@@ -1,4 +1,4 @@
-#include "TktkDX12Wrapper/Graphics/DX3D12/BufferResource/TextureBuffer/TextureBufferData.h"
+#include "TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/BufferResource/TextureBuffer/TextureBufferData.h"
 #ifdef _DEBUG
 #include <stdexcept>
 #endif // _DEBUG
@@ -275,41 +275,9 @@ namespace tktk
 		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
 		commandList->ResourceBarrier(1, &barrierDesc);
-
-		//// コマンドリストを閉じる
-		//commandList->Close();
-		//
-		//// コマンドリストを実行する
-		//ID3D12CommandList* commandLists[] = { commandList };
-		//m_commandQueue->ExecuteCommandLists(1, commandLists);
-		//
-		//// GPU処理が終わった事を検知するための準備
-		//m_commandQueue->Signal(m_fence, ++m_fenceVal);
-		//
-		//// もしGPU処理が終わっていなければ
-		//if (m_fence->GetCompletedValue() != m_fenceVal)
-		//{
-		//	// イベントを作ってそのハンドルを取得
-		//	auto eventHandle = CreateEvent(nullptr, false, false, nullptr);
-		//
-		//	// フェンスにGPU処理が終わったらイベントを発生させる事を設定する
-		//	m_fence->SetEventOnCompletion(m_fenceVal, eventHandle);
-		//
-		//	// フェンスに指定したイベントが発生するまで無限に待ち続ける
-		//	WaitForSingleObject(eventHandle, INFINITE);
-		//
-		//	// イベントハンドルを閉じる
-		//	CloseHandle(eventHandle);
-		//}
-		//
-		//// コマンドアロケータをリセットする
-		//m_commandAllocator->Reset();
-		//
-		//// コマンドリストをリセットする
-		//m_commandList->Reset(m_commandAllocator, nullptr);
 	}
 
-	void TextureBufferData::createShaderResource(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void TextureBufferData::createShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
 #ifdef _DEBUG
 		if (m_textureBuffer == nullptr)

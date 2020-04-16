@@ -72,7 +72,7 @@ namespace tktk
 			swapChainDesc.SampleDesc.Count = 1;
 			swapChainDesc.SampleDesc.Quality = 0;
 			swapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;
-			swapChainDesc.BufferCount = backBufferCount;
+			swapChainDesc.BufferCount = 2U;
 			swapChainDesc.Scaling = DXGI_SCALING_STRETCH;
 			swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 			swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
@@ -80,32 +80,27 @@ namespace tktk
 			m_factory->CreateSwapChainForHwnd(m_commandQueue, hwnd, &swapChainDesc, nullptr, nullptr, &m_swapChain);
 		}
 
+		// スワップチェーンのバックバッファーをディスクリプタヒープで使うための準備
+		for (unsigned int i = 0; i < 2U; ++i)
+		{
+			m_descriptorHeap.createBackBuffer(i, m_swapChain, i);
+		}
+
+		// バックバッファー用のディスクリプタヒープを作る
+		{
+			RtvDescriptorHeapInitParam initParam{};
+			initParam.m_shaderVisible = false;
+			initParam.m_descriptorParamArray.resize(2U);
+			initParam.m_descriptorParamArray.at(0U).m_type = RtvDescriptorType::backBuffer;
+			initParam.m_descriptorParamArray.at(0U).m_id = 0U;
+			initParam.m_descriptorParamArray.at(1U).m_type = RtvDescriptorType::backBuffer;
+			initParam.m_descriptorParamArray.at(1U).m_id = 1U;
+
+			m_descriptorHeap.createRtvDescriptorHeap(0, m_device, initParam);
+		}
+
 		// フェンスを作成する
 		m_device->CreateFence(m_fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&m_fence));
-
-		// バックバッファー用のレンダーターゲットビューを作る
-		{
-			D3D12_DESCRIPTOR_HEAP_DESC renderTargetViewHeapDesc{};
-			renderTargetViewHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-			renderTargetViewHeapDesc.NodeMask = 0;
-			renderTargetViewHeapDesc.NumDescriptors = 2;
-			renderTargetViewHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-			m_device->CreateDescriptorHeap(&renderTargetViewHeapDesc, IID_PPV_ARGS(&m_backBufferRenderTargetViewHeap));
-		}
-
-		// スワップチェーンのバックバッファーとバックバッファー用のレンダーターゲットビューを結びつける
-		for (unsigned int i = 0; i < backBufferCount; ++i)
-		{
-			// スワップチェーンのｉ番目のバックバッファーを取得する
-			m_swapChain->GetBuffer(i, IID_PPV_ARGS(&m_backBuffers.at(i)));
-
-			// バックバッファー用のレンダーターゲットビューのｉ番目のビューのアドレスを求める
-			D3D12_CPU_DESCRIPTOR_HANDLE handle = m_backBufferRenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart();
-			handle.ptr += i * m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
-			// ｉ番目のスワップチェーンのバックバッファーとバックバッファー用のレンダーターゲットビューを結びつける
-			m_device->CreateRenderTargetView(m_backBuffers.at(i), nullptr, handle);
-		}
 
 		// 初回リセット
 		m_commandList->Close();
@@ -213,7 +208,6 @@ namespace tktk
 			formatParam.sampleDescQuality	= 0U;
 
 			m_descriptorHeap.gpuPriorityLoadTextureBuffer(0, m_device, m_commandList, formatParam, "res/test.png");
-			//m_textureBuffer.gpuPriorityLoad(0, m_device, m_commandList, formatParam, "res/test.png");
 
 			// コマンドリストを閉じる
 			m_commandList->Close();
@@ -252,22 +246,19 @@ namespace tktk
 		{
 			tktkMath::Matrix4 mat = tktkMath::mat4Identity;
 			m_descriptorHeap.createConstantBuffer(0, m_device, mat);
-			//m_constantBuffer.create(0, m_device, mat);
 		}
 
 		// ディスクリプタヒープを作る
 		{
-			std::vector<DescriptorHeapInitParam> initParamArray;
-			initParamArray.resize(1U);
-			initParamArray.at(0U).m_flag = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-			initParamArray.at(0U).m_type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-			initParamArray.at(0U).m_descriptorParamArray.resize(2U);
-			initParamArray.at(0U).m_descriptorParamArray.at(0U).descriptorType = DescriptorType::textureBuffer;
-			initParamArray.at(0U).m_descriptorParamArray.at(0U).descriptorIndex = 0U;
-			initParamArray.at(0U).m_descriptorParamArray.at(1U).descriptorType = DescriptorType::constantBuffer;
-			initParamArray.at(0U).m_descriptorParamArray.at(1U).descriptorIndex = 0U;
+			BasicDescriptorHeapInitParam initParam{};
+			initParam.m_shaderVisible = true;
+			initParam.m_descriptorParamArray.resize(2U);
+			initParam.m_descriptorParamArray.at(0U).m_type = BasicDescriptorType::textureBuffer;
+			initParam.m_descriptorParamArray.at(0U).m_id = 0U;
+			initParam.m_descriptorParamArray.at(1U).m_type = BasicDescriptorType::constantBuffer;
+			initParam.m_descriptorParamArray.at(1U).m_id = 0U;
 
-			m_descriptorHeap.createDescriptorHeap(0, m_device, initParamArray);
+			m_descriptorHeap.createBasicDescriptorHeap(0U, m_device, initParam);
 		}
 	}
 
@@ -301,10 +292,6 @@ namespace tktk
 		{
 			m_swapChain->Release();
 		}
-		if (m_backBufferRenderTargetViewHeap != nullptr)
-		{
-			m_backBufferRenderTargetViewHeap->Release();
-		}
 	}
 
 	void DX3DBaseObjects::beginDraw()
@@ -312,32 +299,21 @@ namespace tktk
 		// 現在のバックバッファーのインデックスを取得する
 		m_curBackBufferIndex = static_cast<IDXGISwapChain3*>(m_swapChain)->GetCurrentBackBufferIndex();
 
-		// 現在のバックバッファー用のレンダーターゲットビューのハンドルを取得する
-		auto curBackBufferRenderTargetViewHeapHandle = m_backBufferRenderTargetViewHeap->GetCPUDescriptorHandleForHeapStart();
-		curBackBufferRenderTargetViewHeapHandle.ptr += m_curBackBufferIndex * m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-	
-		// バックバッファー用のレンダーターゲットビューのリソースバリアを設定する
-		D3D12_RESOURCE_BARRIER barrierDesc{};
-		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-		barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-		barrierDesc.Transition.pResource = m_backBuffers.at(m_curBackBufferIndex);
-		barrierDesc.Transition.Subresource = 0;
-		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-		m_commandList->ResourceBarrier(1, &barrierDesc);
+		// バックバッファをレンダーターゲット状態にする
+		m_descriptorHeap.useBackBuffer(m_curBackBufferIndex, m_commandList);
 
 		// 現在のバックバッファーを描画先に設定する
-		m_commandList->OMSetRenderTargets(1, &curBackBufferRenderTargetViewHeapHandle, true, nullptr);
+		m_descriptorHeap.setRenderTarget(0, m_device, m_commandList, m_curBackBufferIndex, 1U);
 
 		// 現在のバックバッファーを指定した単色で塗りつぶす
-		float clearColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
-		m_commandList->ClearRenderTargetView(curBackBufferRenderTargetViewHeapHandle, clearColor, 0, nullptr);
+		tktkMath::Color clearColor = { 1.0f, 1.0f, 0.0f, 1.0f };
+		m_descriptorHeap.clearRenderTarget(0U, m_device, m_commandList, m_curBackBufferIndex, clearColor);
 		
 		// グラフィックパイプラインステートを設定する
 		m_graphicsPipeLineState.set(0, m_commandList);
 		
 		// グラフィックパイプラインにディスクリプタヒープを設定する
-		m_descriptorHeap.set(0, m_commandList);
+		m_descriptorHeap.set(m_device, m_commandList, { { DescriptorHeapType::basic, 0U } });
 
 		// トライアングルリストで描画するように設定する
 		m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -360,15 +336,8 @@ namespace tktk
 
 	void DX3DBaseObjects::endDraw()
 	{
-		// バックバッファー用のレンダーターゲットビューのリソースバリアを解除する
-		D3D12_RESOURCE_BARRIER barrierDesc{};
-		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-		barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-		barrierDesc.Transition.pResource = m_backBuffers.at(m_curBackBufferIndex);
-		barrierDesc.Transition.Subresource = 0;
-		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-		m_commandList->ResourceBarrier(1, &barrierDesc);
+		// バックバッファをプリセット状態にする
+		m_descriptorHeap.unUseBackBuffer(m_curBackBufferIndex, m_commandList);
 
 		// コマンドリストを閉じる
 		m_commandList->Close();

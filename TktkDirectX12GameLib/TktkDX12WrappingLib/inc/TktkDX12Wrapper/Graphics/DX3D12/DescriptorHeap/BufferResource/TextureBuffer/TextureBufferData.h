@@ -20,7 +20,7 @@ namespace tktk
 
 		void gpuPriorityInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
-		void createShaderResource(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
 	private:
 

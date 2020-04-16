@@ -17,12 +17,11 @@ namespace tktk
 		template <class ConstantBufferDataType>
 		void initialize(ID3D12Device* device, const ConstantBufferDataType& rawConstantBufferData);
 
-		void createShaderResource(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createConstantBufferView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
 	private:
 
 		void createBuffer(ID3D12Device* device, unsigned int bufferSize);
-
 
 	private:
 

@@ -1,4 +1,4 @@
-#include "TktkDX12Wrapper/Graphics/DX3D12/BufferResource/ConstantBuffer/ConstantBufferData.h"
+#include "TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/BufferResource/ConstantBuffer/ConstantBufferData.h"
 #ifdef _DEBUG
 #include <stdexcept>
 #endif // _DEBUG
@@ -13,7 +13,7 @@ namespace tktk
 		}
 	}
 
-	void ConstantBufferData::createShaderResource(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void ConstantBufferData::createConstantBufferView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
 #ifdef _DEBUG
 		if (m_constantBuffer == nullptr)

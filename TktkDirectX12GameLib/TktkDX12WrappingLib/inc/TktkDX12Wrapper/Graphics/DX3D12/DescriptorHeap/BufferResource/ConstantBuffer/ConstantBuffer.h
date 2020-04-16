@@ -18,12 +18,15 @@ namespace tktk
 		template <class ConstantBufferDataType>
 		void create(unsigned int id, ID3D12Device* device, const ConstantBufferDataType& rawConstantBufferData);
 	
-		void createShaderResource(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 	
 	private:
 
 		std::array<ConstantBufferData, ConstantBufferNum> m_constantBufferDataArray{};
 	};
+	//„¬„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+	//„«‚±‚±‚©‚ç‰º‚ÍŠÖ”‚ÌÀ‘•
+	//„¯„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
 
 	template<int ConstantBufferNum>
 	template<class ConstantBufferDataType>
@@ -33,9 +36,9 @@ namespace tktk
 	}
 
 	template<int ConstantBufferNum>
-	inline void ConstantBuffer<ConstantBufferNum>::createShaderResource(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	inline void ConstantBuffer<ConstantBufferNum>::createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_constantBufferDataArray.at(id).createShaderResource(device, heapHandle);
+		m_constantBufferDataArray.at(id).createConstantBufferView(device, heapHandle);
 	}
 }
 #endif // !CONSTANT_BUFFER_H_
