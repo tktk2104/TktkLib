@@ -14,6 +14,8 @@ namespace tktk
 
 	public:
 
+		void initialize(ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
+
 		template <class ConstantBufferDataType>
 		void initialize(ID3D12Device* device, const ConstantBufferDataType& rawConstantBufferData);
 

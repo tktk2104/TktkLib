@@ -1,14 +1,13 @@
 #ifndef DX3D_BASE_OBJECTS_H_
 #define DX3D_BASE_OBJECTS_H_
 
-#include <array>
+#include <vector>
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #undef min
 #undef max
 #include <TktkMath/Structs/Vector2.h>
 #include "DX3DBaseObjectsInitParam.h"
-#include "../../Window/Window.h"
 
 #include "../Fence/Fence.h"
 #include "../Viewport/Viewport.h"
@@ -31,6 +30,14 @@ namespace tktk
 
 		void beginDraw();
 		void endDraw();
+
+	public:
+
+		void createVertexBuffer(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
+
+		void createIndexBuffer(unsigned int id, const std::vector<unsigned short>& indices);
+
+		void createConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
 	private:
 

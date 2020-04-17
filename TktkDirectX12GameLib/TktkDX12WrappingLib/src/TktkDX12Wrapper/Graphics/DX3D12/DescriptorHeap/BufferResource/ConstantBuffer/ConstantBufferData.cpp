@@ -13,6 +13,16 @@ namespace tktk
 		}
 	}
 
+	void ConstantBufferData::initialize(ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	{
+		createBuffer(device, constantBufferTypeSize);
+
+		void* mappedBuffer{ nullptr };
+		m_constantBuffer->Map(0, nullptr, &mappedBuffer);
+		memcpy(mappedBuffer, constantBufferDataTopPos, constantBufferTypeSize);
+		m_constantBuffer->Unmap(0, nullptr);
+	}
+
 	void ConstantBufferData::createConstantBufferView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
 #ifdef _DEBUG
@@ -31,6 +41,11 @@ namespace tktk
 
 	void ConstantBufferData::createBuffer(ID3D12Device* device, unsigned int bufferSize)
 	{
+		if (m_constantBuffer != nullptr)
+		{
+			m_constantBuffer->Release();
+		}
+
 		D3D12_HEAP_PROPERTIES constBuffHeapProp{};
 		constBuffHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
 		constBuffHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;

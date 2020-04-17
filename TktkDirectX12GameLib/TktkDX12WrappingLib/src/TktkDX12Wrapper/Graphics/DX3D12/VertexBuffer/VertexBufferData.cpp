@@ -13,6 +13,18 @@ namespace tktk
 		}
 	}
 
+	void VertexBufferData::initialize(ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
+	{
+		createVertexBuffer(device, vertexTypeSize * vertexDataCount);
+
+		void* mappedVertexData{ nullptr };
+		m_vertexBuffer->Map(0, nullptr, &mappedVertexData);
+		memcpy(mappedVertexData, vertexDataTopPos, vertexTypeSize * vertexDataCount);
+		m_vertexBuffer->Unmap(0, nullptr);
+
+		createVertexBufferView(vertexTypeSize * vertexDataCount, vertexTypeSize);
+	}
+
 	void VertexBufferData::set(ID3D12GraphicsCommandList* commandList)
 	{
 #ifdef _DEBUG

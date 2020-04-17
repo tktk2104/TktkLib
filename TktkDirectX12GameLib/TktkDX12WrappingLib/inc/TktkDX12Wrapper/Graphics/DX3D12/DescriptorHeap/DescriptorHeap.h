@@ -38,6 +38,8 @@ namespace tktk
 	
 	public:
 	
+		void createConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
+
 		template <class ConstantBufferDataType>
 		void createConstantBuffer(unsigned int id, ID3D12Device* device, const ConstantBufferDataType& rawConstantBufferData);
 

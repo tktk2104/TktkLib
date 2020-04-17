@@ -16,6 +16,8 @@ namespace tktk
 
 	public:
 
+		void initialize(ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
+
 		template <class VertexData>
 		void initialize(ID3D12Device* device, const std::vector<VertexData>& vertexDataArray);
 

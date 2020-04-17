@@ -1,30 +1,32 @@
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
 
+#include <TktkDX12Wrapper/Graphics/Window/Window.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjects.h>
+
 namespace tktk
 {
-	DX12GameManager::DX12GameManager(
-		const DX3DBaseObjectsInitParam& dx3dInitParam,
-		const WindowInitParam& windowInitParam,
-		const std::string& tktkLibResFolderPath
-	)
-		: m_window(windowInitParam)
-		, m_dx3dBaseObjects(dx3dInitParam, m_window.getHWND(), windowInitParam.windowSize)
+	std::unique_ptr<Window>				DX12GameManager::m_window;
+	std::unique_ptr<DX3DBaseObjects>	DX12GameManager::m_dx3dBaseObjects;
+
+	void DX12GameManager::initialize(const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath)
 	{
+		m_window = std::make_unique<Window>(windowInitParam);
+		m_dx3dBaseObjects = std::make_unique<DX3DBaseObjects>(dx3dInitParam, m_window->getHWND(), windowInitParam.windowSize);
 	}
 
 	void DX12GameManager::run()
 	{
-		MSG m_msg{};
+		MSG msg{};
 
 		while (true)
 		{
-			if (m_msg.message == WM_QUIT)
+			if (msg.message == WM_QUIT)
 			{
 				break;
 			}
-			else if (PeekMessage(&m_msg, NULL, 0, 0, PM_REMOVE))
+			else if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 			{
-				switch (m_msg.message)
+				switch (msg.message)
 				{
 				case WM_MOUSEMOVE:
 				case WM_LBUTTONDOWN:
@@ -64,8 +66,8 @@ namespace tktk
 				case WM_SYSDEADCHAR:
 				case WM_UNICHAR:
 
-					m_dx3dBaseObjects.beginDraw();
-					m_dx3dBaseObjects.endDraw();
+					m_dx3dBaseObjects->beginDraw();
+					m_dx3dBaseObjects->endDraw();
 					break;
 
 				default:
@@ -74,9 +76,24 @@ namespace tktk
 					break;
 				}
 
-				TranslateMessage(&m_msg);
-				DispatchMessage(&m_msg);
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
 			}
 		}
+	}
+
+	void DX12GameManager::createIndexBuffer(unsigned int id, const std::vector<unsigned short>& indices)
+	{
+		m_dx3dBaseObjects->createIndexBuffer(id, indices);
+	}
+
+	void DX12GameManager::createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
+	{
+		m_dx3dBaseObjects->createVertexBuffer(id, vertexTypeSize, vertexDataCount, vertexDataTopPos);
+	}
+
+	void DX12GameManager::createConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	{
+		m_dx3dBaseObjects->createConstantBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 }

@@ -180,6 +180,7 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRect.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectData.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectInitParam.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\SwapChain\SwapChain.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBufferData.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Viewport\Viewport.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBufferData.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRect.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\SwapChain\SwapChain.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBufferData.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\Viewport\Viewport.cpp" />

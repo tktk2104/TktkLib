@@ -1,23 +1,13 @@
 #include "TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjects.h"
 
 #include <TktkMath/Structs/Vector2.h>
-#include <TktkMath/Structs/Vector3.h>
 #include <TktkMath/Structs/Matrix4.h>
 
-#include <TktkFileIo/lodepng.h>
-
-#include <stdexcept>
-#include <vector>
+#include <array>
 
 namespace tktk
 {
 	constexpr unsigned int commandListCount{ 1 };
-
-	struct VertexData
-	{
-		tktkMath::Vector3 pos;
-		tktkMath::Vector2 uv;
-	};
 
 	DX3DBaseObjects::DX3DBaseObjects(const DX3DBaseObjectsInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize)
 		: m_viewport(initParam.viewPortNum)
@@ -108,24 +98,6 @@ namespace tktk
 
 			m_descriptorHeap.createRtvDescriptorHeap(0, m_device, initParam);
 		}
-
-		// 描画する頂点の配列
-		std::vector<VertexData> vertices =
-		{
-			{{ -0.4f, -0.7f, 0.0f }, { 0.0f, 1.0f}},
-			{{ -0.4f,  0.7f, 0.0f }, { 0.0f, 0.0f}},
-			{{  0.4f, -0.7f, 0.0f }, { 1.0f, 1.0f}},
-			{{  0.4f,  0.7f, 0.0f }, { 1.0f, 0.0f}}
-		};
-		m_vertexBuffer.create(0, m_device, vertices);
-
-		// 描画する頂点のインデックス
-		std::vector<unsigned short> indices =
-		{
-			0, 1, 2,
-			2, 1, 3
-		};
-		m_indexBuffer.create(0, m_device, indices);
 
 		// ルートシグネチャを作る
 		{
@@ -226,12 +198,6 @@ namespace tktk
 
 			// コマンドリストをリセットする
 			m_commandList->Reset(m_commandAllocator, nullptr);
-		}
-
-		// 定数バッファを作る
-		{
-			tktkMath::Matrix4 mat = tktkMath::mat4Identity;
-			m_descriptorHeap.createConstantBuffer(0, m_device, mat);
 		}
 
 		// ディスクリプタヒープを作る
@@ -339,5 +305,20 @@ namespace tktk
 		
 		// 画面をフリップする
 		m_swapChain->Present(1, 0);
+	}
+
+	void DX3DBaseObjects::createVertexBuffer(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
+	{
+		m_vertexBuffer.create(id, m_device, vertexTypeSize, vertexDataCount, vertexDataTopPos);
+	}
+
+	void DX3DBaseObjects::createIndexBuffer(unsigned int id, const std::vector<unsigned short>& indices)
+	{
+		m_indexBuffer.create(id, m_device, indices);
+	}
+
+	void DX3DBaseObjects::createConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	{
+		m_descriptorHeap.createConstantBuffer(id, m_device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 }

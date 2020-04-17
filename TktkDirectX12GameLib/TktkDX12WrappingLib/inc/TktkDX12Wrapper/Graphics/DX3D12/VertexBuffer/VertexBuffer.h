@@ -14,6 +14,8 @@ namespace tktk
 
 	public:
 
+		void create(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
+
 		template <class VertexData>
 		void create(unsigned int id, ID3D12Device* device, const std::vector<VertexData>& vertexDataArray);
 
