@@ -1,17 +1,16 @@
 #ifndef SCISSOR_RECT_H_
 #define SCISSOR_RECT_H_
 
-#include <array>
+#include <vector>
 #include "ScissorRectData.h"
 
 namespace tktk
 {
-	template <int ScissorRectNum>
 	class ScissorRect
 	{
 	public:
 
-		ScissorRect() = default;
+		ScissorRect(unsigned int scissorRectNum);
 
 	public:
 
@@ -21,19 +20,7 @@ namespace tktk
 
 	private:
 
-		std::array<ScissorRectData, ScissorRectNum> m_scissorRectDataArray{};
+		std::vector<ScissorRectData> m_scissorRectDataArray{};
 	};
-
-	template<int ScissorRectNum>
-	inline void ScissorRect<ScissorRectNum>::create(unsigned int id, const std::vector<ScissorRectInitParam>& initParamArray)
-	{
-		m_scissorRectDataArray.at(id).initialize(initParamArray);
-	}
-
-	template<int ScissorRectNum>
-	inline void ScissorRect<ScissorRectNum>::set(unsigned int id, ID3D12GraphicsCommandList* commandList)
-	{
-		m_scissorRectDataArray.at(id).set(commandList);
-	}
 }
 #endif // !SCISSOR_RECT_H_

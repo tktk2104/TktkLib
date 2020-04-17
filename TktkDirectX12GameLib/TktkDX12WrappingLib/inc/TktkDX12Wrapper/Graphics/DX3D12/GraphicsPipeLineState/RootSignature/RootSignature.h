@@ -1,17 +1,16 @@
 #ifndef ROOT_SIGNATURE_H_
 #define ROOT_SIGNATURE_H_
 
-#include <array>
+#include <vector>
 #include "RootSignatureData.h"
 
 namespace tktk
 {
-	template <int RootSignatureNum>
 	class RootSignature
 	{
 	public:
 
-		RootSignature() = default;
+		RootSignature(unsigned int rootSignatureNum);
 
 	public:
 
@@ -23,25 +22,7 @@ namespace tktk
 
 	private:
 
-		std::array<RootSignatureData, RootSignatureNum> m_rootSignatureDataArray{};
+		std::vector<RootSignatureData> m_rootSignatureDataArray{};
 	};
-
-	template<int RootSignatureNum>
-	inline void RootSignature<RootSignatureNum>::create(unsigned int id, ID3D12Device* device, const RootSignatureInitParam& initParam)
-	{
-		m_rootSignatureDataArray.at(id).initialize(device, initParam);
-	}
-
-	template<int RootSignatureNum>
-	inline ID3D12RootSignature* RootSignature<RootSignatureNum>::getPtr(unsigned int id) const
-	{
-		return m_rootSignatureDataArray.at(id).getPtr();
-	}
-
-	template<int RootSignatureNum>
-	inline void RootSignature<RootSignatureNum>::set(unsigned int id, ID3D12GraphicsCommandList* commandList) const
-	{
-		m_rootSignatureDataArray.at(id).set(commandList);
-	}
 }
 #endif // !ROOT_SIGNATURE_H_

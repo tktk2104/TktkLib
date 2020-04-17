@@ -11,7 +11,8 @@ namespace tktk
 	public:
 
 		DX12GameManager(
-			WindowInitParam&& param,
+			const DX3DBaseObjectsInitParam& dx3dInitParam,
+			const WindowInitParam& windowInitParam,
 			const std::string& tktkLibResFolderPath = ""		// ライブラリで使用するリソースのフォルダのパス
 		);
 

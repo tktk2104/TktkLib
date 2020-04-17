@@ -19,7 +19,13 @@ namespace tktk
 		tktkMath::Vector2 uv;
 	};
 
-	DX3DBaseObjects::DX3DBaseObjects(HWND hwnd, const tktkMath::Vector2& windowSize)
+	DX3DBaseObjects::DX3DBaseObjects(const DX3DBaseObjectsInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize)
+		: m_viewport(initParam.viewPortNum)
+		, m_scissorRect(initParam.scissorRectNum)
+		, m_vertexBuffer(initParam.vertexBufferNum)
+		, m_indexBuffer(initParam.indexBufferNum)
+		, m_graphicsPipeLineState(initParam.graphicsPipeLineNum, initParam.rootSignatureNum)
+		, m_descriptorHeap(initParam.basicDescriptorHeapNum, initParam.rtvDescriptorHeapNum, initParam.textureBufferNum, initParam.constantBufferNum, initParam.renderTargetBufferNum, initParam.backBufferNum)
 	{
 #ifdef _DEBUG
 		{
@@ -40,12 +46,6 @@ namespace tktk
 		CreateDXGIFactory1(IID_PPV_ARGS(&m_factory));
 #endif
 
-		// ビューポートを作る
-		m_viewport.create(0, { { windowSize, tktkMath::vec2Zero, 1.0f, 0.0f } });
-
-		// シザー矩形を作る
-		m_scissorRect.create(0, { { tktkMath::vec2Zero, windowSize } });
-
 		// コマンドアロケータを作る
 		m_device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandAllocator));
 
@@ -53,32 +53,42 @@ namespace tktk
 		m_device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_commandAllocator, nullptr, IID_PPV_ARGS(&m_commandList));
 
 		// コマンドキューを作る
-		{
-			D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
-			commandQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
-			commandQueueDesc.NodeMask = 0;
-			commandQueueDesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;
-			commandQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-			m_device->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&m_commandQueue));
-		}
+		D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
+		commandQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
+		commandQueueDesc.NodeMask = 0;
+		commandQueueDesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;
+		commandQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
+		m_device->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&m_commandQueue));
 		
 		// スワップチェーンを作る
-		{
-			DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
-			swapChainDesc.Width = static_cast<unsigned int>(windowSize.x);
-			swapChainDesc.Height = static_cast<unsigned int>(windowSize.y);
-			swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-			swapChainDesc.Stereo = false;
-			swapChainDesc.SampleDesc.Count = 1;
-			swapChainDesc.SampleDesc.Quality = 0;
-			swapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;
-			swapChainDesc.BufferCount = 2U;
-			swapChainDesc.Scaling = DXGI_SCALING_STRETCH;
-			swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-			swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
-			swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-			m_factory->CreateSwapChainForHwnd(m_commandQueue, hwnd, &swapChainDesc, nullptr, nullptr, &m_swapChain);
-		}
+		DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
+		swapChainDesc.Width = static_cast<unsigned int>(windowSize.x);
+		swapChainDesc.Height = static_cast<unsigned int>(windowSize.y);
+		swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		swapChainDesc.Stereo = false;
+		swapChainDesc.SampleDesc.Count = 1;
+		swapChainDesc.SampleDesc.Quality = 0;
+		swapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;
+		swapChainDesc.BufferCount = 2U;
+		swapChainDesc.Scaling = DXGI_SCALING_STRETCH;
+		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+		swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
+		swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+		m_factory->CreateSwapChainForHwnd(m_commandQueue, hwnd, &swapChainDesc, nullptr, nullptr, &m_swapChain);
+
+		// フェンスを初期化する
+		m_fence.initialize(m_device);
+
+		// 初回リセット
+		m_commandList->Close();
+		m_commandAllocator->Reset();
+		m_commandList->Reset(m_commandAllocator, nullptr);
+
+		// ビューポートを作る
+		m_viewport.create(0, { { windowSize, tktkMath::vec2Zero, 1.0f, 0.0f } });
+
+		// シザー矩形を作る
+		m_scissorRect.create(0, { { tktkMath::vec2Zero, windowSize } });
 
 		// スワップチェーンのバックバッファーをディスクリプタヒープで使うための準備
 		for (unsigned int i = 0; i < 2U; ++i)
@@ -98,14 +108,6 @@ namespace tktk
 
 			m_descriptorHeap.createRtvDescriptorHeap(0, m_device, initParam);
 		}
-
-		// フェンスを作成する
-		m_device->CreateFence(m_fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&m_fence));
-
-		// 初回リセット
-		m_commandList->Close();
-		m_commandAllocator->Reset();
-		m_commandList->Reset(m_commandAllocator, nullptr);
 
 		// 描画する頂点の配列
 		std::vector<VertexData> vertices =
@@ -216,24 +218,8 @@ namespace tktk
 			ID3D12CommandList* commandLists[] = { m_commandList };
 			m_commandQueue->ExecuteCommandLists(1, commandLists);
 
-			// GPU処理が終わった事を検知するための準備
-			m_commandQueue->Signal(m_fence, ++m_fenceVal);
-
-			// もしGPU処理が終わっていなければ
-			if (m_fence->GetCompletedValue() != m_fenceVal)
-			{
-				// イベントを作ってそのハンドルを取得
-				auto eventHandle = CreateEvent(nullptr, false, false, nullptr);
-
-				// フェンスにGPU処理が終わったらイベントを発生させる事を設定する
-				m_fence->SetEventOnCompletion(m_fenceVal, eventHandle);
-
-				// フェンスに指定したイベントが発生するまで無限に待ち続ける
-				WaitForSingleObject(eventHandle, INFINITE);
-
-				// イベントハンドルを閉じる
-				CloseHandle(eventHandle);
-			}
+			// GPU処理が終わるまで待つ
+			m_fence.waitGpuProcess(m_commandQueue);
 
 			// コマンドアロケータをリセットする
 			m_commandAllocator->Reset();
@@ -279,10 +265,6 @@ namespace tktk
 		if (m_commandList != nullptr)
 		{
 			m_commandList->Release();
-		}
-		if (m_fence != nullptr)
-		{
-			m_fence->Release();
 		}
 		if (m_commandQueue != nullptr)
 		{
@@ -346,24 +328,8 @@ namespace tktk
 		std::array<ID3D12CommandList*, commandListCount> commandLists = { m_commandList };
 		m_commandQueue->ExecuteCommandLists(commandListCount, commandLists.data());
 
-		// GPU処理が終わった事を検知するための準備
-		m_commandQueue->Signal(m_fence, ++m_fenceVal);
-
-		// もしGPU処理が終わっていなければ
-		if (m_fence->GetCompletedValue() != m_fenceVal)
-		{
-			// イベントを作ってそのハンドルを取得
-			auto eventHandle = CreateEvent(nullptr, false, false, nullptr);
-
-			// フェンスにGPU処理が終わったらイベントを発生させる事を設定する
-			m_fence->SetEventOnCompletion(m_fenceVal, eventHandle);
-
-			// フェンスに指定したイベントが発生するまで無限に待ち続ける
-			WaitForSingleObject(eventHandle, INFINITE);
-
-			// イベントハンドルを閉じる
-			CloseHandle(eventHandle);
-		}
+		// GPU処理が終わるまで待つ
+		m_fence.waitGpuProcess(m_commandQueue);
 
 		// コマンドアロケータをリセットする
 		m_commandAllocator->Reset();

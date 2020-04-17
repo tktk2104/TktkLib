@@ -2,9 +2,13 @@
 
 namespace tktk
 {
-	DX12GameManager::DX12GameManager(WindowInitParam&& param, const std::string& tktkLibResFolderPath)
-		: m_window(std::move(param))
-		, m_dx3dBaseObjects(m_window.getHWND(), param.windowSize)
+	DX12GameManager::DX12GameManager(
+		const DX3DBaseObjectsInitParam& dx3dInitParam,
+		const WindowInitParam& windowInitParam,
+		const std::string& tktkLibResFolderPath
+	)
+		: m_window(windowInitParam)
+		, m_dx3dBaseObjects(dx3dInitParam, m_window.getHWND(), windowInitParam.windowSize)
 	{
 	}
 

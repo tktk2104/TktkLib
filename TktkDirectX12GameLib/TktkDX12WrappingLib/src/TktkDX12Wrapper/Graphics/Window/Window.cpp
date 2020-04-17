@@ -13,7 +13,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 namespace tktk
 {
-	Window::Window(WindowInitParam&& initParam)
+	Window::Window(const WindowInitParam& initParam)
 		: m_windowSize(initParam.windowSize)
 	{
 		// ウィンドウクラスを生成

@@ -15,7 +15,7 @@ namespace tktk
 	public:
 
 		explicit Window(
-			WindowInitParam&& initParam
+			const WindowInitParam& initParam
 		);
 
 		// ÉRÉsÅ[ã÷é~

@@ -1,17 +1,16 @@
 #ifndef VIEWPORT_H_
 #define VIEWPORT_H_
 
-#include <array>
+#include <vector>
 #include "ViewportData.h"
 
 namespace tktk
 {
-	template <int ViewportNum>
 	class Viewport
 	{
 	public:
 
-		Viewport() = default;
+		Viewport(unsigned int viewportNum);
 
 	public:
 
@@ -21,19 +20,7 @@ namespace tktk
 
 	private:
 
-		std::array<ViewportData, ViewportNum> m_viewportDataArray{};
+		std::vector<ViewportData> m_viewportDataArray{};
 	};
-
-	template<int ViewportNum>
-	inline void Viewport<ViewportNum>::create(unsigned int id, const std::vector<ViewportInitParam>& initParamArray)
-	{
-		m_viewportDataArray.at(id).initialize(initParamArray);
-	}
-
-	template<int ViewportNum>
-	inline void Viewport<ViewportNum>::set(unsigned int id, ID3D12GraphicsCommandList* commandList)
-	{
-		m_viewportDataArray.at(id).set(commandList);
-	}
 }
 #endif // !VIEWPORT_H_

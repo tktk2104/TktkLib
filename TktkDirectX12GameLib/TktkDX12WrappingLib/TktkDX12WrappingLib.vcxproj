@@ -168,6 +168,7 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeap.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeapData.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeapInitParam.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Fence\Fence.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineState.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineStateData.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineStateInitParam.h" />
@@ -185,21 +186,35 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Viewport\ViewportData.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Viewport\ViewportInitParam.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjectsInitParam.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\Window\Window.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\Window\WindowInitParam.h" />
     <ClInclude Include="inc\TktkDX12WrappingLibDefinition.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeap.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeapData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\ConstantBuffer\ConstantBuffer.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\ConstantBuffer\ConstantBufferData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\RenderTargetBuffer\RenderTargetBuffer.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\RenderTargetBuffer\RenderTargetBufferData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\TextureBuffer\TextureBuffer.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\TextureBuffer\TextureBufferData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DescriptorHeap.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeap.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeapData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\Fence\Fence.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineState.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineStateData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\RootSignature\RootSignature.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\RootSignature\RootSignatureData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBuffer.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBufferData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRect.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBufferData.cpp" />
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\Viewport\Viewport.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\Viewport\ViewportData.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.cpp" />
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\Window\Window.cpp" />
