@@ -144,6 +144,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasEndChecker.h" />
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasStartChecker.h" />
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasUpdateChecker.h" />
     <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\HasFuncCheckMacro.h" />
     <ClInclude Include="inc\TktkTemplateMetaLib\HasValueCheck\HasValueCheckMacro.h" />
     <ClInclude Include="inc\TktkTemplateMetaLib\IsAllOf\IsAllOf.h" />

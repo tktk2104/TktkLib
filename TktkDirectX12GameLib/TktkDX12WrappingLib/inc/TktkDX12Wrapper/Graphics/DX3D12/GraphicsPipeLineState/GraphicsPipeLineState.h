@@ -18,7 +18,7 @@ namespace tktk
 
 		void createRootSignature(unsigned int id, ID3D12Device* device, const RootSignatureInitParam& initParam);
 
-		void createGraphicsPipeLineState(unsigned int graphicsPipeLineId, ID3D12Device* device, const GraphicsPipeLineStateInitParam& initParam, const std::string& vsFilePath, const std::string& psFilePath, unsigned int useRootSignatureId);
+		void createGraphicsPipeLineState(unsigned int graphicsPipeLineId, ID3D12Device* device, const GraphicsPipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath, unsigned int useRootSignatureId);
 
 		void set(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 

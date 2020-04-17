@@ -30,5 +30,14 @@
     <ClInclude Include="inc\TktkTemplateMetaLib\TypeCheck\IsNumber.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasUpdateChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasStartChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasEndChecker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

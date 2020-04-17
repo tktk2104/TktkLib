@@ -153,9 +153,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="inc\TktkDX12GameLibDefinition.h" />
+    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.h" />
+    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyVoidPtr.h" />
+    <ClInclude Include="inc\TktkDX12Game\Scene\SceneInstanceCarrier.h" />
+    <ClInclude Include="inc\TktkDX12Game\Scene\SceneManager.h" />
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.cpp" />
+    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyVoidPtr.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Scene\SceneInstanceCarrier.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Scene\SceneManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\_MainManager\DX12GameManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

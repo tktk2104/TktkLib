@@ -16,14 +16,14 @@ namespace tktk
 		m_rootSignature.create(id, device, initParam);
 	}
 
-	void GraphicsPipeLineState::createGraphicsPipeLineState(unsigned int graphicsPipeLineId, ID3D12Device* device, const GraphicsPipeLineStateInitParam& initParam, const std::string& vsFilePath, const std::string& psFilePath, unsigned int useRootSignatureId)
+	void GraphicsPipeLineState::createGraphicsPipeLineState(unsigned int graphicsPipeLineId, ID3D12Device* device, const GraphicsPipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath, unsigned int useRootSignatureId)
 	{
 		// 頂点シェーダーを読み込む
 		std::vector<char> vsByteArray;
 		{
 			std::FILE* fp;
 	
-			int ret = fopen_s(&fp, vsFilePath.c_str(), "rb");
+			int ret = fopen_s(&fp, shaderFilePath.vsFilePath.c_str(), "rb");
 	
 #ifdef _DEBUG
 			if (ret != 0)
@@ -45,7 +45,7 @@ namespace tktk
 		{
 			std::FILE* fp;
 	
-			int ret = fopen_s(&fp, psFilePath.c_str(), "rb");
+			int ret = fopen_s(&fp, shaderFilePath.psFilePath.c_str(), "rb");
 	
 #ifdef _DEBUG
 			if (ret != 0)

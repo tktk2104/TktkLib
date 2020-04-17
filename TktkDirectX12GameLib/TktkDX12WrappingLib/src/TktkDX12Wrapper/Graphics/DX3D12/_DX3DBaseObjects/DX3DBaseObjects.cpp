@@ -3,12 +3,8 @@
 #include <TktkMath/Structs/Vector2.h>
 #include <TktkMath/Structs/Matrix4.h>
 
-#include <array>
-
 namespace tktk
 {
-	constexpr unsigned int commandListCount{ 1 };
-
 	DX3DBaseObjects::DX3DBaseObjects(const DX3DBaseObjectsInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize)
 		: m_viewport(initParam.viewPortNum)
 		, m_scissorRect(initParam.scissorRectNum)
@@ -96,121 +92,7 @@ namespace tktk
 			initParam.m_descriptorParamArray.at(1U).m_type = RtvDescriptorType::backBuffer;
 			initParam.m_descriptorParamArray.at(1U).m_id = 1U;
 
-			m_descriptorHeap.createRtvDescriptorHeap(0, m_device, initParam);
-		}
-
-		// ルートシグネチャを作る
-		{
-			RootSignatureInitParam initParam{};
-			initParam.m_flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-
-			initParam.m_rootParamArray.resize(2U);
-			{
-				initParam.m_rootParamArray.at(0).m_shaderVisibility		= D3D12_SHADER_VISIBILITY_PIXEL;
-				initParam.m_rootParamArray.at(0).m_descriptorTableArray.resize(1U);
-				{
-					initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_numDescriptors	= 1;
-					initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_type			= D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-				}
-			}
-			{
-				initParam.m_rootParamArray.at(1).m_shaderVisibility		= D3D12_SHADER_VISIBILITY_VERTEX;
-				initParam.m_rootParamArray.at(1).m_descriptorTableArray.resize(1U);
-				{
-					initParam.m_rootParamArray.at(1).m_descriptorTableArray.at(0).m_numDescriptors	= 1;
-					initParam.m_rootParamArray.at(1).m_descriptorTableArray.at(0).m_type			= D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-				}
-			}
-			initParam.m_samplerDescArray.resize(1U);
-			{
-				initParam.m_samplerDescArray.at(0).m_addressU			= D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-				initParam.m_samplerDescArray.at(0).m_addressV			= D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-				initParam.m_samplerDescArray.at(0).m_addressW			= D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-				initParam.m_samplerDescArray.at(0).m_bordercolor		= D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
-				initParam.m_samplerDescArray.at(0).m_filter				= D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-				initParam.m_samplerDescArray.at(0).m_maxLod				= D3D12_FLOAT32_MAX;
-				initParam.m_samplerDescArray.at(0).m_minLod				= 0.0f;
-				initParam.m_samplerDescArray.at(0).m_shaderVisibility	= D3D12_SHADER_VISIBILITY_PIXEL;
-				initParam.m_samplerDescArray.at(0).m_comparisonFunc		= D3D12_COMPARISON_FUNC_NEVER;
-			}
-
-			m_graphicsPipeLineState.createRootSignature(0, m_device, initParam);
-		}
-
-		// グラフィックパイプラインを作る
-		{
-			D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
-			renderTargetBlendDesc.BlendEnable = false;
-			renderTargetBlendDesc.LogicOpEnable = false;
-			renderTargetBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-
-			GraphicsPipeLineStateInitParam initParam{};
-			initParam.m_rasterizerDesc.MultisampleEnable = false;
-			initParam.m_rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
-			initParam.m_rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
-			initParam.m_rasterizerDesc.DepthClipEnable = true;
-			initParam.m_blendDesc.AlphaToCoverageEnable = false;
-			initParam.m_blendDesc.IndependentBlendEnable = false;
-			initParam.m_blendDesc.RenderTarget[0] = renderTargetBlendDesc;
-			initParam.m_inputLayoutArray = {
-				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-				{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,	  0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
-			};
-			initParam.m_primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-			initParam.m_renderTargetFormatArray = {
-				DXGI_FORMAT_R8G8B8A8_UNORM
-			};
-
-			m_graphicsPipeLineState.createGraphicsPipeLineState(
-				0,
-				m_device,
-				initParam,
-				"res/BasicVertexShader.cso",
-				"res/BasicPixelShader.cso",
-				0
-				);
-		}
-
-		// テクスチャバッファを作る
-		{
-			TexBufFormatParam formatParam{};
-			formatParam.resourceDimension	= D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-			formatParam.format				= DXGI_FORMAT_R8G8B8A8_UNORM;
-			formatParam.arraySize			= 1U;
-			formatParam.mipLevels			= 1U;
-			formatParam.sampleDescCount		= 1U;
-			formatParam.sampleDescQuality	= 0U;
-
-			m_descriptorHeap.gpuPriorityLoadTextureBuffer(0, m_device, m_commandList, formatParam, "res/test.png");
-
-			// コマンドリストを閉じる
-			m_commandList->Close();
-
-			// コマンドリストを実行する
-			ID3D12CommandList* commandLists[] = { m_commandList };
-			m_commandQueue->ExecuteCommandLists(1, commandLists);
-
-			// GPU処理が終わるまで待つ
-			m_fence.waitGpuProcess(m_commandQueue);
-
-			// コマンドアロケータをリセットする
-			m_commandAllocator->Reset();
-
-			// コマンドリストをリセットする
-			m_commandList->Reset(m_commandAllocator, nullptr);
-		}
-
-		// ディスクリプタヒープを作る
-		{
-			BasicDescriptorHeapInitParam initParam{};
-			initParam.m_shaderVisible = true;
-			initParam.m_descriptorParamArray.resize(2U);
-			initParam.m_descriptorParamArray.at(0U).m_type = BasicDescriptorType::textureBuffer;
-			initParam.m_descriptorParamArray.at(0U).m_id = 0U;
-			initParam.m_descriptorParamArray.at(1U).m_type = BasicDescriptorType::constantBuffer;
-			initParam.m_descriptorParamArray.at(1U).m_id = 0U;
-
-			m_descriptorHeap.createBasicDescriptorHeap(0U, m_device, initParam);
+			m_descriptorHeap.createRtvDescriptorHeap(0U, m_device, initParam);
 		}
 	}
 
@@ -287,12 +169,20 @@ namespace tktk
 		// バックバッファをプリセット状態にする
 		m_descriptorHeap.unUseBackBuffer(m_curBackBufferIndex, m_commandList);
 
+		executeCommandList();
+
+		// 画面をフリップする
+		m_swapChain->Present(1, 0);
+	}
+
+	void DX3DBaseObjects::executeCommandList()
+	{
 		// コマンドリストを閉じる
 		m_commandList->Close();
 
-		// コマンドリストをコマンドキューに渡す
-		std::array<ID3D12CommandList*, commandListCount> commandLists = { m_commandList };
-		m_commandQueue->ExecuteCommandLists(commandListCount, commandLists.data());
+		// コマンドリストを実行する
+		ID3D12CommandList* commandLists[] = { m_commandList };
+		m_commandQueue->ExecuteCommandLists(1, commandLists);
 
 		// GPU処理が終わるまで待つ
 		m_fence.waitGpuProcess(m_commandQueue);
@@ -302,9 +192,16 @@ namespace tktk
 
 		// コマンドリストをリセットする
 		m_commandList->Reset(m_commandAllocator, nullptr);
-		
-		// 画面をフリップする
-		m_swapChain->Present(1, 0);
+	}
+
+	void DX3DBaseObjects::createRootSignature(unsigned int id, const RootSignatureInitParam& initParam)
+	{
+		m_graphicsPipeLineState.createRootSignature(id, m_device, initParam);
+	}
+
+	void DX3DBaseObjects::createGraphicsPipeLineState(unsigned int graphicsPipeLineId, const GraphicsPipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath, unsigned int useRootSignatureId)
+	{
+		m_graphicsPipeLineState.createGraphicsPipeLineState(graphicsPipeLineId, m_device, initParam, shaderFilePath, useRootSignatureId);
 	}
 
 	void DX3DBaseObjects::createVertexBuffer(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
@@ -320,5 +217,15 @@ namespace tktk
 	void DX3DBaseObjects::createConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_descriptorHeap.createConstantBuffer(id, m_device, constantBufferTypeSize, constantBufferDataTopPos);
+	}
+
+	void DX3DBaseObjects::createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam)
+	{
+		m_descriptorHeap.createBasicDescriptorHeap(id, m_device, initParam);
+	}
+
+	void DX3DBaseObjects::gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath)
+	{
+		m_descriptorHeap.gpuPriorityLoadTextureBuffer(id, m_device, m_commandList, formatParam, texDataPath);
 	}
 }
