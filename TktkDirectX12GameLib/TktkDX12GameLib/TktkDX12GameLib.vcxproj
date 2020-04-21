@@ -153,25 +153,35 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="inc\TktkDX12GameLibDefinition.h" />
-    <ClInclude Include="inc\TktkDX12Game\Component\ComponentInstanceCarrier.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentBase.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentMainList.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\ComponentManager.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentUpdatePriorityList.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObject.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectManager.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectTagList.h" />
+    <ClInclude Include="inc\TktkDX12Game\HeapArray\HeapArray.h" />
     <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.h" />
-    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyVoidPtr.h" />
+    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyOriginalVoidPtr.h" />
+    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyReplicaVoidPtr.h" />
+    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyUniqueVoidPtr.h" />
+    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyVoidPtrVTable.h" />
     <ClInclude Include="inc\TktkDX12Game\Scene\SceneInstanceCarrier.h" />
     <ClInclude Include="inc\TktkDX12Game\Scene\SceneManager.h" />
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\TktkDX12Game\Component\ComponentInstanceCarrier.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentMainList.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\ComponentManager.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentUpdatePriorityList.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObject.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectTagList.cpp" />
+    <ClCompile Include="src\TktkDX12Game\HeapArray\HeapArray.cpp" />
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.cpp" />
-    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyVoidPtr.cpp" />
+    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyOriginalVoidPtr.cpp" />
+    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyReplicaVoidPtr.cpp" />
+    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyUniqueVoidPtr.cpp" />
     <ClCompile Include="src\TktkDX12Game\Scene\SceneInstanceCarrier.cpp" />
     <ClCompile Include="src\TktkDX12Game\Scene\SceneManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\_MainManager\DX12GameManager.cpp" />

@@ -9,6 +9,8 @@
 #include <TktkMath/Structs/Vector3.h>
 #include <TktkMath/Structs/Matrix4.h>
 
+#include <TktkDX12Game/Component/ComponentManager.h>
+
 struct TestScene
 {
 	void start()
@@ -33,8 +35,44 @@ struct VertexData
 	tktkMath::Vector2 uv;
 };
 
+struct Player
+	: public tktk::ComponentBase
+{
+public:
+
+	void update()
+	{
+
+	}
+};
+
+struct Enemy
+	: public tktk::ComponentBase
+{
+public:
+
+	void update()
+	{
+
+	}
+};
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine, int nCmdShow)
 {
+
+	{
+		tktk::ComponentManager manager;
+
+		manager.addUpdatePriority<Player>(2.0f);
+		manager.addUpdatePriority<Enemy>(1.0f);
+
+		manager.createComponent<Player>();
+		manager.createComponent<Enemy>();
+
+		manager.update();
+	}
+
+
 	{
 		tktk::DX3DBaseObjectsInitParam initParam{};
 		initParam.viewPortNum				= 1U;

@@ -4,7 +4,7 @@
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasStartChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasEndChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasUpdateChecker.h>
-#include "../SafetyVoidPtr/SafetyVoidPtr.h"
+#include "../SafetyVoidPtr/SafetyUniqueVoidPtr.h"
 
 namespace tktk
 {
@@ -31,9 +31,9 @@ namespace tktk
 
 		struct VTable
 		{
-			void (*start)(const SafetyVoidPtr&);
-			void (*update)(const SafetyVoidPtr&);
-			void (*end)(const SafetyVoidPtr&);
+			void (*start)(const SafetyUniqueVoidPtr&);
+			void (*update)(const SafetyUniqueVoidPtr&);
+			void (*end)(const SafetyUniqueVoidPtr&);
 		};
 
 		template <class T>
@@ -41,9 +41,9 @@ namespace tktk
 		{
 			static VTable m_vtable;
 
-			static void start(const SafetyVoidPtr& self);
-			static void update(const SafetyVoidPtr& self);
-			static void end(const SafetyVoidPtr& self);
+			static void start(const SafetyUniqueVoidPtr& self);
+			static void update(const SafetyUniqueVoidPtr& self);
+			static void end(const SafetyUniqueVoidPtr& self);
 
 			template <class U>
 			static void checkAndRunStart(U runClass);
@@ -55,10 +55,10 @@ namespace tktk
 
 	private:
 
-		bool			m_isActive{ false };
-		bool			m_nextFrameIsActive{ false };
-		SafetyVoidPtr	m_scenePtr{};
-		VTable*			m_vtablePtr{ nullptr };
+		bool				m_isActive{ false };
+		bool				m_nextFrameIsActive{ false };
+		SafetyUniqueVoidPtr	m_scenePtr{};
+		VTable*				m_vtablePtr{ nullptr };
 	};
 //„¬„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
 //„«‚±‚±‚©‚ç‰º‚ÍŠÖ”‚ÌÀ‘•
@@ -82,21 +82,24 @@ namespace tktk
 	}
 
 	template<class T>
-	inline void SceneInstanceCarrier::VTableInitializer<T>::start(const SafetyVoidPtr& self)
+	inline void SceneInstanceCarrier::VTableInitializer<T>::start(const SafetyUniqueVoidPtr& self)
 	{
-		checkAndRunStart(self.castPtr<T>());
+		start_runner<void>::checkAndRun(self.castPtr<T>());
+		//checkAndRunStart(self.castPtr<T>());
 	}
 
 	template<class T>
-	inline void SceneInstanceCarrier::VTableInitializer<T>::update(const SafetyVoidPtr& self)
+	inline void SceneInstanceCarrier::VTableInitializer<T>::update(const SafetyUniqueVoidPtr& self)
 	{
-		checkAndRunUpdate(self.castPtr<T>());
+		update_runner<void>::checkAndRun(self.castPtr<T>());
+		//checkAndRunUpdate(self.castPtr<T>());
 	}
 
 	template<class T>
-	inline void SceneInstanceCarrier::VTableInitializer<T>::end(const SafetyVoidPtr& self)
+	inline void SceneInstanceCarrier::VTableInitializer<T>::end(const SafetyUniqueVoidPtr& self)
 	{
-		checkAndRunEnd(self.castPtr<T>());
+		end_runner<void>::checkAndRun(self.castPtr<T>());
+		//checkAndRunEnd(self.castPtr<T>());
 	}
 
 	template<class T>
