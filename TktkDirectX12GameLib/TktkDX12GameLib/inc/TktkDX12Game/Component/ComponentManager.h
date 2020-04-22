@@ -4,8 +4,9 @@
 #include <memory>
 #include <map>
 #include <unordered_map>
-#include "ComponentMainList.h"
 #include "ComponentUpdatePriorityList.h"
+#include "ComponentMainList.h"
+#include "ComponentDrawList.h"
 
 namespace tktk
 {
@@ -41,6 +42,8 @@ namespace tktk
 		ComponentUpdatePriorityList									m_priorityList;
 		std::multimap<float, std::shared_ptr<ComponentMainList>>	m_mainMap;
 		std::unordered_map<int, std::weak_ptr<ComponentMainList>>	m_addComponentMap;
+
+		ComponentDrawList											m_drawList;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -65,7 +68,9 @@ namespace tktk
 			createList<ComponentType>();
 			findNode = m_addComponentMap.find(ClassTypeChecker::getClassId<ComponentType>());
 		}
-		(*findNode).second.lock()->createComponent<ComponentType>(args...);
+		auto createdComponent = (*findNode).second.lock()->createComponent<ComponentType>(args...);
+
+		m_drawList.addComponent(createdComponent);
 	}
 
 	// コンポーネントの更新処理

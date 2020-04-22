@@ -3,50 +3,71 @@
 
 #include <memory>
 #include <forward_list>
+#include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasAwakeChecker.h>
+#include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnEnableChecker.h>
+#include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnDisableChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasUpdateChecker.h>
+#include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnDestroyChecker.h>
 #include "ComponentBase.h"
 
 namespace tktk
 {
+	// １種類のコンポーネントを管理するリストクラス
 	class ComponentMainList
 	{
 	public:
 
-		template<class T>
-		ComponentMainList(T* rawPtr);
+		// このクラスで管理するコンポーネントの型のポインタを引数に渡す
+		// ※ポインタの型情報だけあれば良いのでNULLポインタで良い
+		template<class ComponentType>
+		ComponentMainList(ComponentType* rawPtr);
 
 	public:
 
+		// テンプレート引数の型のコンポーネントを引数の値を使って作る
+		// ※コンストラクタで指定した型でないとビルド不可
 		template <class ComponentType, class... Args>
-		void createComponent(Args... args);
+		std::shared_ptr<ComponentBase> createComponent(Args... args);
 
+		// 自身が管理するコンポーネントを巡回し、アクティブフラグが前フレームと変わっていたら「onEnable()」もしくは「onDisable()」関数の実行を試みる
+		void activeChangeCheck();
+
+		// 自身が管理するコンポーネントの型が「update()」関数を持っていたらそれらを全て実行する
 		void runUpdate();
+
+		// 死亡フラグが立っているコンポーネントを削除する
+		void removeDeadComponent();
 
 	private:
 
+		// 自身が管理するコンポーネントの型情報を隠蔽するための関数ポインタ
 		struct VTable
 		{
 			void(*runUpdate)(const std::forward_list<std::shared_ptr<ComponentBase>>&);
+			void(*runOnEnable)(const std::shared_ptr<ComponentBase>&);
+			void(*runOnDisable)(const std::shared_ptr<ComponentBase>&);
+			void(*runOnDestroy)(const std::shared_ptr<ComponentBase>&);
 		};
 
-		template <class T>
+		// 自身が管理するコンポーネントの型情報を隠蔽するための関数の実態が存在する所
+		template <class ComponentType>
 		struct VTableInitializer
 		{
-			static void runUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
-			{
-				checkAndRunUpdate<T>(mainList);
-			}
+			// 「update()」関数を持っていたら呼ぶ処理を行う為の関数達
+			static void runUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList);
+			template <class U, std::enable_if_t<has_update_checker<U*, void>::value>* = nullptr>
+			static void checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList);
+			template <class U, std::enable_if_t<!has_update_checker<U*, void>::value>* = nullptr>
+			static void checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList);
 
-			template <class U, std::enable_if_t<has_update_checker<U, void>::value>* = nullptr>
-			static void checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
-			{
-				for (const auto& node : mainList)
-				{
-					std::dynamic_pointer_cast<std::remove_pointer_t<U>>(node)->update();
-				}
-			}
-			template <class U, std::enable_if_t<!has_update_checker<U, void>::value>* = nullptr>
-			static void checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList) {}
+			// 「onEnable()」関数を持っていたら呼ぶ処理を行う為の関数
+			static void runOnEnable(const std::shared_ptr<ComponentBase>& runPtr);
+
+			// 「onDisable()」関数を持っていたら呼ぶ処理を行う為の関数
+			static void runOnDisable(const std::shared_ptr<ComponentBase>& runPtr);
+
+			// 「onDestroy()」関数を持っていたら呼ぶ処理を行う為の関数
+			static void runOnDestroy(const std::shared_ptr<ComponentBase>& runPtr);
 
 			static VTable m_vtable;
 		};
@@ -60,22 +81,70 @@ namespace tktk
 //┃ここから下は関数の実装
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-	template<class T>
-	typename ComponentMainList::VTable ComponentMainList::VTableInitializer<T>::m_vtable =
+	// このクラスで管理するコンポーネントの型のポインタを引数に渡す
+	// ※ポインタの型情報だけあれば良いのでNULLポインタで良い
+	template<class ComponentType>
+	inline ComponentMainList::ComponentMainList(ComponentType* rawPtr)
+		: m_vtablePtr(&VTableInitializer<ComponentType>::m_vtable)
 	{
-		&ComponentMainList::VTableInitializer<T>::runUpdate
+	}
+
+	// テンプレート引数の型のコンポーネントを引数の値を使って作る
+	// ※コンストラクタで指定した型でないとビルド不可
+	template<class ComponentType, class ...Args>
+	inline std::shared_ptr<ComponentBase> ComponentMainList::createComponent(Args ...args)
+	{
+		auto createdComponent = std::make_shared<ComponentType>(args...);
+		awake_runner<void>::checkAndRun(createdComponent);
+		m_mainList.push_front(createdComponent);
+		return createdComponent;
+	}
+
+	template<class ComponentType>
+	typename ComponentMainList::VTable ComponentMainList::VTableInitializer<ComponentType>::m_vtable =
+	{
+		& ComponentMainList::VTableInitializer<ComponentType>::runUpdate,
+		& ComponentMainList::VTableInitializer<ComponentType>::runOnEnable,
+		& ComponentMainList::VTableInitializer<ComponentType>::runOnDisable,
+		& ComponentMainList::VTableInitializer<ComponentType>::runOnDestroy,
 	};
 
-	template<class T>
-	inline ComponentMainList::ComponentMainList(T* rawPtr)
-		: m_vtablePtr(&VTableInitializer<T*>::m_vtable)
+	template<class ComponentType>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::runUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
 	{
+		checkAndRunUpdate<ComponentType>(mainList);
 	}
 
-	template<class ComponentType, class ...Args>
-	inline void ComponentMainList::createComponent(Args ...args)
+	template<class ComponentType>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::runOnEnable(const std::shared_ptr<ComponentBase>& runPtr)
 	{
-		m_mainList.push_front(std::make_shared<ComponentType>(args...));
+		onEnable_runner<void>::checkAndRun(std::dynamic_pointer_cast<ComponentType>(runPtr));
 	}
+
+	template<class ComponentType>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::runOnDisable(const std::shared_ptr<ComponentBase>& runPtr)
+	{
+		onDisable_runner<void>::checkAndRun(std::dynamic_pointer_cast<ComponentType>(runPtr));
+	}
+
+	template<class ComponentType>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::runOnDestroy(const std::shared_ptr<ComponentBase>& runPtr)
+	{
+		onDestroy_runner<void>::checkAndRun(std::dynamic_pointer_cast<ComponentType>(runPtr));
+	}
+
+	template<class ComponentType>
+	template<class U, std::enable_if_t<has_update_checker<U*, void>::value>*>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
+	{
+		for (const auto& node : mainList)
+		{
+			if (!node->isActive()) continue;
+			std::dynamic_pointer_cast<U>(node)->update();
+		}
+	}
+	template<class ComponentType>
+	template<class U, std::enable_if_t<!has_update_checker<U*, void>::value>*>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList) {}
 }
 #endif // !COMPONENT_MAIN_LIST_H_

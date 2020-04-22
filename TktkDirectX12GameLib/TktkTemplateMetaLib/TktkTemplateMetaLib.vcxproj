@@ -144,7 +144,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasAwakeChecker.h" />
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasDrawChecker.h" />
     <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasEndChecker.h" />
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasOnDestroyChecker.h" />
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasOnDisableChecker.h" />
+    <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasOnEnableChecker.h" />
     <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasStartChecker.h" />
     <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\CreatedStruct\HasUpdateChecker.h" />
     <ClInclude Include="inc\TktkTemplateMetaLib\HasFuncCheck\HasFuncCheckMacro.h" />

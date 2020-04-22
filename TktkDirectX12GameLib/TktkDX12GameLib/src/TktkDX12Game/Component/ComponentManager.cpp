@@ -6,9 +6,23 @@ namespace tktk
 	{
 		for (const auto& node : m_mainMap)
 		{
+			node.second->activeChangeCheck();
+		}
+
+		for (const auto& node : m_mainMap)
+		{
 			node.second->runUpdate();
 		}
 
 
+
+		m_drawList.runDraw();
+
+		for (const auto& node : m_mainMap)
+		{
+			node.second->removeDeadComponent();
+		}
+
+		m_drawList.removeDeadComponent();
 	}
 }

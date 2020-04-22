@@ -40,9 +40,29 @@ struct Player
 {
 public:
 
-	void update()
+	void awake()
 	{
 
+	}
+
+	void onEnable()
+	{
+
+	}
+
+	void onDisable()
+	{
+
+	}
+
+	void onDestroy()
+	{
+
+	}
+
+	void update()
+	{
+		//setActive(false);
 	}
 };
 
@@ -69,6 +89,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		manager.createComponent<Player>();
 		manager.createComponent<Enemy>();
 
+		manager.update();
+		manager.update();
 		manager.update();
 	}
 

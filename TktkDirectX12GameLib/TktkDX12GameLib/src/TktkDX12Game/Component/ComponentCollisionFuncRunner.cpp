@@ -1,0 +1,1 @@
+#include "TktkDX12Game/Component/ComponentCollisionFuncRunner.h"
