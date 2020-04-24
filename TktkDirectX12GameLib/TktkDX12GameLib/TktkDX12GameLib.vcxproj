@@ -153,16 +153,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="inc\TktkDX12GameLibDefinition.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentBasePtr.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\ComponentBase.h" />
-    <ClInclude Include="inc\TktkDX12Game\Component\ComponentCollisionFuncRunner.h" />
-    <ClInclude Include="inc\TktkDX12Game\Component\ComponentCollisionList.h" />
-    <ClInclude Include="inc\TktkDX12Game\Component\ComponentDrawList.h" />
-    <ClInclude Include="inc\TktkDX12Game\Component\ComponentDrawRunner.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentCollisionFunc\ComponentCollisionFuncRunner.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentCollisionFunc\ComponentCollisionList.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentDrawFunc\ComponentDrawList.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentDrawFunc\ComponentDrawRunner.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\ComponentMainList.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\ComponentManager.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentPtr.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\ComponentUpdatePriorityList.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\GameObjectComponentList.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObject.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectManager.h" />
+    <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectPtr.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectTagList.h" />
     <ClInclude Include="inc\TktkDX12Game\HeapArray\HeapArray.h" />
     <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.h" />
@@ -175,16 +179,19 @@
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentBasePtr.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\ComponentBase.cpp" />
-    <ClCompile Include="src\TktkDX12Game\Component\ComponentCollisionFuncRunner.cpp" />
-    <ClCompile Include="src\TktkDX12Game\Component\ComponentCollisionList.cpp" />
-    <ClCompile Include="src\TktkDX12Game\Component\ComponentDrawList.cpp" />
-    <ClCompile Include="src\TktkDX12Game\Component\ComponentDrawRunner.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentCollisionFunc\ComponentCollisionFuncRunner.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentCollisionFunc\ComponentCollisionList.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentDrawFunc\ComponentDrawList.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentDrawFunc\ComponentDrawRunner.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\ComponentMainList.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\ComponentManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\ComponentUpdatePriorityList.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\GameObjectComponentList.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObject.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectManager.cpp" />
+    <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectPtr.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectTagList.cpp" />
     <ClCompile Include="src\TktkDX12Game\HeapArray\HeapArray.cpp" />
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.cpp" />

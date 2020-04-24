@@ -66,16 +66,28 @@
     <ClInclude Include="inc\TktkDX12Game\Component\ComponentUpdatePriorityList.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Component\ComponentDrawList.h">
+    <ClInclude Include="inc\TktkDX12Game\Component\GameObjectComponentList.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Component\ComponentDrawRunner.h">
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentCollisionFunc\ComponentCollisionFuncRunner.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Component\ComponentCollisionList.h">
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentCollisionFunc\ComponentCollisionList.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Component\ComponentCollisionFuncRunner.h">
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentDrawFunc\ComponentDrawList.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentDrawFunc\ComponentDrawRunner.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentBasePtr.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\ComponentPtr.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectPtr.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,16 +137,25 @@
     <ClCompile Include="src\TktkDX12Game\Component\ComponentBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\Component\ComponentDrawRunner.cpp">
+    <ClCompile Include="src\TktkDX12Game\Component\GameObjectComponentList.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\Component\ComponentDrawList.cpp">
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentCollisionFunc\ComponentCollisionFuncRunner.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\Component\ComponentCollisionList.cpp">
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentCollisionFunc\ComponentCollisionList.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\Component\ComponentCollisionFuncRunner.cpp">
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentDrawFunc\ComponentDrawList.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentDrawFunc\ComponentDrawRunner.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\ComponentBasePtr.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectPtr.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

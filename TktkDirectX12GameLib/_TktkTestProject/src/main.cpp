@@ -10,6 +10,7 @@
 #include <TktkMath/Structs/Matrix4.h>
 
 #include <TktkDX12Game/Component/ComponentManager.h>
+#include <TktkDX12Game/Component/ComponentBase.h>
 
 struct TestScene
 {
@@ -40,6 +41,14 @@ struct Player
 {
 public:
 
+	Player()
+		: tktk::ComponentBase(0.0f, 1)
+	{
+
+	}
+
+public:
+
 	void awake()
 	{
 
@@ -52,7 +61,7 @@ public:
 
 	void onDisable()
 	{
-
+		//setActive(true);
 	}
 
 	void onDestroy()
@@ -63,6 +72,27 @@ public:
 	void update()
 	{
 		//setActive(false);
+		//destroy();
+	}
+
+	bool isCollide(const tktk::ComponentBasePtr& other)
+	{
+		return true;
+	}
+
+	void onCollisionEnter(const tktk::GameObjectPtr& other)
+	{
+
+	}
+
+	void onCollisionStay(const tktk::GameObjectPtr& other)
+	{
+
+	}
+
+	void onCollisionExit(const tktk::GameObjectPtr& other)
+	{
+
 	}
 };
 
@@ -71,7 +101,35 @@ struct Enemy
 {
 public:
 
+	Enemy()
+		: tktk::ComponentBase(0.0f, 2)
+	{
+
+	}
+
+public:
+
 	void update()
+	{
+
+	}
+
+	bool isCollide(const tktk::ComponentBasePtr& other)
+	{
+		return true;
+	}
+
+	void onCollisionEnter(const tktk::GameObjectPtr& other)
+	{
+
+	}
+
+	void onCollisionStay(const tktk::GameObjectPtr& other)
+	{
+
+	}
+
+	void onCollisionExit(const tktk::GameObjectPtr& other)
 	{
 
 	}
@@ -79,21 +137,6 @@ public:
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine, int nCmdShow)
 {
-
-	{
-		tktk::ComponentManager manager;
-
-		manager.addUpdatePriority<Player>(2.0f);
-		manager.addUpdatePriority<Enemy>(1.0f);
-
-		manager.createComponent<Player>();
-		manager.createComponent<Enemy>();
-
-		manager.update();
-		manager.update();
-		manager.update();
-	}
-
 
 	{
 		tktk::DX3DBaseObjectsInitParam initParam{};
@@ -241,6 +284,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		initParam.m_descriptorParamArray.at(1U).m_id = 0U;
 
 		tktk::DX12GameManager::createBasicDescriptorHeap(0U, initParam);
+	}
+
+	// テスト
+	{
+		tktk::DX12GameManager::addUpdatePriority<Player>(2.0f);
+		tktk::DX12GameManager::addUpdatePriority<Enemy>(2.0f);
+
+		tktk::DX12GameManager::addCollisionGroup(1, 2);
+
+		auto player = tktk::DX12GameManager::createGameObject();
+		player->createComponent<Player>();
+
+		auto enemy = tktk::DX12GameManager::createGameObject();
+		enemy->createComponent<Enemy>();
+
+		//tktk::DX12GameManager::createComponent<Player>();
+		//tktk::DX12GameManager::createComponent<Enemy>();
 	}
 
 	// プログラム開始

@@ -8,10 +8,11 @@
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnDisableChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasUpdateChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnDestroyChecker.h>
-#include "ComponentBase.h"
 
 namespace tktk
 {
+	class ComponentBase;
+
 	// １種類のコンポーネントを管理するリストクラス
 	class ComponentMainList
 	{
@@ -27,7 +28,7 @@ namespace tktk
 		// テンプレート引数の型のコンポーネントを引数の値を使って作る
 		// ※コンストラクタで指定した型でないとビルド不可
 		template <class ComponentType, class... Args>
-		std::shared_ptr<ComponentBase> createComponent(Args... args);
+		std::weak_ptr<ComponentType> createComponent(Args... args);
 
 		// 自身が管理するコンポーネントを巡回し、アクティブフラグが前フレームと変わっていたら「onEnable()」もしくは「onDisable()」関数の実行を試みる
 		void activeChangeCheck();
@@ -92,7 +93,7 @@ namespace tktk
 	// テンプレート引数の型のコンポーネントを引数の値を使って作る
 	// ※コンストラクタで指定した型でないとビルド不可
 	template<class ComponentType, class ...Args>
-	inline std::shared_ptr<ComponentBase> ComponentMainList::createComponent(Args ...args)
+	inline std::weak_ptr<ComponentType> ComponentMainList::createComponent(Args ...args)
 	{
 		auto createdComponent = std::make_shared<ComponentType>(args...);
 		awake_runner<void>::checkAndRun(createdComponent);

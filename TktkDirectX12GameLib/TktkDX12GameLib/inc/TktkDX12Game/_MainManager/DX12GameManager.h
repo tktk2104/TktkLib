@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <forward_list>
 #include <memory>
 #include <TktkDX12Wrapper/Graphics/Window/WindowInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjectsInitParam.h>
@@ -11,9 +12,12 @@
 #include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/BasicDescriptorHeap/BasicDescriptorHeapInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/BufferResource/TextureBuffer/TextureBufferInitParam.h>
 #include "../Scene/SceneManager.h"
+#include "../GameObject/GameObjectPtr.h"
+#include "../Component/ComponentManager.h"
 
 namespace tktk
 {
+	class GameObjectManager;
 	class Window;
 	class DX3DBaseObjects;
 
@@ -32,6 +36,27 @@ namespace tktk
 		static void enableScene(unsigned int id);
 
 		static void disableScene(unsigned int id);
+
+	public:
+
+		static GameObjectPtr createGameObject();
+		
+		static GameObjectPtr findGameObjectWithTag(int tag);
+		
+		static std::forward_list<GameObjectPtr> findGameObjectWithTags(int tag);
+
+	public:
+
+		// コンポーネントの型ごとの更新優先度を設定する
+		// ※デフォルト（0.0f）で値が小さい程、早く実行される
+		template <class ComponentType>
+		static void addUpdatePriority(float priority);
+
+		static void addCollisionGroup(int firstGroup, int secondGroup);
+
+		// テンプレート引数の型のコンポーネントを引数の値を使って作る
+		template <class ComponentType, class... Args>
+		static std::weak_ptr<ComponentType> createComponent(Args... args);
 
 	public:
 
@@ -60,9 +85,11 @@ namespace tktk
 
 	private:
 
-		static std::unique_ptr<SceneManager>	m_sceneManager;
-		static std::unique_ptr<Window>			m_window;
-		static std::unique_ptr<DX3DBaseObjects> m_dx3dBaseObjects;
+		static std::unique_ptr<SceneManager>		m_sceneManager;
+		static std::unique_ptr<GameObjectManager>	m_gameObjectManager;
+		static std::unique_ptr<ComponentManager>	m_componentManager;
+		static std::unique_ptr<Window>				m_window;
+		static std::unique_ptr<DX3DBaseObjects>		m_dx3dBaseObjects;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -72,6 +99,18 @@ namespace tktk
 	inline void DX12GameManager::addScene(unsigned int id, Args ...constructorArgs)
 	{
 		m_sceneManager->addScene<SceneType>(id, constructorArgs...);
+	}
+
+	template<class ComponentType>
+	inline void DX12GameManager::addUpdatePriority(float priority)
+	{
+		m_componentManager->addUpdatePriority<ComponentType>(priority);
+	}
+
+	template<class ComponentType, class ...Args>
+	inline std::weak_ptr<ComponentType> DX12GameManager::createComponent(Args ...args)
+	{
+		return m_componentManager->createComponent<ComponentType>(args...);
 	}
 
 	template<class VertexData>

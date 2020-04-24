@@ -2,16 +2,22 @@
 
 #include <TktkDX12Wrapper/Graphics/Window/Window.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjects.h>
+#include "TktkDX12Game/GameObject/GameObjectManager.h"
+#include "TktkDX12Game/GameObject/GameObject.h"
 
 namespace tktk
 {
 	std::unique_ptr<SceneManager>		DX12GameManager::m_sceneManager;
+	std::unique_ptr<GameObjectManager>	DX12GameManager::m_gameObjectManager;
+	std::unique_ptr<ComponentManager>	DX12GameManager::m_componentManager;
 	std::unique_ptr<Window>				DX12GameManager::m_window;
 	std::unique_ptr<DX3DBaseObjects>	DX12GameManager::m_dx3dBaseObjects;
 
 	void DX12GameManager::initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath)
 	{
 		m_sceneManager		= std::make_unique<SceneManager>(sceneNum);
+		m_gameObjectManager = std::make_unique<GameObjectManager>();
+		m_componentManager	= std::make_unique<ComponentManager>();
 		m_window			= std::make_unique<Window>(windowInitParam);
 		m_dx3dBaseObjects	= std::make_unique<DX3DBaseObjects>(dx3dInitParam, m_window->getHWND(), windowInitParam.windowSize);
 	}
@@ -69,7 +75,10 @@ namespace tktk
 				case WM_UNICHAR:
 
 					m_sceneManager->update();
+					m_gameObjectManager->update();
+					m_componentManager->update();
 					m_dx3dBaseObjects->beginDraw();
+					m_componentManager->draw();
 					m_dx3dBaseObjects->endDraw();
 					break;
 
@@ -93,6 +102,26 @@ namespace tktk
 	void DX12GameManager::disableScene(unsigned int id)
 	{
 		m_sceneManager->disableScene(id);
+	}
+
+	GameObjectPtr DX12GameManager::createGameObject()
+	{
+		return m_gameObjectManager->createGameObject();
+	}
+
+	GameObjectPtr DX12GameManager::findGameObjectWithTag(int tag)
+	{
+		return m_gameObjectManager->findGameObjectWithTag(tag);
+	}
+	
+	std::forward_list<GameObjectPtr> DX12GameManager::findGameObjectWithTags(int tag)
+	{
+		return m_gameObjectManager->findGameObjectsWithTag(tag);
+	}
+
+	void DX12GameManager::addCollisionGroup(int firstGroup, int secondGroup)
+	{
+		m_componentManager->addCollisionGroup(firstGroup, secondGroup);
 	}
 
 	void DX12GameManager::executeCommandList()

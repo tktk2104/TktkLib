@@ -1,5 +1,7 @@
 #include "TktkDX12Game/Component/ComponentMainList.h"
 
+#include "TktkDX12Game/Component/ComponentBase.h"
+
 namespace tktk
 {
 	void ComponentMainList::activeChangeCheck()

@@ -6,10 +6,13 @@
 #include <unordered_map>
 #include "ComponentUpdatePriorityList.h"
 #include "ComponentMainList.h"
-#include "ComponentDrawList.h"
+#include "ComponentCollisionFunc/ComponentCollisionList.h"
+#include "ComponentDrawFunc/ComponentDrawList.h"
 
 namespace tktk
 {
+	class ComponentMainList;
+
 	// 全てのコンポーネントを管理するマネージャークラス
 	class ComponentManager
 	{
@@ -19,17 +22,24 @@ namespace tktk
 
 	public:
 
+		// コンポーネントの更新処理
+		void update();
+
+		// コンポーネントの描画処理
+		void draw();
+
+	public:
+
 		// コンポーネントの型ごとの更新優先度を設定する
 		// ※デフォルト（0.0f）で値が小さい程、早く実行される
 		template <class ComponentType>
 		void addUpdatePriority(float priority);
 
+		void addCollisionGroup(int firstGroup, int secondGroup);
+
 		// テンプレート引数の型のコンポーネントを引数の値を使って作る
 		template <class ComponentType, class... Args>
-		void createComponent(Args... args);
-
-		// コンポーネントの更新処理
-		void update();
+		std::weak_ptr<ComponentType> createComponent(Args... args);
 
 	private:
 
@@ -42,7 +52,7 @@ namespace tktk
 		ComponentUpdatePriorityList									m_priorityList;
 		std::multimap<float, std::shared_ptr<ComponentMainList>>	m_mainMap;
 		std::unordered_map<int, std::weak_ptr<ComponentMainList>>	m_addComponentMap;
-
+		ComponentCollisionList										m_collisionList;
 		ComponentDrawList											m_drawList;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -59,18 +69,21 @@ namespace tktk
 
 	// テンプレート引数の型のコンポーネントを引数の値を使って作る
 	template<class ComponentType, class ...Args>
-	inline void ComponentManager::createComponent(Args ...args)
+	inline std::weak_ptr<ComponentType> ComponentManager::createComponent(Args ...args)
 	{
 		auto findNode = m_addComponentMap.find(ClassTypeChecker::getClassId<ComponentType>());
-
+		
 		if (findNode == std::end(m_addComponentMap))
 		{
 			createList<ComponentType>();
 			findNode = m_addComponentMap.find(ClassTypeChecker::getClassId<ComponentType>());
 		}
 		auto createdComponent = (*findNode).second.lock()->createComponent<ComponentType>(args...);
-
+		
+		m_collisionList.addComponent(createdComponent);
 		m_drawList.addComponent(createdComponent);
+
+		return createdComponent;
 	}
 
 	// コンポーネントの更新処理
@@ -79,7 +92,7 @@ namespace tktk
 	{
 		ComponentType* tempPtr = nullptr;
 		auto createList = std::make_shared<ComponentMainList>(tempPtr);
-
+		
 		m_mainMap.emplace(m_priorityList.getPriority<ComponentType>(), createList);
 		m_addComponentMap.emplace(ClassTypeChecker::getClassId<ComponentType>(), createList);
 	}

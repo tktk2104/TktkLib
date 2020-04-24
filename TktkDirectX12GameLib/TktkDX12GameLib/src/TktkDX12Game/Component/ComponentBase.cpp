@@ -2,8 +2,9 @@
 
 namespace tktk
 {
-	ComponentBase::ComponentBase(float drawPriority)
+	ComponentBase::ComponentBase(float drawPriority, const int collisionGroup)
 		: m_drawPriority(drawPriority)
+		, m_collisionGroup(collisionGroup)
 	{
 	}
 
@@ -14,6 +15,11 @@ namespace tktk
 	float ComponentBase::getDrawPriority() const
 	{
 		return m_drawPriority;
+	}
+
+	int ComponentBase::getCollisionGroup() const
+	{
+		return m_collisionGroup;
 	}
 
 	bool ComponentBase::activeChangeCheck()
@@ -44,5 +50,15 @@ namespace tktk
 	bool ComponentBase::isDead() const
 	{
 		return m_isDead;
+	}
+
+	GameObjectPtr ComponentBase::getGameObject() const
+	{
+		return m_user;
+	}
+
+	void ComponentBase::setUser(const GameObjectPtr& user)
+	{
+		m_user = user;
 	}
 }
