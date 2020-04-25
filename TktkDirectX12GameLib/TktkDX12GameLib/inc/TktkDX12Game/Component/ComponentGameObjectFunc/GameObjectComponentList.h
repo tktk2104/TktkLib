@@ -2,7 +2,7 @@
 #define GAME_OBJECT_COMPONENT_LIST_H_
 
 #include <forward_list>
-#include "ComponentBasePtr.h"
+#include "ComponentGameObjectFuncRunner.h"
 
 namespace tktk
 {
@@ -17,7 +17,7 @@ namespace tktk
 	public:
 
 		template <class ComponentType>
-		void add(const std::weak_ptr<ComponentType>& componentPtr);
+		ComponentPtr<ComponentType> add(const std::weak_ptr<ComponentType>& weakPtr);
 
 		template <class ComponentType>
 		ComponentPtr<ComponentType> find() const;
@@ -25,20 +25,36 @@ namespace tktk
 		template <class ComponentType>
 		std::forward_list<ComponentPtr<ComponentType>> findAll() const;
 
+		// 全ての「子供の全てのコンポーネントの親要素が変わった時関数」を呼ぶ
+		void runAfterChangeParentAll(const GameObjectPtr& beforParent);
+
+		// 全てのコンポーネントの衝突開始関数を呼ぶ
+		void runOnCollisionEnterAll(const GameObjectPtr& other);
+
+		// 全てのコンポーネントの衝突中関数を呼ぶ
+		void runOnCollisionStayAll(const GameObjectPtr& other);
+
+		// 全てのコンポーネントの衝突終了関数を呼ぶ
+		void runOnCollisionExitAll(const GameObjectPtr& other);
+
+		// 全てのコンポーネントを殺す
+		void destroyAll();
+
 		void removeDeadComponent();
 
 	private:
 
-		std::forward_list<ComponentBasePtr> m_componentList;
+		std::forward_list<ComponentGameObjectFuncRunner> m_componentList;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 	template<class ComponentType>
-	inline void GameObjectComponentList::add(const std::weak_ptr<ComponentType>& componentPtr)
+	inline ComponentPtr<ComponentType> GameObjectComponentList::add(const std::weak_ptr<ComponentType>& weakPtr)
 	{
-		m_componentList.push_front(componentPtr);
+		m_componentList.emplace_front(weakPtr);
+		return ComponentPtr<ComponentType>(weakPtr);
 	}
 
 	template<class ComponentType>
@@ -46,9 +62,11 @@ namespace tktk
 	{
 		for (const auto& node : m_componentList)
 		{
-			if (node.canCast<ComponentType>())
+			const auto& gameObjectPtr = node.getComponentBasePtr();
+
+			if (gameObjectPtr.canCast<ComponentType>())
 			{
-				return node.castPtr<ComponentType>();
+				return gameObjectPtr.castPtr<ComponentType>();
 			}
 		}
 		return nullptr;
@@ -61,9 +79,11 @@ namespace tktk
 
 		for (const auto& node : m_componentList)
 		{
-			if (node.canCast<ComponentType>())
+			const auto& gameObjectPtr = node.getComponentBasePtr();
+
+			if (gameObjectPtr.canCast<ComponentType>())
 			{
-				result.push_front(node.castPtr<ComponentType>());
+				result.push_front(gameObjectPtr.castPtr<ComponentType>());
 			}
 		}
 		return result;

@@ -75,6 +75,11 @@ public:
 		//destroy();
 	}
 
+	void afterCollide()
+	{
+
+	}
+
 	bool isCollide(const tktk::ComponentBasePtr& other)
 	{
 		return true;

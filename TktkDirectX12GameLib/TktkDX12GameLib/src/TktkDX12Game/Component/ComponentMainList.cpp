@@ -26,6 +26,11 @@ namespace tktk
 		m_vtablePtr->runUpdate(m_mainList);
 	}
 
+	void ComponentMainList::runAfterCollide()
+	{
+		m_vtablePtr->runAfterCollide(m_mainList);
+	}
+
 	void ComponentMainList::removeDeadComponent()
 	{
 		m_mainList.remove_if([this](const auto& node)

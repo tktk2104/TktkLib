@@ -19,6 +19,8 @@ namespace tktk
 
 		bool expired() const;
 
+		bool isSame(const GameObjectPtr& other) const;
+
 		std::shared_ptr<GameObject> operator ->() const;
 
 	private:

@@ -44,6 +44,10 @@ namespace tktk
 
 	bool ComponentBase::isActive() const
 	{
+		if (m_user.expired()) return m_isActive;
+
+		if (!m_user->isActive()) return false;
+
 		return m_isActive;
 	}
 
@@ -52,7 +56,7 @@ namespace tktk
 		return m_isDead;
 	}
 
-	GameObjectPtr ComponentBase::getGameObject() const
+	const GameObjectPtr& ComponentBase::getGameObject() const
 	{
 		return m_user;
 	}

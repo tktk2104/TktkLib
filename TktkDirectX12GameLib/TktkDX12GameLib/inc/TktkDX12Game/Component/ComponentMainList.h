@@ -7,6 +7,7 @@
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnEnableChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnDisableChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasUpdateChecker.h>
+#include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasAfterCollideChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnDestroyChecker.h>
 
 namespace tktk
@@ -36,6 +37,9 @@ namespace tktk
 		// 自身が管理するコンポーネントの型が「update()」関数を持っていたらそれらを全て実行する
 		void runUpdate();
 
+		// 自身が管理するコンポーネントの型が「afterCollide」関数を持っていたらそれらを全て実行する
+		void runAfterCollide();
+
 		// 死亡フラグが立っているコンポーネントを削除する
 		void removeDeadComponent();
 
@@ -45,6 +49,7 @@ namespace tktk
 		struct VTable
 		{
 			void(*runUpdate)(const std::forward_list<std::shared_ptr<ComponentBase>>&);
+			void(*runAfterCollide)(const std::forward_list<std::shared_ptr<ComponentBase>>&);
 			void(*runOnEnable)(const std::shared_ptr<ComponentBase>&);
 			void(*runOnDisable)(const std::shared_ptr<ComponentBase>&);
 			void(*runOnDestroy)(const std::shared_ptr<ComponentBase>&);
@@ -60,6 +65,13 @@ namespace tktk
 			static void checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList);
 			template <class U, std::enable_if_t<!has_update_checker<U*, void>::value>* = nullptr>
 			static void checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList);
+
+			// 「afterCollide()」関数を持っていたら呼ぶ処理を行う為の関数達
+			static void runAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList);
+			template <class U, std::enable_if_t<has_afterCollide_checker<U*, void>::value>* = nullptr>
+			static void checkAndRunAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList);
+			template <class U, std::enable_if_t<!has_afterCollide_checker<U*, void>::value>* = nullptr>
+			static void checkAndRunAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList);
 
 			// 「onEnable()」関数を持っていたら呼ぶ処理を行う為の関数
 			static void runOnEnable(const std::shared_ptr<ComponentBase>& runPtr);
@@ -104,16 +116,23 @@ namespace tktk
 	template<class ComponentType>
 	typename ComponentMainList::VTable ComponentMainList::VTableInitializer<ComponentType>::m_vtable =
 	{
-		& ComponentMainList::VTableInitializer<ComponentType>::runUpdate,
-		& ComponentMainList::VTableInitializer<ComponentType>::runOnEnable,
-		& ComponentMainList::VTableInitializer<ComponentType>::runOnDisable,
-		& ComponentMainList::VTableInitializer<ComponentType>::runOnDestroy,
+		&ComponentMainList::VTableInitializer<ComponentType>::runUpdate,
+		&ComponentMainList::VTableInitializer<ComponentType>::runAfterCollide,
+		&ComponentMainList::VTableInitializer<ComponentType>::runOnEnable,
+		&ComponentMainList::VTableInitializer<ComponentType>::runOnDisable,
+		&ComponentMainList::VTableInitializer<ComponentType>::runOnDestroy,
 	};
 
 	template<class ComponentType>
 	inline void ComponentMainList::VTableInitializer<ComponentType>::runUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
 	{
 		checkAndRunUpdate<ComponentType>(mainList);
+	}
+
+	template<class ComponentType>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::runAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
+	{
+		checkAndRunAfterCollide<ComponentType>(mainList);
 	}
 
 	template<class ComponentType>
@@ -147,5 +166,19 @@ namespace tktk
 	template<class ComponentType>
 	template<class U, std::enable_if_t<!has_update_checker<U*, void>::value>*>
 	inline void ComponentMainList::VTableInitializer<ComponentType>::checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList) {}
+
+	template<class ComponentType>
+	template<class U, std::enable_if_t<has_afterCollide_checker<U*, void>::value>*>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::checkAndRunAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
+	{
+		for (const auto& node : mainList)
+		{
+			if (!node->isActive()) continue;
+			std::dynamic_pointer_cast<U>(node)->afterCollide();
+		}
+	}
+	template<class ComponentType>
+	template<class U, std::enable_if_t<!has_afterCollide_checker<U*, void>::value>*>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::checkAndRunAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList) {}
 }
 #endif // !COMPONENT_MAIN_LIST_H_

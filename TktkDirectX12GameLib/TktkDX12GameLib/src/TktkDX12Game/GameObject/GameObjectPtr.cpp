@@ -14,9 +14,16 @@ namespace tktk
 		return m_gameObjectPtr.expired();
 	}
 
+	bool GameObjectPtr::isSame(const GameObjectPtr& other) const
+	{
+		if (expired() && other.expired()) return true;
+		if (expired() || other.expired()) return false;
+		return m_gameObjectPtr.lock() == other.m_gameObjectPtr.lock();
+	}
+
 	std::shared_ptr<GameObject> GameObjectPtr::operator->() const
 	{
-		if (m_gameObjectPtr.expired()) return nullptr;
+		if (expired()) return nullptr;
 		return m_gameObjectPtr.lock();
 	}
 }
