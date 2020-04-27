@@ -69,7 +69,7 @@ namespace tktk
 				return gameObjectPtr.castPtr<ComponentType>();
 			}
 		}
-		return nullptr;
+		return ComponentPtr<ComponentType>();
 	}
 
 	template<class ComponentType>

@@ -11,6 +11,9 @@ namespace tktk
 		{
 			node.second->activeChangeCheck();
 		}
+
+		// 「start()」関数呼び出し処理
+		m_startList.runStart();
 		
 		// 「update()」関数呼び出し処理
 		for (const auto& node : m_mainMap)

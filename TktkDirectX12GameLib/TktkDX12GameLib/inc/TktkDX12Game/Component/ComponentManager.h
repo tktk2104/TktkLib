@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include "ComponentUpdatePriorityList.h"
 #include "ComponentMainList.h"
+#include "ComponentStartFunc/ComponentSatrtList.h"
 #include "ComponentCollisionFunc/ComponentCollisionList.h"
 #include "ComponentDrawFunc/ComponentDrawList.h"
 
@@ -52,6 +53,7 @@ namespace tktk
 		ComponentUpdatePriorityList									m_priorityList;
 		std::multimap<float, std::shared_ptr<ComponentMainList>>	m_mainMap;
 		std::unordered_map<int, std::weak_ptr<ComponentMainList>>	m_addComponentMap;
+		ComponentSatrtList											m_startList;
 		ComponentCollisionList										m_collisionList;
 		ComponentDrawList											m_drawList;
 	};
@@ -80,6 +82,7 @@ namespace tktk
 		}
 		auto createdComponent = (*findNode).second.lock()->createComponent<ComponentType>(args...);
 		
+		m_startList.addComponent(createdComponent);
 		m_collisionList.addComponent(createdComponent);
 		m_drawList.addComponent(createdComponent);
 

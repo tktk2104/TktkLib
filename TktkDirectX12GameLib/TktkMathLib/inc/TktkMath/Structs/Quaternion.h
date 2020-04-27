@@ -107,7 +107,7 @@ namespace tktkMath
 	};
 
 	// 定数達
-	constexpr Quaternion identity = { 0.0f, 0.0f, 0.0f, 1.0f };
+	constexpr Quaternion quaternionIdentity = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	// 演算子オーバーロード達
 	constexpr Quaternion	operator -  (const Quaternion& q);
@@ -193,7 +193,7 @@ namespace tktkMath
 
 		if (angle < helper::kEpsilon)
 		{
-			return identity;
+			return quaternionIdentity;
 		}
 
 		Vector3 axis = Vector3::cross(fromDirection, toDirection);
