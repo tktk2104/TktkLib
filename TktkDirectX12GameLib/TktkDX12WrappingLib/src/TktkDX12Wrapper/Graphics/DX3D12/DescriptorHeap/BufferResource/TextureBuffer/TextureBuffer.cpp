@@ -51,4 +51,9 @@ namespace tktk
 	{
 		m_textureBufferDataArray.at(id).createShaderResourceView(device, heapHandle);
 	}
+
+	const tktkMath::Vector3& TextureBuffer::getTextureSize(unsigned int id) const
+	{
+		return m_textureBufferDataArray.at(id).getTextureSize();
+	}
 }

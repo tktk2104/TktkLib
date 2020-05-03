@@ -23,6 +23,8 @@ namespace tktk
 	
 		void createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 		
+		const tktkMath::Vector3& getTextureSize(unsigned int id) const;
+
 	private:
 
 		std::vector<TextureBufferData> m_textureBufferDataArray{};

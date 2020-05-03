@@ -16,4 +16,9 @@ namespace tktk
 	{
 		m_constantBufferDataArray.at(id).createConstantBufferView(device, heapHandle);
 	}
+
+	void ConstantBuffer::updateBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	{
+		m_constantBufferDataArray.at(id).updateBuffer(device, constantBufferTypeSize, constantBufferDataTopPos);
+	}
 }

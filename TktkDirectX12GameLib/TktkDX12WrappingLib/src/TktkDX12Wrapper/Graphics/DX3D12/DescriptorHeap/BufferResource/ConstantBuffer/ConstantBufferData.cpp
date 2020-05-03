@@ -39,6 +39,21 @@ namespace tktk
 		device->CreateConstantBufferView(&cbvDesc, heapHandle);
 	}
 
+	void ConstantBufferData::updateBuffer(ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	{
+#ifdef _DEBUG
+		if (m_constantBuffer == nullptr)
+		{
+			throw std::runtime_error("Not Create ConstantBuffer");
+		}
+#endif // _DEBUG
+
+		void* mappedBuffer{ nullptr };
+		m_constantBuffer->Map(0, nullptr, &mappedBuffer);
+		memcpy(mappedBuffer, constantBufferDataTopPos, constantBufferTypeSize);
+		m_constantBuffer->Unmap(0, nullptr);
+	}
+
 	void ConstantBufferData::createBuffer(ID3D12Device* device, unsigned int bufferSize)
 	{
 		if (m_constantBuffer != nullptr)

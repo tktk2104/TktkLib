@@ -41,5 +41,7 @@ namespace tktk
 	{
 		m_startList.emplace_front(componentPtr);
 	}
+	template<class ComponentType, std::enable_if_t<!has_start_checker<ComponentType*, void>::value>*>
+	inline void ComponentSatrtList::addComponent(const std::weak_ptr<ComponentType>& componentPtr) {}
 }
 #endif // !COMPONENT_SATRT_LIST_H_

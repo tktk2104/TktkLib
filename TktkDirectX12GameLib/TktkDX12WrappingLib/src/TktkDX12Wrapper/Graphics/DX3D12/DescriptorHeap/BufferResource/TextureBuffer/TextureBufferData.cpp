@@ -30,6 +30,8 @@ namespace tktk
 			m_uploadBuff->Release();
 		}
 
+		m_textureSize = { static_cast<float>(dataParam.width), static_cast<float>(dataParam.height), 1.0f };
+
 		{
 			m_srvInitParam.format = formatParam.format;
 
@@ -127,6 +129,8 @@ namespace tktk
 		{
 			m_uploadBuff->Release();
 		}
+
+		m_textureSize = { static_cast<float>(dataParam.width), static_cast<float>(dataParam.height), 1.0f };
 
 		{
 			m_srvInitParam.format = formatParam.format;
@@ -351,5 +355,10 @@ namespace tktk
 			break;
 		}
 		device->CreateShaderResourceView(m_textureBuffer, &srvDesc, heapHandle);
+	}
+
+	const tktkMath::Vector3& TextureBufferData::getTextureSize() const
+	{
+		return m_textureSize;
 	}
 }

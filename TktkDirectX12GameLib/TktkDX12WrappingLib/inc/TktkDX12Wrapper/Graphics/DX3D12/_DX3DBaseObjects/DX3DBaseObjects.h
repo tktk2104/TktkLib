@@ -6,6 +6,7 @@
 #include <dxgi1_6.h>
 #undef min
 #undef max
+#include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector2.h>
 #include "DX3DBaseObjectsInitParam.h"
 
@@ -23,7 +24,7 @@ namespace tktk
 	{
 	public:
 
-		DX3DBaseObjects(const DX3DBaseObjectsInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize);
+		DX3DBaseObjects(const DX3DBaseObjectsInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize, const tktkMath::Color& backGroundColor);
 		~DX3DBaseObjects();
 
 	public:
@@ -51,7 +52,37 @@ namespace tktk
 
 	public:
 
+		void updateConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
+		const tktkMath::Vector3& getTextureSize(unsigned int id) const;
+
+	public:
+
+		void setBackGroundColor(const tktkMath::Color& backGroundColor);
+
+		void setBackBufferRenderTarget();
+
+		void setViewport(unsigned int id);
+
+		void setScissorRect(unsigned int id);
+
+		void setGraphicsPipeLineState(unsigned int id);
+
+		void setVertexBuffer(unsigned int id);
+
+		void setIndexBuffer(unsigned int id);
+
+		void setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray);
+
+		void setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology);
+
+		void drawIndexedInstanced(
+			unsigned int indexCountPerInstance,
+			unsigned int instanceCount,
+			unsigned int startIndexLocation,
+			unsigned int baseVertexLocation,
+			unsigned int startInstanceLocation
+		);
 
 	private:
 
@@ -69,6 +100,8 @@ namespace tktk
 		IndexBuffer					m_indexBuffer;
 		GraphicsPipeLineState		m_graphicsPipeLineState;
 		DescriptorHeap				m_descriptorHeap;
+
+		tktkMath::Color				m_backGroundColor{ tktkMath::colorBlue };
 	};
 }
 #endif // !DX3D_BASE_OBJECTS_H_

@@ -1,4 +1,7 @@
 #include "TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/BasicDescriptorHeap/BasicDescriptorHeapData.h"
+#ifdef _DEBUG
+#include <stdexcept>
+#endif // _DEBUG
 
 namespace tktk
 {
@@ -12,6 +15,11 @@ namespace tktk
 
 	void BasicDescriptorHeapData::initialize(ID3D12Device* device, const BasicDescriptorHeapInitParam& initParam)
 	{
+		if (m_descriptorHeap != nullptr)
+		{
+			m_descriptorHeap->Release();
+		}
+
 		D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc{};
 		descHeapDesc.Flags = (initParam.m_shaderVisible) ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 		descHeapDesc.NodeMask = 0;
@@ -36,11 +44,23 @@ namespace tktk
 
 	ID3D12DescriptorHeap* BasicDescriptorHeapData::getPtr() const
 	{
+#ifdef _DEBUG
+		if (m_descriptorHeap == nullptr)
+		{
+			throw std::runtime_error("Not Create DescriptorHeap");
+		}
+#endif // _DEBUG
 		return m_descriptorHeap;
 	}
 
 	void BasicDescriptorHeapData::setDescriptor(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
+#ifdef _DEBUG
+		if (m_descriptorHeap == nullptr)
+		{
+			throw std::runtime_error("Not Create DescriptorHeap");
+		}
+#endif // _DEBUG
 		auto gpuHandle = m_descriptorHeap->GetGPUDescriptorHandleForHeapStart();
 		for (unsigned int i = 0; i < m_descriptorHeap->GetDesc().NumDescriptors; i++)
 		{

@@ -17,6 +17,8 @@ namespace tktk
 		unsigned int constantBufferNum;
 		unsigned int renderTargetBufferNum;
 		unsigned int backBufferNum;
+
+		unsigned int spriteNum;
 	};
 }
 #endif // !DX3D_BASE_OBJECTS_INIT_PARAM_H_

@@ -2,24 +2,32 @@
 
 #include <TktkDX12Wrapper/Graphics/Window/Window.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjects.h>
+#include "TktkDX12Game/Sprite/Sprite.h"
 #include "TktkDX12Game/GameObject/GameObjectManager.h"
 #include "TktkDX12Game/GameObject/GameObject.h"
 
+
 namespace tktk
 {
-	std::unique_ptr<SceneManager>		DX12GameManager::m_sceneManager;
-	std::unique_ptr<GameObjectManager>	DX12GameManager::m_gameObjectManager;
-	std::unique_ptr<ComponentManager>	DX12GameManager::m_componentManager;
-	std::unique_ptr<Window>				DX12GameManager::m_window;
-	std::unique_ptr<DX3DBaseObjects>	DX12GameManager::m_dx3dBaseObjects;
+	std::unique_ptr<SceneManager>			DX12GameManager::m_sceneManager;
+	std::unique_ptr<GameObjectManager>		DX12GameManager::m_gameObjectManager;
+	std::unique_ptr<ComponentManager>		DX12GameManager::m_componentManager;
+	std::unique_ptr<Window>					DX12GameManager::m_window;
+	std::unique_ptr<DX3DBaseObjects>		DX12GameManager::m_dx3dBaseObjects;
+	std::unique_ptr<Sprite>					DX12GameManager::m_sprite;
 
 	void DX12GameManager::initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath)
 	{
-		m_sceneManager		= std::make_unique<SceneManager>(sceneNum);
-		m_gameObjectManager = std::make_unique<GameObjectManager>();
-		m_componentManager	= std::make_unique<ComponentManager>();
-		m_window			= std::make_unique<Window>(windowInitParam);
-		m_dx3dBaseObjects	= std::make_unique<DX3DBaseObjects>(dx3dInitParam, m_window->getHWND(), windowInitParam.windowSize);
+		m_sceneManager			= std::make_unique<SceneManager>(sceneNum);
+		m_gameObjectManager		= std::make_unique<GameObjectManager>();
+		m_componentManager		= std::make_unique<ComponentManager>();
+		m_window				= std::make_unique<Window>(windowInitParam);
+		m_dx3dBaseObjects		= std::make_unique<DX3DBaseObjects>(dx3dInitParam, m_window->getHWND(), windowInitParam.windowSize, tktkMath::colorBlue);
+
+		tktk::ShaderFilePaths shaderFilePaths{};
+		shaderFilePaths.vsFilePath = tktkLibResFolderPath + "TktkLibRes/shader/SpriteVertexShader.cso";
+		shaderFilePaths.psFilePath = tktkLibResFolderPath + "TktkLibRes/shader/SpritePixelShader.cso";
+		m_sprite = std::make_unique<Sprite>(shaderFilePaths, dx3dInitParam.spriteNum);
 	}
 
 	void DX12GameManager::run()
@@ -94,6 +102,11 @@ namespace tktk
 		}
 	}
 
+	const tktkMath::Vector2& DX12GameManager::getWindowSize()
+	{
+		return m_window->getWindowSize();
+	}
+
 	void DX12GameManager::enableScene(unsigned int id)
 	{
 		m_sceneManager->enableScene(id);
@@ -129,6 +142,56 @@ namespace tktk
 		m_dx3dBaseObjects->executeCommandList();
 	}
 
+	void DX12GameManager::setBackGroundColor(const tktkMath::Color& backGroundColor)
+	{
+		m_dx3dBaseObjects->setBackGroundColor(backGroundColor);
+	}
+
+	void DX12GameManager::setBackBufferRenderTarget()
+	{
+		m_dx3dBaseObjects->setBackBufferRenderTarget();
+	}
+
+	void DX12GameManager::setViewport(unsigned int id)
+	{
+		m_dx3dBaseObjects->setViewport(id);
+	}
+
+	void DX12GameManager::setScissorRect(unsigned int id)
+	{
+		m_dx3dBaseObjects->setScissorRect(id);
+	}
+
+	void DX12GameManager::setGraphicsPipeLineState(unsigned int id)
+	{
+		m_dx3dBaseObjects->setGraphicsPipeLineState(id);
+	}
+
+	void DX12GameManager::setVertexBuffer(unsigned int id)
+	{
+		m_dx3dBaseObjects->setVertexBuffer(id);
+	}
+
+	void DX12GameManager::setIndexBuffer(unsigned int id)
+	{
+		m_dx3dBaseObjects->setIndexBuffer(id);
+	}
+
+	void DX12GameManager::setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray)
+	{
+		m_dx3dBaseObjects->setDescriptorHeap(heapParamArray);
+	}
+
+	void DX12GameManager::setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology)
+	{
+		m_dx3dBaseObjects->setPrimitiveTopology(topology);
+	}
+
+	void DX12GameManager::drawIndexedInstanced(unsigned int indexCountPerInstance, unsigned int instanceCount, unsigned int startIndexLocation, unsigned int baseVertexLocation, unsigned int startInstanceLocation)
+	{
+		m_dx3dBaseObjects->drawIndexedInstanced(indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startInstanceLocation);
+	}
+
 	void DX12GameManager::createRootSignature(unsigned int id, const RootSignatureInitParam& initParam)
 	{
 		m_dx3dBaseObjects->createRootSignature(id, initParam);
@@ -154,6 +217,21 @@ namespace tktk
 		m_dx3dBaseObjects->gpuPriorityLoadTextureBuffer(id, formatParam, texDataPath);
 	}
 
+	const tktkMath::Vector3& DX12GameManager::getTextureSize(unsigned int id)
+	{
+		return m_dx3dBaseObjects->getTextureSize(id);
+	}
+
+	void DX12GameManager::createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam)
+	{
+		m_sprite->createSpriteMaterial(id, initParam);
+	}
+
+	void DX12GameManager::drawSprite(unsigned int spriteMaterialId, const tktkMath::Matrix3& worldMatrix)
+	{
+		m_sprite->drawSprite(spriteMaterialId, worldMatrix);
+	}
+
 	void DX12GameManager::createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
 	{
 		m_dx3dBaseObjects->createVertexBuffer(id, vertexTypeSize, vertexDataCount, vertexDataTopPos);
@@ -162,5 +240,10 @@ namespace tktk
 	void DX12GameManager::createConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_dx3dBaseObjects->createConstantBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
+	}
+
+	void DX12GameManager::updateConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	{
+		m_dx3dBaseObjects->updateConstantBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 }

@@ -126,9 +126,19 @@ namespace tktk
 		m_textureBuffer.gpuPriorityLoad(id, device, commandList, formatParam, texDataPath);
 	}
 
+	const tktkMath::Vector3& DescriptorHeap::getTextureSize(unsigned int id) const
+	{
+		return m_textureBuffer.getTextureSize(id);
+	}
+
 	void DescriptorHeap::createConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_constantBuffer.create(id, device, constantBufferTypeSize, constantBufferDataTopPos);
+	}
+
+	void DescriptorHeap::updateConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	{
+		m_constantBuffer.updateBuffer(id, device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
 	void DescriptorHeap::createBackBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)

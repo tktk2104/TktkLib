@@ -5,19 +5,26 @@
 
 namespace tktk
 {
-	DX3DBaseObjects::DX3DBaseObjects(const DX3DBaseObjectsInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize)
+	DX3DBaseObjects::DX3DBaseObjects(const DX3DBaseObjectsInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize, const tktkMath::Color& backGroundColor)
 		: m_viewport(initParam.viewPortNum)
 		, m_scissorRect(initParam.scissorRectNum)
 		, m_vertexBuffer(initParam.vertexBufferNum)
 		, m_indexBuffer(initParam.indexBufferNum)
 		, m_graphicsPipeLineState(initParam.graphicsPipeLineNum, initParam.rootSignatureNum)
 		, m_descriptorHeap(initParam.basicDescriptorHeapNum, initParam.rtvDescriptorHeapNum, initParam.textureBufferNum, initParam.constantBufferNum, initParam.renderTargetBufferNum, initParam.backBufferNum)
+		, m_backGroundColor(backGroundColor)
 	{
 #ifdef _DEBUG
 		{
 			ID3D12Debug* debugLayer{ nullptr };
 			D3D12GetDebugInterface(IID_PPV_ARGS(&debugLayer));
 			debugLayer->EnableDebugLayer();
+
+			ID3D12Debug1* debugLayer1{ nullptr };
+			debugLayer->QueryInterface(IID_PPV_ARGS(&debugLayer1));
+			debugLayer1->SetEnableGPUBasedValidation(true);
+
+			debugLayer1->Release();
 			debugLayer->Release();
 		}
 #endif // _DEBUG
@@ -133,35 +140,34 @@ namespace tktk
 		m_descriptorHeap.useBackBuffer(m_curBackBufferIndex, m_commandList);
 
 		// 現在のバックバッファーを描画先に設定する
-		m_descriptorHeap.setRenderTarget(0, m_device, m_commandList, m_curBackBufferIndex, 1U);
+		setBackBufferRenderTarget();
 
 		// 現在のバックバッファーを指定した単色で塗りつぶす
-		tktkMath::Color clearColor = { 1.0f, 1.0f, 0.0f, 1.0f };
-		m_descriptorHeap.clearRenderTarget(0U, m_device, m_commandList, m_curBackBufferIndex, clearColor);
+		m_descriptorHeap.clearRenderTarget(0U, m_device, m_commandList, m_curBackBufferIndex, m_backGroundColor);
 		
-		// グラフィックパイプラインステートを設定する
-		m_graphicsPipeLineState.set(0, m_commandList);
-		
-		// グラフィックパイプラインにディスクリプタヒープを設定する
-		m_descriptorHeap.set(m_device, m_commandList, { { DescriptorHeapType::basic, 0U } });
-
-		// トライアングルリストで描画するように設定する
-		m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		
-		// 頂点バッファ情報を設定する
-		m_vertexBuffer.set(0, m_commandList);
-		
-		// インデックスバッファ情報を設定する
-		m_indexBuffer.set(0, m_commandList);
-		
-		// ビューポートを設定する
+		//// ビューポートを設定する
 		m_viewport.set(0, m_commandList);
 		
 		// シザー矩形を設定する
 		m_scissorRect.set(0, m_commandList);
-		
-		// 描画
-		m_commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
+
+		//// グラフィックパイプラインステートを設定する
+		//m_graphicsPipeLineState.set(0U, m_commandList);
+		//
+		// グラフィックパイプラインにディスクリプタヒープを設定する
+		//m_descriptorHeap.set(m_device, m_commandList, { { DescriptorHeapType::basic, 0U } });
+		//
+		//// トライアングルリストで描画するように設定する
+		//m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		//
+		//// 頂点バッファ情報を設定する
+		//m_vertexBuffer.set(0, m_commandList);
+		//
+		//// インデックスバッファ情報を設定する
+		//m_indexBuffer.set(0, m_commandList);
+		//
+		//// 描画
+		//m_commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 	}
 
 	void DX3DBaseObjects::endDraw()
@@ -227,5 +233,65 @@ namespace tktk
 	void DX3DBaseObjects::gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath)
 	{
 		m_descriptorHeap.gpuPriorityLoadTextureBuffer(id, m_device, m_commandList, formatParam, texDataPath);
+	}
+
+	void DX3DBaseObjects::updateConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	{
+		m_descriptorHeap.updateConstantBuffer(id, m_device, constantBufferTypeSize, constantBufferDataTopPos);
+	}
+
+	const tktkMath::Vector3& DX3DBaseObjects::getTextureSize(unsigned int id) const
+	{
+		return m_descriptorHeap.getTextureSize(id);
+	}
+
+	void DX3DBaseObjects::setBackGroundColor(const tktkMath::Color& backGroundColor)
+	{
+		m_backGroundColor = backGroundColor;
+	}
+
+	void DX3DBaseObjects::setBackBufferRenderTarget()
+	{
+		m_descriptorHeap.setRenderTarget(0U, m_device, m_commandList, m_curBackBufferIndex, 1U);
+	}
+
+	void DX3DBaseObjects::setViewport(unsigned int id)
+	{
+		m_viewport.set(id, m_commandList);
+	}
+
+	void DX3DBaseObjects::setScissorRect(unsigned int id)
+	{
+		m_scissorRect.set(id, m_commandList);
+	}
+
+	void DX3DBaseObjects::setGraphicsPipeLineState(unsigned int id)
+	{
+		m_graphicsPipeLineState.set(id, m_commandList);
+	}
+
+	void DX3DBaseObjects::setVertexBuffer(unsigned int id)
+	{
+		m_vertexBuffer.set(id, m_commandList);
+	}
+
+	void DX3DBaseObjects::setIndexBuffer(unsigned int id)
+	{
+		m_indexBuffer.set(id, m_commandList);
+	}
+
+	void DX3DBaseObjects::setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray)
+	{
+		m_descriptorHeap.set(m_device, m_commandList, heapParamArray);
+	}
+
+	void DX3DBaseObjects::setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology)
+	{
+		m_commandList->IASetPrimitiveTopology(topology);
+	}
+
+	void DX3DBaseObjects::drawIndexedInstanced(unsigned int indexCountPerInstance, unsigned int instanceCount, unsigned int startIndexLocation, unsigned int baseVertexLocation, unsigned int startInstanceLocation)
+	{
+		m_commandList->DrawIndexedInstanced(indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startInstanceLocation);
 	}
 }

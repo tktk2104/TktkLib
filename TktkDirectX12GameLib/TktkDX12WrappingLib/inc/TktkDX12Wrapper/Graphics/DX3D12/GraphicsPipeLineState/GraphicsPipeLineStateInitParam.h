@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include <d3d12.h>
+#undef min
+#undef max
 
 namespace tktk
 {
