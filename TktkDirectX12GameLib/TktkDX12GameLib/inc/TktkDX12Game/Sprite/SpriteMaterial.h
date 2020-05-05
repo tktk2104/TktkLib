@@ -1,8 +1,8 @@
 #ifndef SPRITE_MATERIAL_H_
 #define SPRITE_MATERIAL_H_
 
-#include <memory>
 #include "SpriteMaterialData.h"
+#include "../HeapArray/HeapArray.h"
 
 namespace tktk
 {
@@ -11,7 +11,7 @@ namespace tktk
 	public:
 
 		SpriteMaterial(unsigned int spriteMaterialNum);
-		~SpriteMaterial();
+		~SpriteMaterial() = default;
 
 	public:
 
@@ -21,10 +21,7 @@ namespace tktk
 
 	private:
 
-		std::allocator<SpriteMaterialData> m_allocator;
-
-		unsigned int		m_spriteMaterialNum;
-		SpriteMaterialData* m_arrayTopPos;
+		HeapArray<SpriteMaterialData> m_spriteMaterialArray;
 	};
 }
 #endif // !SPRITE_MATERIAL_H_

@@ -7,35 +7,26 @@
 namespace tktk
 {
 	SpriteMaterial::SpriteMaterial(unsigned int spriteMaterialNum)
-		: m_spriteMaterialNum(spriteMaterialNum)
-		, m_arrayTopPos(std::allocator_traits<std::allocator<SpriteMaterialData>>::allocate(m_allocator, m_spriteMaterialNum))
+		: m_spriteMaterialArray(spriteMaterialNum)
 	{
-	}
-
-	SpriteMaterial::~SpriteMaterial()
-	{
-		for (unsigned int i = 0; i < m_spriteMaterialNum; i++)
-		{
-			std::allocator_traits<std::allocator<SpriteMaterialData>>::destroy(m_allocator, m_arrayTopPos + i);
-		}
-
-		std::allocator_traits<std::allocator<SpriteMaterialData>>::deallocate(m_allocator, m_arrayTopPos, m_spriteMaterialNum);
 	}
 
 	void SpriteMaterial::create(unsigned int id, const SpriteMaterialInitParam& initParam)
 	{
-		std::allocator_traits<std::allocator<SpriteMaterialData>>::construct(m_allocator, m_arrayTopPos + id, initParam);
+		m_spriteMaterialArray.emplaceAt(id, initParam);
 	}
 
 	void SpriteMaterial::drawSprite(unsigned int id, const tktkMath::Matrix3& worldMatrix)
 	{
+		auto spritePtr = m_spriteMaterialArray.at(id);
+
 #ifdef _DEBUG
-		if (id >= m_spriteMaterialNum)
+		if (spritePtr == nullptr)
 		{
-			throw std::out_of_range("out of range");
+			throw std::runtime_error("not create spriteMaterial");
 		}
 #endif // _DEBUG
 
-		(*(m_arrayTopPos + id)).drawSprite(worldMatrix);
+		spritePtr->drawSprite(worldMatrix);
 	}
 }

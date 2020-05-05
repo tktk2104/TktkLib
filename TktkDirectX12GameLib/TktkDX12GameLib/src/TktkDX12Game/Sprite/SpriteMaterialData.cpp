@@ -47,6 +47,6 @@ namespace tktk
 		DX12GameManager::setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 		DX12GameManager::setVertexBuffer(1U);
 		DX12GameManager::setIndexBuffer(1U);
-		DX12GameManager::drawIndexedInstanced(6U, 1U, 0U, 0U, 0U);
+		DX12GameManager::drawIndexedInstanced(4U, 1U, 0U, 0U, 0U);
 	}
 }

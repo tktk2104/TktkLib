@@ -28,17 +28,17 @@ namespace tktk
 
 	class DX12GameManager
 	{
-	public:
+	public: /* このマネージャー自体の処理 */
 
 		static void initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath = "");
 		static void run();
 
-	public:
+	public: /* ウィンドウの処理 */
 
 		// ウィンドウサイズを取得する
 		static const tktkMath::Vector2& getWindowSize();
 
-	public:
+	public: /* シーンの処理 */
 
 		template<class SceneType, class... Args>
 		static void addScene(unsigned int id, Args... constructorArgs);
@@ -47,7 +47,7 @@ namespace tktk
 
 		static void disableScene(unsigned int id);
 
-	public:
+	public: /* ゲームオブジェクトの処理 */
 
 		static GameObjectPtr createGameObject();
 		
@@ -55,7 +55,7 @@ namespace tktk
 		
 		static std::forward_list<GameObjectPtr> findGameObjectWithTags(int tag);
 
-	public:
+	public: /* コンポーネントの処理 */
 
 		// コンポーネントの型ごとの更新優先度を設定する
 		// ※デフォルト（0.0f）で値が小さい程、早く実行される
@@ -68,7 +68,7 @@ namespace tktk
 		template <class ComponentType, class... Args>
 		static std::weak_ptr<ComponentType> createComponent(Args... args);
 
-	public:
+	public: /* 直接DX12の処理を呼ぶ */
 
 		// コマンドリストを手動で実行する
 		static void executeCommandList();
@@ -121,7 +121,7 @@ namespace tktk
 		// ディスクリプタヒープを作る
 		static void createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam);
 
-		// GPU側優先処理でテクスチャをロードする
+		// GPU側優先処理でテクスチャをロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		static void gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath);
 
 	public: /* 直接DX12のリソースを設定、取得する */
@@ -131,13 +131,18 @@ namespace tktk
 
 		static const tktkMath::Vector3& getTextureSize(unsigned int id);
 
+	public: /* リソース読み込み処理 */
+
+		// GPU側優先処理でpng画像をロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
+		static void gpuPriorityLoadPng(unsigned int id, const std::string& texDataPath);
+
 	public: /* スプライト関係の処理 */
 
 		static void createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam);
 
 		static void drawSprite(unsigned int spriteMaterialId, const tktkMath::Matrix3& worldMatrix);
 
-	private:
+	private: /* 裏実装 */
 
 		static void createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
 		static void createConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);

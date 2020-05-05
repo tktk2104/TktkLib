@@ -222,6 +222,19 @@ namespace tktk
 		return m_dx3dBaseObjects->getTextureSize(id);
 	}
 
+	void DX12GameManager::gpuPriorityLoadPng(unsigned int id, const std::string& texDataPath)
+	{
+		tktk::TexBufFormatParam formatParam{};
+		formatParam.resourceDimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+		formatParam.format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		formatParam.arraySize = 1U;
+		formatParam.mipLevels = 1U;
+		formatParam.sampleDescCount = 1U;
+		formatParam.sampleDescQuality = 0U;
+
+		tktk::DX12GameManager::gpuPriorityLoadTextureBuffer(id, formatParam, texDataPath);
+	}
+
 	void DX12GameManager::createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam)
 	{
 		m_sprite->createSpriteMaterial(id, initParam);

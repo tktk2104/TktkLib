@@ -4,7 +4,7 @@
 #include <TktkDX12Wrapper/Graphics/DX3D12/GraphicsPipeLineState/GraphicsPipeLineStateInitParam.h>
 #undef min
 #undef max
-#include "../Sprite/SpriteMaterial.h"
+#include "SpriteMaterial.h"
 
 namespace tktk
 {

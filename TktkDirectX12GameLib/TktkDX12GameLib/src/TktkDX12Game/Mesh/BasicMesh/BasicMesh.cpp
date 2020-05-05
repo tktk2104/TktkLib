@@ -1,53 +1,32 @@
-#include "TktkDX12Game/Sprite/Sprite.h"
+#include "TktkDX12Game/Mesh/BasicMesh/BasicMesh.h"
 
-#include <vector>
-#include <TktkMath/Structs/Vector2.h>
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
-#include "TktkDX12Game/Sprite/SpriteConstantBufferData.h"
+#include "TktkDX12Game/Mesh/BasicMesh/BasicMeshConstantBufferData.h"
 
 namespace tktk
 {
-	Sprite::Sprite(const tktk::ShaderFilePaths& shaderFilePaths, unsigned int spriteMaterialNum)
-		: m_spriteMaterial(spriteMaterialNum)
+	BasicMesh::BasicMesh(const tktk::ShaderFilePaths& shaderFilePaths, unsigned int basicMeshMaterialNum)
+		: m_basicMeshMaterial(basicMeshMaterialNum)
 	{
-		// スプライト用のルートシグネチャを作る
 		createRootSignature();
 
 		createGraphicsPipeLineState(shaderFilePaths);
 
-		// スプライト用の頂点バッファを作る
-		std::vector<tktkMath::Vector2> vertices{
-			tktkMath::vec2Zero,
-			tktkMath::vec2Right,
-			tktkMath::vec2Up,
-			tktkMath::vec2One
-		};
-		DX12GameManager::createVertexBuffer(1U, vertices);
-
-		// スプライト用のインデックスバッファを作る
-		std::vector<unsigned short> indices =
-		{
-			0, 1, 2,
-			2, 1, 3
-		};
-		DX12GameManager::createIndexBuffer(1U, { 0U, 1U, 2U, 3U });
-
 		// スプライト用の定数バッファを作る
-		DX12GameManager::createConstantBuffer(1U, SpriteConstantBufferData());
+		DX12GameManager::createConstantBuffer(2U, BasicMeshConstantBufferData());
 	}
 
-	void Sprite::createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam)
+	void BasicMesh::createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initparam)
 	{
-		m_spriteMaterial.create(id, initParam);
+		m_basicMeshMaterial.create(id, initparam);
 	}
 
-	void Sprite::drawSprite(unsigned int spriteMaterialId, const tktkMath::Matrix3& worldMatrix)
+	void BasicMesh::drawMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
 	{
-		m_spriteMaterial.drawSprite(spriteMaterialId, worldMatrix);
+		m_basicMeshMaterial.drawMesh(id, baseArgs);
 	}
 
-	// スプライト用のルートシグネチャ
-	void Sprite::createRootSignature()
+	void BasicMesh::createRootSignature()
 	{
 		tktk::RootSignatureInitParam initParam{};
 		initParam.m_flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -80,11 +59,10 @@ namespace tktk
 			initParam.m_samplerDescArray.at(0).m_shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 			initParam.m_samplerDescArray.at(0).m_comparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 		}
-		tktk::DX12GameManager::createRootSignature(1U, initParam);
+		tktk::DX12GameManager::createRootSignature(2U, initParam);
 	}
 
-	// スプライト用のグラフィックパイプラインステート
-	void Sprite::createGraphicsPipeLineState(const tktk::ShaderFilePaths& shaderFilePaths)
+	void BasicMesh::createGraphicsPipeLineState(const tktk::ShaderFilePaths& shaderFilePaths)
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
 		renderTargetBlendDesc.BlendEnable = false;
@@ -99,12 +77,12 @@ namespace tktk
 		initParam.m_blendDesc.AlphaToCoverageEnable = false;
 		initParam.m_blendDesc.IndependentBlendEnable = false;
 		initParam.m_blendDesc.RenderTarget[0] = renderTargetBlendDesc;
-		initParam.m_inputLayoutArray = { 
+		initParam.m_inputLayoutArray = {
 			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
 		};
 		initParam.m_primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 		initParam.m_renderTargetFormatArray = { DXGI_FORMAT_R8G8B8A8_UNORM };
 
-		tktk::DX12GameManager::createGraphicsPipeLineState(1U, initParam, shaderFilePaths, 1U);
+		tktk::DX12GameManager::createGraphicsPipeLineState(2U, initParam, shaderFilePaths, 1U);
 	}
 }

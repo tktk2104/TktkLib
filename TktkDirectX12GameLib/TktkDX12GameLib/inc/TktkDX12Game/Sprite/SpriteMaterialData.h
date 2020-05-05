@@ -10,6 +10,7 @@ namespace tktk
 	public:
 
 		SpriteMaterialData(const SpriteMaterialInitParam& initParam);
+		~SpriteMaterialData() = default;
 
 	public:
 
