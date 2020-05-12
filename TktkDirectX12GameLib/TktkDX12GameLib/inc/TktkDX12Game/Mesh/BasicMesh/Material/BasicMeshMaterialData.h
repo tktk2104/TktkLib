@@ -2,7 +2,8 @@
 #define BASIC_MESH_MATERIAL_DATA_H_
 
 #include "BasicMeshMaterialInitParam.h"
-#include "../MeshDrawFuncBaseArgs.h"
+#include "../../MeshDrawFuncBaseArgs.h"
+#include "../../MeshMaterialDrawFuncArgs.h"
 
 namespace tktk
 {
@@ -15,7 +16,7 @@ namespace tktk
 
 	public:
 
-		void drawBasicMesh(const MeshDrawFuncBaseArgs& baseArgs);
+		void drawUseMaterial(const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs);
 
 	private:
 

@@ -3,6 +3,9 @@
 #include <TktkDX12Wrapper/Graphics/Window/Window.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjects.h>
 #include "TktkDX12Game/Sprite/Sprite.h"
+#include "TktkDX12Game/Mesh/BasicMesh/Mesh/BasicMesh.h"
+#include "TktkDX12Game/Mesh/BasicMesh/Material/BasicMeshMaterial.h"
+#include "TktkDX12Game/Mesh/BasicMesh/Loader/BasicMeshPmdLoader.h"
 #include "TktkDX12Game/GameObject/GameObjectManager.h"
 #include "TktkDX12Game/GameObject/GameObject.h"
 
@@ -15,6 +18,8 @@ namespace tktk
 	std::unique_ptr<Window>					DX12GameManager::m_window;
 	std::unique_ptr<DX3DBaseObjects>		DX12GameManager::m_dx3dBaseObjects;
 	std::unique_ptr<Sprite>					DX12GameManager::m_sprite;
+	std::unique_ptr<BasicMesh>				DX12GameManager::m_basicMesh;
+	std::unique_ptr<BasicMeshMaterial>		DX12GameManager::m_basicMeshMaterial;
 
 	void DX12GameManager::initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath)
 	{
@@ -24,10 +29,17 @@ namespace tktk
 		m_window				= std::make_unique<Window>(windowInitParam);
 		m_dx3dBaseObjects		= std::make_unique<DX3DBaseObjects>(dx3dInitParam, m_window->getHWND(), windowInitParam.windowSize, tktkMath::colorBlue);
 
-		tktk::ShaderFilePaths shaderFilePaths{};
-		shaderFilePaths.vsFilePath = tktkLibResFolderPath + "TktkLibRes/shader/SpriteVertexShader.cso";
-		shaderFilePaths.psFilePath = tktkLibResFolderPath + "TktkLibRes/shader/SpritePixelShader.cso";
-		m_sprite = std::make_unique<Sprite>(shaderFilePaths, dx3dInitParam.spriteNum);
+		tktk::ShaderFilePaths spriteShaderFilePaths{};
+		spriteShaderFilePaths.vsFilePath = tktkLibResFolderPath + "TktkLibRes/shader/SpriteVertexShader.cso";
+		spriteShaderFilePaths.psFilePath = tktkLibResFolderPath + "TktkLibRes/shader/SpritePixelShader.cso";
+		m_sprite = std::make_unique<Sprite>(spriteShaderFilePaths, dx3dInitParam.spriteNum);
+
+		m_basicMesh = std::make_unique<BasicMesh>(dx3dInitParam.basicMeshNum);
+
+		tktk::ShaderFilePaths basicMeshShaderFilePaths{};
+		basicMeshShaderFilePaths.vsFilePath = tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshVertexShader.cso";
+		basicMeshShaderFilePaths.psFilePath = tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshPixelShader.cso";
+		m_basicMeshMaterial = std::make_unique<BasicMeshMaterial>(basicMeshShaderFilePaths, dx3dInitParam.basicMeshMaterialNum);
 	}
 
 	void DX12GameManager::run()
@@ -240,9 +252,34 @@ namespace tktk
 		m_sprite->createSpriteMaterial(id, initParam);
 	}
 
-	void DX12GameManager::drawSprite(unsigned int spriteMaterialId, const tktkMath::Matrix3& worldMatrix)
+	void DX12GameManager::drawSprite(unsigned int id, const tktkMath::Matrix3& worldMatrix)
 	{
-		m_sprite->drawSprite(spriteMaterialId, worldMatrix);
+		m_sprite->drawSprite(id, worldMatrix);
+	}
+
+	void DX12GameManager::createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam)
+	{
+		m_basicMesh->craete(id, initParam);
+	}
+
+	void DX12GameManager::createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initparam)
+	{
+		m_basicMeshMaterial->create(id, initparam);
+	}
+
+	void DX12GameManager::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
+	{
+		m_basicMesh->drawMesh(id, baseArgs);
+	}
+
+	void DX12GameManager::drawBasicMeshMaterial(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs)
+	{
+		m_basicMeshMaterial->drawUseMaterial(id, baseArgs, materialArgs);
+	}
+
+	void DX12GameManager::loadPmd(const BasicMeshLoadPmdArgs& args)
+	{
+		BasicMeshPmdLoader::loadPmd(args);
 	}
 
 	void DX12GameManager::createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)

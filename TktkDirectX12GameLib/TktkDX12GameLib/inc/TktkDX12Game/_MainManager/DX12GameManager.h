@@ -18,6 +18,12 @@
 #include "../GameObject/GameObjectPtr.h"
 #include "../Component/ComponentManager.h"
 #include "../Sprite/SpriteMaterialInitParam.h"
+#include "../Mesh/MeshDrawFuncBaseArgs.h"
+#include "../Mesh/MeshMaterialDrawFuncArgs.h"
+#include "../Mesh/BasicMesh/Mesh/BasicMeshInitParam.h"
+#include "../Mesh/BasicMesh/Material/BasicMeshMaterialInitParam.h"
+
+#include "../Mesh/BasicMesh/Loader/BasicMeshLoadPmdArgs.h"
 
 namespace tktk
 {
@@ -25,6 +31,8 @@ namespace tktk
 	class Window;
 	class DX3DBaseObjects;
 	class Sprite;
+	class BasicMesh;
+	class BasicMeshMaterial;
 
 	class DX12GameManager
 	{
@@ -140,7 +148,19 @@ namespace tktk
 
 		static void createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam);
 
-		static void drawSprite(unsigned int spriteMaterialId, const tktkMath::Matrix3& worldMatrix);
+		static void drawSprite(unsigned int id, const tktkMath::Matrix3& worldMatrix);
+
+	public: /* ƒƒbƒVƒ…ŠÖŒW‚Ìˆ— */
+
+		static void createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam);
+
+		static void createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initparam);
+
+		static void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
+
+		static void drawBasicMeshMaterial(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs);
+
+		static void loadPmd(const BasicMeshLoadPmdArgs& args);
 
 	private: /* — À‘• */
 
@@ -157,6 +177,8 @@ namespace tktk
 		static std::unique_ptr<Window>				m_window;
 		static std::unique_ptr<DX3DBaseObjects>		m_dx3dBaseObjects;
 		static std::unique_ptr<Sprite>				m_sprite;
+		static std::unique_ptr<BasicMesh>			m_basicMesh;
+		static std::unique_ptr<BasicMeshMaterial>	m_basicMeshMaterial;
 	};
 //„¬„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
 //„«‚±‚±‚©‚ç‰º‚ÍŠÖ”‚ÌÀ‘•

@@ -135,21 +135,6 @@
     <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\BasicMeshConstantBufferData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\BasicMesh.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\BasicMeshMaterial.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\BasicMeshMaterialData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\BasicMeshMaterialInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Mesh\MeshDrawFuncBaseArgs.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshDrawer\BasicMeshDrawer\BasicMeshDrawer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -157,6 +142,39 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\Light\PointLight\PointLight.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\Material\BasicMeshMaterial.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\Material\BasicMeshMaterialData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\Material\BasicMeshMaterialInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\Mesh\BasicMesh.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\Mesh\BasicMeshData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\MeshDrawFuncBaseArgs.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\MeshMaterialDrawFuncArgs.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\Subset.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\Mesh\BasicMeshInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\Loader\BasicMeshPmdLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Mesh\BasicMesh\Loader\BasicMeshLoadPmdArgs.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -257,15 +275,6 @@
     <ClCompile Include="src\TktkDX12Game\Sprite\Sprite.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\Mesh\BasicMesh\BasicMesh.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\Mesh\BasicMesh\BasicMeshMaterial.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\Mesh\BasicMesh\BasicMeshMaterialData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshDrawer\BasicMeshDrawer\BasicMeshDrawer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -275,9 +284,26 @@
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\Light\PointLight\PointLight.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Mesh\BasicMesh\Material\BasicMeshMaterial.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Mesh\BasicMesh\Material\BasicMeshMaterialData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Mesh\BasicMesh\Mesh\BasicMesh.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Mesh\BasicMesh\Mesh\BasicMeshData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Mesh\BasicMesh\Loader\BasicMeshPmdLoader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\spriteShader\SpritePixelShader.hlsl" />
     <FxCompile Include="shader\spriteShader\SpriteVertexShader.hlsl" />
+    <FxCompile Include="shader\basicMeshShader\BasicMeshPixelShader.hlsl" />
+    <FxCompile Include="shader\basicMeshShader\BasicMeshVertexShader.hlsl" />
   </ItemGroup>
 </Project>

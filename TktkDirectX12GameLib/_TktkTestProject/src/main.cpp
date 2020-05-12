@@ -13,6 +13,8 @@
 #include <TktkDX12Game/Component/ComponentBase.h>
 #include <TktkDX12Game/Component/DefaultComponents/2DComponents/Transform2D/Transform2D.h>
 #include <TktkDX12Game/Component/DefaultComponents/2DComponents/SpriteDrawer/SpriteDrawer.h>
+#include <TktkDX12Game/Component/DefaultComponents/3DComponents/Transform3D/Transform3D.h>
+#include <TktkDX12Game/Component/DefaultComponents/3DComponents/MeshDrawer/BasicMeshDrawer/BasicMeshDrawer.h>
 
 struct TestScene
 {
@@ -149,17 +151,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		tktk::DX3DBaseObjectsInitParam initParam{};
 		initParam.viewPortNum				= 1U;
 		initParam.scissorRectNum			= 1U;
-		initParam.vertexBufferNum			= 2U;
-		initParam.indexBufferNum			= 2U;
-		initParam.graphicsPipeLineNum		= 2U;
-		initParam.rootSignatureNum			= 2U;
-		initParam.basicDescriptorHeapNum	= 2U;
-		initParam.rtvDescriptorHeapNum		= 1U;
-		initParam.textureBufferNum			= 1U;
-		initParam.constantBufferNum			= 2U;
+		initParam.vertexBufferNum			= 3U;
+		initParam.indexBufferNum			= 3U;
+		initParam.graphicsPipeLineNum		= 4U;//3U;
+		initParam.rootSignatureNum			= 4U;//3U;
+		initParam.basicDescriptorHeapNum	= 3U;
+		initParam.rtvDescriptorHeapNum		= 2U;
+		initParam.textureBufferNum			= 2U;
+		initParam.constantBufferNum			= 3U;
 		initParam.renderTargetBufferNum		= 0U;
 		initParam.backBufferNum				= 2U;
 		initParam.spriteNum					= 2U;
+		initParam.basicMeshNum				= 2U;
+		initParam.basicMeshMaterialNum		= 2U;
 
 		tktk::DX12GameManager::initialize(1U, initParam, { hInstance, nCmdShow, "TestProject", { 1920.0f, 1080.0f } });
 	}
@@ -185,6 +189,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		tktk::DX12GameManager::createSpriteMaterial(0U, initParam);
 	}
 
+	// メッシュをロードする
+	{
+		tktk::BasicMeshLoadPmdArgs loadArgs{};
+		loadArgs.m_filePath = "res/Model/初音ミク.pmd";
+		loadArgs.createDescriptorHeapId = 2U;
+		loadArgs.createVertexBufferId = 2U;
+		loadArgs.createIndexBufferId = 2U;
+		loadArgs.createBasicMeshId = 0U;
+		loadArgs.createBasicMeshMaterialId = 0U;
+
+		tktk::DX12GameManager::loadPmd(loadArgs);
+	}
+
 	// テスト
 	{
 		tktk::DX12GameManager::addUpdatePriority<Player>(2.0f);
@@ -207,6 +224,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	
 		auto enemy = tktk::DX12GameManager::createGameObject();
 		enemy->createComponent<Enemy>();
+
+		auto miku = tktk::DX12GameManager::createGameObject();
+		miku->createComponent<tktk::Transform3D>(
+			tktkMath::vec3Zero,
+			tktkMath::vec3One,
+			tktkMath::quaternionIdentity,
+			tktk::TraceParentType::trace_All
+			);
+		miku->createComponent<tktk::BasicMeshDrawer>(
+			0.0f,
+			0U
+			);
 	}
 
 	// プログラム開始

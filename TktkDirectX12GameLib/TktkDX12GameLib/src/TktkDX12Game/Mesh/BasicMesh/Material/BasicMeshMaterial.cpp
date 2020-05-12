@@ -1,35 +1,58 @@
-#include "TktkDX12Game/Mesh/BasicMesh/BasicMesh.h"
+#include "TktkDX12Game/Mesh/BasicMesh/Material/BasicMeshMaterial.h"
 
+#ifdef _DEBUG
+#include <stdexcept>
+#endif // _DEBUG
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
 #include "TktkDX12Game/Mesh/BasicMesh/BasicMeshConstantBufferData.h"
 
 namespace tktk
 {
-	BasicMesh::BasicMesh(const tktk::ShaderFilePaths& shaderFilePaths, unsigned int basicMeshMaterialNum)
-		: m_basicMeshMaterial(basicMeshMaterialNum)
+	BasicMeshMaterial::BasicMeshMaterial(const tktk::ShaderFilePaths& shaderFilePaths, unsigned int basicMeshMaterialNum)
+		: m_basicMeshMaterialArray(basicMeshMaterialNum)
 	{
 		createRootSignature();
 
 		createGraphicsPipeLineState(shaderFilePaths);
 
-		// スプライト用の定数バッファを作る
+		// 通常メッシュ用の定数バッファを作る
 		DX12GameManager::createConstantBuffer(2U, BasicMeshConstantBufferData());
 	}
 
-	void BasicMesh::createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initparam)
+	void BasicMeshMaterial::create(unsigned int id, const BasicMeshMaterialInitParam& initparam)
 	{
-		m_basicMeshMaterial.create(id, initparam);
+		m_basicMeshMaterialArray.emplaceAt(id, initparam);
 	}
 
-	void BasicMesh::drawMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
+	void BasicMeshMaterial::drawUseMaterial(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs)
 	{
-		m_basicMeshMaterial.drawMesh(id, baseArgs);
+		auto basicMeshPtr = m_basicMeshMaterialArray.at(id);
+
+#ifdef _DEBUG
+		if (basicMeshPtr == nullptr)
+		{
+			throw std::runtime_error("not create basicMeshMaterial");
+		}
+#endif // _DEBUG
+
+		basicMeshPtr->drawUseMaterial(baseArgs, materialArgs);
 	}
 
-	void BasicMesh::createRootSignature()
+	void BasicMeshMaterial::createRootSignature()
 	{
 		tktk::RootSignatureInitParam initParam{};
 		initParam.m_flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+		
+		//initParam.m_rootParamArray.resize(1U);
+		//{/* 定数バッファ用のルートパラメータ */
+		//	initParam.m_rootParamArray.at(0).m_shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//D3D12_SHADER_VISIBILITY_VERTEX;
+		//	initParam.m_rootParamArray.at(0).m_descriptorTableArray.resize(1U);
+		//	{
+		//		initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_numDescriptors = 1;
+		//		initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+		//	}
+		//}
+
 		initParam.m_rootParamArray.resize(2U);
 		{/* テクスチャ用のルートパラメータ */
 			initParam.m_rootParamArray.at(0).m_shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
@@ -47,6 +70,7 @@ namespace tktk
 				initParam.m_rootParamArray.at(1).m_descriptorTableArray.at(0).m_type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
 			}
 		}
+
 		initParam.m_samplerDescArray.resize(1U);
 		{/* サンプラーの設定 */
 			initParam.m_samplerDescArray.at(0).m_addressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
@@ -62,7 +86,7 @@ namespace tktk
 		tktk::DX12GameManager::createRootSignature(2U, initParam);
 	}
 
-	void BasicMesh::createGraphicsPipeLineState(const tktk::ShaderFilePaths& shaderFilePaths)
+	void BasicMeshMaterial::createGraphicsPipeLineState(const tktk::ShaderFilePaths& shaderFilePaths)
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
 		renderTargetBlendDesc.BlendEnable = false;
@@ -78,11 +102,17 @@ namespace tktk
 		initParam.m_blendDesc.IndependentBlendEnable = false;
 		initParam.m_blendDesc.RenderTarget[0] = renderTargetBlendDesc;
 		initParam.m_inputLayoutArray = {
-			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
+			{ "POSITION",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "NORMAL",			0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD",		0, DXGI_FORMAT_R32G32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "BLENDINDICES",	0, DXGI_FORMAT_R8G8B8A8_SINT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "BLENDWEIGHT",	0, DXGI_FORMAT_R32G32B32A32_FLOAT,	0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "TANGENT",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "BINORMAL",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
 		};
 		initParam.m_primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 		initParam.m_renderTargetFormatArray = { DXGI_FORMAT_R8G8B8A8_UNORM };
 
-		tktk::DX12GameManager::createGraphicsPipeLineState(2U, initParam, shaderFilePaths, 1U);
+		tktk::DX12GameManager::createGraphicsPipeLineState(2U, initParam, shaderFilePaths, 2U);
 	}
 }
