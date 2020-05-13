@@ -2,7 +2,7 @@
 #define SPRITE_MATERIAL_H_
 
 #include "SpriteMaterialData.h"
-#include "../HeapArray/HeapArray.h"
+#include <TktkContainer/HeapArray/HeapArray.h>
 
 namespace tktk
 {

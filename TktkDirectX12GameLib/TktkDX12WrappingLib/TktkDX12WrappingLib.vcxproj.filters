@@ -132,6 +132,21 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\SwapChain\SwapChain.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\DepthStencilBuffer\DepthStencilBuffer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\DepthStencilBuffer\DepthStencilBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeapData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeapInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\Window\Window.cpp">
@@ -213,6 +228,18 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\SwapChain\SwapChain.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\DepthStencilBuffer\DepthStencilBuffer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\DepthStencilBuffer\DepthStencilBufferData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeapData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

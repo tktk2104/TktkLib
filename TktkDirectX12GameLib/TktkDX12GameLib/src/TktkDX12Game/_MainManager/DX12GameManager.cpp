@@ -48,6 +48,8 @@ namespace tktk
 
 		while (true)
 		{
+			bool canRunDX12Func = true;
+
 			if (msg.message == WM_QUIT)
 			{
 				break;
@@ -94,22 +96,26 @@ namespace tktk
 				case WM_SYSDEADCHAR:
 				case WM_UNICHAR:
 
-					m_sceneManager->update();
-					m_gameObjectManager->update();
-					m_componentManager->update();
-					m_dx3dBaseObjects->beginDraw();
-					m_componentManager->draw();
-					m_dx3dBaseObjects->endDraw();
 					break;
 
 				default:
 
 					// ˆ—‚©‚Á”ò‚Î‚µ
+					canRunDX12Func = false;
 					break;
 				}
-
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
+			}
+
+			if (canRunDX12Func)
+			{
+				m_sceneManager->update();
+				m_gameObjectManager->update();
+				m_componentManager->update();
+				m_dx3dBaseObjects->beginDraw();
+				m_componentManager->draw();
+				m_dx3dBaseObjects->endDraw();
 			}
 		}
 	}
@@ -162,6 +168,11 @@ namespace tktk
 	void DX12GameManager::setBackBufferRenderTarget()
 	{
 		m_dx3dBaseObjects->setBackBufferRenderTarget();
+	}
+
+	void DX12GameManager::setUseDepthStencilBackBufferRenderTarget(unsigned int depthStencilViewId)
+	{
+		m_dx3dBaseObjects->setUseDepthStencilBackBufferRenderTarget(depthStencilViewId);
 	}
 
 	void DX12GameManager::setViewport(unsigned int id)
@@ -219,9 +230,19 @@ namespace tktk
 		m_dx3dBaseObjects->createIndexBuffer(id, indices);
 	}
 
+	void DX12GameManager::createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize)
+	{
+		m_dx3dBaseObjects->createDepthStencilBuffer(id, depthStencilSize);
+	}
+
 	void DX12GameManager::createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam)
 	{
 		m_dx3dBaseObjects->createBasicDescriptorHeap(id, initParam);
+	}
+
+	void DX12GameManager::createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam)
+	{
+		m_dx3dBaseObjects->createDsvDescriptorHeap(id, initParam);
 	}
 
 	void DX12GameManager::gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath)

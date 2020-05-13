@@ -15,6 +15,10 @@ namespace tktk
 
 	public:
 
+		unsigned int arrayMaxSize() const;
+
+	public:
+
 		// 確保したメモリの先頭から使用可能なメモリが存在するか探し、見つけたら引数を使ってインスタンスを作った上でそのアドレスのポインタを返し、見つからなかったらnullptrを返す
 		template <class... ConstructorArgs>
 		NodeType* emplace(ConstructorArgs&&... args);
@@ -82,6 +86,12 @@ namespace tktk
 
 		// 配列要素使用管理ビットデータを開放する
 		delete[] m_arrayNodeUseCheckBitFlag;
+	}
+
+	template<class NodeType, class Allocator>
+	inline unsigned int HeapArray<NodeType, Allocator>::arrayMaxSize() const
+	{
+		return m_arrayMaxSize;
 	}
 
 	// 確保したメモリの先頭から使用可能なメモリが存在するか探し、見つけたら引数を使ってインスタンスを作った上でそのアドレスのポインタを返し、見つからなかったらnullptrを返す

@@ -13,10 +13,12 @@ namespace tktk
 		unsigned int rootSignatureNum;
 		unsigned int basicDescriptorHeapNum;
 		unsigned int rtvDescriptorHeapNum;
+		unsigned int dsvDescriptorHeapNum;
 		unsigned int textureBufferNum;
 		unsigned int constantBufferNum;
 		unsigned int renderTargetBufferNum;
 		unsigned int backBufferNum;
+		unsigned int depthStencilBufferNum;
 
 		unsigned int spriteNum;
 		unsigned int basicMeshNum;

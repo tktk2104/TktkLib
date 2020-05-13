@@ -6,7 +6,8 @@ namespace tktk
 	enum class DescriptorHeapType
 	{
 		basic,
-		rtv
+		rtv,
+		dsv
 	};
 
 	struct DescriptorHeapParam

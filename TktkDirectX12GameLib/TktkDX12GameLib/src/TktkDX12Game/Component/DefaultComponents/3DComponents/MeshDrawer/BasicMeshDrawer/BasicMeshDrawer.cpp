@@ -20,8 +20,16 @@ namespace tktk
 
 	void BasicMeshDrawer::draw() const
 	{
+		static float angle = 0.0f;
+
+		angle += 0.1f;
+
+		auto testSin = tktkMath::helper::sin(angle);
+
+		auto temp = tktkMath::Matrix4::createRotationY(angle);
+
 		MeshDrawFuncBaseArgs baseArgs{};
-		baseArgs.worldMatrix = m_transform->calculateWorldMatrix();
+		baseArgs.worldMatrix = m_transform->calculateWorldMatrix() * temp;
 
 		baseArgs.viewMatrix = tktkMath::Matrix4::createLookAtLH(
 			tktkMath::Vector3(0.0f, 8.0f, -15.0f),

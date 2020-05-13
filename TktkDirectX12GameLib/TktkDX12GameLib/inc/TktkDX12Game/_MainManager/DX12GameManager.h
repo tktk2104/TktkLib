@@ -13,6 +13,7 @@
 #include <TktkDX12Wrapper/Graphics/DX3D12/GraphicsPipeLineState/GraphicsPipeLineStateInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/DescriptorHeapParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/BasicDescriptorHeap/BasicDescriptorHeapInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/DsvDescriptorHeap/DsvDescriptorHeapInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/BufferResource/TextureBuffer/TextureBufferInitParam.h>
 #include "../Scene/SceneManager.h"
 #include "../GameObject/GameObjectPtr.h"
@@ -85,6 +86,8 @@ namespace tktk
 
 		static void setBackBufferRenderTarget();
 
+		static void setUseDepthStencilBackBufferRenderTarget(unsigned int depthStencilViewId);
+
 		static void setViewport(unsigned int id);
 
 		static void setScissorRect(unsigned int id);
@@ -126,8 +129,14 @@ namespace tktk
 		template <class ConstantBufferDataType>
 		static void createConstantBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData);
 
+		// 深度ステンシルバッファを作る
+		static void createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize);
+
 		// ディスクリプタヒープを作る
 		static void createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam);
+
+		// 深度ステンシルディスクリプタヒープを作る
+		static void createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam);
 
 		// GPU側優先処理でテクスチャをロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		static void gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath);

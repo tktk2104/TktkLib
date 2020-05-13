@@ -11,7 +11,7 @@ namespace tktk
 		, m_vertexBuffer(initParam.vertexBufferNum)
 		, m_indexBuffer(initParam.indexBufferNum)
 		, m_graphicsPipeLineState(initParam.graphicsPipeLineNum, initParam.rootSignatureNum)
-		, m_descriptorHeap(initParam.basicDescriptorHeapNum, initParam.rtvDescriptorHeapNum, initParam.textureBufferNum, initParam.constantBufferNum, initParam.renderTargetBufferNum, initParam.backBufferNum)
+		, m_descriptorHeap(initParam.basicDescriptorHeapNum, initParam.rtvDescriptorHeapNum, initParam.dsvDescriptorHeapNum, initParam.textureBufferNum, initParam.constantBufferNum, initParam.renderTargetBufferNum, initParam.backBufferNum, initParam.depthStencilBufferNum)
 		, m_backGroundColor(backGroundColor)
 	{
 #ifdef _DEBUG
@@ -101,6 +101,17 @@ namespace tktk
 
 			m_descriptorHeap.createRtvDescriptorHeap(0U, m_device, initParam);
 		}
+
+		// デフォルトの深度バッファーと深度ディスクリプタヒープを作るを作る
+		{
+			m_descriptorHeap.createDepthStencilBuffer(0U, m_device, windowSize);
+
+			DsvDescriptorHeapInitParam initParam{};
+			initParam.m_shaderVisible = false;
+			initParam.m_descriptorParamArray.push_back({ DsvDescriptorType::normal, 0U });
+
+			m_descriptorHeap.createDsvDescriptorHeap(0U, m_device, initParam);
+		}
 	}
 
 	DX3DBaseObjects::~DX3DBaseObjects()
@@ -145,7 +156,10 @@ namespace tktk
 		// 現在のバックバッファーを指定した単色で塗りつぶす
 		m_descriptorHeap.clearRenderTarget(0U, m_device, m_commandList, m_curBackBufferIndex, m_backGroundColor);
 		
-		//// ビューポートを設定する
+		// 全てのデプスステンシルビューをクリアする
+		m_descriptorHeap.clearDepthStencilViewAll(m_device, m_commandList);
+
+		// ビューポートを設定する
 		m_viewport.set(0, m_commandList);
 		
 		// シザー矩形を設定する
@@ -225,9 +239,19 @@ namespace tktk
 		m_descriptorHeap.createConstantBuffer(id, m_device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
+	void DX3DBaseObjects::createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize)
+	{
+		m_descriptorHeap.createDepthStencilBuffer(id, m_device, depthStencilSize);
+	}
+
 	void DX3DBaseObjects::createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam)
 	{
 		m_descriptorHeap.createBasicDescriptorHeap(id, m_device, initParam);
+	}
+
+	void DX3DBaseObjects::createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam)
+	{
+		m_descriptorHeap.createDsvDescriptorHeap(id, m_device, initParam);
 	}
 
 	void DX3DBaseObjects::gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath)
@@ -253,6 +277,11 @@ namespace tktk
 	void DX3DBaseObjects::setBackBufferRenderTarget()
 	{
 		m_descriptorHeap.setRenderTarget(0U, m_device, m_commandList, m_curBackBufferIndex, 1U);
+	}
+
+	void DX3DBaseObjects::setUseDepthStencilBackBufferRenderTarget(unsigned int depthStencilViewId)
+	{
+		m_descriptorHeap.setRenderTargetAndDepthStencil(0U, depthStencilViewId, m_device, m_commandList, m_curBackBufferIndex, 1U);
 	}
 
 	void DX3DBaseObjects::setViewport(unsigned int id)

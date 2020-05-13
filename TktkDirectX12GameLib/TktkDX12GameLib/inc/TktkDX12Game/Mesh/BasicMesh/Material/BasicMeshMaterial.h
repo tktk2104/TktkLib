@@ -5,7 +5,7 @@
 #undef min
 #undef max
 #include "BasicMeshMaterialData.h"
-#include "../../../HeapArray/HeapArray.h"
+#include <TktkContainer/HeapArray/HeapArray.h>
 
 namespace tktk
 {

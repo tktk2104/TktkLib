@@ -16,6 +16,9 @@ namespace tktk
 		std::vector<D3D12_INPUT_ELEMENT_DESC>	m_inputLayoutArray{};
 		D3D12_PRIMITIVE_TOPOLOGY_TYPE			m_primitiveTopology{};
 		std::vector<DXGI_FORMAT>				m_renderTargetFormatArray{};
+		bool									m_useDepth{ false };
+		bool									m_writeDepth{ false };
+		D3D12_COMPARISON_FUNC					m_depthFunc{};
 	};
 
 	struct ShaderFilePaths

@@ -27,9 +27,9 @@ namespace tktk
 		m_rtvDescriptorHeapDataArray.at(id).setDescriptor(device, commandList);
 	}
 
-	void RtvDescriptorHeap::setRenderTarget(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
+	void RtvDescriptorHeap::setRenderTarget(unsigned int renderTargetId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount, const D3D12_CPU_DESCRIPTOR_HANDLE* useDsvHandle) const
 	{
-		m_rtvDescriptorHeapDataArray.at(id).setRenderTarget(device, commandList, startRtvLocationIndex, rtvCount);
+		m_rtvDescriptorHeapDataArray.at(renderTargetId).setRenderTarget(device, commandList, startRtvLocationIndex, rtvCount, useDsvHandle);
 	}
 
 	void RtvDescriptorHeap::clearRenderTarget(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)

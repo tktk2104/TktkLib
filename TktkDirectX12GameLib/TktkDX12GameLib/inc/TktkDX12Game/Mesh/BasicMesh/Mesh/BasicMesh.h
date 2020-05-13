@@ -1,9 +1,8 @@
 #ifndef BASIC_MESH_H_
 #define BASIC_MESH_H_
 
-
 #include "BasicMeshData.h"
-#include "../../../HeapArray/HeapArray.h"
+#include <TktkContainer/HeapArray/HeapArray.h>
 
 namespace tktk
 {

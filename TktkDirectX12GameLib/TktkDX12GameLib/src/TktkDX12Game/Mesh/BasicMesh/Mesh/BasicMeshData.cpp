@@ -13,6 +13,8 @@ namespace tktk
 
 	void BasicMeshData::drawMesh(const MeshDrawFuncBaseArgs& baseArgs)
 	{
+		DX12GameManager::setUseDepthStencilBackBufferRenderTarget(0U);
+
 		MeshMaterialDrawFuncArgs materialDrawFuncArgs{};
 
 		materialDrawFuncArgs.useVertexBufferId = m_useVertexBufferId;
@@ -25,5 +27,7 @@ namespace tktk
 
 			DX12GameManager::drawBasicMeshMaterial(node.useMaterialId, baseArgs, materialDrawFuncArgs);
 		}
+
+		DX12GameManager::setBackBufferRenderTarget();
 	}
 }

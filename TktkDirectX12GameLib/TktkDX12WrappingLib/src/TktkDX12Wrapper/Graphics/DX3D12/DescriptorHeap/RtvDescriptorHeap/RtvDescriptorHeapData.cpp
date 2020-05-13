@@ -49,10 +49,10 @@ namespace tktk
 		}
 	}
 
-	void RtvDescriptorHeapData::setRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
+	void RtvDescriptorHeapData::setRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount, const D3D12_CPU_DESCRIPTOR_HANDLE* useDsvHandle) const
 	{
 		auto cpuHeapHandleArray = getCpuHeapHandleArray(device);
-		commandList->OMSetRenderTargets(rtvCount, &cpuHeapHandleArray.at(startRtvLocationIndex), true, nullptr);
+		commandList->OMSetRenderTargets(rtvCount, &cpuHeapHandleArray.at(startRtvLocationIndex), true, useDsvHandle);
 	}
 
 	void RtvDescriptorHeapData::clearRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)

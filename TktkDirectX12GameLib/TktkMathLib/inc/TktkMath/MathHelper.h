@@ -394,7 +394,7 @@ namespace tktkMath::helper
 			sumCo += t;
 		}
 
-		return static_cast<JudgeType>((si * sumSi + co * sumCo) * dir);
+		return static_cast<JudgeType>(dir * (si * sumSi + (co * sumCo / pi)));
 	}
 	template<int Accuracy, class JudgeType, std::enable_if_t<!is_number_v<JudgeType>>* = nullptr> constexpr inline JudgeType sin(JudgeType degree) { static_assert(false, "JudgeType Fraud Type"); }
 

@@ -20,6 +20,7 @@ cbuffer ConstantBuffer : register(b0)
 struct PS_INPUT
 {
 	float4 Position     : SV_POSITION;
+	float4 Normal		: NORMAL;
 	float2 TexCoord     : TEXCOORD0;
 	float3 View			: TEXCOORD1;
 	float3 Light		: TEXCOORD2;
@@ -38,7 +39,7 @@ SamplerState TextureMapSampler : register(s0);
 
 float4 main(PS_INPUT Input) : SV_TARGET
 {
-	return float4(0, 0, 0, 1);
+	return float4(Input.Normal);
 
 	//float3 N = normalize(g_NormalMapTexture.Sample(g_NormalMapSampler, Input.TexCoord).xyz * 2.0 - 1.0);
 	//float3 V = normalize(Input.View);

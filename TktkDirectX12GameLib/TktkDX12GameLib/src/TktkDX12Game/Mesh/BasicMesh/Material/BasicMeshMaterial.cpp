@@ -113,6 +113,10 @@ namespace tktk
 		initParam.m_primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 		initParam.m_renderTargetFormatArray = { DXGI_FORMAT_R8G8B8A8_UNORM };
 
+		initParam.m_useDepth = true;
+		initParam.m_writeDepth = true;
+		initParam.m_depthFunc = D3D12_COMPARISON_FUNC_LESS;
+
 		tktk::DX12GameManager::createGraphicsPipeLineState(2U, initParam, shaderFilePaths, 2U);
 	}
 }

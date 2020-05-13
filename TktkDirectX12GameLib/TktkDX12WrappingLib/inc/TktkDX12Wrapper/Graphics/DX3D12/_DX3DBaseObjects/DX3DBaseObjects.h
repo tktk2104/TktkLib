@@ -46,7 +46,11 @@ namespace tktk
 
 		void createConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
+		void createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize);
+
 		void createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam);
+
+		void createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam);
 
 		void gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath);
 
@@ -61,6 +65,8 @@ namespace tktk
 		void setBackGroundColor(const tktkMath::Color& backGroundColor);
 
 		void setBackBufferRenderTarget();
+
+		void setUseDepthStencilBackBufferRenderTarget(unsigned int depthStencilViewId);
 
 		void setViewport(unsigned int id);
 

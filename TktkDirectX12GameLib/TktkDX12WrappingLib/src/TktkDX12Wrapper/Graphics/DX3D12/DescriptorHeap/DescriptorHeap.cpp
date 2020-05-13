@@ -2,12 +2,14 @@
 
 namespace tktk
 {
-	DescriptorHeap::DescriptorHeap(int basicDescriptorHeapNum, int rtvDescriptorHeapNum, int textureBufferNum, int constantBufferNum, int renderTargetBufferNum, int backBufferNum)
+	DescriptorHeap::DescriptorHeap(int basicDescriptorHeapNum, int rtvDescriptorHeapNum, int dsvDescriptorHeapNum, int textureBufferNum, int constantBufferNum, int renderTargetBufferNum, int backBufferNum, int depthStencilBufferNum)
 		: m_basicDescriptorHeap(basicDescriptorHeapNum)
 		, m_rtvDescriptorHeap(rtvDescriptorHeapNum)
+		, m_dsvDescriptorHeap(dsvDescriptorHeapNum)
 		, m_textureBuffer(textureBufferNum)
 		, m_constantBuffer(constantBufferNum)
 		, m_renderTargetBuffer(renderTargetBufferNum, backBufferNum)
+		, m_depthStencilBuffer(depthStencilBufferNum)
 	{
 	}
 
@@ -29,6 +31,11 @@ namespace tktk
 	
 				descriptorHeapArray.push_back(m_rtvDescriptorHeap.getPtr(heapParam.m_id));
 				break;
+
+			case DescriptorHeapType::dsv:
+
+				descriptorHeapArray.push_back(m_dsvDescriptorHeap.getPtr(heapParam.m_id));
+				break;
 			}
 		}
 	
@@ -47,18 +54,34 @@ namespace tktk
 	
 				m_rtvDescriptorHeap.setDescriptor(heapParam.m_id, device, commandList);
 				break;
+
+			case DescriptorHeapType::dsv:
+
+				m_dsvDescriptorHeap.setDescriptor(heapParam.m_id, device, commandList);
+				break;
 			}
 		}
 	}
 
 	void DescriptorHeap::setRenderTarget(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount) const
 	{
-		m_rtvDescriptorHeap.setRenderTarget(id, device, commandList, startRtvLocation, rtvCount);
+		m_rtvDescriptorHeap.setRenderTarget(id, device, commandList, startRtvLocation, rtvCount, nullptr);
+	}
+
+	void DescriptorHeap::setRenderTargetAndDepthStencil(unsigned int renderTargetId, unsigned int depthStencilViewId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount)
+	{
+		auto cpuHeapHandleArray = m_dsvDescriptorHeap.getCpuHeapHandleArray(depthStencilViewId, device);
+		m_rtvDescriptorHeap.setRenderTarget(renderTargetId, device, commandList, startRtvLocation, rtvCount, cpuHeapHandleArray.data());
 	}
 
 	void DescriptorHeap::clearRenderTarget(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
 	{
 		m_rtvDescriptorHeap.clearRenderTarget(id, device, commandList, rtvLocationIndex, color);
+	}
+
+	void DescriptorHeap::clearDepthStencilViewAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	{
+		m_dsvDescriptorHeap.clearViewAll(device, commandList);
 	}
 
 	void DescriptorHeap::createBasicDescriptorHeap(unsigned int id, ID3D12Device* device, const BasicDescriptorHeapInitParam& initParam)
@@ -101,6 +124,24 @@ namespace tktk
 			case RtvDescriptorType::backBuffer:
 	
 				m_renderTargetBuffer.createBackBufferView(initParam.m_descriptorParamArray.at(i).m_id, device, cpuHeapHandleArray.at(i));
+				break;
+			}
+		}
+	}
+
+	void DescriptorHeap::createDsvDescriptorHeap(unsigned int id, ID3D12Device* device, const DsvDescriptorHeapInitParam& initParam)
+	{
+		m_dsvDescriptorHeap.create(id, device, initParam);
+
+		auto cpuHeapHandleArray = m_dsvDescriptorHeap.getCpuHeapHandleArray(id, device);
+
+		for (unsigned int i = 0; i < initParam.m_descriptorParamArray.size(); i++)
+		{
+			switch (initParam.m_descriptorParamArray.at(i).m_type)
+			{
+			case DsvDescriptorType::normal:
+
+				m_depthStencilBuffer.createDepthStencilView(initParam.m_descriptorParamArray.at(i).m_id, device, cpuHeapHandleArray.at(i));
 				break;
 			}
 		}
@@ -154,5 +195,10 @@ namespace tktk
 	void DescriptorHeap::unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
 		m_renderTargetBuffer.unUseBackBuffer(id, commandList);
+	}
+
+	void DescriptorHeap::createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& depthStencilSize)
+	{
+		m_depthStencilBuffer.create(id, device, depthStencilSize);
 	}
 }

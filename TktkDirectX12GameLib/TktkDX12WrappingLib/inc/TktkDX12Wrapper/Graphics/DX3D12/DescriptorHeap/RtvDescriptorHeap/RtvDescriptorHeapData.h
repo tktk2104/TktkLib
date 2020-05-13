@@ -27,7 +27,7 @@ namespace tktk
 
 		void setDescriptor(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 
-		void setRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const;
+		void setRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount, const D3D12_CPU_DESCRIPTOR_HANDLE* useDsvHandle) const;
 
 		void clearRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color);
 

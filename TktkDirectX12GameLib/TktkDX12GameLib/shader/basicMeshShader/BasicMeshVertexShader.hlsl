@@ -31,6 +31,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
 	float4 Position     : SV_POSITION;
+	float4 Normal		: NORMAL;
 	float2 TexCoord     : TEXCOORD0;
 	float3 View			: TEXCOORD1;
 	float3 Light		: TEXCOORD2;
@@ -89,6 +90,8 @@ VS_OUTPUT main(VS_INPUT Input)
 	Output.View = mul(-ViewPosition.xyz, matTBN);
 	//
 	Output.Light = mul((ViewLight - ViewPosition.xyz), matTBN);
+
+	Output.Normal = float4(viewNormal, 1.0f);
 
 	return Output;
 }
