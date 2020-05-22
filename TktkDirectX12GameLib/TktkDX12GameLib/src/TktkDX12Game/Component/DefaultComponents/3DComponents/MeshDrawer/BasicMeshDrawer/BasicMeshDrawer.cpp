@@ -22,7 +22,7 @@ namespace tktk
 	{
 		static float angle = 0.0f;
 
-		angle += 0.1f;
+		angle += 1.0f;
 
 		auto testSin = tktkMath::helper::sin(angle);
 
@@ -43,6 +43,8 @@ namespace tktk
 			1.0f,
 			100.0f
 		);
+
+		baseArgs.lightPosition = { 0.0f, 10.0f, -100.0f };
 
 		/*for (auto& node : baseArgs.boneMatrix)
 		{

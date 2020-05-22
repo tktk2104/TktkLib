@@ -220,9 +220,9 @@ namespace tktk
 		m_dx3dBaseObjects->createRootSignature(id, initParam);
 	}
 
-	void DX12GameManager::createGraphicsPipeLineState(unsigned int graphicsPipeLineId, const GraphicsPipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath, unsigned int useRootSignatureId)
+	void DX12GameManager::createGraphicsPipeLineState(unsigned int graphicsPipeLineId, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath)
 	{
-		m_dx3dBaseObjects->createGraphicsPipeLineState(graphicsPipeLineId, initParam, shaderFilePath, useRootSignatureId);
+		m_dx3dBaseObjects->createGraphicsPipeLineState(graphicsPipeLineId, initParam, shaderFilePath);
 	}
 
 	void DX12GameManager::createIndexBuffer(unsigned int id, const std::vector<unsigned short>& indices)

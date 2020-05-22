@@ -9,12 +9,12 @@
 #include <TktkMath/Structs/Vector3.h>
 #include <TktkDX12Wrapper/Graphics/Window/WindowInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjectsInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/GraphicsPipeLineState/RootSignature/RootSignatureInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/GraphicsPipeLineState/GraphicsPipeLineStateInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/DescriptorHeapParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/BasicDescriptorHeap/BasicDescriptorHeapInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/DsvDescriptorHeap/DsvDescriptorHeapInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DescriptorHeap/BufferResource/TextureBuffer/TextureBufferInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/RootSignature/RootSignatureInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DescriptorHeapParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/BasicDescriptorHeap/BasicDescriptorHeapInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DsvDescriptorHeap/DsvDescriptorHeapInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/TextureBuffer/TextureBufferInitParam.h>
 #include "../Scene/SceneManager.h"
 #include "../GameObject/GameObjectPtr.h"
 #include "../Component/ComponentManager.h"
@@ -116,7 +116,7 @@ namespace tktk
 		static void createRootSignature(unsigned int id, const RootSignatureInitParam& initParam);
 
 		// グラフィックパイプラインステートを作る
-		static void createGraphicsPipeLineState(unsigned int graphicsPipeLineId, const GraphicsPipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath, unsigned int useRootSignatureId);
+		static void createGraphicsPipeLineState(unsigned int graphicsPipeLineId, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath);
 
 		// 頂点バッファを作る
 		template <class VertexData>

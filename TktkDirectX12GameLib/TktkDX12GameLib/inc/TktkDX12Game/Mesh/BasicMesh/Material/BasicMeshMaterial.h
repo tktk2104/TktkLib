@@ -1,7 +1,7 @@
 #ifndef BASIC_MESH_MATERIAL_H_
 #define BASIC_MESH_MATERIAL_H_
 
-#include <TktkDX12Wrapper/Graphics/DX3D12/GraphicsPipeLineState/GraphicsPipeLineStateInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
 #undef min
 #undef max
 #include "BasicMeshMaterialData.h"
@@ -13,7 +13,7 @@ namespace tktk
 	{
 	public:
 
-		BasicMeshMaterial(const tktk::ShaderFilePaths& shaderFilePaths, unsigned int basicMeshMaterialNum);
+		BasicMeshMaterial(const ShaderFilePaths& shaderFilePaths, unsigned int basicMeshMaterialNum);
 		~BasicMeshMaterial() = default;
 
 	public:
@@ -26,7 +26,7 @@ namespace tktk
 
 		void createRootSignature();
 
-		void createGraphicsPipeLineState(const tktk::ShaderFilePaths& shaderFilePaths);
+		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths);
 
 	private:
 

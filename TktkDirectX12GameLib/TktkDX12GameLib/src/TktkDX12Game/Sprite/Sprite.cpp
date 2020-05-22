@@ -7,7 +7,7 @@
 
 namespace tktk
 {
-	Sprite::Sprite(const tktk::ShaderFilePaths& shaderFilePaths, unsigned int spriteMaterialNum)
+	Sprite::Sprite(const ShaderFilePaths& shaderFilePaths, unsigned int spriteMaterialNum)
 		: m_spriteMaterial(spriteMaterialNum)
 	{
 		// スプライト用のルートシグネチャを作る
@@ -49,62 +49,63 @@ namespace tktk
 	// スプライト用のルートシグネチャ
 	void Sprite::createRootSignature()
 	{
-		tktk::RootSignatureInitParam initParam{};
-		initParam.m_flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-		initParam.m_rootParamArray.resize(2U);
+		RootSignatureInitParam initParam{};
+		initParam.flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+		initParam.rootParamArray.resize(2U);
 		{/* テクスチャ用のルートパラメータ */
-			initParam.m_rootParamArray.at(0).m_shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			initParam.m_rootParamArray.at(0).m_descriptorTableArray.resize(1U);
+			initParam.rootParamArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+			initParam.rootParamArray.at(0).descriptorTableArray.resize(1U);
 			{
-				initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_numDescriptors = 1;
-				initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+				initParam.rootParamArray.at(0).descriptorTableArray.at(0).numDescriptors = 1;
+				initParam.rootParamArray.at(0).descriptorTableArray.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 			}
 		}
 		{/* 定数バッファ用のルートパラメータ */
-			initParam.m_rootParamArray.at(1).m_shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//D3D12_SHADER_VISIBILITY_VERTEX;
-			initParam.m_rootParamArray.at(1).m_descriptorTableArray.resize(1U);
+			initParam.rootParamArray.at(1).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//D3D12_SHADER_VISIBILITY_VERTEX;
+			initParam.rootParamArray.at(1).descriptorTableArray.resize(1U);
 			{
-				initParam.m_rootParamArray.at(1).m_descriptorTableArray.at(0).m_numDescriptors = 1;
-				initParam.m_rootParamArray.at(1).m_descriptorTableArray.at(0).m_type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+				initParam.rootParamArray.at(1).descriptorTableArray.at(0).numDescriptors = 1;
+				initParam.rootParamArray.at(1).descriptorTableArray.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
 			}
 		}
-		initParam.m_samplerDescArray.resize(1U);
+		initParam.samplerDescArray.resize(1U);
 		{/* サンプラーの設定 */
-			initParam.m_samplerDescArray.at(0).m_addressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-			initParam.m_samplerDescArray.at(0).m_addressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-			initParam.m_samplerDescArray.at(0).m_addressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-			initParam.m_samplerDescArray.at(0).m_bordercolor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
-			initParam.m_samplerDescArray.at(0).m_filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-			initParam.m_samplerDescArray.at(0).m_maxLod = D3D12_FLOAT32_MAX;
-			initParam.m_samplerDescArray.at(0).m_minLod = 0.0f;
-			initParam.m_samplerDescArray.at(0).m_shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			initParam.m_samplerDescArray.at(0).m_comparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+			initParam.samplerDescArray.at(0).addressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			initParam.samplerDescArray.at(0).addressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			initParam.samplerDescArray.at(0).addressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			initParam.samplerDescArray.at(0).bordercolor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+			initParam.samplerDescArray.at(0).filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+			initParam.samplerDescArray.at(0).maxLod = D3D12_FLOAT32_MAX;
+			initParam.samplerDescArray.at(0).minLod = 0.0f;
+			initParam.samplerDescArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+			initParam.samplerDescArray.at(0).comparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 		}
-		tktk::DX12GameManager::createRootSignature(1U, initParam);
+		DX12GameManager::createRootSignature(1U, initParam);
 	}
 
 	// スプライト用のグラフィックパイプラインステート
-	void Sprite::createGraphicsPipeLineState(const tktk::ShaderFilePaths& shaderFilePaths)
+	void Sprite::createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths)
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
 		renderTargetBlendDesc.BlendEnable = false;
 		renderTargetBlendDesc.LogicOpEnable = false;
 		renderTargetBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 
-		tktk::GraphicsPipeLineStateInitParam initParam{};
-		initParam.m_rasterizerDesc.MultisampleEnable = false;
-		initParam.m_rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
-		initParam.m_rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
-		initParam.m_rasterizerDesc.DepthClipEnable = true;
-		initParam.m_blendDesc.AlphaToCoverageEnable = false;
-		initParam.m_blendDesc.IndependentBlendEnable = false;
-		initParam.m_blendDesc.RenderTarget[0] = renderTargetBlendDesc;
-		initParam.m_inputLayoutArray = { 
+		PipeLineStateInitParam initParam{};
+		initParam.rasterizerDesc.MultisampleEnable = false;
+		initParam.rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
+		initParam.rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
+		initParam.rasterizerDesc.DepthClipEnable = true;
+		initParam.blendDesc.AlphaToCoverageEnable = false;
+		initParam.blendDesc.IndependentBlendEnable = false;
+		initParam.blendDesc.RenderTarget[0] = renderTargetBlendDesc;
+		initParam.inputLayoutArray = { 
 			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
 		};
-		initParam.m_primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-		initParam.m_renderTargetFormatArray = { DXGI_FORMAT_R8G8B8A8_UNORM };
+		initParam.primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+		initParam.renderTargetFormatArray = { DXGI_FORMAT_R8G8B8A8_UNORM };
+		initParam.rootSignatureId = 1U;
 
-		tktk::DX12GameManager::createGraphicsPipeLineState(1U, initParam, shaderFilePaths, 1U);
+		DX12GameManager::createGraphicsPipeLineState(1U, initParam, shaderFilePaths);
 	}
 }

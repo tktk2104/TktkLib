@@ -39,25 +39,23 @@ SamplerState TextureMapSampler : register(s0);
 
 float4 main(PS_INPUT Input) : SV_TARGET
 {
-	return float4(Input.Normal);
-
-	//float3 N = normalize(g_NormalMapTexture.Sample(g_NormalMapSampler, Input.TexCoord).xyz * 2.0 - 1.0);
-	//float3 V = normalize(Input.View);
-	//float3 L = normalize(Input.Light);
-	//float3 H = normalize(L + V);
-	//
-	//float diffuse = max(dot(L, N), 0.0);
-	//float specular = pow(max(dot(N, H), 0.0), MatShiniess);
-	//
-	//float4 baseColor = g_AlbedoMapTexture.Sample(g_AlbedoMapSampler, Input.TexCoord);
-	//
-	//float4 resultColor
-	//	= materialAmbient * lightAmbient * baseColor
-	//	+ materialDiffuse * lightDiffuse * diffuse * baseColor
-	//	+ materialSpecular * lightSpeqular * specular
-	//	+ materialEmissive * baseColor;
-	//
-	//resultColor.a = baseColor.a * materialDiffuse.a;
-	//
-	//return resultColor;
+	float3 N = float3(0.0, 0.0, 1.0);// (Input.Normal).xyz;//normalize(g_NormalMapTexture.Sample(g_NormalMapSampler, Input.TexCoord).xyz * 2.0 - 1.0);
+	float3 V = normalize(Input.View);
+	float3 L = normalize(Input.Light);
+	float3 H = normalize(L + V);
+	
+	float diffuse = max(dot(L, N), 0.0);
+	float specular = pow(max(dot(N, H), 0.0), materialShiniess);
+	
+	float4 baseColor = float4(0.3, 0.3, 0.3, 0.3);//g_AlbedoMapTexture.Sample(g_AlbedoMapSampler, Input.TexCoord);
+	
+	float4 resultColor
+		= materialAmbient * lightAmbient * baseColor
+		+ materialDiffuse * lightDiffuse * diffuse * baseColor
+		+ materialSpecular * lightSpeqular * specular
+		+ materialEmissive * baseColor;
+	
+	resultColor.a = baseColor.a * materialDiffuse.a;
+	
+	return resultColor;
 }

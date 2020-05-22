@@ -1,7 +1,7 @@
 #ifndef SPRITE_H_
 #define SPRITE_H_
 
-#include <TktkDX12Wrapper/Graphics/DX3D12/GraphicsPipeLineState/GraphicsPipeLineStateInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
 #undef min
 #undef max
 #include "SpriteMaterial.h"
@@ -12,7 +12,7 @@ namespace tktk
 	{
 	public:
 
-		Sprite(const tktk::ShaderFilePaths& shaderFilePaths, unsigned int spriteMaterialNum);
+		Sprite(const ShaderFilePaths& shaderFilePaths, unsigned int spriteMaterialNum);
 
 	public:
 
@@ -24,7 +24,7 @@ namespace tktk
 
 		void createRootSignature();
 
-		void createGraphicsPipeLineState(const tktk::ShaderFilePaths& shaderFilePaths);
+		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths);
 
 	private:
 

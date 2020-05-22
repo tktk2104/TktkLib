@@ -27,124 +27,142 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBuffer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBufferData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBuffer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBufferData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineStateData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\RootSignature\RootSignature.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\RootSignature\RootSignatureData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\RootSignature\RootSignatureInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineStateInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Viewport\Viewport.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Viewport\ViewportData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Viewport\ViewportInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DescriptorHeap.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\ConstantBuffer\ConstantBuffer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\ConstantBuffer\ConstantBufferData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\TextureBuffer\ShaderResourceViewInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\TextureBuffer\TextureBuffer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\TextureBuffer\TextureBufferData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\TextureBuffer\TextureBufferInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\RenderTargetBuffer\RenderTargetBuffer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\RenderTargetBuffer\RenderTargetBufferData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeap.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeapData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeapInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DescriptorHeapParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeap.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeapData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeapInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Fence\Fence.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjectsInitParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeapData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeapInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeapData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeapInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeapData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeapInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\DescriptorHeap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\DescriptorHeapParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\ScissorRect\ScissorRect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\ScissorRect\ScissorRectData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\ScissorRect\ScissorRectInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\Viewport\Viewport.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\Viewport\ViewportData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\Viewport\ViewportInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\SwapChain\SwapChain.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\DepthStencilBuffer\DepthStencilBuffer.h">
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\ConstantBuffer\ConstantBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\DepthStencilBuffer\DepthStencilBufferData.h">
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\ConstantBuffer\ConstantBufferData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeap.h">
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\DepthStencilBuffer\DepthStencilBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeapData.h">
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\DepthStencilBuffer\DepthStencilBufferData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeapInitParam.h">
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\RenderTargetBuffer\RenderTargetBuffer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\RenderTargetBuffer\RenderTargetBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\TextureBuffer\ShaderResourceViewInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\TextureBuffer\TextureBuffer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\TextureBuffer\TextureBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\TextureBuffer\TextureBufferInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\IndexBuffer\IndexBuffer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\IndexBuffer\IndexBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\VertexBuffer\VertexBuffer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\VertexBuffer\VertexBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\RootSignature\RootSignature.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\RootSignature\RootSignatureData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\RootSignature\RootSignatureInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\BufferResource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\BufferResourceInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\PipeLineState\PipeLineState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\PipeLineState\PipeLineStateData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\PipeLineState\PipeLineStateInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\GraphicsPipeLine.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DX3DResource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DX3DResourceInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\DescriptorHeapInitParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -155,91 +173,100 @@
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBufferData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBufferData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineStateData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\RootSignature\RootSignatureData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\Viewport\ViewportData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRectData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\ConstantBuffer\ConstantBufferData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\TextureBuffer\TextureBufferData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\RenderTargetBuffer\RenderTargetBufferData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeapData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeapData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\Fence\Fence.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\Viewport\Viewport.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\VertexBuffer\VertexBuffer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\ScissorRect\ScissorRect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\IndexBuffer\IndexBuffer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\RootSignature\RootSignature.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\GraphicsPipeLineState\GraphicsPipeLineState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\ConstantBuffer\ConstantBuffer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\RenderTargetBuffer\RenderTargetBuffer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\TextureBuffer\TextureBuffer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeap.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeap.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DescriptorHeap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\SwapChain\SwapChain.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\DepthStencilBuffer\DepthStencilBuffer.cpp">
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\BufferResource\DepthStencilBuffer\DepthStencilBufferData.cpp">
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeapData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeap.cpp">
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeapData.cpp">
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\DsvDescriptorHeap\DsvDescriptorHeapData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\RtvDescriptorHeap\RtvDescriptorHeapData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\DescriptorHeap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\ScissorRect\ScissorRect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\ScissorRect\ScissorRectData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\Viewport\Viewport.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\Viewport\ViewportData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\ConstantBuffer\ConstantBuffer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\ConstantBuffer\ConstantBufferData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\DepthStencilBuffer\DepthStencilBuffer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\DepthStencilBuffer\DepthStencilBufferData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\RenderTargetBuffer\RenderTargetBuffer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\RenderTargetBuffer\RenderTargetBufferData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\TextureBuffer\TextureBuffer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\TextureBuffer\TextureBufferData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\IndexBuffer\IndexBuffer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\IndexBuffer\IndexBufferData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\VertexBuffer\VertexBuffer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\VertexBuffer\VertexBufferData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\RootSignature\RootSignature.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\RootSignature\RootSignatureData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\BufferResource.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\GraphicsPipeLine.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\PipeLineState\PipeLineState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\GraphicsPipeLine\PipeLineState\PipeLineStateData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DX3DResource.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

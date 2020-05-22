@@ -11,12 +11,8 @@
 #include "DX3DBaseObjectsInitParam.h"
 
 #include "../Fence/Fence.h"
-#include "../Viewport/Viewport.h"
-#include "../ScissorRect/ScissorRect.h"
-#include "../VertexBuffer/VertexBuffer.h"
-#include "../IndexBuffer/IndexBuffer.h"
-#include "../GraphicsPipeLineState/GraphicsPipeLineState.h"
-#include "../DescriptorHeap/DescriptorHeap.h"
+
+#include "../DX3DResource/DX3DResource.h"
 
 namespace tktk
 {
@@ -29,59 +25,84 @@ namespace tktk
 
 	public:
 
+		// 描画開始
 		void beginDraw();
-		void endDraw();
 
-		void executeCommandList();
+		// 描画終了
+		void endDraw();
 
 	public:
 
+		// ルートシグネチャを作る
 		void createRootSignature(unsigned int id, const RootSignatureInitParam& initParam);
 
-		void createGraphicsPipeLineState(unsigned int graphicsPipeLineId, const GraphicsPipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath, unsigned int useRootSignatureId);
+		// グラフィックパイプラインステートを作る
+		void createGraphicsPipeLineState(unsigned int id, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath);
 
+		// 頂点バッファを作る
 		void createVertexBuffer(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
 
+		// インデックスバッファを作る
 		void createIndexBuffer(unsigned int id, const std::vector<unsigned short>& indices);
 
+		// 定数バッファを作る
 		void createConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
+		// 深度ステンシルバッファを作る
 		void createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize);
 
+		// 定数、テクスチャのディスクリプタヒープを作る
 		void createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam);
 
+		// 深度ステンシルビューのディスクリプタヒープを作る
 		void createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam);
 
+		// gpu優先でテクスチャをロードする
 		void gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath);
 
 	public:
 
+		// 指定の定数バッファを更新する
 		void updateConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
+		// 指定のテクスチャのサイズを取得する
 		const tktkMath::Vector3& getTextureSize(unsigned int id) const;
 
 	public:
 
+		// 背景色を設定する
 		void setBackGroundColor(const tktkMath::Color& backGroundColor);
 
+		// バックバッファー用のレンダーターゲットをコマンドリストに設定する
 		void setBackBufferRenderTarget();
 
-		void setUseDepthStencilBackBufferRenderTarget(unsigned int depthStencilViewId);
+		// バックバッファー用のレンダーターゲットと指定のデプスステンシルビューをコマンドリストに設定する
+		void setUseDepthStencilBackBufferRenderTarget(unsigned int dsvDescriptorHeapId);
 
+		// 指定のビューポートをコマンドリストに設定する
 		void setViewport(unsigned int id);
 
+		// 指定のシザー矩形をコマンドリストに設定する
 		void setScissorRect(unsigned int id);
 
+		// 指定のグラフィックパイプラインステートをコマンドリストに設定する
 		void setGraphicsPipeLineState(unsigned int id);
 
+		// 指定の頂点バッファをコマンドリストに設定する
 		void setVertexBuffer(unsigned int id);
 
+		// 指定のインデックスバッファをコマンドリストに設定する
 		void setIndexBuffer(unsigned int id);
 
+		// 指定のディスクリプタヒープの配列をコマンドリストに設定する
 		void setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray);
 
+		// プリミティブトポロジを設定する
 		void setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology);
 
+	public:
+
+		// インデックスを使用してインスタンス描画を行う
 		void drawIndexedInstanced(
 			unsigned int indexCountPerInstance,
 			unsigned int instanceCount,
@@ -89,6 +110,9 @@ namespace tktk
 			unsigned int baseVertexLocation,
 			unsigned int startInstanceLocation
 		);
+
+		// コマンドリストを実行する
+		void executeCommandList();
 
 	private:
 
@@ -100,13 +124,8 @@ namespace tktk
 		IDXGISwapChain1*			m_swapChain				{ nullptr };
 		unsigned int				m_curBackBufferIndex	{ 0U };
 		Fence						m_fence					{};
-		Viewport					m_viewport;
-		ScissorRect					m_scissorRect;
-		VertexBuffer				m_vertexBuffer;
-		IndexBuffer					m_indexBuffer;
-		GraphicsPipeLineState		m_graphicsPipeLineState;
-		DescriptorHeap				m_descriptorHeap;
 
+		DX3DResource				m_dX3DResource;
 		tktkMath::Color				m_backGroundColor{ tktkMath::colorBlue };
 	};
 }

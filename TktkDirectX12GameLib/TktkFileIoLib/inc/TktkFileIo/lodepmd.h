@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector2.h>
 #include <TktkMath/Structs/Vector3.h>
 
@@ -25,8 +26,19 @@ namespace tktk
 				tktkMath::Vector3	binormal;
 			};
 
+			struct OutMaterial
+			{
+				unsigned int		indexCount;
+				tktkMath::Color		ambient;
+				tktkMath::Color		diffuse;
+				tktkMath::Color		speqular;
+				tktkMath::Color		emissive;
+				float				shiniess;
+			};
+
 			std::vector<OutVertex> vertexData;
 			std::vector<unsigned short> indexData;
+			std::vector<OutMaterial> materialData;
 		};
 
 	public:

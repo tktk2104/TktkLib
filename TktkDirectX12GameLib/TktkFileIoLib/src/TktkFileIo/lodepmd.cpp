@@ -19,8 +19,19 @@ namespace tktk
 		unsigned char		boneWeight;
 		unsigned char		edgeFlg;
 	};
-#pragma pack(pop)
 
+	struct PmdMaterial
+	{
+		tktkMath::Color		diffuse;
+		float				specularrity;
+		float				speqular[3];
+		float				ambient[3];
+		unsigned char		toonIdx;
+		unsigned char		edgeFlg;
+		unsigned int		indicesNum;
+		char				textureFilePath[20];
+	};
+#pragma pack(pop)
 
 	void lodepmd::load(loadData* out, const std::string& fileName)
 	{
@@ -45,6 +56,12 @@ namespace tktk
 		out->indexData.clear();
 		out->indexData.resize(indexNum);
 		fread(out->indexData.data(), out->indexData.size() * sizeof(unsigned short), 1, fp);
+
+		unsigned int materialNum;
+		fread(&materialNum, sizeof(unsigned int), 1, fp);
+
+		std::vector<PmdMaterial> tempMaterialData(materialNum);
+		fread(tempMaterialData.data(), tempMaterialData.size() * sizeof(PmdMaterial), 1, fp);
 
 		fclose(fp);
 
@@ -73,6 +90,26 @@ namespace tktk
 			);
 		}
 
-		
+		out->materialData.clear();
+		out->materialData.resize(materialNum);
+		for (unsigned int i = 0; i < materialNum; i++)
+		{
+			out->materialData.at(i).indexCount = tempMaterialData.at(i).indicesNum;
+			out->materialData.at(i).ambient = {
+				tempMaterialData.at(i).ambient[0],
+				tempMaterialData.at(i).ambient[1],
+				tempMaterialData.at(i).ambient[2],
+				1.0f
+			};
+			out->materialData.at(i).diffuse = tempMaterialData.at(i).diffuse;
+			out->materialData.at(i).speqular = {
+				tempMaterialData.at(i).speqular[0],
+				tempMaterialData.at(i).speqular[1],
+				tempMaterialData.at(i).speqular[2],
+				1.0f
+			};
+			out->materialData.at(i).emissive = tktkMath::colorWhite;
+			out->materialData.at(i).shiniess = 1.0f;
+		}
 	}
 }

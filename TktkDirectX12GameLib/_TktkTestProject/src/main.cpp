@@ -148,21 +148,30 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 {
 	// ÅuDX12GameManagerÅvÇÃèâä˙ê›íËÇÇ∑ÇÈ
 	{
+		tktk::DescriptorHeapInitParam descriptorHeapInitParam{};
+		descriptorHeapInitParam.basicDescriptorHeapNum	= 3U;
+		descriptorHeapInitParam.rtvDescriptorHeapNum	= 2U;
+		descriptorHeapInitParam.dsvDescriptorHeapNum	= 1U;
+
+		tktk::BufferResourceInitParam bufferResourceInitParam{};
+		bufferResourceInitParam.vertexBufferNum			= 3U;
+		bufferResourceInitParam.indexBufferNum			= 3U;
+		bufferResourceInitParam.constantBufferNum		= 3U;
+		bufferResourceInitParam.textureBufferNum		= 2U;
+		bufferResourceInitParam.depthStencilBufferNum	= 1U;
+		bufferResourceInitParam.renderTargetBufferNum	= 0U;
+		bufferResourceInitParam.backBufferNum			= 2U;
+
+		tktk::DX3DResourceInitParam resourceInitParam{};
+		resourceInitParam.viewPortNum				= 1U;
+		resourceInitParam.scissorRectNum			= 1U;
+		resourceInitParam.pipeLineStateNum			= 3U;
+		resourceInitParam.rootSignatureNum			= 3U;
+		resourceInitParam.descriptorHeapInitParam	= descriptorHeapInitParam;
+		resourceInitParam.bufferResourceInitParam	= bufferResourceInitParam;
+
 		tktk::DX3DBaseObjectsInitParam initParam{};
-		initParam.viewPortNum				= 1U;
-		initParam.scissorRectNum			= 1U;
-		initParam.vertexBufferNum			= 3U;
-		initParam.indexBufferNum			= 3U;
-		initParam.graphicsPipeLineNum		= 3U;
-		initParam.rootSignatureNum			= 3U;
-		initParam.basicDescriptorHeapNum	= 3U;
-		initParam.rtvDescriptorHeapNum		= 2U;
-		initParam.dsvDescriptorHeapNum		= 1U;
-		initParam.textureBufferNum			= 2U;
-		initParam.constantBufferNum			= 3U;
-		initParam.renderTargetBufferNum		= 0U;
-		initParam.backBufferNum				= 2U;
-		initParam.depthStencilBufferNum		= 1U;
+		initParam.resourceInitParam = resourceInitParam;
 		initParam.spriteNum					= 2U;
 		initParam.basicMeshNum				= 2U;
 		initParam.basicMeshMaterialNum		= 2U;
