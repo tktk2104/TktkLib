@@ -7,18 +7,18 @@
 namespace tktk
 {
 	TextureBuffer::TextureBuffer(unsigned int textureBufferNum)
+		: m_textureBufferDataArray(textureBufferNum)
 	{
-		m_textureBufferDataArray.resize(textureBufferNum);
 	}
 
 	void TextureBuffer::cpuPriorityCreate(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
 	{
-		m_textureBufferDataArray.at(id).cpuPriorityInitialize(device, formatParam, dataParam);
+		m_textureBufferDataArray.emplaceAt(id, device, formatParam, dataParam);
 	}
 
 	void TextureBuffer::gpuPriorityCreate(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
 	{
-		m_textureBufferDataArray.at(id).gpuPriorityInitialize(device, commandList, formatParam, dataParam);
+		m_textureBufferDataArray.emplaceAt(id, device, commandList, formatParam, dataParam);
 	}
 
 	void TextureBuffer::cpuPriorityLoad(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const std::string& texDataPath)
@@ -49,11 +49,11 @@ namespace tktk
 
 	void TextureBuffer::createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_textureBufferDataArray.at(id).createShaderResourceView(device, heapHandle);
+		m_textureBufferDataArray.at(id)->createShaderResourceView(device, heapHandle);
 	}
 
 	const tktkMath::Vector3& TextureBuffer::getTextureSize(unsigned int id) const
 	{
-		return m_textureBufferDataArray.at(id).getTextureSize();
+		return m_textureBufferDataArray.at(id)->getTextureSize();
 	}
 }

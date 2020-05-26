@@ -14,14 +14,11 @@ namespace tktk
 	{
 	public:
 
-		TextureBufferData() = default;
+		TextureBufferData(ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
+		TextureBufferData(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 		~TextureBufferData();
 
 	public:
-
-		void cpuPriorityInitialize(ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
-
-		void gpuPriorityInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
 		void createShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 

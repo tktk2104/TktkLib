@@ -1,7 +1,7 @@
 #ifndef RTV_DESCRIPTOR_HEAP_H_
 #define RTV_DESCRIPTOR_HEAP_H_
 
-#include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "RtvDescriptorHeapData.h"
 
 namespace tktk
@@ -28,7 +28,7 @@ namespace tktk
 
 	private:
 
-		std::vector<RtvDescriptorHeapData> m_rtvDescriptorHeapDataArray{};
+		HeapArray<RtvDescriptorHeapData> m_rtvDescriptorHeapDataArray;
 	};
 }
 #endif // !RTV_DESCRIPTOR_HEAP_H_

@@ -1,7 +1,7 @@
 #ifndef RENDER_TARGET_BUFFER_H_
 #define RENDER_TARGET_BUFFER_H_
 
-#include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "RenderTargetBufferData.h"
 
 namespace tktk
@@ -28,8 +28,8 @@ namespace tktk
 
 	private:
 
-		std::vector<RenderTargetBufferData>	m_renderTargetBufferDataArray{};
-		std::vector<RenderTargetBufferData>	m_backBufferDataArray{};
+		HeapArray<RenderTargetBufferData>	m_renderTargetBufferDataArray;
+		HeapArray<RenderTargetBufferData>	m_backBufferDataArray;
 	};
 }
 #endif // !RENDER_TARGET_BUFFER_H_

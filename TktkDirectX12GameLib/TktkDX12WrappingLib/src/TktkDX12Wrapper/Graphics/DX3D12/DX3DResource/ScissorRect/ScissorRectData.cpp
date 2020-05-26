@@ -2,15 +2,15 @@
 
 namespace tktk
 {
-	void ScissorRectData::initialize(const std::vector<ScissorRectInitParam>& initParamArray)
+	ScissorRectData::ScissorRectData(const std::vector<ScissorRectInitParam>& initParamArray)
 	{
 		m_scissorRectArray.resize(initParamArray.size());
 
 		for (unsigned int i = 0; i < initParamArray.size(); i++)
 		{
-			m_scissorRectArray.at(i).top	= static_cast<long>(initParamArray.at(i).m_topLeft.y);
-			m_scissorRectArray.at(i).left	= static_cast<long>(initParamArray.at(i).m_topLeft.x);
-			m_scissorRectArray.at(i).right	= static_cast<long>(initParamArray.at(i).m_botRight.x);
+			m_scissorRectArray.at(i).top = static_cast<long>(initParamArray.at(i).m_topLeft.y);
+			m_scissorRectArray.at(i).left = static_cast<long>(initParamArray.at(i).m_topLeft.x);
+			m_scissorRectArray.at(i).right = static_cast<long>(initParamArray.at(i).m_botRight.x);
 			m_scissorRectArray.at(i).bottom = static_cast<long>(initParamArray.at(i).m_botRight.y);
 		}
 	}

@@ -1,19 +1,8 @@
 #include "TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/VertexBuffer/VertexBufferData.h"
-#ifdef _DEBUG
-#include <stdexcept>
-#endif // _DEBUG
 
 namespace tktk
 {
-	VertexBufferData::~VertexBufferData()
-	{
-		if (m_vertexBuffer != nullptr)
-		{
-			m_vertexBuffer->Release();
-		}
-	}
-
-	void VertexBufferData::initialize(ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
+	VertexBufferData::VertexBufferData(ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
 	{
 		createVertexBuffer(device, vertexTypeSize * vertexDataCount);
 
@@ -25,14 +14,16 @@ namespace tktk
 		createVertexBufferView(vertexTypeSize * vertexDataCount, vertexTypeSize);
 	}
 
+	VertexBufferData::~VertexBufferData()
+	{
+		if (m_vertexBuffer != nullptr)
+		{
+			m_vertexBuffer->Release();
+		}
+	}
+
 	void VertexBufferData::set(ID3D12GraphicsCommandList* commandList)
 	{
-#ifdef _DEBUG
-		if (m_vertexBuffer == nullptr)
-		{
-			throw std::runtime_error("Not Create VertexBuffer");
-		}
-#endif // _DEBUG
 		commandList->IASetVertexBuffers(0, 1, &m_vertexBufferView);
 	}
 

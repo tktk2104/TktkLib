@@ -10,12 +10,10 @@ namespace tktk
 	{
 	public:
 
-		RootSignatureData() = default;
+		RootSignatureData(ID3D12Device* device, const RootSignatureInitParam& initParam);
 		~RootSignatureData();
 
 	public:
-
-		void initialize(ID3D12Device* device, const RootSignatureInitParam& initParam);
 
 		ID3D12RootSignature* getPtr() const;
 

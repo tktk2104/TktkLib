@@ -2,15 +2,7 @@
 
 namespace tktk
 {
-	RtvDescriptorHeapData::~RtvDescriptorHeapData()
-	{
-		if (m_descriptorHeap != nullptr)
-		{
-			m_descriptorHeap->Release();
-		}
-	}
-
-	void RtvDescriptorHeapData::initialize(ID3D12Device* device, const RtvDescriptorHeapInitParam& initParam)
+	RtvDescriptorHeapData::RtvDescriptorHeapData(ID3D12Device* device, const RtvDescriptorHeapInitParam& initParam)
 	{
 		D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc{};
 		descHeapDesc.Flags = (initParam.m_shaderVisible) ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
@@ -18,6 +10,14 @@ namespace tktk
 		descHeapDesc.NumDescriptors = initParam.m_descriptorParamArray.size();
 		descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&m_descriptorHeap));
+	}
+
+	RtvDescriptorHeapData::~RtvDescriptorHeapData()
+	{
+		if (m_descriptorHeap != nullptr)
+		{
+			m_descriptorHeap->Release();
+		}
 	}
 
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> RtvDescriptorHeapData::getCpuHeapHandleArray(ID3D12Device* device) const

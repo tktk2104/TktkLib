@@ -14,12 +14,10 @@ namespace tktk
 	{
 	public:
 
-		RtvDescriptorHeapData() = default;
+		RtvDescriptorHeapData(ID3D12Device* device, const RtvDescriptorHeapInitParam& initParam);
 		~RtvDescriptorHeapData();
 
 	public:
-
-		void initialize(ID3D12Device* device, const RtvDescriptorHeapInitParam& initParam);
 
 		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> getCpuHeapHandleArray(ID3D12Device* device) const;
 

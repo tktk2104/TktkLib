@@ -10,18 +10,16 @@ namespace tktk
 	{
 	public:
 
-		PipeLineStateData() = default;
-		~PipeLineStateData();
-
-	public:
-
-		void initialize(
+		PipeLineStateData(
 			ID3D12Device* device,
 			const PipeLineStateInitParam& initParam,
 			const std::vector<char>& vsByteArray,
 			const std::vector<char>& psByteArray,
 			ID3D12RootSignature* rootSignaturePtr
 		);
+		~PipeLineStateData();
+
+	public:
 
 		int getUseRootSignatureIndex() const;
 

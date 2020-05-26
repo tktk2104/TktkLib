@@ -1,7 +1,7 @@
 #ifndef ROOT_SIGNATURE_H_
 #define ROOT_SIGNATURE_H_
 
-#include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "RootSignatureData.h"
 
 namespace tktk
@@ -22,7 +22,7 @@ namespace tktk
 
 	private:
 
-		std::vector<RootSignatureData> m_rootSignatureDataArray{};
+		HeapArray<RootSignatureData> m_rootSignatureDataArray;
 	};
 }
 #endif // !ROOT_SIGNATURE_H_

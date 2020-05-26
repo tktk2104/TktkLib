@@ -6,8 +6,8 @@
 namespace tktk
 {
 	PipeLineState::PipeLineState(unsigned int pipeLineNum)
+		: m_pipeLineStateDataArray(pipeLineNum)
 	{
-		m_pipeLineStateDataArray.resize(pipeLineNum);
 	}
 
 	void PipeLineState::createPipeLineState(unsigned int id, ID3D12Device* device, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath, ID3D12RootSignature* rootSignaturePtr)
@@ -56,7 +56,8 @@ namespace tktk
 			fclose(fp);
 		}
 	
-		m_pipeLineStateDataArray.at(id).initialize(
+		m_pipeLineStateDataArray.emplaceAt(
+			id,
 			device,
 			initParam,
 			vsByteArray,
@@ -67,11 +68,11 @@ namespace tktk
 
 	int PipeLineState::getUseRootSignatureIndex(unsigned int id) const
 	{
-		return m_pipeLineStateDataArray.at(id).getUseRootSignatureIndex();
+		return m_pipeLineStateDataArray.at(id)->getUseRootSignatureIndex();
 	}
 
 	void PipeLineState::set(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
-		m_pipeLineStateDataArray.at(id).set(commandList);
+		m_pipeLineStateDataArray.at(id)->set(commandList);
 	}
 }

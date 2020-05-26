@@ -13,13 +13,11 @@ namespace tktk
 	{
 	public:
 
-		ViewportData() = default;
+		ViewportData(const std::vector<ViewportInitParam>& initParamArray);
 		~ViewportData() = default;
 
 	public:
 
-		void initialize(const std::vector<ViewportInitParam>& initParamArray);
-	
 		void set(ID3D12GraphicsCommandList* commandList) const;
 	
 	private:

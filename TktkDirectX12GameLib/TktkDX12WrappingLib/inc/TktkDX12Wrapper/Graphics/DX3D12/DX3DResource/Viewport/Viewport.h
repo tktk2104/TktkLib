@@ -1,7 +1,7 @@
 #ifndef VIEWPORT_H_
 #define VIEWPORT_H_
 
-#include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "ViewportData.h"
 
 namespace tktk
@@ -20,7 +20,7 @@ namespace tktk
 
 	private:
 
-		std::vector<ViewportData> m_viewportDataArray{};
+		HeapArray<ViewportData> m_viewportDataArray;
 	};
 }
 #endif // !VIEWPORT_H_

@@ -1,24 +1,9 @@
 #include "TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/RootSignature/RootSignatureData.h"
-#ifdef _DEBUG
-#include <stdexcept>
-#endif // _DEBUG
 
 namespace tktk
 {
-	RootSignatureData::~RootSignatureData()
+	RootSignatureData::RootSignatureData(ID3D12Device* device, const RootSignatureInitParam& initParam)
 	{
-		if (m_rootSignature != nullptr)
-		{
-			m_rootSignature->Release();
-		}
-	}
-
-	void RootSignatureData::initialize(ID3D12Device* device, const RootSignatureInitParam& initParam)
-	{
-		if (m_rootSignature != nullptr)
-		{
-			m_rootSignature->Release();
-		}
 		std::vector<D3D12_ROOT_PARAMETER> rootParamArray;
 		rootParamArray.reserve(initParam.rootParamArray.size());
 
@@ -80,25 +65,21 @@ namespace tktk
 		rootSigBlob->Release();
 	}
 
+	RootSignatureData::~RootSignatureData()
+	{
+		if (m_rootSignature != nullptr)
+		{
+			m_rootSignature->Release();
+		}
+	}
+
 	ID3D12RootSignature* RootSignatureData::getPtr() const
 	{
-#ifdef _DEBUG
-		if (m_rootSignature == nullptr)
-		{
-			throw std::runtime_error("Not Create RootSignature");
-		}
-#endif // _DEBUG
 		return m_rootSignature;
 	}
 
 	void RootSignatureData::set(ID3D12GraphicsCommandList* commandList) const
 	{
-#ifdef _DEBUG
-		if (m_rootSignature == nullptr)
-		{
-			throw std::runtime_error("Not Create RootSignature");
-		}
-#endif // _DEBUG
 		commandList->SetGraphicsRootSignature(m_rootSignature);
 	}
 }

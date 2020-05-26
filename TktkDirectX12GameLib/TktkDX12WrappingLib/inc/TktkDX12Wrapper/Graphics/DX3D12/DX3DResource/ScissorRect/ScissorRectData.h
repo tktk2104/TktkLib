@@ -13,12 +13,10 @@ namespace tktk
 	{
 	public:
 
-		ScissorRectData() = default;
+		ScissorRectData(const std::vector<ScissorRectInitParam>& initParamArray);
 		~ScissorRectData() = default;
 
 	public:
-
-		void initialize(const std::vector<ScissorRectInitParam>& initParamArray);
 
 		void set(ID3D12GraphicsCommandList* commandList) const;
 

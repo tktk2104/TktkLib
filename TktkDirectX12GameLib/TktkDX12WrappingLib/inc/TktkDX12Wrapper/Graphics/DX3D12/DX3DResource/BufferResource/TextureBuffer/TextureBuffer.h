@@ -2,7 +2,7 @@
 #define TEXTURE_BUFFER_H_
 
 #include <string>
-#include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "TextureBufferData.h"
 
 namespace tktk
@@ -27,7 +27,7 @@ namespace tktk
 
 	private:
 
-		std::vector<TextureBufferData> m_textureBufferDataArray{};
+		HeapArray<TextureBufferData> m_textureBufferDataArray;
 	};
 }
 #endif // !TEXTURE_BUFFER_H_

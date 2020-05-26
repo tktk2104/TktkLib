@@ -2,7 +2,7 @@
 #define GRAPHICS_PIPELINE_STATE_H_
 
 #include <string>
-#include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "PipeLineStateData.h"
 
 namespace tktk
@@ -23,7 +23,7 @@ namespace tktk
 
 	private:
 
-		std::vector<PipeLineStateData> m_pipeLineStateDataArray{};
+		HeapArray<PipeLineStateData> m_pipeLineStateDataArray;
 	};
 }
 #endif // !GRAPHICS_PIPELINE_STATE_H_

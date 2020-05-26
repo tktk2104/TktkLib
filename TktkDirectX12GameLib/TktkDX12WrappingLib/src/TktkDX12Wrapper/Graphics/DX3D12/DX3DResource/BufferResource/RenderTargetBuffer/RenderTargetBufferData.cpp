@@ -2,19 +2,20 @@
 
 namespace tktk
 {
+	RenderTargetBufferData::RenderTargetBufferData(IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
+	{
+		m_mustRelease = false;
+		swapChain->GetBuffer(backBufferIndex, IID_PPV_ARGS(&m_renderTargetBuffer));
+	}
+
 	RenderTargetBufferData::~RenderTargetBufferData()
 	{
-		if (m_mustRelease && m_renderTargetBuffer != nullptr)
+		if (m_mustRelease)
 		{
 			m_renderTargetBuffer->Release();
 		}
 	}
 
-	void RenderTargetBufferData::initializeBackBuffer(IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
-	{
-		m_mustRelease = false;
-		swapChain->GetBuffer(backBufferIndex, IID_PPV_ARGS(&m_renderTargetBuffer));
-	}
 
 	D3D12_RESOURCE_BARRIER RenderTargetBufferData::createBarrierDesc(D3D12_RESOURCE_STATES beforState, D3D12_RESOURCE_STATES afterState) const
 	{

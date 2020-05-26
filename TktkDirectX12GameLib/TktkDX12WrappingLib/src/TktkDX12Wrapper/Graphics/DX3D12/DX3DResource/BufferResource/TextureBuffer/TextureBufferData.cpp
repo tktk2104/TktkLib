@@ -1,24 +1,8 @@
 #include "TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/TextureBuffer/TextureBufferData.h"
-#ifdef _DEBUG
-#include <stdexcept>
-#endif // _DEBUG
 
 namespace tktk
 {
-	TextureBufferData::~TextureBufferData()
-	{
-		if (m_textureBuffer != nullptr)
-		{
-			m_textureBuffer->Release();
-		}
-
-		if (m_uploadBuff != nullptr)
-		{
-			m_uploadBuff->Release();
-		}
-	}
-
-	void TextureBufferData::cpuPriorityInitialize(ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
+	TextureBufferData::TextureBufferData(ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
 	{
 		if (m_textureBuffer != nullptr)
 		{
@@ -79,7 +63,7 @@ namespace tktk
 			m_srvInitParam.planeSlice = 0;
 			m_srvInitParam.minLodClamp = 0.0f;
 		}
-		
+
 
 		D3D12_HEAP_PROPERTIES heapProp{};
 		heapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
@@ -118,7 +102,7 @@ namespace tktk
 		);
 	}
 
-	void TextureBufferData::gpuPriorityInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
+	TextureBufferData::TextureBufferData(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
 	{
 		if (m_textureBuffer != nullptr)
 		{
@@ -281,15 +265,21 @@ namespace tktk
 		commandList->ResourceBarrier(1, &barrierDesc);
 	}
 
+	TextureBufferData::~TextureBufferData()
+	{
+		if (m_textureBuffer != nullptr)
+		{
+			m_textureBuffer->Release();
+		}
+
+		if (m_uploadBuff != nullptr)
+		{
+			m_uploadBuff->Release();
+		}
+	}
+
 	void TextureBufferData::createShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-#ifdef _DEBUG
-		if (m_textureBuffer == nullptr)
-		{
-			throw std::runtime_error("Not Create TextureBuffer");
-		}
-#endif // _DEBUG
-
 		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 		srvDesc.Format = m_srvInitParam.format;
 		srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;

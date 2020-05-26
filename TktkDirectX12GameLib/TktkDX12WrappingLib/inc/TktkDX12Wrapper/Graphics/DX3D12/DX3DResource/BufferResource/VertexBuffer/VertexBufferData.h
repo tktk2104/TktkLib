@@ -11,15 +11,12 @@ namespace tktk
 	{
 	public:
 
-		VertexBufferData() = default;
+		VertexBufferData(ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
+		template <class VertexData>
+		VertexBufferData(ID3D12Device* device, const std::vector<VertexData>& vertexDataArray);
 		~VertexBufferData();
 
 	public:
-
-		void initialize(ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
-
-		template <class VertexData>
-		void initialize(ID3D12Device* device, const std::vector<VertexData>& vertexDataArray);
 
 		void set(ID3D12GraphicsCommandList* commandList);
 
@@ -33,9 +30,12 @@ namespace tktk
 		ID3D12Resource*				m_vertexBuffer		{ nullptr };
 		D3D12_VERTEX_BUFFER_VIEW	m_vertexBufferView	{};
 	};
+//„¬„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
+//„«‚±‚±‚©‚ç‰º‚ÍŠÖ”‚ÌÀ‘•
+//„¯„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
 
 	template<class VertexData>
-	inline void VertexBufferData::initialize(ID3D12Device* device, const std::vector<VertexData>& vertexDataArray)
+	inline VertexBufferData::VertexBufferData(ID3D12Device* device, const std::vector<VertexData>& vertexDataArray)
 	{
 		createVertexBuffer(device, sizeof(VertexData) * vertexDataArray.size());
 

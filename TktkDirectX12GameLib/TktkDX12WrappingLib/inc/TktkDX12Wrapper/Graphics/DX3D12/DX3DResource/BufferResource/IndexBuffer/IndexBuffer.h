@@ -1,7 +1,7 @@
 #ifndef INDEX_BUFFER_H_
 #define INDEX_BUFFER_H_
 
-#include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "IndexBufferData.h"
 
 namespace tktk
@@ -20,7 +20,7 @@ namespace tktk
 
 	private:
 
-		std::vector<IndexBufferData> m_indexBufferDataArray{};
+		HeapArray<IndexBufferData> m_indexBufferDataArray;
 	};
 }
 #endif // !INDEX_BUFFER_H_

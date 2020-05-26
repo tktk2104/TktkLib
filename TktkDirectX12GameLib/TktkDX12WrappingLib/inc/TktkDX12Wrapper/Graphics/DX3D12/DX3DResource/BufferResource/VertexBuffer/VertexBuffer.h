@@ -1,7 +1,7 @@
 #ifndef VERTEX_BUFFER_H_
 #define VERTEX_BUFFER_H_
 
-#include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "VertexBufferData.h"
 
 namespace tktk
@@ -23,17 +23,16 @@ namespace tktk
 
 	private:
 
-		std::vector<VertexBufferData> m_vertexBufferDataArray{};
+		HeapArray<VertexBufferData> m_vertexBufferDataArray;
 	};
 //„¬„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
 //„«‚±‚±‚©‚ç‰º‚ÍŠÖ”‚ÌÀ‘•
 //„¯„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
 
-
 	template<class VertexData>
 	inline void VertexBuffer::create(unsigned int id, ID3D12Device* device, const std::vector<VertexData>& vertexDataArray)
 	{
-		m_vertexBufferDataArray.at(id).initialize(device, vertexDataArray);
+		m_vertexBufferDataArray.emplaceAt(id, device, vertexDataArray);
 	}
 }
 #endif // !VERTEX_BUFFER_H_

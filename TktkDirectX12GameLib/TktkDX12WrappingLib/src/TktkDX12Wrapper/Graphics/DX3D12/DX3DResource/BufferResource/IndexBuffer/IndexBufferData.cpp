@@ -1,25 +1,9 @@
 #include "TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/IndexBuffer/IndexBufferData.h"
-#ifdef _DEBUG
-#include <stdexcept>
-#endif // _DEBUG
 
 namespace tktk
 {
-	IndexBufferData::~IndexBufferData()
+	IndexBufferData::IndexBufferData(ID3D12Device* device, const std::vector<unsigned short>& indexDataArray)
 	{
-		if (m_indexBuffer != nullptr)
-		{
-			m_indexBuffer->Release();
-		}
-	}
-
-	void IndexBufferData::initialize(ID3D12Device* device, const std::vector<unsigned short>& indexDataArray)
-	{
-		if (m_indexBuffer != nullptr)
-		{
-			m_indexBuffer->Release();
-		}
-
 		D3D12_HEAP_PROPERTIES heapProp{};
 		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
 		heapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
@@ -55,14 +39,15 @@ namespace tktk
 		m_indexBufferView.SizeInBytes = sizeof(unsigned short) * indexDataArray.size();
 	}
 
+	IndexBufferData::~IndexBufferData()
+	{
+		if (m_indexBuffer != nullptr)
+		{
+			m_indexBuffer->Release();
+		}
+	}
 	void IndexBufferData::set(ID3D12GraphicsCommandList* commandList) const
 	{
-#ifdef _DEBUG
-		if (m_indexBuffer == nullptr)
-		{
-			throw std::runtime_error("Not Create VertexBuffer");
-		}
-#endif // _DEBUG
 		commandList->IASetIndexBuffer(&m_indexBufferView);
 	}
 }

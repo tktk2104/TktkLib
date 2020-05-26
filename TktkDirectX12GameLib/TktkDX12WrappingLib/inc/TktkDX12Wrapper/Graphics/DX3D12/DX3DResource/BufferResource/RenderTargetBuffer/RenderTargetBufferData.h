@@ -10,12 +10,10 @@ namespace tktk
 	{
 	public:
 
-		RenderTargetBufferData() = default;
+		RenderTargetBufferData(IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 		~RenderTargetBufferData();
 
 	public:
-
-		void initializeBackBuffer(IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 
 		D3D12_RESOURCE_BARRIER createBarrierDesc(D3D12_RESOURCE_STATES beforState, D3D12_RESOURCE_STATES afterState) const;
 

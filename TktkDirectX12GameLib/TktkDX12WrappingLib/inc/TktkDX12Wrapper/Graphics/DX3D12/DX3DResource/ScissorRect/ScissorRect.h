@@ -1,7 +1,7 @@
 #ifndef SCISSOR_RECT_H_
 #define SCISSOR_RECT_H_
 
-#include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "ScissorRectData.h"
 
 namespace tktk
@@ -20,7 +20,7 @@ namespace tktk
 
 	private:
 
-		std::vector<ScissorRectData> m_scissorRectDataArray{};
+		HeapArray<ScissorRectData> m_scissorRectDataArray;
 	};
 }
 #endif // !SCISSOR_RECT_H_

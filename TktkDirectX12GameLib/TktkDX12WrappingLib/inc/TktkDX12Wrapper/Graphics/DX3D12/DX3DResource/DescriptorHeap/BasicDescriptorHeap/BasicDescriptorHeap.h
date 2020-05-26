@@ -2,6 +2,7 @@
 #define BASIC_DESCRIPTOR_HEAP_H_
 
 #include <vector>
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "BasicDescriptorHeapData.h"
 
 namespace tktk
@@ -24,7 +25,7 @@ namespace tktk
 
 	private:
 
-		std::vector<BasicDescriptorHeapData> m_basicDescriptorHeapDataArray{};
+		HeapArray<BasicDescriptorHeapData> m_basicDescriptorHeapDataArray;
 	};
 }
 #endif // !BASIC_DESCRIPTOR_HEAP_H_
