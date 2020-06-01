@@ -66,7 +66,7 @@ namespace tktk
 		);
 	}
 
-	int PipeLineState::getUseRootSignatureIndex(unsigned int id) const
+	unsigned int PipeLineState::getUseRootSignatureIndex(unsigned int id) const
 	{
 		return m_pipeLineStateDataArray.at(id)->getUseRootSignatureIndex();
 	}

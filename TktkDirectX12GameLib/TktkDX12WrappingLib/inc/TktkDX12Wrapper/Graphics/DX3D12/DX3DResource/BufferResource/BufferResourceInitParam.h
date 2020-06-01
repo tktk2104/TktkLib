@@ -11,7 +11,6 @@ namespace tktk
 		unsigned int textureBufferNum;
 		unsigned int depthStencilBufferNum;
 		unsigned int renderTargetBufferNum;
-		unsigned int backBufferNum;
 	};
 }
 #endif // !BUFFER_RESOURCE_INIT_PARAM_H_

@@ -3,8 +3,7 @@
 namespace tktk
 {
 	ConstantBuffer::ConstantBuffer(unsigned int constantBufferNum)
-		: m_systemConstantBufferDataArray(2U)
-		, m_constantBufferDataArray(constantBufferNum)
+		: m_constantBufferDataArray(constantBufferNum)
 	{
 	}
 

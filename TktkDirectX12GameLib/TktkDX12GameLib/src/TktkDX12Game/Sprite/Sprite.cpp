@@ -22,7 +22,7 @@ namespace tktk
 			tktkMath::vec2Up,
 			tktkMath::vec2One
 		};
-		DX12GameManager::createVertexBuffer(1U, vertices);
+		DX12GameManager::createVertexBuffer(DX12GameManager::getSystemId(SystemVertexBufferType::Sprite), vertices);
 
 		// スプライト用のインデックスバッファを作る
 		std::vector<unsigned short> indices =
@@ -30,10 +30,10 @@ namespace tktk
 			0, 1, 2,
 			2, 1, 3
 		};
-		DX12GameManager::createIndexBuffer(1U, { 0U, 1U, 2U, 3U });
+		DX12GameManager::createIndexBuffer(DX12GameManager::getSystemId(SystemIndexBufferType::Sprite), { 0U, 1U, 2U, 3U });
 
 		// スプライト用の定数バッファを作る
-		DX12GameManager::createConstantBuffer(1U, SpriteConstantBufferData());
+		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::Sprite), SpriteConstantBufferData());
 	}
 
 	void Sprite::createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam)
@@ -56,7 +56,7 @@ namespace tktk
 			initParam.rootParamArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 			initParam.rootParamArray.at(0).descriptorTableArray.resize(1U);
 			{
-				initParam.rootParamArray.at(0).descriptorTableArray.at(0).numDescriptors = 1;
+				initParam.rootParamArray.at(0).descriptorTableArray.at(0).numDescriptors = 1U;
 				initParam.rootParamArray.at(0).descriptorTableArray.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 			}
 		}
@@ -64,7 +64,7 @@ namespace tktk
 			initParam.rootParamArray.at(1).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//D3D12_SHADER_VISIBILITY_VERTEX;
 			initParam.rootParamArray.at(1).descriptorTableArray.resize(1U);
 			{
-				initParam.rootParamArray.at(1).descriptorTableArray.at(0).numDescriptors = 1;
+				initParam.rootParamArray.at(1).descriptorTableArray.at(0).numDescriptors = 1U;
 				initParam.rootParamArray.at(1).descriptorTableArray.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
 			}
 		}
@@ -80,7 +80,7 @@ namespace tktk
 			initParam.samplerDescArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 			initParam.samplerDescArray.at(0).comparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 		}
-		DX12GameManager::createRootSignature(1U, initParam);
+		DX12GameManager::createRootSignature(DX12GameManager::getSystemId(SystemRootSignatureType::Sprite), initParam);
 	}
 
 	// スプライト用のグラフィックパイプラインステート
@@ -104,8 +104,8 @@ namespace tktk
 		};
 		initParam.primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 		initParam.renderTargetFormatArray = { DXGI_FORMAT_R8G8B8A8_UNORM };
-		initParam.rootSignatureId = 1U;
+		initParam.rootSignatureId = DX12GameManager::getSystemId(SystemRootSignatureType::Sprite);
 
-		DX12GameManager::createGraphicsPipeLineState(1U, initParam, shaderFilePaths);
+		DX12GameManager::createPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::Sprite), initParam, shaderFilePaths);
 	}
 }

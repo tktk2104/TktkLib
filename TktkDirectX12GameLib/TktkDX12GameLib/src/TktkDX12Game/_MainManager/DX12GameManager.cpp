@@ -165,14 +165,24 @@ namespace tktk
 		m_dx3dBaseObjects->setBackGroundColor(backGroundColor);
 	}
 
-	void DX12GameManager::setBackBufferRenderTarget()
+	void DX12GameManager::setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_dx3dBaseObjects->setBackBufferRenderTarget();
+		m_dx3dBaseObjects->setRenderTarget(rtvDescriptorHeapId, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX12GameManager::setUseDepthStencilBackBufferRenderTarget(unsigned int depthStencilViewId)
+	void DX12GameManager::setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_dx3dBaseObjects->setUseDepthStencilBackBufferRenderTarget(depthStencilViewId);
+		m_dx3dBaseObjects->setRenderTargetAndDepthStencil(rtvDescriptorHeapId, dsvDescriptorHeapId, startRtvLocationIndex, rtvCount);
+	}
+
+	void DX12GameManager::setBackBuffer()
+	{
+		m_dx3dBaseObjects->setBackBuffer();
+	}
+
+	void DX12GameManager::setBackBufferAndDepthStencil(unsigned int dsvDescriptorHeapId)
+	{
+		m_dx3dBaseObjects->setBackBufferAndDepthStencil(dsvDescriptorHeapId);
 	}
 
 	void DX12GameManager::setViewport(unsigned int id)
@@ -185,9 +195,9 @@ namespace tktk
 		m_dx3dBaseObjects->setScissorRect(id);
 	}
 
-	void DX12GameManager::setGraphicsPipeLineState(unsigned int id)
+	void DX12GameManager::setPipeLineState(unsigned int id)
 	{
-		m_dx3dBaseObjects->setGraphicsPipeLineState(id);
+		m_dx3dBaseObjects->setPipeLineState(id);
 	}
 
 	void DX12GameManager::setVertexBuffer(unsigned int id)
@@ -220,9 +230,9 @@ namespace tktk
 		m_dx3dBaseObjects->createRootSignature(id, initParam);
 	}
 
-	void DX12GameManager::createGraphicsPipeLineState(unsigned int graphicsPipeLineId, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath)
+	void DX12GameManager::createPipeLineState(unsigned int graphicsPipeLineId, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath)
 	{
-		m_dx3dBaseObjects->createGraphicsPipeLineState(graphicsPipeLineId, initParam, shaderFilePath);
+		m_dx3dBaseObjects->createPipeLineState(graphicsPipeLineId, initParam, shaderFilePath);
 	}
 
 	void DX12GameManager::createIndexBuffer(unsigned int id, const std::vector<unsigned short>& indices)
@@ -244,6 +254,11 @@ namespace tktk
 	{
 		m_dx3dBaseObjects->createDsvDescriptorHeap(id, initParam);
 	}
+
+	/*void DX12GameManager::gpuPriorityCreateSystemTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
+	{
+		m_dx3dBaseObjects->gpuPriorityCreateSystemTextureBuffer(id, formatParam, dataParam);
+	}*/
 
 	void DX12GameManager::gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath)
 	{
@@ -301,6 +316,46 @@ namespace tktk
 	void DX12GameManager::loadPmd(const BasicMeshLoadPmdArgs& args)
 	{
 		BasicMeshPmdLoader::loadPmd(args);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemViewportType type)
+	{
+		return m_dx3dBaseObjects->getSystemId(type);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemScissorRectType type)
+	{
+		return m_dx3dBaseObjects->getSystemId(type);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemVertexBufferType type)
+	{
+		return m_dx3dBaseObjects->getSystemId(type);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemIndexBufferType type)
+	{
+		return m_dx3dBaseObjects->getSystemId(type);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemConstantBufferType type)
+	{
+		return m_dx3dBaseObjects->getSystemId(type);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemDepthStencilBufferType type)
+	{
+		return m_dx3dBaseObjects->getSystemId(type);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemRootSignatureType type)
+	{
+		return m_dx3dBaseObjects->getSystemId(type);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemPipeLineStateType type)
+	{
+		return m_dx3dBaseObjects->getSystemId(type);
 	}
 
 	void DX12GameManager::createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)

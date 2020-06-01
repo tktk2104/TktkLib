@@ -16,7 +16,7 @@ namespace tktk
 		createGraphicsPipeLineState(shaderFilePaths);
 
 		// 通常メッシュ用の定数バッファを作る
-		DX12GameManager::createConstantBuffer(2U, BasicMeshConstantBufferData());
+		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), BasicMeshConstantBufferData());
 	}
 
 	void BasicMeshMaterial::create(unsigned int id, const BasicMeshMaterialInitParam& initparam)
@@ -43,16 +43,6 @@ namespace tktk
 		RootSignatureInitParam initParam{};
 		initParam.flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 		
-		//initParam.m_rootParamArray.resize(1U);
-		//{/* 定数バッファ用のルートパラメータ */
-		//	initParam.m_rootParamArray.at(0).m_shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//D3D12_SHADER_VISIBILITY_VERTEX;
-		//	initParam.m_rootParamArray.at(0).m_descriptorTableArray.resize(1U);
-		//	{
-		//		initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_numDescriptors = 1;
-		//		initParam.m_rootParamArray.at(0).m_descriptorTableArray.at(0).m_type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-		//	}
-		//}
-
 		initParam.rootParamArray.resize(2U);
 		{/* テクスチャ用のルートパラメータ */
 			initParam.rootParamArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
@@ -83,7 +73,7 @@ namespace tktk
 			initParam.samplerDescArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 			initParam.samplerDescArray.at(0).comparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 		}
-		DX12GameManager::createRootSignature(2U, initParam);
+		DX12GameManager::createRootSignature(DX12GameManager::getSystemId(SystemRootSignatureType::BasicMesh), initParam);
 	}
 
 	void BasicMeshMaterial::createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths)
@@ -116,8 +106,8 @@ namespace tktk
 		initParam.useDepth = true;
 		initParam.writeDepth = true;
 		initParam.depthFunc = D3D12_COMPARISON_FUNC_LESS;
-		initParam.rootSignatureId = 2U;
+		initParam.rootSignatureId = DX12GameManager::getSystemId(SystemRootSignatureType::BasicMesh);
 
-		DX12GameManager::createGraphicsPipeLineState(2U, initParam, shaderFilePaths);
+		DX12GameManager::createPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMesh), initParam, shaderFilePaths);
 	}
 }

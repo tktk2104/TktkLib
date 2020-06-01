@@ -16,15 +16,11 @@ namespace tktk
 	public:
 
 		BufferResource(const BufferResourceInitParam& initParam);
+		~BufferResource() = default;
 
 	public: /* 頂点バッファの処理 */
 
 		void createVertexBuffer(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
-
-		template <class VertexData>
-		void createVertexBuffer(unsigned int id, ID3D12Device* device, const std::vector<VertexData>& vertexDataArray);
-
-		void createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
 		void setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
@@ -38,11 +34,10 @@ namespace tktk
 
 		void createConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
-		template <class ConstantBufferDataType>
-		void createConstantBuffer(unsigned int id, ID3D12Device* device, const ConstantBufferDataType& rawConstantBufferData);
+		void createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
 		void updateConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
-	
+
 	public: /* テクスチャバッファの処理 */
 
 		void cpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
@@ -63,12 +58,12 @@ namespace tktk
 
 	public: /* レンダーターゲットバッファの処理 */
 
-		void createBackBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
+		void createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 
-		void createBackBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createRenderTargetView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
-		void useBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
-		void unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void useRenderTarget(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void unUseRenderTarget(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 	private:
 
@@ -79,20 +74,5 @@ namespace tktk
 		DepthStencilBuffer	m_depthStencilBuffer;
 		RenderTargetBuffer	m_renderTargetBuffer;
 	};
-//┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//┃ここから下は関数の実装
-//┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-	template<class VertexData>
-	inline void BufferResource::createVertexBuffer(unsigned int id, ID3D12Device* device, const std::vector<VertexData>& vertexDataArray)
-	{
-		m_vertexBuffer.create<VertexData>(id, device, vertexDataArray);
-	}
-
-	template<class ConstantBufferDataType>
-	inline void BufferResource::createConstantBuffer(unsigned int id, ID3D12Device* device, const ConstantBufferDataType& rawConstantBufferData)
-	{
-		m_constantBuffer.create(id, device, rawConstantBufferData);
-	}
 }
 #endif // !BUFFER_RESOURCE_H_

@@ -149,32 +149,31 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	// 「DX12GameManager」の初期設定をする
 	{
 		tktk::DescriptorHeapInitParam descriptorHeapInitParam{};
-		descriptorHeapInitParam.basicDescriptorHeapNum	= 3U;
-		descriptorHeapInitParam.rtvDescriptorHeapNum	= 2U;
-		descriptorHeapInitParam.dsvDescriptorHeapNum	= 1U;
+		descriptorHeapInitParam.basicDescriptorHeapNum	= 2U;
+		descriptorHeapInitParam.rtvDescriptorHeapNum	= 0U;
+		descriptorHeapInitParam.dsvDescriptorHeapNum	= 0U;
 
 		tktk::BufferResourceInitParam bufferResourceInitParam{};
-		bufferResourceInitParam.vertexBufferNum			= 3U;
-		bufferResourceInitParam.indexBufferNum			= 3U;
-		bufferResourceInitParam.constantBufferNum		= 3U;
-		bufferResourceInitParam.textureBufferNum		= 2U;
-		bufferResourceInitParam.depthStencilBufferNum	= 1U;
+		bufferResourceInitParam.vertexBufferNum			= 1U;
+		bufferResourceInitParam.indexBufferNum			= 1U;
+		bufferResourceInitParam.constantBufferNum		= 0U;
+		bufferResourceInitParam.textureBufferNum		= 1U;
+		bufferResourceInitParam.depthStencilBufferNum	= 0U;
 		bufferResourceInitParam.renderTargetBufferNum	= 0U;
-		bufferResourceInitParam.backBufferNum			= 2U;
 
 		tktk::DX3DResourceInitParam resourceInitParam{};
-		resourceInitParam.viewPortNum				= 1U;
-		resourceInitParam.scissorRectNum			= 1U;
-		resourceInitParam.pipeLineStateNum			= 3U;
-		resourceInitParam.rootSignatureNum			= 3U;
+		resourceInitParam.viewPortNum				= 0U;
+		resourceInitParam.scissorRectNum			= 0U;
+		resourceInitParam.pipeLineStateNum			= 0U;
+		resourceInitParam.rootSignatureNum			= 0U;
 		resourceInitParam.descriptorHeapInitParam	= descriptorHeapInitParam;
 		resourceInitParam.bufferResourceInitParam	= bufferResourceInitParam;
 
 		tktk::DX3DBaseObjectsInitParam initParam{};
 		initParam.resourceInitParam = resourceInitParam;
-		initParam.spriteNum					= 2U;
-		initParam.basicMeshNum				= 2U;
-		initParam.basicMeshMaterialNum		= 2U;
+		initParam.spriteNum					= 1U;
+		initParam.basicMeshNum				= 1U;
+		initParam.basicMeshMaterialNum		= 1U;
 
 		tktk::DX12GameManager::initialize(1U, initParam, { hInstance, nCmdShow, "TestProject", { 1920.0f, 1080.0f } });
 	}
@@ -194,7 +193,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	// スプライトのマテリアルを作る
 	{
 		tktk::SpriteMaterialInitParam initParam{};
-		initParam.createDescriptorHeapId = 1U;
+		initParam.createDescriptorHeapId = 0U;
 		initParam.useTextureId = 0U;
 
 		tktk::DX12GameManager::createSpriteMaterial(0U, initParam);
@@ -204,9 +203,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	{
 		tktk::BasicMeshLoadPmdArgs loadArgs{};
 		loadArgs.m_filePath = "res/Model/初音ミク.pmd";
-		loadArgs.createDescriptorHeapId = 2U;
-		loadArgs.createVertexBufferId = 2U;
-		loadArgs.createIndexBufferId = 2U;
+		loadArgs.createDescriptorHeapId = 1U;
+		loadArgs.createVertexBufferId = 0U;
+		loadArgs.createIndexBufferId = 0U;
 		loadArgs.createBasicMeshId = 0U;
 		loadArgs.createBasicMeshMaterialId = 0U;
 

@@ -17,7 +17,7 @@ namespace tktk
 
 		void createPipeLineState(unsigned int id, ID3D12Device* device, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath, ID3D12RootSignature* rootSignaturePtr);
 
-		int getUseRootSignatureIndex(unsigned int id) const;
+		unsigned int getUseRootSignatureIndex(unsigned int id) const;
 
 		void set(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 

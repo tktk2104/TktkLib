@@ -27,8 +27,8 @@ namespace tktk
 		// ルートシグネチャを作る
 		void createRootSignature(unsigned int id, ID3D12Device* device, const RootSignatureInitParam& initParam);
 
-		// グラフィックパイプラインステートを作る
-		void createGraphicsPipeLineState(unsigned int id, ID3D12Device* device, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath);
+		// パイプラインステートを作る
+		void createPipeLineState(unsigned int id, ID3D12Device* device, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath);
 
 		// 頂点バッファを作る
 		void createVertexBuffer(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
@@ -39,8 +39,8 @@ namespace tktk
 		// 定数バッファを作る
 		void createConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
-		// バックバッファを作る
-		void createBackBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
+		// レンダーターゲットバッファを作る
+		void createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 
 		// 深度ステンシルバッファを作る
 		void createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& depthStencilSize);
@@ -53,6 +53,9 @@ namespace tktk
 
 		// 深度ステンシルビューのディスクリプタヒープを作る
 		void createDsvDescriptorHeap(unsigned int id, ID3D12Device* device, const DsvDescriptorHeapInitParam& initParam);
+
+		// gpu優先でテクスチャを作る
+		void gpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
 		// gpu優先でテクスチャをロードする
 		void gpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const std::string& texDataPath);
@@ -75,11 +78,11 @@ namespace tktk
 
 	public: /* 描画準備 */
 
-		// バックバッファー用のレンダーターゲットをコマンドリストに設定する
-		void setBackBufferRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int curBackBufferIndex);
+		// 指定のレンダーターゲットをコマンドリストに設定する
+		void setRenderTarget(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
-		// バックバッファー用のレンダーターゲットと指定のデプスステンシルビューをコマンドリストに設定する
-		void setUseDepthStencilBackBufferRenderTarget(unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int curBackBufferIndex);
+		// 指定のレンダーターゲットと深度ステンシルビューをコマンドリストに設定する
+		void setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
 		// 指定のビューポートをコマンドリストに設定する
 		void setViewport(unsigned int id, ID3D12GraphicsCommandList* commandList);
@@ -87,8 +90,8 @@ namespace tktk
 		// 指定のシザー矩形をコマンドリストに設定する
 		void setScissorRect(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
-		// 指定のグラフィックパイプラインステートをコマンドリストに設定する
-		void setGraphicsPipeLineState(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		// 指定のパイプラインステートをコマンドリストに設定する
+		void setPipeLineState(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 		// 指定の頂点バッファをコマンドリストに設定する
 		void setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
@@ -99,11 +102,11 @@ namespace tktk
 		// 指定のディスクリプタヒープの配列をコマンドリストに設定する
 		void setDescriptorHeap(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray);
 
-		// バックバッファをレンダーターゲット状態にする
-		void useBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		// レンダーターゲットバッファををレンダーターゲット状態にする
+		void useRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
-		// バックバッファをプリセット状態にする
-		void unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		// レンダーターゲットバッファをプリセット状態にする
+		void unUseRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 	private:
 

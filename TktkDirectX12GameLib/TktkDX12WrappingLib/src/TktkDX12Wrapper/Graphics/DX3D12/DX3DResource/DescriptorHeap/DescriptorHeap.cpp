@@ -59,9 +59,9 @@ namespace tktk
 		}
 	}
 
-	void DescriptorHeap::setRenderTarget(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount) const
+	void DescriptorHeap::setRenderTarget(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
 	{
-		m_rtvDescriptorHeap.setRenderTarget(id, device, commandList, startRtvLocation, rtvCount, nullptr);
+		m_rtvDescriptorHeap.setRenderTarget(rtvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount, nullptr);
 	}
 
 	void DescriptorHeap::setRenderTargetAndDepthStencil(unsigned int renderTargetId, unsigned int depthStencilViewId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount)

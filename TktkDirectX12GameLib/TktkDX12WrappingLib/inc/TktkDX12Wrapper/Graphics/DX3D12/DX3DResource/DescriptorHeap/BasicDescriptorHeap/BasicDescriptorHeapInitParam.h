@@ -13,8 +13,8 @@ namespace tktk
 
 	struct BasicDescriptorParam
 	{
-		BasicDescriptorType	m_type;
-		unsigned int		m_id;
+		BasicDescriptorType	type;
+		unsigned int		id;
 	};
 
 	struct BasicDescriptorHeapInitParam

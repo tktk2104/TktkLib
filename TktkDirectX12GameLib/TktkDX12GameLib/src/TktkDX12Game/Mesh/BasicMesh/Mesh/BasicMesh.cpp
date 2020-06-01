@@ -1,6 +1,5 @@
 #include "TktkDX12Game/Mesh/BasicMesh/Mesh/BasicMesh.h"
 
-
 namespace tktk
 {
 	BasicMesh::BasicMesh(unsigned int basicMeshNum)

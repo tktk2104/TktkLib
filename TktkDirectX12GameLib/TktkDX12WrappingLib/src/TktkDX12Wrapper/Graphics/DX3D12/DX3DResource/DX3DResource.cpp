@@ -26,7 +26,7 @@ namespace tktk
 		m_graphicsPipeLine.createRootSignature(id, device, initParam);
 	}
 
-	void DX3DResource::createGraphicsPipeLineState(unsigned int id, ID3D12Device* device, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath)
+	void DX3DResource::createPipeLineState(unsigned int id, ID3D12Device* device, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath)
 	{
 		m_graphicsPipeLine.createPipeLineState(id, device, initParam, shaderFilePath);
 	}
@@ -46,9 +46,9 @@ namespace tktk
 		m_bufferResource.createConstantBuffer(id, device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
-	void DX3DResource::createBackBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
+	void DX3DResource::createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
 	{
-		m_bufferResource.createBackBuffer(id, swapChain, backBufferIndex);
+		m_bufferResource.createRenderTargetBuffer(id, swapChain, backBufferIndex);
 	}
 
 	void DX3DResource::createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& depthStencilSize)
@@ -64,16 +64,18 @@ namespace tktk
 
 		for (unsigned int i = 0; i < initParam.m_descriptorParamArray.size(); i++)
 		{
-			switch (initParam.m_descriptorParamArray.at(i).m_type)
+			const auto& descriptorParam = initParam.m_descriptorParamArray.at(i);
+
+			switch (descriptorParam.type)
 			{
 			case BasicDescriptorType::constantBuffer:
 
-				m_bufferResource.createConstantBufferView(initParam.m_descriptorParamArray.at(i).m_id, device, cpuHeapHandleArray.at(i));
+				m_bufferResource.createConstantBufferView(descriptorParam.id, device, cpuHeapHandleArray.at(i));
 				break;
 
 			case BasicDescriptorType::textureBuffer:
 
-				m_bufferResource.createShaderResourceView(initParam.m_descriptorParamArray.at(i).m_id, device, cpuHeapHandleArray.at(i));
+				m_bufferResource.createShaderResourceView(descriptorParam.id, device, cpuHeapHandleArray.at(i));
 				break;
 			}
 		}
@@ -91,11 +93,7 @@ namespace tktk
 			{
 			case RtvDescriptorType::normal:
 
-				break;
-
-			case RtvDescriptorType::backBuffer:
-
-				m_bufferResource.createBackBufferView(initParam.m_descriptorParamArray.at(i).m_id, device, cpuHeapHandleArray.at(i));
+				m_bufferResource.createRenderTargetView(initParam.m_descriptorParamArray.at(i).m_id, device, cpuHeapHandleArray.at(i));
 				break;
 			}
 		}
@@ -117,6 +115,11 @@ namespace tktk
 				break;
 			}
 		}
+	}
+
+	void DX3DResource::gpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
+	{
+		m_bufferResource.gpuPriorityCreateTextureBuffer(id, device, commandList, formatParam, dataParam);
 	}
 
 	void DX3DResource::gpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const std::string& texDataPath)
@@ -144,14 +147,14 @@ namespace tktk
 		return m_bufferResource.getTextureSize(id);
 	}
 
-	void DX3DResource::setBackBufferRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int curBackBufferIndex)
+	void DX3DResource::setRenderTarget(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_descriptorHeap.setRenderTarget(0U, device, commandList, curBackBufferIndex, 1U);
+		m_descriptorHeap.setRenderTarget(rtvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX3DResource::setUseDepthStencilBackBufferRenderTarget(unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int curBackBufferIndex)
+	void DX3DResource::setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_descriptorHeap.setRenderTargetAndDepthStencil(0U, dsvDescriptorHeapId, device, commandList, curBackBufferIndex, 1U);
+		m_descriptorHeap.setRenderTargetAndDepthStencil(rtvDescriptorHeapId, dsvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount);
 	}
 
 	void DX3DResource::setViewport(unsigned int id, ID3D12GraphicsCommandList* commandList)
@@ -164,7 +167,7 @@ namespace tktk
 		m_scissorRect.set(id, commandList);
 	}
 
-	void DX3DResource::setGraphicsPipeLineState(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::setPipeLineState(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
 		m_graphicsPipeLine.set(id, commandList);
 	}
@@ -184,13 +187,13 @@ namespace tktk
 		m_descriptorHeap.set(device, commandList, heapParamArray);
 	}
 
-	void DX3DResource::useBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::useRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_bufferResource.useBackBuffer(id, commandList);
+		m_bufferResource.useRenderTarget(id, commandList);
 	}
 
-	void DX3DResource::unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::unUseRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_bufferResource.unUseBackBuffer(id, commandList);
+		m_bufferResource.unUseRenderTarget(id, commandList);
 	}
 }

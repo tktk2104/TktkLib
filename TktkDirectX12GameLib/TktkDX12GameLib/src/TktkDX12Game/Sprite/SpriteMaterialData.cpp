@@ -17,10 +17,10 @@ namespace tktk
 		BasicDescriptorHeapInitParam descriptorHeapInitParam{};
 		descriptorHeapInitParam.m_shaderVisible = true;
 		descriptorHeapInitParam.m_descriptorParamArray.resize(2U);
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).m_type = BasicDescriptorType::textureBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).m_id = initParam.useTextureId;
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).m_type = BasicDescriptorType::constantBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).m_id = 1U;
+		descriptorHeapInitParam.m_descriptorParamArray.at(0U).type = BasicDescriptorType::textureBuffer;
+		descriptorHeapInitParam.m_descriptorParamArray.at(0U).id = initParam.useTextureId;
+		descriptorHeapInitParam.m_descriptorParamArray.at(1U).type = BasicDescriptorType::constantBuffer;
+		descriptorHeapInitParam.m_descriptorParamArray.at(1U).id = DX12GameManager::getSystemId(SystemConstantBufferType::Sprite);
 
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
 	}
@@ -40,13 +40,13 @@ namespace tktk
 		constantBufferData.spriteCenterRate = m_spriteCenterRate;
 		constantBufferData.screenSize = DX12GameManager::getWindowSize();
 
-		DX12GameManager::updateConstantBuffer(1U, constantBufferData);
+		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::Sprite), constantBufferData);
 
-		DX12GameManager::setGraphicsPipeLineState(1U);
-		DX12GameManager::setDescriptorHeap({ { DescriptorHeapType::basic, 1U } });
+		DX12GameManager::setPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::Sprite));
+		DX12GameManager::setDescriptorHeap({ { DescriptorHeapType::basic, m_createDescriptorHeapId} });
 		DX12GameManager::setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-		DX12GameManager::setVertexBuffer(1U);
-		DX12GameManager::setIndexBuffer(1U);
+		DX12GameManager::setVertexBuffer(DX12GameManager::getSystemId(SystemVertexBufferType::Sprite));
+		DX12GameManager::setIndexBuffer(DX12GameManager::getSystemId(SystemIndexBufferType::Sprite));
 		DX12GameManager::drawIndexedInstanced(4U, 1U, 0U, 0U, 0U);
 	}
 }

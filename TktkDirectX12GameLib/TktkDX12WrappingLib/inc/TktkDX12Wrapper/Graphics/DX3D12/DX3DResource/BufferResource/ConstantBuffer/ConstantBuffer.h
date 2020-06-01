@@ -15,9 +15,6 @@ namespace tktk
 	public:
 
 		void create(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
-
-		template <class ConstantBufferDataType>
-		void create(unsigned int id, ID3D12Device* device, const ConstantBufferDataType& rawConstantBufferData);
 	
 		void createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 	
@@ -25,17 +22,7 @@ namespace tktk
 
 	private:
 
-		HeapArray<ConstantBufferData> m_systemConstantBufferDataArray;
 		HeapArray<ConstantBufferData> m_constantBufferDataArray;
 	};
-//„¬„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
-//„«‚±‚±‚©‚ç‰º‚ÍŠÖ”‚ÌÀ‘•
-//„¯„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª
-
-	template<class ConstantBufferDataType>
-	inline void ConstantBuffer::create(unsigned int id, ID3D12Device* device, const ConstantBufferDataType& rawConstantBufferData)
-	{
-		m_constantBufferDataArray.at(id)->initialize<ConstantBufferDataType>(device, rawConstantBufferData);
-	}
 }
 #endif // !CONSTANT_BUFFER_H_

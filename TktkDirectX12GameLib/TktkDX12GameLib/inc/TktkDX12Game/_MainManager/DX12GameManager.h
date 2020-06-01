@@ -11,10 +11,11 @@
 #include <TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjectsInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/RootSignature/RootSignatureInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DescriptorHeapParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/BasicDescriptorHeap/BasicDescriptorHeapInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DsvDescriptorHeap/DsvDescriptorHeapInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/TextureBuffer/TextureBufferInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/_SystemResourceIdGetter/SystemResourceType.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DescriptorHeapParam.h>
 #include "../Scene/SceneManager.h"
 #include "../GameObject/GameObjectPtr.h"
 #include "../Component/ComponentManager.h"
@@ -23,7 +24,6 @@
 #include "../Mesh/MeshMaterialDrawFuncArgs.h"
 #include "../Mesh/BasicMesh/Mesh/BasicMeshInitParam.h"
 #include "../Mesh/BasicMesh/Material/BasicMeshMaterialInitParam.h"
-
 #include "../Mesh/BasicMesh/Loader/BasicMeshLoadPmdArgs.h"
 
 namespace tktk
@@ -84,15 +84,19 @@ namespace tktk
 
 		static void setBackGroundColor(const tktkMath::Color& backGroundColor);
 
-		static void setBackBufferRenderTarget();
+		static void setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
-		static void setUseDepthStencilBackBufferRenderTarget(unsigned int depthStencilViewId);
+		static void setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+
+		static void setBackBuffer();
+
+		static void setBackBufferAndDepthStencil(unsigned int dsvDescriptorHeapId);
 
 		static void setViewport(unsigned int id);
 
 		static void setScissorRect(unsigned int id);
 
-		static void setGraphicsPipeLineState(unsigned int id);
+		static void setPipeLineState(unsigned int id);
 
 		static void setVertexBuffer(unsigned int id);
 
@@ -115,8 +119,8 @@ namespace tktk
 		// ルートシグネチャを作る
 		static void createRootSignature(unsigned int id, const RootSignatureInitParam& initParam);
 
-		// グラフィックパイプラインステートを作る
-		static void createGraphicsPipeLineState(unsigned int graphicsPipeLineId, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath);
+		// パイプラインステートを作る
+		static void createPipeLineState(unsigned int graphicsPipeLineId, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath);
 
 		// 頂点バッファを作る
 		template <class VertexData>
@@ -138,9 +142,12 @@ namespace tktk
 		// 深度ステンシルディスクリプタヒープを作る
 		static void createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam);
 
+		// GPU側優先処理でテクスチャを作る（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
+		//static void gpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
+
 		// GPU側優先処理でテクスチャをロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		static void gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath);
-
+		
 	public: /* 直接DX12のリソースを設定、取得する */
 
 		template <class ConstantBufferDataType>
@@ -171,11 +178,21 @@ namespace tktk
 
 		static void loadPmd(const BasicMeshLoadPmdArgs& args);
 
+	public: /* デフォルトのリソースを使うためのIDを取得する */
+
+		static unsigned int getSystemId(SystemViewportType type);
+		static unsigned int getSystemId(SystemScissorRectType type);
+		static unsigned int getSystemId(SystemVertexBufferType type);
+		static unsigned int getSystemId(SystemIndexBufferType type);
+		static unsigned int getSystemId(SystemConstantBufferType type);
+		static unsigned int getSystemId(SystemDepthStencilBufferType type);
+		static unsigned int getSystemId(SystemRootSignatureType type);
+		static unsigned int getSystemId(SystemPipeLineStateType type);
+
 	private: /* 裏実装 */
 
 		static void createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
 		static void createConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
-
 		static void updateConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
 	private:

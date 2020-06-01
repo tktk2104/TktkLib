@@ -24,10 +24,10 @@ namespace tktk
 		BasicDescriptorHeapInitParam descriptorHeapInitParam{};
 		descriptorHeapInitParam.m_shaderVisible = true;
 		descriptorHeapInitParam.m_descriptorParamArray.resize(2U);
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).m_type = BasicDescriptorType::textureBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).m_id = 0U;
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).m_type = BasicDescriptorType::constantBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).m_id = 2U;
+		descriptorHeapInitParam.m_descriptorParamArray.at(0U).type = BasicDescriptorType::textureBuffer;
+		descriptorHeapInitParam.m_descriptorParamArray.at(0U).id = 0U;// TODO : ˆÓ–¡‚Ì‚ ‚é’l‚ð
+		descriptorHeapInitParam.m_descriptorParamArray.at(1U).type = BasicDescriptorType::constantBuffer;
+		descriptorHeapInitParam.m_descriptorParamArray.at(1U).id = DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh);
 
 
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
@@ -57,10 +57,9 @@ namespace tktk
 		constantBufferData.materialEmissive	= m_materialEmissive;
 		constantBufferData.materialShiniess = m_materialShiniess;
 
-		DX12GameManager::updateConstantBuffer(2U, constantBufferData);
+		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), constantBufferData);
 
-		DX12GameManager::setGraphicsPipeLineState(2U);
-
+		DX12GameManager::setPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMesh));
 
 		DX12GameManager::setDescriptorHeap({ { DescriptorHeapType::basic, m_createDescriptorHeapId } });
 		DX12GameManager::setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

@@ -21,7 +21,7 @@ namespace tktk
 
 	public:
 
-		int getUseRootSignatureIndex() const;
+		unsigned int getUseRootSignatureIndex() const;
 
 		void set(ID3D12GraphicsCommandList* commandList) const;
 

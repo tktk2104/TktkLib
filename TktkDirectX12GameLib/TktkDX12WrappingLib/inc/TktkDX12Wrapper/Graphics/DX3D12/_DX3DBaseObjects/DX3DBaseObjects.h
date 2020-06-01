@@ -9,10 +9,9 @@
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector2.h>
 #include "DX3DBaseObjectsInitParam.h"
-
 #include "../Fence/Fence.h"
-
 #include "../DX3DResource/DX3DResource.h"
+#include "../DX3DResource/_SystemResourceIdGetter/SystemResourceIdGetter.h"
 
 namespace tktk
 {
@@ -36,8 +35,8 @@ namespace tktk
 		// ルートシグネチャを作る
 		void createRootSignature(unsigned int id, const RootSignatureInitParam& initParam);
 
-		// グラフィックパイプラインステートを作る
-		void createGraphicsPipeLineState(unsigned int id, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath);
+		// パイプラインステートを作る
+		void createPipeLineState(unsigned int id, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath);
 
 		// 頂点バッファを作る
 		void createVertexBuffer(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
@@ -73,11 +72,17 @@ namespace tktk
 		// 背景色を設定する
 		void setBackGroundColor(const tktkMath::Color& backGroundColor);
 
-		// バックバッファー用のレンダーターゲットをコマンドリストに設定する
-		void setBackBufferRenderTarget();
+		// 指定のレンダーターゲットをコマンドリストに設定する
+		void setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
-		// バックバッファー用のレンダーターゲットと指定のデプスステンシルビューをコマンドリストに設定する
-		void setUseDepthStencilBackBufferRenderTarget(unsigned int dsvDescriptorHeapId);
+		// 指定のレンダーターゲットと深度ステンシルビューをコマンドリストに設定する
+		void setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+
+		// バックバッファーを設定する
+		void setBackBuffer();
+
+		// バックバッファーと深度ステンシルビューを設定する
+		void setBackBufferAndDepthStencil(unsigned int dsvDescriptorHeapId);
 
 		// 指定のビューポートをコマンドリストに設定する
 		void setViewport(unsigned int id);
@@ -85,8 +90,8 @@ namespace tktk
 		// 指定のシザー矩形をコマンドリストに設定する
 		void setScissorRect(unsigned int id);
 
-		// 指定のグラフィックパイプラインステートをコマンドリストに設定する
-		void setGraphicsPipeLineState(unsigned int id);
+		// 指定のパイプラインステートをコマンドリストに設定する
+		void setPipeLineState(unsigned int id);
 
 		// 指定の頂点バッファをコマンドリストに設定する
 		void setVertexBuffer(unsigned int id);
@@ -114,6 +119,11 @@ namespace tktk
 		// コマンドリストを実行する
 		void executeCommandList();
 
+	public:
+
+		template <class SystemResourceType>
+		unsigned int getSystemId(SystemResourceType type) const;
+
 	private:
 
 		ID3D12Device*				m_device				{ nullptr };
@@ -125,8 +135,19 @@ namespace tktk
 		unsigned int				m_curBackBufferIndex	{ 0U };
 		Fence						m_fence					{};
 
+		SystemResourceIdGetter		m_systemResourceIdGetter;
 		DX3DResource				m_dX3DResource;
+
 		tktkMath::Color				m_backGroundColor{ tktkMath::colorBlue };
 	};
+//┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//┃ここから下は関数の実装
+//┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+	template<class SystemResourceType>
+	inline unsigned int DX3DBaseObjects::getSystemId(SystemResourceType type) const
+	{
+		return m_systemResourceIdGetter.getSystemId(type);
+	}
 }
 #endif // !DX3D_BASE_OBJECTS_H_

@@ -8,18 +8,13 @@ namespace tktk
 		, m_constantBuffer(initParam.constantBufferNum)
 		, m_textureBuffer(initParam.textureBufferNum)
 		, m_depthStencilBuffer(initParam.depthStencilBufferNum)
-		, m_renderTargetBuffer(initParam.renderTargetBufferNum, initParam.backBufferNum)
+		, m_renderTargetBuffer(initParam.renderTargetBufferNum)
 	{
 	}
 
 	void BufferResource::createVertexBuffer(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
 	{
 		m_vertexBuffer.create(id, device, vertexTypeSize, vertexDataCount, vertexDataTopPos);
-	}
-
-	void BufferResource::createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
-	{
-		m_constantBuffer.createConstantBufferView(id, device, heapHandle);
 	}
 
 	void BufferResource::setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
@@ -40,6 +35,11 @@ namespace tktk
 	void BufferResource::createConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_constantBuffer.create(id, device, constantBufferTypeSize, constantBufferDataTopPos);
+	}
+
+	void BufferResource::createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	{
+		m_constantBuffer.createConstantBufferView(id, device, heapHandle);
 	}
 
 	void BufferResource::updateConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
@@ -87,23 +87,23 @@ namespace tktk
 		m_depthStencilBuffer.createDepthStencilView(id, device, heapHandle);
 	}
 
-	void BufferResource::createBackBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
+	void BufferResource::createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
 	{
-		m_renderTargetBuffer.createBackBuffer(id, swapChain, backBufferIndex);
+		m_renderTargetBuffer.create(id, swapChain, backBufferIndex);
 	}
 
-	void BufferResource::createBackBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createRenderTargetView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_renderTargetBuffer.createBackBufferView(id, device, heapHandle);
+		m_renderTargetBuffer.createView(id, device, heapHandle);
 	}
 
-	void BufferResource::useBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::useRenderTarget(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_renderTargetBuffer.useBackBuffer(id, commandList);
+		m_renderTargetBuffer.use(id, commandList);
 	}
 
-	void BufferResource::unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::unUseRenderTarget(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_renderTargetBuffer.unUseBackBuffer(id, commandList);
+		m_renderTargetBuffer.unUse(id, commandList);
 	}
 }
