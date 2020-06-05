@@ -3,12 +3,18 @@
 
 namespace tktk
 {
-	constexpr unsigned int SystemRootSignatureNum = 2U;
+	constexpr unsigned int SystemRootSignatureNum = 8U;
 
 	enum class SystemRootSignatureType
 	{
-		Sprite		= 0U,
-		BasicMesh	= 1U
+		PostEffectMonochrome	= 0U,
+		PostEffectNegative,
+		PostEffectSimpleBlur,
+		PostEffectEmbossing,
+		PostEffectSharpness,
+		PostEffectGlassFilter,
+		Sprite,
+		BasicMesh
 	};
 }
 #endif // !SYSTEM_ROOT_SIGNATURE_TYPE_H_

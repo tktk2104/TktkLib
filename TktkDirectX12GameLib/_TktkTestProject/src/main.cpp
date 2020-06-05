@@ -16,6 +16,9 @@
 #include <TktkDX12Game/Component/DefaultComponents/3DComponents/Transform3D/Transform3D.h>
 #include <TktkDX12Game/Component/DefaultComponents/3DComponents/MeshDrawer/BasicMeshDrawer/BasicMeshDrawer.h>
 
+#include <TktkDX12Game/Component/DefaultComponents/2DComponents/PostEffectDrawer/PostEffectDrawer.h>
+#include <TktkDX12Game/Component/DefaultComponents/2DComponents/RenderTargetClearer/RenderTargetClearer.h>
+
 struct TestScene
 {
 	void start()
@@ -149,8 +152,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	// 「DX12GameManager」の初期設定をする
 	{
 		tktk::DescriptorHeapInitParam descriptorHeapInitParam{};
-		descriptorHeapInitParam.basicDescriptorHeapNum	= 2U;
-		descriptorHeapInitParam.rtvDescriptorHeapNum	= 0U;
+		descriptorHeapInitParam.basicDescriptorHeapNum	= 3U;
+		descriptorHeapInitParam.rtvDescriptorHeapNum	= 1U;
 		descriptorHeapInitParam.dsvDescriptorHeapNum	= 0U;
 
 		tktk::BufferResourceInitParam bufferResourceInitParam{};
@@ -159,7 +162,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		bufferResourceInitParam.constantBufferNum		= 0U;
 		bufferResourceInitParam.textureBufferNum		= 1U;
 		bufferResourceInitParam.depthStencilBufferNum	= 0U;
-		bufferResourceInitParam.renderTargetBufferNum	= 0U;
+		bufferResourceInitParam.renderTargetBufferNum	= 1U;
 
 		tktk::DX3DResourceInitParam resourceInitParam{};
 		resourceInitParam.viewPortNum				= 0U;
@@ -173,7 +176,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		initParam.resourceInitParam = resourceInitParam;
 		initParam.spriteNum					= 1U;
 		initParam.basicMeshNum				= 1U;
-		initParam.basicMeshMaterialNum		= 1U;
+		initParam.basicMeshMaterialNum		= 17U;
+		initParam.postEffectMaterialNum		= 1U;
 
 		tktk::DX12GameManager::initialize(1U, initParam, { hInstance, nCmdShow, "TestProject", { 1920.0f, 1080.0f } });
 	}
@@ -194,7 +198,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	{
 		tktk::SpriteMaterialInitParam initParam{};
 		initParam.createDescriptorHeapId = 0U;
-		initParam.useTextureId = 0U;
+		initParam.useTextureId = 0U;//tktk::DX12GameManager::getSystemId(tktk::SystemTextureBufferType::White);
 
 		tktk::DX12GameManager::createSpriteMaterial(0U, initParam);
 	}
@@ -207,9 +211,51 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		loadArgs.createVertexBufferId = 0U;
 		loadArgs.createIndexBufferId = 0U;
 		loadArgs.createBasicMeshId = 0U;
-		loadArgs.createBasicMeshMaterialId = 0U;
+		loadArgs.createBasicMeshMaterialIdStartNum = 0U;
 
-		tktk::DX12GameManager::loadPmd(loadArgs);
+		auto result = tktk::DX12GameManager::loadPmd(loadArgs);
+
+		if (result.createBasicMeshMaterialIdEndNum == 16U)
+		{
+			//throw std::runtime_error("load Pmd error");
+		}
+	}
+
+	// レンダーターゲットバッファを作る
+	{
+		tktk::DX12GameManager::createRenderTargetBuffer(0U, tktk::DX12GameManager::getWindowSize(), tktkMath::colorRed);
+	}
+
+	// レンダーターゲットビューを作る
+	{
+		tktk::RtvDescriptorHeapInitParam initParam{};
+		initParam.m_shaderVisible = false;
+		initParam.m_descriptorParamArray.resize(1U);
+		initParam.m_descriptorParamArray.at(0U).m_type = tktk::RtvDescriptorType::normal;
+		initParam.m_descriptorParamArray.at(0U).m_id = 0U;
+
+		tktk::DX12GameManager::createRtvDescriptorHeap(0U, initParam);
+	}
+
+	// モノクロのポストエフェクト用のディスクリプタヒープを作る
+	{
+		// ディスクリプタヒープを作る
+		tktk::BasicDescriptorHeapInitParam descriptorHeapInitParam{};
+		descriptorHeapInitParam.m_shaderVisible = true;
+		descriptorHeapInitParam.m_descriptorParamArray.resize(1U);
+		descriptorHeapInitParam.m_descriptorParamArray.at(0U).type = tktk::BasicDescriptorType::renderTarget;
+		descriptorHeapInitParam.m_descriptorParamArray.at(0U).id = 0U;
+		
+		tktk::DX12GameManager::createBasicDescriptorHeap(2U, descriptorHeapInitParam);
+	}
+
+	// モノクロのポストエフェクトを作る
+	{
+		tktk::PostEffectMaterialInitParam initParam{};
+		initParam.usePipeLineStateId = tktk::DX12GameManager::getSystemId(tktk::SystemPipeLineStateType::PostEffectMonochrome);
+		initParam.useDescriptorHeapId = 2U;
+
+		tktk::DX12GameManager::createPostEffectMaterial(0U, initParam);
 	}
 
 	// テスト
@@ -229,7 +275,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			);
 		player->createComponent<tktk::SpriteDrawer>(
 			0.0f,
-			0
+			0U,
+			0U
 			);
 	
 		auto enemy = tktk::DX12GameManager::createGameObject();
@@ -244,8 +291,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			);
 		miku->createComponent<tktk::BasicMeshDrawer>(
 			0.0f,
+			0U,
 			0U
 			);
+
+		auto postEffectObject = tktk::DX12GameManager::createGameObject();
+		postEffectObject->createComponent<tktk::PostEffectDrawer>(
+			1.0f,
+			0U,
+			tktk::DX12GameManager::getSystemId(tktk::SystemRtvDescriptorHeapType::BackBuffer)
+			);
+		/*postEffectObject->createComponent<tktk::RenderTargetClearer>(
+			0U,
+			tktkMath::colorBlack
+			);*/
 	}
 
 	// プログラム開始

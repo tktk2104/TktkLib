@@ -12,10 +12,7 @@ namespace tktk
 	{
 	public:
 
-		BasicMeshDrawer(
-			float drawPriority,
-			int meshId
-		);
+		BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int useRtvDescriptorHeapId);
 
 	public:
 
@@ -24,7 +21,8 @@ namespace tktk
 
 	private:
 
-		int							m_meshId{ -1 };
+		unsigned int				m_useRtvDescriptorHeapId;
+		unsigned int				m_meshId;
 		ComponentPtr<Transform3D>	m_transform{ };
 	};
 }

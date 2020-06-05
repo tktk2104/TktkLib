@@ -21,6 +21,8 @@ namespace tktk
 
 		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> getCpuHeapHandleArray(ID3D12Device* device) const;
 
+		const std::vector<unsigned int>& getRenderTargetBufferIdArray() const;
+
 		ID3D12DescriptorHeap* getPtr() const;
 
 		void setDescriptor(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
@@ -30,6 +32,8 @@ namespace tktk
 		void clearRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color);
 
 	private:
+
+		std::vector<unsigned int> m_renderTargetBufferIdArray{};
 
 		ID3D12DescriptorHeap* m_descriptorHeap{ nullptr };
 	};

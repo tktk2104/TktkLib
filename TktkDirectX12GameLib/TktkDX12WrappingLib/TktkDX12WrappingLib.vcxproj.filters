@@ -207,6 +207,9 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\_SystemResourceIdGetter\SystemResourceType\SystemRtvDescriptorHeapType.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\_SystemResourceIdGetter\SystemResourceType\SystemTextureBufferType.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\Window\Window.cpp">
@@ -316,7 +319,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\BasicVertexShader.hlsl" />
-    <FxCompile Include="shader\BasicPixelShader.hlsl" />
+    <FxCompile Include="shader\drawRenderTargetShader\DrawRenderTargetPixelShader.hlsl" />
+    <FxCompile Include="shader\drawRenderTargetShader\DrawRenderTargetVertexShader.hlsl" />
   </ItemGroup>
 </Project>

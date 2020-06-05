@@ -6,6 +6,7 @@
 #include "SystemResourceType/SystemVertexBufferType.h"
 #include "SystemResourceType/SystemIndexBufferType.h"
 #include "SystemResourceType/SystemConstantBufferType.h"
+#include "SystemResourceType/SystemTextureBufferType.h"
 #include "SystemResourceType/SystemRenderTargetBufferType.h"
 #include "SystemResourceType/SystemDepthStencilBufferType.h"
 #include "SystemResourceType/SystemBasicDescriptorHeapType.h"

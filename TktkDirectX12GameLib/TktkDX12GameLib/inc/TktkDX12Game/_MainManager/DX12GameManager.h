@@ -12,6 +12,7 @@
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/RootSignature/RootSignatureInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/BasicDescriptorHeap/BasicDescriptorHeapInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/RtvDescriptorHeap/RtvDescriptorHeapInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DsvDescriptorHeap/DsvDescriptorHeapInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/TextureBuffer/TextureBufferInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/_SystemResourceIdGetter/SystemResourceType.h>
@@ -19,21 +20,23 @@
 #include "../Scene/SceneManager.h"
 #include "../GameObject/GameObjectPtr.h"
 #include "../Component/ComponentManager.h"
-#include "../Sprite/SpriteMaterialInitParam.h"
-#include "../Mesh/MeshDrawFuncBaseArgs.h"
-#include "../Mesh/MeshMaterialDrawFuncArgs.h"
-#include "../Mesh/BasicMesh/Mesh/BasicMeshInitParam.h"
-#include "../Mesh/BasicMesh/Material/BasicMeshMaterialInitParam.h"
-#include "../Mesh/BasicMesh/Loader/BasicMeshLoadPmdArgs.h"
+#include "../DXGameResource/Sprite/SpriteMaterialInitParam.h"
+#include "../DXGameResource/Sprite/SpriteMaterialDrawFuncArgs.h"
+#include "../DXGameResource/Mesh/MeshDrawFuncBaseArgs.h"
+#include "../DXGameResource/Mesh/MeshMaterialDrawFuncArgs.h"
+#include "../DXGameResource/Mesh/BasicMesh/Mesh/BasicMeshInitParam.h"
+#include "../DXGameResource/Mesh/BasicMesh/Material/BasicMeshMaterialInitParam.h"
+#include "../DXGameResource/Mesh/BasicMesh/Loader/BasicMeshLoadPmdArgs.h"
+#include "../DXGameResource/Mesh/BasicMesh/Loader/BasicMeshLoadPmdReturnValue.h"
+#include "../DXGameResource/PostEffect/PostEffectMaterialInitParam.h"
+#include "../DXGameResource/PostEffect/PostEffectMaterialDrawFuncArgs.h"
 
 namespace tktk
 {
 	class GameObjectManager;
 	class Window;
 	class DX3DBaseObjects;
-	class Sprite;
-	class BasicMesh;
-	class BasicMeshMaterial;
+	class DXGameResource;
 
 	class DX12GameManager
 	{
@@ -86,6 +89,8 @@ namespace tktk
 
 		static void setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
+		static void unSetRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+
 		static void setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
 		static void setBackBuffer();
@@ -133,17 +138,26 @@ namespace tktk
 		template <class ConstantBufferDataType>
 		static void createConstantBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData);
 
+		// レンダーターゲットバッファを作る
+		static void createRenderTargetBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
+
 		// 深度ステンシルバッファを作る
 		static void createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize);
 
 		// ディスクリプタヒープを作る
 		static void createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam);
 
+		// レンダーターゲットのディスクリプタヒープを作る
+		static void createRtvDescriptorHeap(unsigned int id, const RtvDescriptorHeapInitParam& initParam);
+
 		// 深度ステンシルディスクリプタヒープを作る
 		static void createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam);
 
+		// CPU側優先処理でテクスチャを作る
+		static void cpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
+
 		// GPU側優先処理でテクスチャを作る（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
-		//static void gpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
+		static void gpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
 		// GPU側優先処理でテクスチャをロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		static void gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath);
@@ -152,6 +166,8 @@ namespace tktk
 
 		template <class ConstantBufferDataType>
 		static void updateConstantBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData);
+
+		static void clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color);
 
 		static const tktkMath::Vector3& getTextureSize(unsigned int id);
 
@@ -164,19 +180,25 @@ namespace tktk
 
 		static void createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam);
 
-		static void drawSprite(unsigned int id, const tktkMath::Matrix3& worldMatrix);
+		static void drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs);
 
 	public: /* メッシュ関係の処理 */
 
 		static void createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam);
 
-		static void createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initparam);
+		static void createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam);
 
 		static void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 
 		static void drawBasicMeshMaterial(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs);
 
-		static void loadPmd(const BasicMeshLoadPmdArgs& args);
+		static BasicMeshLoadPmdReturnValue loadPmd(const BasicMeshLoadPmdArgs& args);
+
+	public: /* ポストエフェクト関係の処理 */
+
+		static void createPostEffectMaterial(unsigned int id, const PostEffectMaterialInitParam& initParam);
+
+		static void drawPostEffect(unsigned int id, const PostEffectMaterialDrawFuncArgs& drawFuncArgs);
 
 	public: /* デフォルトのリソースを使うためのIDを取得する */
 
@@ -185,7 +207,11 @@ namespace tktk
 		static unsigned int getSystemId(SystemVertexBufferType type);
 		static unsigned int getSystemId(SystemIndexBufferType type);
 		static unsigned int getSystemId(SystemConstantBufferType type);
+		static unsigned int getSystemId(SystemTextureBufferType type);
 		static unsigned int getSystemId(SystemDepthStencilBufferType type);
+		static unsigned int getSystemId(SystemBasicDescriptorHeapType type);
+		static unsigned int getSystemId(SystemRtvDescriptorHeapType type);
+		static unsigned int getSystemId(SystemDsvDescriptorHeapType type);
 		static unsigned int getSystemId(SystemRootSignatureType type);
 		static unsigned int getSystemId(SystemPipeLineStateType type);
 
@@ -202,9 +228,7 @@ namespace tktk
 		static std::unique_ptr<ComponentManager>	m_componentManager;
 		static std::unique_ptr<Window>				m_window;
 		static std::unique_ptr<DX3DBaseObjects>		m_dx3dBaseObjects;
-		static std::unique_ptr<Sprite>				m_sprite;
-		static std::unique_ptr<BasicMesh>			m_basicMesh;
-		static std::unique_ptr<BasicMeshMaterial>	m_basicMeshMaterial;
+		static std::unique_ptr<DXGameResource>		m_dxGameResource;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装

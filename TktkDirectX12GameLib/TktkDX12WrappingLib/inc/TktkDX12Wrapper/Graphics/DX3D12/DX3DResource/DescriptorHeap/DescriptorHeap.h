@@ -34,6 +34,8 @@ namespace tktk
 		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> getCpuRtvHeapHandleArray(unsigned int id, ID3D12Device* device) const;
 		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> getCpuDsvHeapHandleArray(unsigned int id, ID3D12Device* device) const;
 
+		const std::vector<unsigned int>& getRtvDescriptorHeapUseBufferIdArray(unsigned int id) const;
+
 	private:
 
 		BasicDescriptorHeap	m_basicDescriptorHeap;

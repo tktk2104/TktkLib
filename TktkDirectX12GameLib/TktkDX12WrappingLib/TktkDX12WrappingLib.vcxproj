@@ -191,6 +191,7 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\_SystemResourceIdGetter\SystemResourceType\SystemRootSignatureType.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\_SystemResourceIdGetter\SystemResourceType\SystemRtvDescriptorHeapType.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\_SystemResourceIdGetter\SystemResourceType\SystemScissorRectType.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\_SystemResourceIdGetter\SystemResourceType\SystemTextureBufferType.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\_SystemResourceIdGetter\SystemResourceType\SystemVertexBufferType.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\_SystemResourceIdGetter\SystemResourceType\SystemViewportType.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Fence\Fence.h" />
@@ -255,27 +256,21 @@
     <ClCompile Include="src\TktkDX12Wrapper\Graphics\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\BasicPixelShader.hlsl">
+    <FxCompile Include="shader\drawRenderTargetShader\DrawRenderTargetPixelShader.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\%(Filename).cso</ObjectFileOutput>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">main</EntryPointName>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">main</EntryPointName>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\drawRenderTargetShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\drawRenderTargetShader\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="shader\BasicVertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    <FxCompile Include="shader\drawRenderTargetShader\DrawRenderTargetVertexShader.hlsl">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\drawRenderTargetShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\drawRenderTargetShader\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

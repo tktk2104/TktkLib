@@ -46,6 +46,11 @@ namespace tktk
 		m_bufferResource.createConstantBuffer(id, device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
+	void DX3DResource::createRenderTargetBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
+	{
+		m_bufferResource.createRenderTargetBuffer(id, device, renderTargetSize, clearColor);
+	}
+
 	void DX3DResource::createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
 	{
 		m_bufferResource.createRenderTargetBuffer(id, swapChain, backBufferIndex);
@@ -76,6 +81,11 @@ namespace tktk
 			case BasicDescriptorType::textureBuffer:
 
 				m_bufferResource.createShaderResourceView(descriptorParam.id, device, cpuHeapHandleArray.at(i));
+				break;
+
+			case BasicDescriptorType::renderTarget:
+
+				m_bufferResource.createRtvShaderResourceView(descriptorParam.id, device, cpuHeapHandleArray.at(i));
 				break;
 			}
 		}
@@ -117,6 +127,11 @@ namespace tktk
 		}
 	}
 
+	void DX3DResource::cpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
+	{
+		m_bufferResource.cpuPriorityCreateTextureBuffer(id, device, formatParam, dataParam);
+	}
+
 	void DX3DResource::gpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
 	{
 		m_bufferResource.gpuPriorityCreateTextureBuffer(id, device, commandList, formatParam, dataParam);
@@ -145,6 +160,11 @@ namespace tktk
 	const tktkMath::Vector3& DX3DResource::getTextureSize(unsigned int id) const
 	{
 		return m_bufferResource.getTextureSize(id);
+	}
+
+	const std::vector<unsigned int>& DX3DResource::getRtvDescriptorHeapUseBufferIdArray(unsigned int id) const
+	{
+		return m_descriptorHeap.getRtvDescriptorHeapUseBufferIdArray(id);
 	}
 
 	void DX3DResource::setRenderTarget(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount)
@@ -187,13 +207,23 @@ namespace tktk
 		m_descriptorHeap.set(device, commandList, heapParamArray);
 	}
 
-	void DX3DResource::useRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::useAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_bufferResource.useRenderTarget(id, commandList);
+		m_bufferResource.useAsRenderTargetBuffer(id, commandList);
 	}
 
-	void DX3DResource::unUseRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::unUseAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_bufferResource.unUseRenderTarget(id, commandList);
+		m_bufferResource.unUseAsRenderTargetBuffer(id, commandList);
+	}
+
+	void DX3DResource::useAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	{
+		m_bufferResource.useBackBuffer(id, commandList);
+	}
+
+	void DX3DResource::unUseAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	{
+		m_bufferResource.unUseBackBuffer(id, commandList);
 	}
 }

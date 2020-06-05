@@ -47,14 +47,26 @@ namespace tktk
 		// 定数バッファを作る
 		void createConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
+		// レンダーターゲットバッファを作る
+		void createRenderTargetBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
+
 		// 深度ステンシルバッファを作る
 		void createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize);
 
 		// 定数、テクスチャのディスクリプタヒープを作る
 		void createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam);
 
+		// レンダーターゲットのディスクリプタヒープを作る
+		void createRtvDescriptorHeap(unsigned int id, const RtvDescriptorHeapInitParam& initParam);
+
 		// 深度ステンシルビューのディスクリプタヒープを作る
 		void createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam);
+
+		// cpu優先でテクスチャを作る
+		void cpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
+
+		// gpu優先でテクスチャを作る
+		void gpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
 		// gpu優先でテクスチャをロードする
 		void gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath);
@@ -64,6 +76,9 @@ namespace tktk
 		// 指定の定数バッファを更新する
 		void updateConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
+		// 指定のレンダーターゲットビューを指定の色でクリアする
+		void clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color);
+
 		// 指定のテクスチャのサイズを取得する
 		const tktkMath::Vector3& getTextureSize(unsigned int id) const;
 
@@ -72,10 +87,13 @@ namespace tktk
 		// 背景色を設定する
 		void setBackGroundColor(const tktkMath::Color& backGroundColor);
 
-		// 指定のレンダーターゲットをコマンドリストに設定する
+		// 指定のレンダーターゲット用のディスクリプタヒープをコマンドリストに設定する
 		void setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
-		// 指定のレンダーターゲットと深度ステンシルビューをコマンドリストに設定する
+		// 指定のレンダーターゲット用のディスクリプタヒープの描画後処理を行い、バックバッファーをコマンドリストに設定する
+		void unSetRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+
+		// 指定の（レンダーターゲットと深度ステンシルビュー）用のディスクリプタヒープ２つをコマンドリストに設定する
 		void setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
 		// バックバッファーを設定する

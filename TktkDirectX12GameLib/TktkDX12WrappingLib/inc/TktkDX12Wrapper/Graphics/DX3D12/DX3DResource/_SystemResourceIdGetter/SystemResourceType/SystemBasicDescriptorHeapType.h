@@ -7,7 +7,6 @@ namespace tktk
 
 	enum class SystemBasicDescriptorHeapType
 	{
-
 	};
 }
 #endif // !SYSTEM_BASIC_DESCRIPTOR_HEAP_TYPE_H_

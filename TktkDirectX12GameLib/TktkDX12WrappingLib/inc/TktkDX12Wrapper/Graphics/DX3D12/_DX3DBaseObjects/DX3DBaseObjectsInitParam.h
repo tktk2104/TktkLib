@@ -12,6 +12,7 @@ namespace tktk
 		unsigned int spriteNum;
 		unsigned int basicMeshNum;
 		unsigned int basicMeshMaterialNum;
+		unsigned int postEffectMaterialNum;
 	};
 }
 #endif // !DX3D_BASE_OBJECTS_INIT_PARAM_H_

@@ -16,10 +16,7 @@ namespace tktk
 	{
 	public:
 
-		SpriteDrawer(
-			float drawPriority,
-			int spriteMaterialId
-		);
+		SpriteDrawer(float drawPriority, unsigned int spriteMaterialId, unsigned int useRtvDescriptorHeapId);
 
 	public:
 
@@ -44,7 +41,8 @@ namespace tktk
 
 	private:
 
-		int							m_spriteMaterialId	{ -1 };
+		unsigned int				m_useRtvDescriptorHeapId;
+		unsigned int				m_spriteMaterialId;
 		ComponentPtr<Transform2D>	m_transform			{ };
 	};
 }

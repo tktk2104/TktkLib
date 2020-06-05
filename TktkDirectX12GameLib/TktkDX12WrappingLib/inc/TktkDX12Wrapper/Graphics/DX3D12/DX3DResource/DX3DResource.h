@@ -40,6 +40,9 @@ namespace tktk
 		void createConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
 		// レンダーターゲットバッファを作る
+		void createRenderTargetBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
+
+		// スワップチェーンからレンダーターゲットバッファを取得する
 		void createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 
 		// 深度ステンシルバッファを作る
@@ -53,6 +56,9 @@ namespace tktk
 
 		// 深度ステンシルビューのディスクリプタヒープを作る
 		void createDsvDescriptorHeap(unsigned int id, ID3D12Device* device, const DsvDescriptorHeapInitParam& initParam);
+
+		// cpu優先でテクスチャを作る
+		void cpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
 		// gpu優先でテクスチャを作る
 		void gpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
@@ -75,6 +81,9 @@ namespace tktk
 
 		// 指定のテクスチャのサイズを取得する
 		const tktkMath::Vector3& getTextureSize(unsigned int id) const;
+
+		// 指定のレンダーターゲット用のディスクリプタヒープが使用しているレンダーターゲットバッファーのIDを取得する
+		const std::vector<unsigned int>& getRtvDescriptorHeapUseBufferIdArray(unsigned int id) const;
 
 	public: /* 描画準備 */
 
@@ -103,10 +112,16 @@ namespace tktk
 		void setDescriptorHeap(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray);
 
 		// レンダーターゲットバッファををレンダーターゲット状態にする
-		void useRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void useAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 		// レンダーターゲットバッファをプリセット状態にする
-		void unUseRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void unUseAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		// レンダーターゲットバッファををレンダーターゲット状態にする
+		void useAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		// レンダーターゲットバッファをプリセット状態にする
+		void unUseAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 	private:
 

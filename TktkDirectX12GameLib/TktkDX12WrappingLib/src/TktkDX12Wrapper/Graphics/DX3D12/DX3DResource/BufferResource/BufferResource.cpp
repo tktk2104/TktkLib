@@ -87,6 +87,11 @@ namespace tktk
 		m_depthStencilBuffer.createDepthStencilView(id, device, heapHandle);
 	}
 
+	void BufferResource::createRenderTargetBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
+	{
+		m_renderTargetBuffer.create(id, device, renderTargetSize, clearColor);
+	}
+
 	void BufferResource::createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
 	{
 		m_renderTargetBuffer.create(id, swapChain, backBufferIndex);
@@ -94,16 +99,31 @@ namespace tktk
 
 	void BufferResource::createRenderTargetView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_renderTargetBuffer.createView(id, device, heapHandle);
+		m_renderTargetBuffer.createRenderTargetView(id, device, heapHandle);
 	}
 
-	void BufferResource::useRenderTarget(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::createRtvShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_renderTargetBuffer.use(id, commandList);
+		m_renderTargetBuffer.createShaderResourceView(id, device, heapHandle);
 	}
 
-	void BufferResource::unUseRenderTarget(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::useAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_renderTargetBuffer.unUse(id, commandList);
+		m_renderTargetBuffer.useAsRenderTargetBuffer(id, commandList);
+	}
+
+	void BufferResource::unUseAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	{
+		m_renderTargetBuffer.unUseAsRenderTargetBuffer(id, commandList);
+	}
+
+	void BufferResource::useBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	{
+		m_renderTargetBuffer.useAsBackBuffer(id, commandList);
+	}
+
+	void BufferResource::unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	{
+		m_renderTargetBuffer.unUseAsBackBuffer(id, commandList);
 	}
 }

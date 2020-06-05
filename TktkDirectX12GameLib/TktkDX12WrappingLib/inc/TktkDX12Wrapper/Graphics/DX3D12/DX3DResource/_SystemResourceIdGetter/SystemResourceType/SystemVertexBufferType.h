@@ -3,11 +3,11 @@
 
 namespace tktk
 {
-	constexpr unsigned int SystemVertexBufferNum = 1U;
+	constexpr unsigned int SystemVertexBufferNum = 2U;
 
 	enum class SystemVertexBufferType
 	{
-		Sprite = 0U
+		Sprite = 0U,
 	};
 }
 #endif // !SYSTEM_VERTEX_BUFFER_TYPE_H_

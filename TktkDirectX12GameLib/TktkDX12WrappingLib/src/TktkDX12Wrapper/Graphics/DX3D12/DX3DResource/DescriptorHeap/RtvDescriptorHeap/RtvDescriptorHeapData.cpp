@@ -10,6 +10,13 @@ namespace tktk
 		descHeapDesc.NumDescriptors = initParam.m_descriptorParamArray.size();
 		descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&m_descriptorHeap));
+
+		m_renderTargetBufferIdArray.reserve(descHeapDesc.NumDescriptors);
+
+		for (const auto& node : initParam.m_descriptorParamArray)
+		{
+			m_renderTargetBufferIdArray.push_back(node.m_id);
+		}
 	}
 
 	RtvDescriptorHeapData::~RtvDescriptorHeapData()
@@ -32,6 +39,11 @@ namespace tktk
 			cpuHandle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 		}
 		return handleArray;
+	}
+
+	const std::vector<unsigned int>& RtvDescriptorHeapData::getRenderTargetBufferIdArray() const
+	{
+		return m_renderTargetBufferIdArray;
 	}
 
 	ID3D12DescriptorHeap* RtvDescriptorHeapData::getPtr() const

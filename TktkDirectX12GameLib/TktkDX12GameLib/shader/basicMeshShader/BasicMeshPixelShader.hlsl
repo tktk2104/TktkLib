@@ -47,13 +47,13 @@ float4 main(PS_INPUT Input) : SV_TARGET
 	float diffuse = max(dot(L, N), 0.0);
 	float specular = pow(max(dot(N, H), 0.0), materialShiniess);
 	
-	float4 baseColor = float4(0.3, 0.3, 0.3, 0.3);//g_AlbedoMapTexture.Sample(g_AlbedoMapSampler, Input.TexCoord);
+	float4 baseColor = float4(0.3, 0.3, 0.3, 1.0);//g_AlbedoMapTexture.Sample(g_AlbedoMapSampler, Input.TexCoord);
 	
-	float4 resultColor
-		= materialAmbient * lightAmbient * baseColor
-		+ materialDiffuse * lightDiffuse * diffuse * baseColor
-		+ materialSpecular * lightSpeqular * specular
-		+ materialEmissive * baseColor;
+	float4 resultColor = materialAmbient;
+		//= materialAmbient * lightAmbient * baseColor
+		//+ materialDiffuse * lightDiffuse * diffuse * baseColor
+		//+ materialSpecular * lightSpeqular * specular
+		//+ materialEmissive * baseColor;
 	
 	resultColor.a = baseColor.a * materialDiffuse.a;
 	

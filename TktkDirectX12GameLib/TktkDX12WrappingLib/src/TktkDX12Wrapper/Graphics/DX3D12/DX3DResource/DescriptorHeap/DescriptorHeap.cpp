@@ -109,4 +109,9 @@ namespace tktk
 	{
 		return m_dsvDescriptorHeap.getCpuHeapHandleArray(id, device);
 	}
+
+	const std::vector<unsigned int>& DescriptorHeap::getRtvDescriptorHeapUseBufferIdArray(unsigned int id) const
+	{
+		return m_rtvDescriptorHeap.getRenderTargetBufferIdArray(id);
+	}
 }

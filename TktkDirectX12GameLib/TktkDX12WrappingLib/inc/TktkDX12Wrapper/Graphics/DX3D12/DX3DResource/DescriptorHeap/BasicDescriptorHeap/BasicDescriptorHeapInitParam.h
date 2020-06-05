@@ -8,7 +8,8 @@ namespace tktk
 	enum class BasicDescriptorType
 	{
 		constantBuffer,
-		textureBuffer
+		textureBuffer,
+		renderTarget
 	};
 
 	struct BasicDescriptorParam

@@ -58,12 +58,17 @@ namespace tktk
 
 	public: /* レンダーターゲットバッファの処理 */
 
+		void createRenderTargetBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
 		void createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 
 		void createRenderTargetView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createRtvShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
-		void useRenderTarget(unsigned int id, ID3D12GraphicsCommandList* commandList);
-		void unUseRenderTarget(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void useAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void unUseAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		void useBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 	private:
 

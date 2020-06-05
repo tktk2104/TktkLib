@@ -17,6 +17,11 @@ namespace tktk
 		return m_rtvDescriptorHeapDataArray.at(id)->getCpuHeapHandleArray(device);
 	}
 
+	const std::vector<unsigned int>& RtvDescriptorHeap::getRenderTargetBufferIdArray(unsigned int id) const
+	{
+		return m_rtvDescriptorHeapDataArray.at(id)->getRenderTargetBufferIdArray();
+	}
+
 	ID3D12DescriptorHeap* RtvDescriptorHeap::getPtr(unsigned int id) const
 	{
 		return m_rtvDescriptorHeapDataArray.at(id)->getPtr();

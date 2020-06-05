@@ -23,6 +23,7 @@ namespace tktk
 		unsigned int getSystemId(SystemVertexBufferType type) const;
 		unsigned int getSystemId(SystemIndexBufferType type) const;
 		unsigned int getSystemId(SystemConstantBufferType type) const;
+		unsigned int getSystemId(SystemTextureBufferType type) const;
 		unsigned int getSystemId(SystemRenderTargetBufferType type) const;
 		unsigned int getSystemId(SystemDepthStencilBufferType type) const;
 		unsigned int getSystemId(SystemBasicDescriptorHeapType type) const;

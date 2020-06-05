@@ -16,6 +16,7 @@ namespace tktk
 		result.bufferResourceInitParam.vertexBufferNum			+= SystemVertexBufferNum;
 		result.bufferResourceInitParam.indexBufferNum			+= SystemIndexBufferNum;
 		result.bufferResourceInitParam.constantBufferNum		+= SystemConstantBufferNum;
+		result.bufferResourceInitParam.textureBufferNum			+= SystemTextureBufferNum;
 		result.bufferResourceInitParam.renderTargetBufferNum	+= SystemRenderTargetBufferNum;
 		result.bufferResourceInitParam.depthStencilBufferNum	+= SystemDepthStencilBufferNum;
 		result.descriptorHeapInitParam.basicDescriptorHeapNum	+= SystemBasicDescriptorHeapNum;
@@ -50,6 +51,11 @@ namespace tktk
 	unsigned int SystemResourceIdGetter::getSystemId(SystemConstantBufferType type) const
 	{
 		return m_basicResourceNum.bufferResourceInitParam.constantBufferNum + static_cast<unsigned int>(type);
+	}
+
+	unsigned int SystemResourceIdGetter::getSystemId(SystemTextureBufferType type) const
+	{
+		return m_basicResourceNum.bufferResourceInitParam.textureBufferNum + static_cast<unsigned int>(type);
 	}
 
 	unsigned int SystemResourceIdGetter::getSystemId(SystemRenderTargetBufferType type) const

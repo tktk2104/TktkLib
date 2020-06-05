@@ -14,13 +14,21 @@ namespace tktk
 
 	public:
 
+		void create(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
+
 		void create(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 
-		void use(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void useAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
-		void unUse(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void unUseAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
-		void createView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void useAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		void unUseAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		void createRenderTargetView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+
+		void createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
 	private:
 

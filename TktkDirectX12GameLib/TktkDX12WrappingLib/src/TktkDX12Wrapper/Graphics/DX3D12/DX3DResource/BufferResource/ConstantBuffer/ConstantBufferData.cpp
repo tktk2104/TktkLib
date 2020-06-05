@@ -48,8 +48,8 @@ namespace tktk
 		constBuffHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
 		constBuffHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
 		constBuffHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-		constBuffHeapProp.CreationNodeMask = 0;
-		constBuffHeapProp.VisibleNodeMask = 0;
+		constBuffHeapProp.CreationNodeMask = 0U;
+		constBuffHeapProp.VisibleNodeMask = 0U;
 
 		D3D12_RESOURCE_DESC resDesc{};
 		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
