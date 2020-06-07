@@ -45,10 +45,10 @@ namespace tktk
 		}
 
 		baseArgs.lightPosition = { 0.0f, 10.0f, -100.0f };
-		/*for (auto& node : baseArgs.boneMatrix)
+		for (auto& node : baseArgs.boneMatrix)
 		{
 			node = tktkMath::mat4Identity;
-		}*/
+		}
 		baseArgs.viewportId				= DX12GameManager::getSystemId(SystemViewportType::Basic);
 		baseArgs.scissorRectId			= DX12GameManager::getSystemId(SystemScissorRectType::Basic);
 		baseArgs.rtvDescriptorHeapId	= m_useRtvDescriptorHeapId;

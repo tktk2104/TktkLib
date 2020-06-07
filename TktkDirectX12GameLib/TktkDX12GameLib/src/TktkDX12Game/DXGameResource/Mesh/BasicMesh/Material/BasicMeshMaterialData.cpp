@@ -83,10 +83,10 @@ namespace tktk
 		constantBufferData.viewMatrix = baseArgs.viewMatrix;
 		constantBufferData.projectionMatrix = baseArgs.projectionMatrix;
 
-		/*for (unsigned int i = 0; i < 256U; i++)
+		for (unsigned int i = 0; i < 256U; i++)
 		{
 			constantBufferData.boneMatrix[i] = baseArgs.boneMatrix[i];
-		}*/
+		}
 
 		constantBufferData.lightAmbient = baseArgs.lightAmbient;
 		constantBufferData.lightDiffuse = baseArgs.lightDiffuse;

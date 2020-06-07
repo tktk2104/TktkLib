@@ -13,7 +13,7 @@ namespace tktk
 		tktkMath::Matrix4					worldMatrix			{ tktkMath::mat4Identity };
 		tktkMath::Matrix4					viewMatrix			{ tktkMath::mat4Identity };
 		tktkMath::Matrix4					projectionMatrix	{ tktkMath::mat4Identity };
-		//tktkMath::Matrix4					boneMatrix[256U]	{ };
+		tktkMath::Matrix4					boneMatrix[256U]	{ };
 
 		tktkMath::Color						lightAmbient		{ tktkMath::colorBlack };
 		tktkMath::Color						lightDiffuse		{ tktkMath::colorWhite };

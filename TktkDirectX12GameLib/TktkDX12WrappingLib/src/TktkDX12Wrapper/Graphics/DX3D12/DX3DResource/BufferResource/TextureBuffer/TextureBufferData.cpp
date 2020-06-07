@@ -4,16 +4,6 @@ namespace tktk
 {
 	TextureBufferData::TextureBufferData(ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
 	{
-		if (m_textureBuffer != nullptr)
-		{
-			m_textureBuffer->Release();
-		}
-
-		if (m_uploadBuff != nullptr)
-		{
-			m_uploadBuff->Release();
-		}
-
 		m_textureSize = { static_cast<float>(dataParam.width), static_cast<float>(dataParam.height), 1.0f };
 
 		{
@@ -104,16 +94,6 @@ namespace tktk
 
 	TextureBufferData::TextureBufferData(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
 	{
-		if (m_textureBuffer != nullptr)
-		{
-			m_textureBuffer->Release();
-		}
-
-		if (m_uploadBuff != nullptr)
-		{
-			m_uploadBuff->Release();
-		}
-
 		m_textureSize = { static_cast<float>(dataParam.width), static_cast<float>(dataParam.height), 1.0f };
 
 		{

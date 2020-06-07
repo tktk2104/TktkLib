@@ -17,6 +17,8 @@ namespace tktk
 
 		// 通常メッシュ用の定数バッファを作る
 		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), BasicMeshConstantBufferData());
+	
+		DX12GameManager::executeCommandList();
 	}
 
 	void BasicMeshMaterial::create(unsigned int id, const BasicMeshMaterialInitParam& initParam)
