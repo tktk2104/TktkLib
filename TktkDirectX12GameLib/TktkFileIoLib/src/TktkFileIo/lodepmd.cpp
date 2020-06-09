@@ -1,5 +1,7 @@
 #include "TktkFileIo/lodepmd.h"
 
+#include <filesystem>
+
 namespace tktk
 {
 	struct PmdHeader
@@ -79,7 +81,7 @@ namespace tktk
 			out->vertexData.at(i).bones[3] = 0U;
 
 			out->vertexData.at(i).weight[0] = static_cast<float>(tempVertices.at(i).boneWeight) / 256.0f;
-			out->vertexData.at(i).weight[1] = 0.0f;
+			out->vertexData.at(i).weight[1] = (1.0f - out->vertexData.at(i).weight[0]);
 			out->vertexData.at(i).weight[2] = 0.0f;
 			out->vertexData.at(i).weight[3] = 0.0f;
 
@@ -88,6 +90,13 @@ namespace tktk
 				&out->vertexData.at(i).tangent,
 				&out->vertexData.at(i).binormal
 			);
+		}
+
+		std::string baseTexturePath;
+		std::filesystem::path meshPath(fileName);
+		if (meshPath.has_parent_path())
+		{
+			baseTexturePath = meshPath.parent_path().string() + "/";
 		}
 
 		out->materialData.clear();
@@ -110,6 +119,7 @@ namespace tktk
 			};
 			out->materialData.at(i).emissive = tktkMath::colorWhite;
 			out->materialData.at(i).shiniess = 1.0f;
+			out->materialData.at(i).textureFilePath = (std::string(tempMaterialData.at(i).textureFilePath) == "") ? "" : baseTexturePath + tempMaterialData.at(i).textureFilePath;
 		}
 	}
 }

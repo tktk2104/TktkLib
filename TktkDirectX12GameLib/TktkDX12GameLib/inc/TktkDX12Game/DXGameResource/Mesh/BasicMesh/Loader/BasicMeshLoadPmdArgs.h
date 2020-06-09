@@ -7,12 +7,13 @@ namespace tktk
 {
 	struct BasicMeshLoadPmdArgs
 	{
-		unsigned int createDescriptorHeapId;
+		unsigned int createDescriptorHeapIdStartNum;
 		unsigned int createVertexBufferId;
 		unsigned int createIndexBufferId;
 
 		unsigned int createBasicMeshId;
 		unsigned int createBasicMeshMaterialIdStartNum;
+		unsigned int loadTextureIdStartNum;
 
 		std::string m_filePath;
 	};

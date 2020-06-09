@@ -21,17 +21,13 @@ namespace tktk
 
 	void BasicMeshDrawer::draw() const
 	{
-		static float angle = 0.0f;
-
-		angle += 1.0f;
-
 		MeshDrawFuncBaseArgs baseArgs{};
-		baseArgs.worldMatrix = m_transform->calculateWorldMatrix() * tktkMath::Matrix4::createRotationY(angle);
+		baseArgs.worldMatrix = m_transform->calculateWorldMatrix();
 
 		// ÉJÉÅÉâèÓïÒ
 		{
 			baseArgs.viewMatrix = tktkMath::Matrix4::createLookAtLH(
-				tktkMath::Vector3(0.0f, 8.0f, -15.0f),
+				tktkMath::Vector3(0.0f, 20.0f, -20.0f),
 				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
 				tktkMath::vec3Up
 			);
@@ -53,6 +49,8 @@ namespace tktk
 		baseArgs.scissorRectId			= DX12GameManager::getSystemId(SystemScissorRectType::Basic);
 		baseArgs.rtvDescriptorHeapId	= m_useRtvDescriptorHeapId;
 		baseArgs.dsvDescriptorHeapId	= DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::Basic);
+
+		baseArgs.lightPosition = tktkMath::Vector3(10.0f, 10.0f, 10.0f);
 
 		DX12GameManager::drawBasicMesh(m_meshId, baseArgs);
 	}

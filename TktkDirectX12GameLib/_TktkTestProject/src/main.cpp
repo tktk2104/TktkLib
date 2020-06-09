@@ -152,7 +152,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	// 「DX12GameManager」の初期設定をする
 	{
 		tktk::DescriptorHeapInitParam descriptorHeapInitParam{};
-		descriptorHeapInitParam.basicDescriptorHeapNum	= 3U;
+		descriptorHeapInitParam.basicDescriptorHeapNum	= 19U;
 		descriptorHeapInitParam.rtvDescriptorHeapNum	= 1U;
 		descriptorHeapInitParam.dsvDescriptorHeapNum	= 0U;
 
@@ -160,7 +160,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		bufferResourceInitParam.vertexBufferNum			= 1U;
 		bufferResourceInitParam.indexBufferNum			= 1U;
 		bufferResourceInitParam.constantBufferNum		= 0U;
-		bufferResourceInitParam.textureBufferNum		= 1U;
+		bufferResourceInitParam.textureBufferNum		= 17U;
 		bufferResourceInitParam.depthStencilBufferNum	= 0U;
 		bufferResourceInitParam.renderTargetBufferNum	= 1U;
 
@@ -190,14 +190,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 
 	// テクスチャを読み込む
 	{
-		tktk::DX12GameManager::gpuPriorityLoadPng(0U, "res/test.png");
+		tktk::DX12GameManager::gpuPriorityLoadTextureBuffer(0U, "res/test.png");
 		tktk::DX12GameManager::executeCommandList();
 	}
 
 	// スプライトのマテリアルを作る
 	{
 		tktk::SpriteMaterialInitParam initParam{};
-		initParam.createDescriptorHeapId = 0U;
+		initParam.createDescriptorHeapId = 1U;
 		initParam.useTextureId = 0U;//tktk::DX12GameManager::getSystemId(tktk::SystemTextureBufferType::White);
 
 		tktk::DX12GameManager::createSpriteMaterial(0U, initParam);
@@ -207,11 +207,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	{
 		tktk::BasicMeshLoadPmdArgs loadArgs{};
 		loadArgs.m_filePath = "res/Model/初音ミク.pmd";
-		loadArgs.createDescriptorHeapId = 1U;
+		loadArgs.createDescriptorHeapIdStartNum = 2U;
 		loadArgs.createVertexBufferId = 0U;
 		loadArgs.createIndexBufferId = 0U;
 		loadArgs.createBasicMeshId = 0U;
 		loadArgs.createBasicMeshMaterialIdStartNum = 0U;
+		loadArgs.loadTextureIdStartNum = 1U;
 
 		auto result = tktk::DX12GameManager::loadPmd(loadArgs);
 
@@ -246,14 +247,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		descriptorHeapInitParam.m_descriptorParamArray.at(0U).type = tktk::BasicDescriptorType::renderTarget;
 		descriptorHeapInitParam.m_descriptorParamArray.at(0U).id = 0U;
 		
-		tktk::DX12GameManager::createBasicDescriptorHeap(2U, descriptorHeapInitParam);
+		tktk::DX12GameManager::createBasicDescriptorHeap(0U, descriptorHeapInitParam);
 	}
 
 	// モノクロのポストエフェクトを作る
 	{
 		tktk::PostEffectMaterialInitParam initParam{};
 		initParam.usePipeLineStateId = tktk::DX12GameManager::getSystemId(tktk::SystemPipeLineStateType::PostEffectMonochrome);
-		initParam.useDescriptorHeapId = 2U;
+		initParam.useDescriptorHeapId = 0U;
 
 		tktk::DX12GameManager::createPostEffectMaterial(0U, initParam);
 	}
@@ -282,18 +283,50 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		auto enemy = tktk::DX12GameManager::createGameObject();
 		enemy->createComponent<Enemy>();
 
-		auto miku = tktk::DX12GameManager::createGameObject();
-		miku->createComponent<tktk::Transform3D>(
-			tktkMath::vec3Zero,
-			tktkMath::vec3One,
-			tktkMath::quaternionIdentity,
-			tktk::TraceParentType::trace_All
-			);
-		miku->createComponent<tktk::BasicMeshDrawer>(
-			0.0f,
-			0U,
-			0U
-			);
+		{
+			auto miku = tktk::DX12GameManager::createGameObject();
+			miku->createComponent<tktk::Transform3D>(
+				tktkMath::vec3Zero,
+				tktkMath::vec3One,
+				tktkMath::quaternionIdentity,
+				tktk::TraceParentType::trace_All
+				);
+			miku->createComponent<tktk::BasicMeshDrawer>(
+				0.0f,
+				0U,
+				0U
+				);
+		}
+
+		{
+			auto mikuMiku = tktk::DX12GameManager::createGameObject();
+			mikuMiku->createComponent<tktk::Transform3D>(
+				tktkMath::Vector3(10.0f, 0.0f, 0.0f),
+				tktkMath::vec3One,
+				tktkMath::quaternionIdentity,
+				tktk::TraceParentType::trace_All
+				);
+			mikuMiku->createComponent<tktk::BasicMeshDrawer>(
+				0.0f,
+				0U,
+				0U
+				);
+		}
+
+		{
+			auto mikuMikuMiku = tktk::DX12GameManager::createGameObject();
+			mikuMikuMiku->createComponent<tktk::Transform3D>(
+				tktkMath::Vector3(-10.0f, 0.0f, 0.0f),
+				tktkMath::vec3One,
+				tktkMath::quaternionIdentity,
+				tktk::TraceParentType::trace_All
+				);
+			mikuMikuMiku->createComponent<tktk::BasicMeshDrawer>(
+				0.0f,
+				0U,
+				0U
+				);
+		}
 
 		auto postEffectObject = tktk::DX12GameManager::createGameObject();
 		postEffectObject->createComponent<tktk::PostEffectDrawer>(

@@ -13,7 +13,7 @@ namespace tktk
 		tktkMath::Matrix4					worldMatrix			{ tktkMath::mat4Identity };
 		tktkMath::Matrix4					viewMatrix			{ tktkMath::mat4Identity };
 		tktkMath::Matrix4					projectionMatrix	{ tktkMath::mat4Identity };
-		tktkMath::Matrix4					boneMatrix[256U]	{ };
+		//tktkMath::Matrix4					boneMatrix[128U]	{ };
 
 		tktkMath::Color						lightAmbient		{ tktkMath::colorBlack };
 		tktkMath::Color						lightDiffuse		{ tktkMath::colorWhite };
@@ -27,6 +27,12 @@ namespace tktk
 		tktkMath::Color						materialEmissive	{ tktkMath::colorWhite };
 		float								materialShiniess	{ 1.0f };
 		float								materialDataPad[3]	{ 0.0f, 0.0f, 0.0f };
+	};
+
+
+	struct BasicMeshBoneMatrix
+	{
+		tktkMath::Matrix4					boneMatrix[128U]	{ };
 	};
 }
 #endif // !BASIC_MESH_CONSTANT_BUFFER_DATA_H_

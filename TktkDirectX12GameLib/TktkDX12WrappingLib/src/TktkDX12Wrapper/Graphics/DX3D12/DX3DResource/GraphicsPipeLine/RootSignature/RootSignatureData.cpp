@@ -12,14 +12,15 @@ namespace tktk
 
 		for (unsigned int i = 0; i < initParam.rootParamArray.size(); i++)
 		{
-			descriptorRangeArray.at(i).reserve(initParam.rootParamArray.at(i).descriptorTableArray.size());
+			descriptorRangeArray.at(i).reserve(initParam.rootParamArray.at(i).descriptorTable.size());
 
-			for (const auto& descriptorTableInitParam : initParam.rootParamArray.at(i).descriptorTableArray)
+			const auto& descriptorTable = initParam.rootParamArray.at(i).descriptorTable;
+			for (unsigned int j = 0; j < descriptorTable.size(); j++)
 			{
 				D3D12_DESCRIPTOR_RANGE descriptorRange{};
-				descriptorRange.NumDescriptors = descriptorTableInitParam.numDescriptors;
-				descriptorRange.RangeType = descriptorTableInitParam.type;
-				descriptorRange.BaseShaderRegister = 0;
+				descriptorRange.NumDescriptors = descriptorTable.at(j).numDescriptors;
+				descriptorRange.RangeType = descriptorTable.at(j).type;
+				descriptorRange.BaseShaderRegister = descriptorTable.at(j).startRegisterNum + j;
 				descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 				descriptorRangeArray.at(i).push_back(descriptorRange);

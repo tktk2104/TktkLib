@@ -68,8 +68,11 @@ namespace tktk
 		// gpu優先でテクスチャを作る
 		void gpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
+		// cpu優先でテクスチャをロードする
+		void cpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath);
+
 		// gpu優先でテクスチャをロードする
-		void gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath);
+		void gpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath);
 
 	public:
 

@@ -17,6 +17,8 @@ namespace tktk
 
 		// 通常メッシュ用の定数バッファを作る
 		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), BasicMeshConstantBufferData());
+
+		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat), BasicMeshBoneMatrix());
 	
 		DX12GameManager::executeCommandList();
 	}
@@ -45,21 +47,32 @@ namespace tktk
 		RootSignatureInitParam initParam{};
 		initParam.flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 		
-		initParam.rootParamArray.resize(2U);
+		initParam.rootParamArray.resize(3U);
 		{/* テクスチャ用のルートパラメータ */
 			initParam.rootParamArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			initParam.rootParamArray.at(0).descriptorTableArray.resize(1U);
+			initParam.rootParamArray.at(0).descriptorTable.resize(1U);
 			{
-				initParam.rootParamArray.at(0).descriptorTableArray.at(0).numDescriptors = 1;
-				initParam.rootParamArray.at(0).descriptorTableArray.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+				initParam.rootParamArray.at(0).descriptorTable.at(0).numDescriptors = 1U;
+				initParam.rootParamArray.at(0).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+				initParam.rootParamArray.at(0).descriptorTable.at(0).startRegisterNum = 0U;
 			}
 		}
 		{/* 定数バッファ用のルートパラメータ */
 			initParam.rootParamArray.at(1).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//D3D12_SHADER_VISIBILITY_VERTEX;
-			initParam.rootParamArray.at(1).descriptorTableArray.resize(1U);
+			initParam.rootParamArray.at(1).descriptorTable.resize(1U);
 			{
-				initParam.rootParamArray.at(1).descriptorTableArray.at(0).numDescriptors = 1;
-				initParam.rootParamArray.at(1).descriptorTableArray.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+				initParam.rootParamArray.at(1).descriptorTable.at(0).numDescriptors = 1U;
+				initParam.rootParamArray.at(1).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+				initParam.rootParamArray.at(1).descriptorTable.at(0).startRegisterNum = 0U;
+			}
+		}
+		{
+			initParam.rootParamArray.at(2).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+			initParam.rootParamArray.at(2).descriptorTable.resize(1U);
+			{
+				initParam.rootParamArray.at(2).descriptorTable.at(0).numDescriptors = 1U;
+				initParam.rootParamArray.at(2).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+				initParam.rootParamArray.at(2).descriptorTable.at(0).startRegisterNum = 1U;
 			}
 		}
 

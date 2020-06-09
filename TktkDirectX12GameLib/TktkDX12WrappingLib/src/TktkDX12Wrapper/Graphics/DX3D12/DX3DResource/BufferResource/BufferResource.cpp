@@ -57,14 +57,14 @@ namespace tktk
 		m_textureBuffer.gpuPriorityCreate(id, device, commandList, formatParam, dataParam);
 	}
 
-	void BufferResource::cpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const std::string& texDataPath)
+	void BufferResource::cpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, const std::string& texDataPath)
 	{
-		m_textureBuffer.cpuPriorityLoad(id, device, formatParam, texDataPath);
+		m_textureBuffer.cpuPriorityLoad(id, device, texDataPath);
 	}
 
-	void BufferResource::gpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const std::string& texDataPath)
+	void BufferResource::gpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::string& texDataPath)
 	{
-		m_textureBuffer.gpuPriorityLoad(id, device, commandList, formatParam, texDataPath);
+		m_textureBuffer.gpuPriorityLoad(id, device, commandList, texDataPath);
 	}
 
 	void BufferResource::createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)

@@ -3,7 +3,7 @@ cbuffer ConstantBuffer : register(b0)
 	float4x4    WorldMatrix;
 	float4x4    ViewMatrix;
 	float4x4    ProjectionMatrix;
-	float4x4    BoneMatrices[256];
+	//float4x4    BoneMatrices[128];
 	float4		lightAmbient;
 	float4		lightDiffuse;
 	float4		lightSpeqular;
@@ -15,6 +15,11 @@ cbuffer ConstantBuffer : register(b0)
 	float4		materialEmissive;
 	float		materialShiniess;
 	float3		materialDataPad;
+};
+
+cbuffer BoneMat : register(b1)
+{
+	float4x4    BoneMatrices[128];
 };
 
 struct VS_INPUT
@@ -43,10 +48,10 @@ VS_OUTPUT main(VS_INPUT Input)
 
 	// この頂点が使用するメッシュのボーンのローカル行列を計算する
 	float4x4 LocalMatrix
-		= BoneMatrices[Input.BlendIndices.x] * Input.BlendWeight.x
-		+ BoneMatrices[Input.BlendIndices.y] * Input.BlendWeight.y
-		+ BoneMatrices[Input.BlendIndices.z] * Input.BlendWeight.z
-		+ BoneMatrices[Input.BlendIndices.w] * Input.BlendWeight.w;
+		= mul(BoneMatrices[Input.BlendIndices.x], Input.BlendWeight.x)
+		+ mul(BoneMatrices[Input.BlendIndices.y], Input.BlendWeight.y);
+		
+		//BoneMatrices[Input.BlendIndices.y] * Input.BlendWeight.y;
 
 	// 【この頂点座標の座標変換】
 	// ボーンのローカル行列を使って座標変換する

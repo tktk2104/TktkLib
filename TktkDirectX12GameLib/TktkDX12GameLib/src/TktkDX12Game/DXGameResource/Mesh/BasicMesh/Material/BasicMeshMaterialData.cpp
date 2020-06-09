@@ -16,11 +16,13 @@ namespace tktk
 		// ディスクリプタヒープを作る
 		BasicDescriptorHeapInitParam descriptorHeapInitParam{};
 		descriptorHeapInitParam.m_shaderVisible = true;
-		descriptorHeapInitParam.m_descriptorParamArray.resize(2U);
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).type = BasicDescriptorType::textureBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).id = 0U;// TODO : 意味のある値を
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).type = BasicDescriptorType::constantBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).id = DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh);
+		descriptorHeapInitParam.m_descriptorParamArray.resize(3U);
+		descriptorHeapInitParam.m_descriptorParamArray.at(0U).type	= BasicDescriptorType::textureBuffer;
+		descriptorHeapInitParam.m_descriptorParamArray.at(0U).id	= initParam.useAlbedoMapTextureId;
+		descriptorHeapInitParam.m_descriptorParamArray.at(1U).type	= BasicDescriptorType::constantBuffer;
+		descriptorHeapInitParam.m_descriptorParamArray.at(1U).id	= DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh);
+		descriptorHeapInitParam.m_descriptorParamArray.at(2U).type	= BasicDescriptorType::constantBuffer;
+		descriptorHeapInitParam.m_descriptorParamArray.at(2U).id	= DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat);
 
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
 	}
@@ -83,10 +85,10 @@ namespace tktk
 		constantBufferData.viewMatrix = baseArgs.viewMatrix;
 		constantBufferData.projectionMatrix = baseArgs.projectionMatrix;
 
-		for (unsigned int i = 0; i < 256U; i++)
+		/*for (unsigned int i = 0; i < 128U; i++)
 		{
 			constantBufferData.boneMatrix[i] = baseArgs.boneMatrix[i];
-		}
+		}*/
 
 		constantBufferData.lightAmbient = baseArgs.lightAmbient;
 		constantBufferData.lightDiffuse = baseArgs.lightDiffuse;
@@ -100,5 +102,13 @@ namespace tktk
 		constantBufferData.materialShiniess = m_materialShiniess;
 
 		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), constantBufferData);
+
+		BasicMeshBoneMatrix boneMatBuf;
+
+		for (unsigned int i = 0; i < 128U; i++)
+		{
+			boneMatBuf.boneMatrix[i] = baseArgs.boneMatrix[i];
+		}
+		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat), boneMatBuf);
 	}
 }

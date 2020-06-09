@@ -43,18 +43,18 @@ namespace tktk
 		initParam.rootParamArray.resize(2U);
 		{/* テクスチャ用のルートパラメータ */
 			initParam.rootParamArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			initParam.rootParamArray.at(0).descriptorTableArray.resize(1U);
+			initParam.rootParamArray.at(0).descriptorTable.resize(1U);
 			{
-				initParam.rootParamArray.at(0).descriptorTableArray.at(0).numDescriptors = 1U;
-				initParam.rootParamArray.at(0).descriptorTableArray.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+				initParam.rootParamArray.at(0).descriptorTable.at(0).numDescriptors = 1U;
+				initParam.rootParamArray.at(0).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 			}
 		}
 		{/* 定数バッファ用のルートパラメータ */
 			initParam.rootParamArray.at(1).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//D3D12_SHADER_VISIBILITY_VERTEX;
-			initParam.rootParamArray.at(1).descriptorTableArray.resize(1U);
+			initParam.rootParamArray.at(1).descriptorTable.resize(1U);
 			{
-				initParam.rootParamArray.at(1).descriptorTableArray.at(0).numDescriptors = 1U;
-				initParam.rootParamArray.at(1).descriptorTableArray.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+				initParam.rootParamArray.at(1).descriptorTable.at(0).numDescriptors = 1U;
+				initParam.rootParamArray.at(1).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
 			}
 		}
 		initParam.samplerDescArray.resize(1U);

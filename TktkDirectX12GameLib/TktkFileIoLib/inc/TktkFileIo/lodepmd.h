@@ -34,6 +34,7 @@ namespace tktk
 				tktkMath::Color		speqular;
 				tktkMath::Color		emissive;
 				float				shiniess;
+				std::string			textureFilePath;
 			};
 
 			std::vector<OutVertex> vertexData;

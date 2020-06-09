@@ -264,9 +264,14 @@ namespace tktk
 		m_dX3DResource.gpuPriorityCreateTextureBuffer(id, m_device, m_commandList, formatParam, dataParam);
 	}
 
-	void DX3DBaseObjects::gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath)
+	void DX3DBaseObjects::cpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath)
 	{
-		m_dX3DResource.gpuPriorityLoadTextureBuffer(id, m_device, m_commandList, formatParam, texDataPath);
+		m_dX3DResource.cpuPriorityLoadTextureBuffer(id, m_device, texDataPath);
+	}
+
+	void DX3DBaseObjects::gpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath)
+	{
+		m_dX3DResource.gpuPriorityLoadTextureBuffer(id, m_device, m_commandList, texDataPath);
 	}
 
 	void DX3DBaseObjects::updateConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)

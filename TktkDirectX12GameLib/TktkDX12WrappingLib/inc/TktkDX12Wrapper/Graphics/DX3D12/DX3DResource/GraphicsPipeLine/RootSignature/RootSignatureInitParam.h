@@ -14,12 +14,13 @@ namespace tktk
 		{
 			unsigned int					numDescriptors{};
 			D3D12_DESCRIPTOR_RANGE_TYPE		type{};
+			unsigned int					startRegisterNum{};
 		};
 
 		struct RootParam
 		{
 			D3D12_SHADER_VISIBILITY			shaderVisibility{};
-			std::vector<DescriptorRange>	descriptorTableArray{};
+			std::vector<DescriptorRange>	descriptorTable{};
 		};
 
 		struct SamplerDesc

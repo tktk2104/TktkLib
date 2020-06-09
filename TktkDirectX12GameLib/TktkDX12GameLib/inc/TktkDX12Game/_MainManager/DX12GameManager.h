@@ -159,8 +159,11 @@ namespace tktk
 		// GPU側優先処理でテクスチャを作る（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		static void gpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
+		// CPU側優先処理でテクスチャをロードする
+		static void cpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath);
+
 		// GPU側優先処理でテクスチャをロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
-		static void gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath);
+		static void gpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath);
 		
 	public: /* 直接DX12のリソースを設定、取得する */
 
@@ -170,11 +173,6 @@ namespace tktk
 		static void clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color);
 
 		static const tktkMath::Vector3& getTextureSize(unsigned int id);
-
-	public: /* リソース読み込み処理 */
-
-		// GPU側優先処理でpng画像をロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
-		static void gpuPriorityLoadPng(unsigned int id, const std::string& texDataPath);
 
 	public: /* スプライト関係の処理 */
 

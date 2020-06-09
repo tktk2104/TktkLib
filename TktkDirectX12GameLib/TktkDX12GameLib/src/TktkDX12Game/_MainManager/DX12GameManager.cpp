@@ -280,9 +280,14 @@ namespace tktk
 		m_dx3dBaseObjects->gpuPriorityCreateTextureBuffer(id, formatParam, dataParam);
 	}
 
-	void DX12GameManager::gpuPriorityLoadTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const std::string& texDataPath)
+	void DX12GameManager::cpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath)
 	{
-		m_dx3dBaseObjects->gpuPriorityLoadTextureBuffer(id, formatParam, texDataPath);
+		m_dx3dBaseObjects->cpuPriorityLoadTextureBuffer(id, texDataPath);
+	}
+
+	void DX12GameManager::gpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath)
+	{
+		m_dx3dBaseObjects->gpuPriorityLoadTextureBuffer(id, texDataPath);
 	}
 
 	void DX12GameManager::clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color)
@@ -293,19 +298,6 @@ namespace tktk
 	const tktkMath::Vector3& DX12GameManager::getTextureSize(unsigned int id)
 	{
 		return m_dx3dBaseObjects->getTextureSize(id);
-	}
-
-	void DX12GameManager::gpuPriorityLoadPng(unsigned int id, const std::string& texDataPath)
-	{
-		tktk::TexBufFormatParam formatParam{};
-		formatParam.resourceDimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-		formatParam.format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		formatParam.arraySize = 1U;
-		formatParam.mipLevels = 1U;
-		formatParam.sampleDescCount = 1U;
-		formatParam.sampleDescQuality = 0U;
-
-		tktk::DX12GameManager::gpuPriorityLoadTextureBuffer(id, formatParam, texDataPath);
 	}
 
 	void DX12GameManager::createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam)

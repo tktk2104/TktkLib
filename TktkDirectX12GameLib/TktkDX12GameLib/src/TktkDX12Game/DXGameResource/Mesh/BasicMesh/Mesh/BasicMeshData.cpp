@@ -21,7 +21,7 @@ namespace tktk
 		{
 			materialDrawFuncArgs.indexBufferStartPos = node.indexBufferStartPos;
 			materialDrawFuncArgs.indexBufferUseCount = node.indexBufferUseCount;
-	
+		
 			DX12GameManager::drawBasicMeshMaterial(node.useMaterialId, baseArgs, materialDrawFuncArgs);
 		}
 	}

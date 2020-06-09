@@ -18,9 +18,9 @@ namespace tktk
 		tktkMath::Matrix4					worldMatrix		{ tktkMath::mat4Identity };
 		tktkMath::Matrix4					viewMatrix		{ tktkMath::mat4Identity };
 		tktkMath::Matrix4					projectionMatrix{ tktkMath::mat4Identity };
-		tktkMath::Matrix4					boneMatrix[256U]{ };
+		tktkMath::Matrix4					boneMatrix[128U]{ };
 
-		tktkMath::Color						lightAmbient	{ tktkMath::colorBlack };
+		tktkMath::Color						lightAmbient	{ 0.3f, 1.0f };
 		tktkMath::Color						lightDiffuse	{ tktkMath::colorWhite };
 		tktkMath::Color						lightSpeqular	{ tktkMath::colorWhite };
 		tktkMath::Vector3					lightPosition	{ tktkMath::vec3Zero };
