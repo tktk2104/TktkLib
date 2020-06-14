@@ -12,15 +12,11 @@ namespace tktk
 		: m_basicMeshMaterialArray(basicMeshMaterialNum)
 	{
 		createRootSignature();
-
 		createGraphicsPipeLineState(shaderFilePaths);
 
 		// 通常メッシュ用の定数バッファを作る
 		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), BasicMeshConstantBufferData());
-
 		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat), BasicMeshBoneMatrix());
-	
-		DX12GameManager::executeCommandList();
 	}
 
 	void BasicMeshMaterial::create(unsigned int id, const BasicMeshMaterialInitParam& initParam)
@@ -49,44 +45,57 @@ namespace tktk
 		
 		initParam.rootParamArray.resize(3U);
 		{/* テクスチャ用のルートパラメータ */
-			initParam.rootParamArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			initParam.rootParamArray.at(0).descriptorTable.resize(1U);
+			initParam.rootParamArray.at(0U).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+			initParam.rootParamArray.at(0U).descriptorTable.resize(1U);
 			{
-				initParam.rootParamArray.at(0).descriptorTable.at(0).numDescriptors = 1U;
-				initParam.rootParamArray.at(0).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-				initParam.rootParamArray.at(0).descriptorTable.at(0).startRegisterNum = 0U;
+				initParam.rootParamArray.at(0U).descriptorTable.at(0U).numDescriptors = 2U;
+				initParam.rootParamArray.at(0U).descriptorTable.at(0U).type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+				initParam.rootParamArray.at(0U).descriptorTable.at(0U).startRegisterNum = 0U;
 			}
 		}
 		{/* 定数バッファ用のルートパラメータ */
-			initParam.rootParamArray.at(1).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//D3D12_SHADER_VISIBILITY_VERTEX;
-			initParam.rootParamArray.at(1).descriptorTable.resize(1U);
+			initParam.rootParamArray.at(1U).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+			initParam.rootParamArray.at(1U).descriptorTable.resize(1U);
 			{
-				initParam.rootParamArray.at(1).descriptorTable.at(0).numDescriptors = 1U;
-				initParam.rootParamArray.at(1).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-				initParam.rootParamArray.at(1).descriptorTable.at(0).startRegisterNum = 0U;
+				initParam.rootParamArray.at(1U).descriptorTable.at(0U).numDescriptors = 1U;
+				initParam.rootParamArray.at(1U).descriptorTable.at(0U).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+				initParam.rootParamArray.at(1U).descriptorTable.at(0U).startRegisterNum = 0U;
 			}
 		}
 		{
-			initParam.rootParamArray.at(2).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-			initParam.rootParamArray.at(2).descriptorTable.resize(1U);
+			initParam.rootParamArray.at(2U).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+			initParam.rootParamArray.at(2U).descriptorTable.resize(1U);
 			{
-				initParam.rootParamArray.at(2).descriptorTable.at(0).numDescriptors = 1U;
-				initParam.rootParamArray.at(2).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-				initParam.rootParamArray.at(2).descriptorTable.at(0).startRegisterNum = 1U;
+				initParam.rootParamArray.at(2U).descriptorTable.at(0U).numDescriptors = 1U;
+				initParam.rootParamArray.at(2U).descriptorTable.at(0U).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
+				initParam.rootParamArray.at(2U).descriptorTable.at(0U).startRegisterNum = 1U;
 			}
 		}
 
-		initParam.samplerDescArray.resize(1U);
+		initParam.samplerDescArray.resize(2U);
 		{/* サンプラーの設定 */
-			initParam.samplerDescArray.at(0).addressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-			initParam.samplerDescArray.at(0).addressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-			initParam.samplerDescArray.at(0).addressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-			initParam.samplerDescArray.at(0).bordercolor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
-			initParam.samplerDescArray.at(0).filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-			initParam.samplerDescArray.at(0).maxLod = D3D12_FLOAT32_MAX;
-			initParam.samplerDescArray.at(0).minLod = 0.0f;
-			initParam.samplerDescArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			initParam.samplerDescArray.at(0).comparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+			initParam.samplerDescArray.at(0U).addressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			initParam.samplerDescArray.at(0U).addressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			initParam.samplerDescArray.at(0U).addressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			initParam.samplerDescArray.at(0U).bordercolor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+			initParam.samplerDescArray.at(0U).filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+			initParam.samplerDescArray.at(0U).maxLod = D3D12_FLOAT32_MAX;
+			initParam.samplerDescArray.at(0U).minLod = 0.0f;
+			initParam.samplerDescArray.at(0U).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+			initParam.samplerDescArray.at(0U).comparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+			initParam.samplerDescArray.at(0U).shaderRegister = 0U;
+		}
+		{
+			initParam.samplerDescArray.at(1U).addressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+			initParam.samplerDescArray.at(1U).addressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+			initParam.samplerDescArray.at(1U).addressW = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+			initParam.samplerDescArray.at(1U).bordercolor = D3D12_STATIC_BORDER_COLOR_OPAQUE_WHITE;
+			initParam.samplerDescArray.at(1U).filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+			initParam.samplerDescArray.at(1U).maxLod = D3D12_FLOAT32_MAX;
+			initParam.samplerDescArray.at(1U).minLod = 0.0f;
+			initParam.samplerDescArray.at(1U).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+			initParam.samplerDescArray.at(1U).comparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+			initParam.samplerDescArray.at(1U).shaderRegister = 1U;
 		}
 		DX12GameManager::createRootSignature(DX12GameManager::getSystemId(SystemRootSignatureType::BasicMesh), initParam);
 	}

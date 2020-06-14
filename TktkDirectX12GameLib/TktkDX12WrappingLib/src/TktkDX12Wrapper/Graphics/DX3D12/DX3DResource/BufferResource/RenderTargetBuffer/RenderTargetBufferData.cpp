@@ -3,6 +3,7 @@
 namespace tktk
 {
 	RenderTargetBufferData::RenderTargetBufferData(ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
+		: m_renderTargetSize(renderTargetSize)
 	{
 		D3D12_RESOURCE_DESC resDesc{};
 		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
@@ -41,6 +42,10 @@ namespace tktk
 
 	RenderTargetBufferData::RenderTargetBufferData(IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
 	{
+		DXGI_SWAP_CHAIN_DESC1 desc{};
+		swapChain->GetDesc1(&desc);
+
+		m_renderTargetSize = { static_cast<float>(desc.Width), static_cast<float>(desc.Height) };
 		m_mustRelease = false;
 		swapChain->GetBuffer(backBufferIndex, IID_PPV_ARGS(&m_renderTargetBuffer));
 	}
@@ -84,5 +89,10 @@ namespace tktk
 		srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 
 		device->CreateShaderResourceView(m_renderTargetBuffer, &srvDesc, heapHandle);
+	}
+
+	const tktkMath::Vector2& RenderTargetBufferData::getRenderTargetSize() const
+	{
+		return m_renderTargetSize;
 	}
 }

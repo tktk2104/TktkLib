@@ -13,14 +13,14 @@ namespace tktk
 
 	struct RtvDescriptorParam
 	{
-		RtvDescriptorType	m_type;
-		unsigned int		m_id;
+		RtvDescriptorType	type;
+		unsigned int		id;
 	};
 
 	struct RtvDescriptorHeapInitParam
 	{
-		bool							m_shaderVisible{ true };
-		std::vector<RtvDescriptorParam>	m_descriptorParamArray{ };
+		bool							shaderVisible{ true };
+		std::vector<RtvDescriptorParam>	descriptorParamArray{ };
 	};
 }
 #endif // !RTV_DESCRIPTOR_HEAP_INIT_PARAM_H_

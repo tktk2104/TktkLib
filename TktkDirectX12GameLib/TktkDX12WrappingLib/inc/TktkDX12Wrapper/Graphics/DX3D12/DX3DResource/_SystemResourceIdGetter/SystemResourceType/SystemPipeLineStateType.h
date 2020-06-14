@@ -3,7 +3,7 @@
 
 namespace tktk
 {
-	constexpr unsigned int SystemPipeLineStateNum = 8U;
+	constexpr unsigned int SystemPipeLineStateNum = 9U;
 
 	enum class SystemPipeLineStateType
 	{
@@ -13,6 +13,7 @@ namespace tktk
 		PostEffectEmbossing,
 		PostEffectSharpness,
 		PostEffectGlassFilter,
+		ShadowMap,
 		Sprite,
 		BasicMesh
 	};

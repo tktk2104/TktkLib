@@ -2,26 +2,33 @@
 #define BASIC_DESCRIPTOR_HEAP_INIT_PARAM_H_
 
 #include <vector>
+#include "../../BufferResource/BufferType.h"
 
 namespace tktk
 {
+	struct BasicDescriptorParam
+	{
+		BufferType			type;
+		unsigned int		id;
+	};
+
 	enum class BasicDescriptorType
 	{
 		constantBuffer,
 		textureBuffer,
-		renderTarget
 	};
 
-	struct BasicDescriptorParam
+	struct BasicDescriptorTableParam
 	{
-		BasicDescriptorType	type;
-		unsigned int		id;
+		BasicDescriptorType					type;
+		std::vector<BasicDescriptorParam>	descriptorParamArray{};
 	};
 
+	// 「CBV_SRV_UAV」のディスクリプタヒープを作るためのデータ
 	struct BasicDescriptorHeapInitParam
 	{
-		bool								m_shaderVisible{ true };
-		std::vector<BasicDescriptorParam>	m_descriptorParamArray{ };
+		bool									shaderVisible{ true };
+		std::vector<BasicDescriptorTableParam>	descriptorTableParamArray{ };
 	};
 }
 #endif // !BASIC_DESCRIPTOR_HEAP_INIT_PARAM_H_

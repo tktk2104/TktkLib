@@ -12,14 +12,14 @@ namespace tktk
 
 	struct DsvDescriptorParam
 	{
-		DsvDescriptorType	m_type;
-		unsigned int		m_id;
+		DsvDescriptorType	type;
+		unsigned int		id;
 	};
 
 	struct DsvDescriptorHeapInitParam
 	{
-		bool							m_shaderVisible{ true };
-		std::vector<DsvDescriptorParam>	m_descriptorParamArray{ };
+		bool							shaderVisible{ true };
+		std::vector<DsvDescriptorParam>	descriptorParamArray{ };
 	};
 }
 #endif // !DSV_DESCRIPTOR_HEAP_INIT_PARAM_H_

@@ -20,6 +20,7 @@ namespace tktk
 		tktkMath::Color						lightSpeqular		{ tktkMath::colorWhite };
 		tktkMath::Vector3					lightPosition		{ tktkMath::vec3Zero };
 		float								lightDataPad		{ 0.0f };
+		tktkMath::Matrix4					lightMatrix			{ tktkMath::mat4Identity };
 
 		tktkMath::Color						materialAmbient		{ tktkMath::colorBlack };
 		tktkMath::Color						materialDiffuse		{ tktkMath::colorWhite };

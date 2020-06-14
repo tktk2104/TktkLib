@@ -11,7 +11,6 @@
 #include "DX3DBaseObjectsInitParam.h"
 #include "../Fence/Fence.h"
 #include "../DX3DResource/DX3DResource.h"
-#include "../DX3DResource/_SystemResourceIdGetter/SystemResourceIdGetter.h"
 
 namespace tktk
 {
@@ -51,7 +50,7 @@ namespace tktk
 		void createRenderTargetBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
 
 		// 深度ステンシルバッファを作る
-		void createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize);
+		void createDepthStencilBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam);
 
 		// 定数、テクスチャのディスクリプタヒープを作る
 		void createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam);
@@ -84,6 +83,8 @@ namespace tktk
 
 		// 指定のテクスチャのサイズを取得する
 		const tktkMath::Vector3& getTextureSize(unsigned int id) const;
+		const tktkMath::Vector2& getDepthStencilSize(unsigned int id) const;
+		const tktkMath::Vector2& getRenderTargetSize(unsigned int id) const;
 
 	public:
 
@@ -93,17 +94,23 @@ namespace tktk
 		// 指定のレンダーターゲット用のディスクリプタヒープをコマンドリストに設定する
 		void setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
-		// 指定のレンダーターゲット用のディスクリプタヒープの描画後処理を行い、バックバッファーをコマンドリストに設定する
-		void unSetRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
-
 		// 指定の（レンダーターゲットと深度ステンシルビュー）用のディスクリプタヒープ２つをコマンドリストに設定する
 		void setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+
+		// 指定の深度ステンシルビュー用のディスクリプタヒープをコマンドリストに設定する（※レンダーターゲットは設定できない）
+		void setOnlyDepthStencil(unsigned int id);
 
 		// バックバッファーを設定する
 		void setBackBuffer();
 
 		// バックバッファーと深度ステンシルビューを設定する
 		void setBackBufferAndDepthStencil(unsigned int dsvDescriptorHeapId);
+
+		// 指定のレンダーターゲット用のディスクリプタヒープが使用しているレンダーターゲットバッファの書き込み後処理を行う
+		void unSetRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+
+		// 指定の深度書き込み用のディスクリプタヒープが使用している深度バッファの書き込み後処理を行う
+		void unSetDepthStencil(unsigned int dsvDescriptorHeapId);
 
 		// 指定のビューポートをコマンドリストに設定する
 		void setViewport(unsigned int id);
@@ -156,7 +163,6 @@ namespace tktk
 		unsigned int				m_curBackBufferIndex	{ 0U };
 		Fence						m_fence					{};
 
-		SystemResourceIdGetter		m_systemResourceIdGetter;
 		DX3DResource				m_dX3DResource;
 
 		tktkMath::Color				m_backGroundColor{ tktkMath::colorBlue };
@@ -168,7 +174,7 @@ namespace tktk
 	template<class SystemResourceType>
 	inline unsigned int DX3DBaseObjects::getSystemId(SystemResourceType type) const
 	{
-		return m_systemResourceIdGetter.getSystemId(type);
+		return m_dX3DResource.getSystemId(type);
 	}
 }
 #endif // !DX3D_BASE_OBJECTS_H_

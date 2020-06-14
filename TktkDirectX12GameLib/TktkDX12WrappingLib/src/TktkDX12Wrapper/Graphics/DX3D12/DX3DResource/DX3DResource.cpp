@@ -1,9 +1,14 @@
 #include "TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DX3DResource.h"
 
+#ifdef _DEBUG
+#include <stdexcept>
+#endif // _DEBUG
+
 namespace tktk
 {
-	DX3DResource::DX3DResource(const DX3DResourceInitParam& initParam)
-		: m_viewport(initParam.viewPortNum)
+	DX3DResource::DX3DResource(DX3DResourceInitParam initParam)
+		: m_sysResIdGetter(&initParam)	// <=【※ここの初期化時に「initParam」の値にデフォルトのリソースの数が足されます】
+		, m_viewport(initParam.viewPortNum)
 		, m_scissorRect(initParam.scissorRectNum)
 		, m_graphicsPipeLine(initParam.pipeLineStateNum, initParam.rootSignatureNum)
 		, m_descriptorHeap(initParam.descriptorHeapInitParam)
@@ -56,75 +61,9 @@ namespace tktk
 		m_bufferResource.createRenderTargetBuffer(id, swapChain, backBufferIndex);
 	}
 
-	void DX3DResource::createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& depthStencilSize)
+	void DX3DResource::createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam)
 	{
-		m_bufferResource.createDepthStencilBuffer(id, device, depthStencilSize);
-	}
-
-	void DX3DResource::createBasicDescriptorHeap(unsigned int id, ID3D12Device* device, const BasicDescriptorHeapInitParam& initParam)
-	{
-		m_descriptorHeap.createBasicDescriptorHeap(id, device, initParam);
-
-		auto cpuHeapHandleArray = m_descriptorHeap.getCpuBasicHeapHandleArray(id, device);
-
-		for (unsigned int i = 0; i < initParam.m_descriptorParamArray.size(); i++)
-		{
-			const auto& descriptorParam = initParam.m_descriptorParamArray.at(i);
-
-			switch (descriptorParam.type)
-			{
-			case BasicDescriptorType::constantBuffer:
-
-				m_bufferResource.createConstantBufferView(descriptorParam.id, device, cpuHeapHandleArray.at(i));
-				break;
-
-			case BasicDescriptorType::textureBuffer:
-
-				m_bufferResource.createShaderResourceView(descriptorParam.id, device, cpuHeapHandleArray.at(i));
-				break;
-
-			case BasicDescriptorType::renderTarget:
-
-				m_bufferResource.createRtvShaderResourceView(descriptorParam.id, device, cpuHeapHandleArray.at(i));
-				break;
-			}
-		}
-	}
-
-	void DX3DResource::createRtvDescriptorHeap(unsigned int id, ID3D12Device* device, const RtvDescriptorHeapInitParam& initParam)
-	{
-		m_descriptorHeap.createRtvDescriptorHeap(id, device, initParam);
-
-		auto cpuHeapHandleArray = m_descriptorHeap.getCpuRtvHeapHandleArray(id, device);
-
-		for (unsigned int i = 0; i < initParam.m_descriptorParamArray.size(); i++)
-		{
-			switch (initParam.m_descriptorParamArray.at(i).m_type)
-			{
-			case RtvDescriptorType::normal:
-
-				m_bufferResource.createRenderTargetView(initParam.m_descriptorParamArray.at(i).m_id, device, cpuHeapHandleArray.at(i));
-				break;
-			}
-		}
-	}
-
-	void DX3DResource::createDsvDescriptorHeap(unsigned int id, ID3D12Device* device, const DsvDescriptorHeapInitParam& initParam)
-	{
-		m_descriptorHeap.createDsvDescriptorHeap(id, device, initParam);
-
-		auto cpuHeapHandleArray = m_descriptorHeap.getCpuDsvHeapHandleArray(id, device);
-
-		for (unsigned int i = 0; i < initParam.m_descriptorParamArray.size(); i++)
-		{
-			switch (initParam.m_descriptorParamArray.at(i).m_type)
-			{
-			case DsvDescriptorType::normal:
-
-				m_bufferResource.createDepthStencilView(initParam.m_descriptorParamArray.at(i).m_id, device, cpuHeapHandleArray.at(i));
-				break;
-			}
-		}
+		m_bufferResource.createDepthStencilBuffer(id, device, initParam);
 	}
 
 	void DX3DResource::cpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
@@ -147,24 +86,127 @@ namespace tktk
 		m_bufferResource.gpuPriorityLoadTextureBuffer(id, device, commandList, texDataPath);
 	}
 
+	void DX3DResource::createBasicDescriptorHeap(unsigned int id, ID3D12Device* device, const BasicDescriptorHeapInitParam& initParam)
+	{
+		// バッファを割り当てていないディスクリプタヒープを作る
+		m_descriptorHeap.createBasicDescriptorHeap(id, device, initParam);
+
+		// 全てのディスクリプタの先頭アドレスの配列を取得する
+		auto cpuHeapHandleArray = m_descriptorHeap.getCpuBasicHeapHandleArray(id, device);
+
+		// 設定しているディスクリプタの番号
+		unsigned int curDescriptorIndex = 0U;
+
+		for (const auto& descriptorParam : initParam.descriptorTableParamArray)
+		{
+			for (const auto& node : descriptorParam.descriptorParamArray)
+			{
+				switch (descriptorParam.type)
+				{
+				case BasicDescriptorType::constantBuffer:
+
+					createBasicDescriptorCbufferView(device, cpuHeapHandleArray.at(curDescriptorIndex), node);
+					break;
+
+				case BasicDescriptorType::textureBuffer:
+
+					createBasicDescriptorShaderResourceView(device, cpuHeapHandleArray.at(curDescriptorIndex), node);
+					break;
+				}
+
+				curDescriptorIndex++;
+			}
+		}
+
+		/*for (unsigned int i = 0; i < initParam.descriptorParamArray.size(); i++)
+		{
+			const auto& descriptorParam = initParam.descriptorParamArray.at(i);
+
+			switch (descriptorParam.type)
+			{
+			case BasicDescriptorType::constantBuffer:
+
+				createBasicDescriptorCbufferView(device, cpuHeapHandleArray.at(i), descriptorParam.useBufferParamArray);
+				break;
+
+			case BasicDescriptorType::textureBuffer:
+
+				createBasicDescriptorShaderResourceView(device, cpuHeapHandleArray.at(i), descriptorParam.useBufferParamArray);
+				break;
+			}
+		}*/
+	}
+
+	void DX3DResource::createRtvDescriptorHeap(unsigned int id, ID3D12Device* device, const RtvDescriptorHeapInitParam& initParam)
+	{
+		// バッファを割り当てていないディスクリプタヒープを作る
+		m_descriptorHeap.createRtvDescriptorHeap(id, device, initParam);
+
+		auto cpuHeapHandleArray = m_descriptorHeap.getCpuRtvHeapHandleArray(id, device);
+
+		for (unsigned int i = 0; i < initParam.descriptorParamArray.size(); i++)
+		{
+			switch (initParam.descriptorParamArray.at(i).type)
+			{
+			case RtvDescriptorType::normal:
+
+				m_bufferResource.createRenderTargetView(initParam.descriptorParamArray.at(i).id, device, cpuHeapHandleArray.at(i));
+				break;
+			}
+		}
+	}
+
+	void DX3DResource::createDsvDescriptorHeap(unsigned int id, ID3D12Device* device, const DsvDescriptorHeapInitParam& initParam)
+	{
+		// バッファを割り当てていないディスクリプタヒープを作る
+		m_descriptorHeap.createDsvDescriptorHeap(id, device, initParam);
+
+		auto cpuHeapHandleArray = m_descriptorHeap.getCpuDsvHeapHandleArray(id, device);
+
+		for (unsigned int i = 0; i < initParam.descriptorParamArray.size(); i++)
+		{
+			switch (initParam.descriptorParamArray.at(i).type)
+			{
+			case DsvDescriptorType::normal:
+
+				m_bufferResource.createDepthStencilView(initParam.descriptorParamArray.at(i).id, device, cpuHeapHandleArray.at(i));
+				break;
+			}
+		}
+	}
+
 	void DX3DResource::updateConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_bufferResource.updateConstantBuffer(id, device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
-	void DX3DResource::clearRenderTarget(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	void DX3DResource::clearRenderTargetView(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
 	{
 		m_descriptorHeap.clearRenderTarget(id, device, commandList, rtvLocationIndex, color);
 	}
 
 	void DX3DResource::clearDepthStencilViewAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
 	{
+		m_bufferResource.allUseDepthStencilBuffer(commandList);
+
 		m_descriptorHeap.clearDepthStencilViewAll(device, commandList);
+
+		m_bufferResource.allUnUseDepthStencilBuffer(commandList);
 	}
 
-	const tktkMath::Vector3& DX3DResource::getTextureSize(unsigned int id) const
+	const tktkMath::Vector3& DX3DResource::getTextureBufferSize(unsigned int id) const
 	{
 		return m_bufferResource.getTextureSize(id);
+	}
+
+	const tktkMath::Vector2& DX3DResource::getDepthStencilBufferSize(unsigned int id) const
+	{
+		return m_bufferResource.getDepthStencilSize(id);
+	}
+
+	const tktkMath::Vector2& DX3DResource::getRenderTargetBufferSize(unsigned int id) const
+	{
+		return m_bufferResource.getRenderTargetSize(id);
 	}
 
 	const std::vector<unsigned int>& DX3DResource::getRtvDescriptorHeapUseBufferIdArray(unsigned int id) const
@@ -172,14 +214,104 @@ namespace tktk
 		return m_descriptorHeap.getRtvDescriptorHeapUseBufferIdArray(id);
 	}
 
+	const std::vector<unsigned int>& DX3DResource::getDsvDescriptorHeapUseBufferIdArray(unsigned int id) const
+	{
+		return m_descriptorHeap.getDsvDescriptorHeapUseBufferIdArray(id);
+	}
+
 	void DX3DResource::setRenderTarget(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
+		// 使用するレンダーターゲットバッファーを取得して、書き込み状態に設定する
+		auto rtvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getRtvDescriptorHeapUseBufferIdArray(rtvDescriptorHeapId);
+		for (unsigned int i = 0; i < rtvCount; i++)
+		{
+			m_bufferResource.useAsRenderTargetBuffer(rtvDescriptorHeapUseBufferIdArray.at(startRtvLocationIndex + i), commandList);
+		}
+
+		// 「レンダーターゲット用のディスクリプタヒープ」を設定する
 		m_descriptorHeap.setRenderTarget(rtvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount);
 	}
 
 	void DX3DResource::setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
+		// 使用するレンダーターゲットバッファーを取得して、書き込み状態に設定する
+		auto rtvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getRtvDescriptorHeapUseBufferIdArray(rtvDescriptorHeapId);
+		for (unsigned int i = 0; i < rtvCount; i++)
+		{
+			m_bufferResource.useAsRenderTargetBuffer(rtvDescriptorHeapUseBufferIdArray.at(startRtvLocationIndex + i), commandList);
+		}
+
+		// 使用する深度ステンシルバッファーを取得して、書き込み状態に設定する
+		auto dsvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getDsvDescriptorHeapUseBufferIdArray(dsvDescriptorHeapId);
+		for (const auto& dsvDescriptorHeapUseBufferId : dsvDescriptorHeapUseBufferIdArray)
+		{
+			m_bufferResource.useDepthStencilBuffer(dsvDescriptorHeapUseBufferId, commandList);
+		}
+
+		// 「レンダーターゲット用のディスクリプタヒープ」と「深度ステンシル用のディスクリプタヒープ」を設定する
 		m_descriptorHeap.setRenderTargetAndDepthStencil(rtvDescriptorHeapId, dsvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount);
+	}
+
+	void DX3DResource::setOnlyDepthStencil(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	{
+		// 使用する深度ステンシルバッファーを取得して、書き込み状態に設定する
+		auto dsvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getDsvDescriptorHeapUseBufferIdArray(id);
+		for (const auto& dsvDescriptorHeapUseBufferId : dsvDescriptorHeapUseBufferIdArray)
+		{
+			m_bufferResource.useDepthStencilBuffer(dsvDescriptorHeapUseBufferId, commandList);
+		}
+
+		// 「深度ステンシル用のディスクリプタヒープ」を設定する
+		m_descriptorHeap.setOnlyDepthStencil(id, device, commandList);
+	}
+
+	void DX3DResource::setBackBuffer(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex)
+	{
+		// バックバッファはフレームの初めに書き込み状態に設定されているのでそのまま ディスクリプタヒープを設定できる
+		m_descriptorHeap.setRenderTarget(getSystemId(SystemRtvDescriptorHeapType::BackBuffer), device, commandList, backBufferIndex, 1U);
+	}
+
+	void DX3DResource::setBackBufferAndDepthStencil(unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex)
+	{
+		// 使用する深度ステンシルバッファーを取得して、書き込み状態に設定する
+		auto dsvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getDsvDescriptorHeapUseBufferIdArray(dsvDescriptorHeapId);
+		for (const auto& dsvDescriptorHeapUseBufferId : dsvDescriptorHeapUseBufferIdArray)
+		{
+			m_bufferResource.useDepthStencilBuffer(dsvDescriptorHeapUseBufferId, commandList);
+		}
+
+		// 「バックバッファー用のディスクリプタヒープ」と「深度ステンシル用のディスクリプタヒープ」を設定する
+		m_descriptorHeap.setRenderTargetAndDepthStencil(getSystemId(SystemRtvDescriptorHeapType::BackBuffer), dsvDescriptorHeapId, device, commandList, backBufferIndex, 1U);
+	}
+
+	void DX3DResource::unSetRenderTarget(unsigned int rtvDescriptorHeapId, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	{
+		// 使用していたレンダーターゲットバッファーを取得して、ピクセルシェーダーで使用する状態に変更する
+		auto rtvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getRtvDescriptorHeapUseBufferIdArray(rtvDescriptorHeapId);
+		for (unsigned int i = 0; i < rtvCount; i++)
+		{
+			m_bufferResource.unUseAsRenderTargetBuffer(rtvDescriptorHeapUseBufferIdArray.at(startRtvLocationIndex + i), commandList);
+		}
+	}
+
+	void DX3DResource::unSetDepthStencil(unsigned int dsvDescriptorHeapId, ID3D12GraphicsCommandList* commandList)
+	{
+		// 使用していた深度ステンシルバッファーを取得して、ピクセルシェーダーで使用する状態に変更する
+		auto dsvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getDsvDescriptorHeapUseBufferIdArray(dsvDescriptorHeapId);
+		for (const auto& dsvDescriptorHeapUseBufferId : dsvDescriptorHeapUseBufferIdArray)
+		{
+			m_bufferResource.unUseDepthStencilBuffer(dsvDescriptorHeapUseBufferId, commandList);
+		}
+	}
+
+	void DX3DResource::useAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	{
+		m_bufferResource.useBackBuffer(id, commandList);
+	}
+
+	void DX3DResource::unUseAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	{
+		m_bufferResource.unUseBackBuffer(id, commandList);
 	}
 
 	void DX3DResource::setViewport(unsigned int id, ID3D12GraphicsCommandList* commandList)
@@ -212,23 +344,39 @@ namespace tktk
 		m_descriptorHeap.set(device, commandList, heapParamArray);
 	}
 
-	void DX3DResource::useAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::createBasicDescriptorCbufferView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam)
 	{
-		m_bufferResource.useAsRenderTargetBuffer(id, commandList);
+#ifdef _DEBUG
+		if (useBufferParam.type != BufferType::constant) throw std::runtime_error("useBuffer Type Error -not cbuffer-");
+#endif // _DEBUG
+
+		m_bufferResource.createConstantBufferView(useBufferParam.id, device, cpuHandle);
 	}
 
-	void DX3DResource::unUseAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::createBasicDescriptorShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam)
 	{
-		m_bufferResource.unUseAsRenderTargetBuffer(id, commandList);
-	}
+		switch (useBufferParam.type)
+		{
+		case BufferType::texture:
 
-	void DX3DResource::useAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
-	{
-		m_bufferResource.useBackBuffer(id, commandList);
-	}
+			m_bufferResource.createShaderResourceView(useBufferParam.id, device, cpuHandle);
+			break;
 
-	void DX3DResource::unUseAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
-	{
-		m_bufferResource.unUseBackBuffer(id, commandList);
+		case BufferType::renderTarget:
+
+			m_bufferResource.createRtvShaderResourceView(useBufferParam.id, device, cpuHandle);
+			break;
+
+		case BufferType::depthStencil:
+
+			m_bufferResource.createDsvShaderResourceView(useBufferParam.id, device, cpuHandle);
+			break;
+
+		default:
+#ifdef _DEBUG
+			throw std::runtime_error("useBuffer Type Error -not ShaderResourceView-");
+#endif // _DEBUG
+			break;
+		}
 	}
 }

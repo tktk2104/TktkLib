@@ -18,6 +18,7 @@ namespace tktk
 		BasicMeshInitParam meshInitParam{};
 		meshInitParam.useVertexBufferId = args.createVertexBufferId;
 		meshInitParam.useIndexBufferId = args.createIndexBufferId;
+		meshInitParam.indexNum = outData.indexData.size();
 		meshInitParam.materialSlots.reserve(outData.materialData.size());
 
 		unsigned int curDescriptorHeapId	= args.createDescriptorHeapIdStartNum;

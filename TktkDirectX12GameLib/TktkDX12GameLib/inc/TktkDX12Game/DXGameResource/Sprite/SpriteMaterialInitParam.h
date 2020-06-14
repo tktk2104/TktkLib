@@ -3,13 +3,15 @@
 
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector2.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/BufferType.h>
 
 namespace tktk
 {
 	struct SpriteMaterialInitParam
 	{
 		unsigned int		createDescriptorHeapId;
-		unsigned int		useTextureId;
+		BufferType			srvBufferType;
+		unsigned int		useBufferId;
 		tktkMath::Color		blendRate		{ 1.0f, 1.0f, 1.0f, 1.0f };;
 		tktkMath::Vector2	textureUvOffset	{ 0.0f, 0.0f };
 		tktkMath::Vector2	textureUvMulRate{ 1.0f, 1.0f };

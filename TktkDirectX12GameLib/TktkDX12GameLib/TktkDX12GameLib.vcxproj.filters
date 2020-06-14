@@ -210,6 +210,18 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterialDrawFuncArgs.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\ShadowMap\ShadowMap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshWriteShadowFuncBaseArgs.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshShadowMapCbufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TktkDX12Game\_MainManager\DX12GameManager.cpp">
@@ -344,6 +356,12 @@
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\2DComponents\RenderTargetClearer\RenderTargetClearer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\ShadowMap\ShadowMap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\spriteShader\SpritePixelShader.hlsl" />
@@ -352,5 +370,6 @@
     <FxCompile Include="shader\basicMeshShader\BasicMeshVertexShader.hlsl" />
     <FxCompile Include="shader\postEffectShader\monochromeShader\MonochromePixelShader.hlsl" />
     <FxCompile Include="shader\postEffectShader\PostEffectVertexShader.hlsl" />
+    <FxCompile Include="shader\shadowMapShader\BasicMeshShadowVertexShader.hlsl" />
   </ItemGroup>
 </Project>

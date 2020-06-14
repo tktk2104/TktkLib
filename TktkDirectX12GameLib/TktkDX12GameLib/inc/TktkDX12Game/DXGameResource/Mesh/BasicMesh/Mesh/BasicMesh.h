@@ -2,6 +2,7 @@
 #define BASIC_MESH_H_
 
 #include "BasicMeshData.h"
+#include <string>
 #include <TktkContainer/HeapArray/HeapArray.h>
 
 namespace tktk
@@ -10,13 +11,21 @@ namespace tktk
 	{
 	public:
 
-		BasicMesh(unsigned int basicMeshNum);
+		BasicMesh(const std::string& writeShadowMapVsFilePath, unsigned int basicMeshNum);
 	
 	public:
 
 		void craete(unsigned int id, const BasicMeshInitParam& initParam);
 
+		void writeShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs);
+
 		void drawMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
+
+	private:
+
+		void createWriteShadowMapRootSignature();
+
+		void createWriteShadowMapGraphicsPipeLineState(const std::string& writeShadowMapVsFilePath);
 
 	private:
 

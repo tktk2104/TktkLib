@@ -30,6 +30,8 @@ namespace tktk
 
 		void createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
+		const tktkMath::Vector2& getRenderTargetSize(unsigned int id) const;
+
 	private:
 
 		HeapArray<RenderTargetBufferData>	m_renderTargetBufferDataArray;

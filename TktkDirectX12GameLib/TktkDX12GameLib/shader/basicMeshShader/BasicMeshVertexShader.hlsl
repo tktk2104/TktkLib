@@ -9,6 +9,7 @@ cbuffer ConstantBuffer : register(b0)
 	float4		lightSpeqular;
 	float3		lightPosition;
 	float		lightDataPad;
+	float4x4	lightMatrix;
 	float4		materialAmbient;
 	float4		materialDiffuse;
 	float4		materialSpecular;
@@ -40,6 +41,7 @@ struct VS_OUTPUT
 	float2 TexCoord     : TEXCOORD0;
 	float3 View			: TEXCOORD1;
 	float3 Light		: TEXCOORD2;
+	float4 LightBasePos : TEXCOORD3;
 };
 
 VS_OUTPUT main(VS_INPUT Input)
@@ -95,6 +97,8 @@ VS_OUTPUT main(VS_INPUT Input)
 	Output.View = mul(-ViewPosition.xyz, matTBN);
 	//
 	Output.Light = mul((ViewLight - ViewPosition.xyz), matTBN);
+
+	Output.LightBasePos = Output.Position;//mul(lightMatrix, Output.Position);
 
 	Output.Normal = float4(viewNormal, 1.0f);
 

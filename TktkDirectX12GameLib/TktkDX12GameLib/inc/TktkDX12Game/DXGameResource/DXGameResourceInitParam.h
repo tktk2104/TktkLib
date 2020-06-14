@@ -10,6 +10,7 @@ namespace tktk
 	{
 		tktk::ShaderFilePaths		spriteShaderFilePaths;
 		tktk::ShaderFilePaths		basicMeshShaderFilePaths;
+		std::string					writeShadowMapVsFilePath;
 		PostEffectShaderFilePaths	postEffectShaderFilePaths;
 
 		unsigned int spriteNum;

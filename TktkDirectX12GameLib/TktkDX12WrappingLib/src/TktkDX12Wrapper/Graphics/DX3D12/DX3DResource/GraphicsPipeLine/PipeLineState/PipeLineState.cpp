@@ -14,6 +14,8 @@ namespace tktk
 	{
 		// 頂点シェーダーを読み込む
 		std::vector<char> vsByteArray;
+
+		if (shaderFilePath.vsFilePath != "")
 		{
 			std::FILE* fp;
 	
@@ -36,6 +38,8 @@ namespace tktk
 	
 		// ピクセルシェーダーを読み込む
 		std::vector<char> psByteArray;
+
+		if (shaderFilePath.psFilePath != "")
 		{
 			std::FILE* fp;
 	

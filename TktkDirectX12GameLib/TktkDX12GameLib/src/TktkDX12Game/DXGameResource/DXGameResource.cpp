@@ -6,7 +6,7 @@ namespace tktk
 {
 	DXGameResource::DXGameResource(const DXGameResourceInitParam& initParam)
 		: m_spriteMaterial(initParam.spriteShaderFilePaths, initParam.spriteNum)
-		, m_basicMesh(initParam.basicMeshNum)
+		, m_basicMesh(initParam.writeShadowMapVsFilePath, initParam.basicMeshNum)
 		, m_basicMeshMaterial(initParam.basicMeshShaderFilePaths, initParam.basicMeshMaterialNum)
 		, m_postEffectMaterial(initParam.postEffectShaderFilePaths, initParam.postEffectMaterialNum)
 	{
@@ -30,6 +30,11 @@ namespace tktk
 	void DXGameResource::createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam)
 	{
 		m_basicMeshMaterial.create(id, initParam);
+	}
+
+	void DXGameResource::writeBasicMeshShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs)
+	{
+		m_basicMesh.writeShadowMap(id, baseArgs);
 	}
 
 	void DXGameResource::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)

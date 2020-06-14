@@ -10,11 +10,8 @@ namespace tktk
 	{
 	public:
 
-		SystemResourceIdGetter(const DX3DResourceInitParam& initParam);
-
-	public:
-
-		DX3DResourceInitParam calculateIncludingSystemResourceInitParam() const;
+		// コンストラクタ内で「initParam」の値を書き換えます
+		SystemResourceIdGetter(DX3DResourceInitParam* initParam);
 
 	public:
 

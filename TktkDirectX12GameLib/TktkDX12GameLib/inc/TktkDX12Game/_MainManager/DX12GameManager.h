@@ -15,6 +15,7 @@
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/RtvDescriptorHeap/RtvDescriptorHeapInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DsvDescriptorHeap/DsvDescriptorHeapInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/TextureBuffer/TextureBufferInitParam.h>
+#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/DepthStencilBuffer/DepthStencilBufferInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/_SystemResourceIdGetter/SystemResourceType.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DescriptorHeapParam.h>
 #include "../Scene/SceneManager.h"
@@ -22,6 +23,7 @@
 #include "../Component/ComponentManager.h"
 #include "../DXGameResource/Sprite/SpriteMaterialInitParam.h"
 #include "../DXGameResource/Sprite/SpriteMaterialDrawFuncArgs.h"
+#include "../DXGameResource/Mesh/MeshWriteShadowFuncBaseArgs.h"
 #include "../DXGameResource/Mesh/MeshDrawFuncBaseArgs.h"
 #include "../DXGameResource/Mesh/MeshMaterialDrawFuncArgs.h"
 #include "../DXGameResource/Mesh/BasicMesh/Mesh/BasicMeshInitParam.h"
@@ -91,7 +93,11 @@ namespace tktk
 
 		static void unSetRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
+		static void unSetDepthStencil(unsigned int dsvDescriptorHeapId);
+
 		static void setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+
+		static void setOnlyDepthStencil(unsigned int dsvDescriptorHeapId);
 
 		static void setBackBuffer();
 
@@ -142,7 +148,7 @@ namespace tktk
 		static void createRenderTargetBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
 
 		// 深度ステンシルバッファを作る
-		static void createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize);
+		static void createDepthStencilBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam);
 
 		// ディスクリプタヒープを作る
 		static void createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam);
@@ -173,6 +179,8 @@ namespace tktk
 		static void clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color);
 
 		static const tktkMath::Vector3& getTextureSize(unsigned int id);
+		static const tktkMath::Vector2& getDepthStencilSize(unsigned int id);
+		static const tktkMath::Vector2& getRenderTargetSize(unsigned int id);
 
 	public: /* スプライト関係の処理 */
 
@@ -185,6 +193,8 @@ namespace tktk
 		static void createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam);
 
 		static void createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam);
+
+		static void writeBasicMeshShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs);
 
 		static void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 

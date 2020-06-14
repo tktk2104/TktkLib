@@ -174,6 +174,7 @@
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\Camera\Camera.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\Light\PointLight\PointLight.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshDrawer\BasicMeshDrawer\BasicMeshDrawer.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriter.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\Transform3D\Transform3D.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ChildList.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ParentChildManager.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameDrawFuncArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameResource.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameResourceInitParam.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshShadowMapCbufferData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshLoadPmdReturnValue.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshPmdLoader.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMesh.h" />
@@ -194,11 +196,13 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Subset.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshDrawFuncBaseArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshMaterialDrawFuncArgs.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshWriteShadowFuncBaseArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterial.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterialData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterialDrawFuncArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterialInitParam.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectShaderFilePaths.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\ShadowMap\ShadowMap.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteConstantBufferData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialDrawFuncArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObject.h" />
@@ -238,6 +242,7 @@
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\Camera\Camera.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\Light\PointLight\PointLight.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshDrawer\BasicMeshDrawer\BasicMeshDrawer.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriter.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\Transform3D\Transform3D.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ChildList.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ParentChildManager.cpp" />
@@ -250,6 +255,7 @@
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMeshData.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterial.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterialData.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\ShadowMap\ShadowMap.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObject.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectPtr.cpp" />
@@ -296,6 +302,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\postEffectShader\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\postEffectShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\shadowMapShader\BasicMeshShadowVertexShader.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\shadowMapShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\shadowMapShader\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="shader\spriteShader\SpritePixelShader.hlsl">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>

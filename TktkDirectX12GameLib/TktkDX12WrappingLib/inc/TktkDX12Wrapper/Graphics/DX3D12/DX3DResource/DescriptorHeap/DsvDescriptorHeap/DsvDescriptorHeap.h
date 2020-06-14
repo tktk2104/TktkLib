@@ -18,9 +18,13 @@ namespace tktk
 
 		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> getCpuHeapHandleArray(unsigned int id, ID3D12Device* device) const;
 
+		const std::vector<unsigned int>& getDepthStencilBufferIdArray(unsigned int id) const;
+
 		ID3D12DescriptorHeap* getPtr(unsigned int id) const;
 
 		void setDescriptor(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
+
+		void setOnlyDepthStencil(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
 
 		void clearViewAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
 

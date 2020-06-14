@@ -52,9 +52,18 @@ namespace tktk
 
 	public: /* 深度ステンシルバッファの処理 */
 
-		void createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& depthStencilSize);
+		void createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam);
 
 		void createDepthStencilView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createDsvShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+
+		void useDepthStencilBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void unUseDepthStencilBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		void allUseDepthStencilBuffer(ID3D12GraphicsCommandList* commandList);
+		void allUnUseDepthStencilBuffer(ID3D12GraphicsCommandList* commandList);
+
+		const tktkMath::Vector2& getDepthStencilSize(unsigned int id) const;
 
 	public: /* レンダーターゲットバッファの処理 */
 
@@ -69,6 +78,8 @@ namespace tktk
 
 		void useBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 		void unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		const tktkMath::Vector2& getRenderTargetSize(unsigned int id) const;
 
 	private:
 

@@ -9,6 +9,7 @@ cbuffer ConstantBuffer : register(b0)
 	float4		lightSpeqular;
 	float3		lightPosition;
 	float		lightDataPad;
+	float4x4	lightMatrix;
 	float4		materialAmbient;
 	float4		materialDiffuse;
 	float4		materialSpecular;
@@ -29,18 +30,20 @@ struct PS_INPUT
 	float2 TexCoord     : TEXCOORD0;
 	float3 View			: TEXCOORD1;
 	float3 Light		: TEXCOORD2;
+	float4 LightBasePos : TEXCOORD3;
 };
 
 // アルベドマップ
-SamplerState g_AlbedoMapSampler  : register(s0);
-Texture2D	 g_AlbedoMapTexture  : register(t0);
+SamplerState	g_AlbedoMapSampler  : register(s0);
+Texture2D		g_AlbedoMapTexture  : register(t0);
+
+// ライトからの深度テクスチャ
+SamplerState		g_LightDepthSampler : register(s1);
+Texture2D<float>	g_LightDepthTexture	: register(t1);
 
 //// 法線マップ
 //SamplerState g_NormalMapSampler  : register(s1);
 //Texture2D    g_NormalMapTexture  : register(t1);
-
-Texture2D TextureMapTexture : register(t0);
-SamplerState TextureMapSampler : register(s0);
 
 float4 main(PS_INPUT Input) : SV_TARGET
 {
@@ -52,13 +55,17 @@ float4 main(PS_INPUT Input) : SV_TARGET
 	float diffuse = max(dot(L, N), 0.0);
 	float specular = pow(max(dot(N, H), 0.0), materialShiniess);
 	
+	float3 posFromLightVP = Input.LightBasePos.xyz / Input.LightBasePos.w;
+	float2 shadowUV = (posFromLightVP.xy + float2(1, - 1)) * float2(0.5, -0.5);
+	float depthFromLight = g_LightDepthTexture.Sample(g_LightDepthSampler, shadowUV);
+
 	float4 baseColor = g_AlbedoMapTexture.Sample(g_AlbedoMapSampler, Input.TexCoord);
 	
-	float4 resultColor 
-		= materialAmbient	* lightAmbient	* baseColor
-		+ materialDiffuse	* lightDiffuse	* diffuse * baseColor
-		+ materialSpecular	* lightSpeqular * specular
-		+ materialEmissive	* baseColor;
+	float4 resultColor = float4(depthFromLight, depthFromLight, depthFromLight, 1.0f);
+		//= materialAmbient	* lightAmbient	* baseColor
+		//+ materialDiffuse	* lightDiffuse	* diffuse * baseColor
+		//+ materialSpecular	* lightSpeqular * specular
+		//+ materialEmissive	* baseColor;
 	
 	resultColor.a = baseColor.a * materialDiffuse.a;
 	

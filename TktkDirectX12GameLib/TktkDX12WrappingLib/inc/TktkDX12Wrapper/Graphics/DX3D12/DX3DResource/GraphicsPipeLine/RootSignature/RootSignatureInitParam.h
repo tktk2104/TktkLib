@@ -34,6 +34,7 @@ namespace tktk
 			float						maxLod{};
 			D3D12_SHADER_VISIBILITY		shaderVisibility{};
 			D3D12_COMPARISON_FUNC		comparisonFunc{};
+			unsigned int				shaderRegister{};
 		};
 
 	public:

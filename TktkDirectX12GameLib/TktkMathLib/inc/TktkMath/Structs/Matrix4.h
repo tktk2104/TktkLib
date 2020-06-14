@@ -65,6 +65,8 @@ namespace tktkMath
 		static constexpr Matrix4 createLookAtLH(const Vector3& position, const Vector3& target, const Vector3& up);
 		// 右手座標系のビュー行列を生成（OpenGL等）
 		static constexpr Matrix4 createLookAtRH(const Vector3& position, const Vector3& target, const Vector3& up);
+		// 左手座標系の平行投影行列を生成（DirectX等）
+		static constexpr Matrix4 createOrthographicLH(float width, float height, float zn, float zf);
 		// 左手座標系のパースペクティブ射影行列を生成（DirectX等）
 		static constexpr Matrix4 createPerspectiveFieldOfViewLH(float fov, float aspect, float zn, float zf);
 		// 右手座標系のパースペクティブ射影行列を生成（OpenGL等）
@@ -381,6 +383,18 @@ namespace tktkMath
 			-Vector3::dot(position, x), -Vector3::dot(position, y), -Vector3::dot(position, z), 1.0f
 		);
 	}
+
+	// 左手座標系の平行投影行列を生成（DirectX等）
+	inline constexpr Matrix4 Matrix4::createOrthographicLH(float width, float height, float zn, float zf)
+	{
+		return Matrix4(
+			2 / width,	0.0f,		0.0f,			0.0f,
+			0.0f,		2 / height, 0.0f,			0.0f,
+			0.0f,		0.0f,		1 / (zf - zn),	0.0f,
+			0.0f,		0.0f,		zn / (zn - zf), 1.0f
+		);
+	}
+
 	// 左手座標系のパースペクティブ射影行列を生成（DirectX等）
 	inline constexpr Matrix4 Matrix4::createPerspectiveFieldOfViewLH(float fov, float aspect, float zn, float zf)
 	{

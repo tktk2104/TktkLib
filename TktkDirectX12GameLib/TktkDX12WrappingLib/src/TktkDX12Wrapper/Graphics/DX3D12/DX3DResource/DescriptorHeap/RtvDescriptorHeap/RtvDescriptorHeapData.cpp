@@ -5,17 +5,17 @@ namespace tktk
 	RtvDescriptorHeapData::RtvDescriptorHeapData(ID3D12Device* device, const RtvDescriptorHeapInitParam& initParam)
 	{
 		D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc{};
-		descHeapDesc.Flags = (initParam.m_shaderVisible) ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+		descHeapDesc.Flags = (initParam.shaderVisible) ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 		descHeapDesc.NodeMask = 0;
-		descHeapDesc.NumDescriptors = initParam.m_descriptorParamArray.size();
+		descHeapDesc.NumDescriptors = initParam.descriptorParamArray.size();
 		descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&m_descriptorHeap));
 
 		m_renderTargetBufferIdArray.reserve(descHeapDesc.NumDescriptors);
 
-		for (const auto& node : initParam.m_descriptorParamArray)
+		for (const auto& node : initParam.descriptorParamArray)
 		{
-			m_renderTargetBufferIdArray.push_back(node.m_id);
+			m_renderTargetBufferIdArray.push_back(node.id);
 		}
 	}
 

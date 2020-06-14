@@ -25,10 +25,11 @@ namespace tktk
 
 		{
 			DXGameResourceInitParam initParam;
-			initParam.spriteShaderFilePaths.vsFilePath = tktkLibResFolderPath + "TktkLibRes/shader/SpriteVertexShader.cso";
-			initParam.spriteShaderFilePaths.psFilePath = tktkLibResFolderPath + "TktkLibRes/shader/SpritePixelShader.cso";
-			initParam.basicMeshShaderFilePaths.vsFilePath = tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshVertexShader.cso";
-			initParam.basicMeshShaderFilePaths.psFilePath = tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshPixelShader.cso";
+			initParam.spriteShaderFilePaths.vsFilePath		= tktkLibResFolderPath + "TktkLibRes/shader/SpriteVertexShader.cso";
+			initParam.spriteShaderFilePaths.psFilePath		= tktkLibResFolderPath + "TktkLibRes/shader/SpritePixelShader.cso";
+			initParam.basicMeshShaderFilePaths.vsFilePath	= tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshVertexShader.cso";
+			initParam.basicMeshShaderFilePaths.psFilePath	= tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshPixelShader.cso";
+			initParam.writeShadowMapVsFilePath				= tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshShadowVertexShader.cso";
 
 			initParam.postEffectShaderFilePaths.postEffectVSFilePath = tktkLibResFolderPath + "TktkLibRes/shader/PostEffectVertexShader.cso";
 			initParam.postEffectShaderFilePaths.monochromePSFilePath = tktkLibResFolderPath + "TktkLibRes/shader/MonochromePixelShader.cso";
@@ -39,6 +40,24 @@ namespace tktk
 			initParam.postEffectMaterialNum = dx3dInitParam.postEffectMaterialNum;
 
 			m_dxGameResource = std::make_unique<DXGameResource>(initParam);
+		}
+
+		// シャドウマップの深度バッファーを作る
+		{
+			DepthStencilBufferInitParam initParam{};
+			initParam.depthStencilSize = { 1024.0f, 1024.0f };
+			initParam.useAsShaderResource = true;
+
+			createDepthStencilBuffer(getSystemId(SystemDepthStencilBufferType::ShadowMap), initParam);
+		}
+
+		// シャドウマップの深度ディスクリプタヒープを作る
+		{
+			DsvDescriptorHeapInitParam initParam{};
+			initParam.shaderVisible = false;
+			initParam.descriptorParamArray.push_back({ DsvDescriptorType::normal, getSystemId(SystemDepthStencilBufferType::ShadowMap) });
+
+			createDsvDescriptorHeap(getSystemId(SystemDsvDescriptorHeapType::ShadowMap), initParam);
 		}
 	}
 
@@ -175,9 +194,19 @@ namespace tktk
 		m_dx3dBaseObjects->unSetRenderTarget(rtvDescriptorHeapId, startRtvLocationIndex, rtvCount);
 	}
 
+	void DX12GameManager::unSetDepthStencil(unsigned int dsvDescriptorHeapId)
+	{
+		m_dx3dBaseObjects->unSetDepthStencil(dsvDescriptorHeapId);
+	}
+
 	void DX12GameManager::setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
 		m_dx3dBaseObjects->setRenderTargetAndDepthStencil(rtvDescriptorHeapId, dsvDescriptorHeapId, startRtvLocationIndex, rtvCount);
+	}
+
+	void DX12GameManager::setOnlyDepthStencil(unsigned int dsvDescriptorHeapId)
+	{
+		m_dx3dBaseObjects->setOnlyDepthStencil(dsvDescriptorHeapId);
 	}
 
 	void DX12GameManager::setBackBuffer()
@@ -250,9 +279,9 @@ namespace tktk
 		m_dx3dBaseObjects->createRenderTargetBuffer(id, renderTargetSize, clearColor);
 	}
 
-	void DX12GameManager::createDepthStencilBuffer(unsigned int id, const tktkMath::Vector2& depthStencilSize)
+	void DX12GameManager::createDepthStencilBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam)
 	{
-		m_dx3dBaseObjects->createDepthStencilBuffer(id, depthStencilSize);
+		m_dx3dBaseObjects->createDepthStencilBuffer(id, initParam);
 	}
 
 	void DX12GameManager::createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam)
@@ -300,6 +329,16 @@ namespace tktk
 		return m_dx3dBaseObjects->getTextureSize(id);
 	}
 
+	const tktkMath::Vector2& DX12GameManager::getDepthStencilSize(unsigned int id)
+	{
+		return m_dx3dBaseObjects->getDepthStencilSize(id);
+	}
+
+	const tktkMath::Vector2& DX12GameManager::getRenderTargetSize(unsigned int id)
+	{
+		return m_dx3dBaseObjects->getRenderTargetSize(id);
+	}
+
 	void DX12GameManager::createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam)
 	{
 		m_dxGameResource->createSpriteMaterial(id, initParam);
@@ -318,6 +357,11 @@ namespace tktk
 	void DX12GameManager::createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam)
 	{
 		m_dxGameResource->createBasicMeshMaterial(id, initParam);
+	}
+
+	void DX12GameManager::writeBasicMeshShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs)
+	{
+		m_dxGameResource->writeBasicMeshShadowMap(id, baseArgs);
 	}
 
 	void DX12GameManager::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)

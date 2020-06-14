@@ -5,11 +5,18 @@ namespace tktk
 	DsvDescriptorHeapData::DsvDescriptorHeapData(ID3D12Device* device, const DsvDescriptorHeapInitParam& initParam)
 	{
 		D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc{};
-		descHeapDesc.Flags = (initParam.m_shaderVisible) ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+		descHeapDesc.Flags = (initParam.shaderVisible) ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 		descHeapDesc.NodeMask = 0;
-		descHeapDesc.NumDescriptors = initParam.m_descriptorParamArray.size();
+		descHeapDesc.NumDescriptors = initParam.descriptorParamArray.size();
 		descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 		device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&m_descriptorHeap));
+
+		m_depthStencilBufferIdArray.reserve(descHeapDesc.NumDescriptors);
+
+		for (const auto& node : initParam.descriptorParamArray)
+		{
+			m_depthStencilBufferIdArray.push_back(node.id);
+		}
 	}
 
 	DsvDescriptorHeapData::~DsvDescriptorHeapData()
@@ -34,6 +41,11 @@ namespace tktk
 		return handleArray;
 	}
 
+	const std::vector<unsigned int>& DsvDescriptorHeapData::getDepthStencilBufferIdArray() const
+	{
+		return m_depthStencilBufferIdArray;
+	}
+
 	ID3D12DescriptorHeap* DsvDescriptorHeapData::getPtr() const
 	{
 		return m_descriptorHeap;
@@ -47,6 +59,11 @@ namespace tktk
 			commandList->SetGraphicsRootDescriptorTable(i, gpuHandle);
 			gpuHandle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 		}
+	}
+
+	void DsvDescriptorHeapData::setOnlyDepthStencil(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	{
+		commandList->OMSetRenderTargets(0, nullptr, true, getCpuHeapHandleArray(device).data());
 	}
 
 	void DsvDescriptorHeapData::clearView(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)

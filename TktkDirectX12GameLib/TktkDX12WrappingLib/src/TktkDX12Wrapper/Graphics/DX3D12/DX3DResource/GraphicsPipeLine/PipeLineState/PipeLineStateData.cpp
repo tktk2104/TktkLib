@@ -14,9 +14,9 @@ namespace tktk
 
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipeLineStateDesc{};
 		graphicsPipeLineStateDesc.pRootSignature = rootSignaturePtr;
-		graphicsPipeLineStateDesc.VS.pShaderBytecode = vsByteArray.data();
+		graphicsPipeLineStateDesc.VS.pShaderBytecode = (vsByteArray.size() == 0U) ? nullptr : vsByteArray.data();
 		graphicsPipeLineStateDesc.VS.BytecodeLength = vsByteArray.size();
-		graphicsPipeLineStateDesc.PS.pShaderBytecode = psByteArray.data();
+		graphicsPipeLineStateDesc.PS.pShaderBytecode = (psByteArray.size() == 0U) ? nullptr : psByteArray.data();
 		graphicsPipeLineStateDesc.PS.BytecodeLength = psByteArray.size();
 		graphicsPipeLineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 		graphicsPipeLineStateDesc.RasterizerState = initParam.rasterizerDesc;
@@ -25,10 +25,19 @@ namespace tktk
 		graphicsPipeLineStateDesc.InputLayout.NumElements = initParam.inputLayoutArray.size();
 		graphicsPipeLineStateDesc.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
 		graphicsPipeLineStateDesc.PrimitiveTopologyType = initParam.primitiveTopology;
+
 		graphicsPipeLineStateDesc.NumRenderTargets = initParam.renderTargetFormatArray.size();
-		for (unsigned int i = 0; i < graphicsPipeLineStateDesc.NumRenderTargets; i++)
+
+		if (graphicsPipeLineStateDesc.NumRenderTargets == 0U)
 		{
-			graphicsPipeLineStateDesc.RTVFormats[i] = initParam.renderTargetFormatArray.at(i);
+			graphicsPipeLineStateDesc.RTVFormats[0] = DXGI_FORMAT_UNKNOWN;
+		}
+		else
+		{
+			for (unsigned int i = 0; i < graphicsPipeLineStateDesc.NumRenderTargets; i++)
+			{
+				graphicsPipeLineStateDesc.RTVFormats[i] = initParam.renderTargetFormatArray.at(i);
+			}
 		}
 		graphicsPipeLineStateDesc.SampleDesc.Count = 1;
 		graphicsPipeLineStateDesc.SampleDesc.Quality = 0;

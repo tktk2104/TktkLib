@@ -24,6 +24,7 @@ namespace tktk
 		tktkMath::Color						lightDiffuse	{ tktkMath::colorWhite };
 		tktkMath::Color						lightSpeqular	{ tktkMath::colorWhite };
 		tktkMath::Vector3					lightPosition	{ tktkMath::vec3Zero };
+		tktkMath::Matrix4					lightMatrix		{ tktkMath::mat4Identity };
 	};
 }
 #endif // !MESH_DRAW_FUNC_BASE_ARGS_H_

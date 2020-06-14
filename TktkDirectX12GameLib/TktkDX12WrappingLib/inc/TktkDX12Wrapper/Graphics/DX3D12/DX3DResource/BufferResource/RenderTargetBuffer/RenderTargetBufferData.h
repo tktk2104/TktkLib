@@ -27,10 +27,13 @@ namespace tktk
 
 		void createShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
+		const tktkMath::Vector2& getRenderTargetSize() const;
+
 	private:
 
-		ID3D12Resource* m_renderTargetBuffer{ nullptr };
-		bool			m_mustRelease{ true };
+		tktkMath::Vector2	m_renderTargetSize;
+		ID3D12Resource*		m_renderTargetBuffer{ nullptr };
+		bool				m_mustRelease{ true };
 	};
 }
 #endif // !RENDER_TARGET_BUFFER_DATA_H_

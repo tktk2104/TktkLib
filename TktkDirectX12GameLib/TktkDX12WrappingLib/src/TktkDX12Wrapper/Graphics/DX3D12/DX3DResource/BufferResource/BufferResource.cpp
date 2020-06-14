@@ -77,14 +77,44 @@ namespace tktk
 		return m_textureBuffer.getTextureSize(id);
 	}
 
-	void BufferResource::createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& depthStencilSize)
+	void BufferResource::createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam)
 	{
-		m_depthStencilBuffer.create(id, device, depthStencilSize);
+		m_depthStencilBuffer.create(id, device, initParam);
 	}
 
 	void BufferResource::createDepthStencilView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
 		m_depthStencilBuffer.createDepthStencilView(id, device, heapHandle);
+	}
+
+	void BufferResource::createDsvShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	{
+		m_depthStencilBuffer.createShaderResourceView(id, device, heapHandle);
+	}
+
+	void BufferResource::useDepthStencilBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	{
+		m_depthStencilBuffer.use(id, commandList);
+	}
+
+	void BufferResource::unUseDepthStencilBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	{
+		m_depthStencilBuffer.unUse(id, commandList);
+	}
+
+	void BufferResource::allUseDepthStencilBuffer(ID3D12GraphicsCommandList* commandList)
+	{
+		m_depthStencilBuffer.allUse(commandList);
+	}
+
+	void BufferResource::allUnUseDepthStencilBuffer(ID3D12GraphicsCommandList* commandList)
+	{
+		m_depthStencilBuffer.allUnUse(commandList);
+	}
+
+	const tktkMath::Vector2& BufferResource::getDepthStencilSize(unsigned int id) const
+	{
+		return m_depthStencilBuffer.getDepthStencilSize(id);
 	}
 
 	void BufferResource::createRenderTargetBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
@@ -125,5 +155,10 @@ namespace tktk
 	void BufferResource::unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
 		m_renderTargetBuffer.unUseAsBackBuffer(id, commandList);
+	}
+
+	const tktkMath::Vector2& BufferResource::getRenderTargetSize(unsigned int id) const
+	{
+		return m_renderTargetBuffer.getRenderTargetSize(id);
 	}
 }

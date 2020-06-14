@@ -10,6 +10,7 @@ namespace tktk
 	{
 		unsigned int useVertexBufferId;
 		unsigned int useIndexBufferId;
+		unsigned int indexNum;
 		std::vector<Subset> materialSlots;
 	};
 }

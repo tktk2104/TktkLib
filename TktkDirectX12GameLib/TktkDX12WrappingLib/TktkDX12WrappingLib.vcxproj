@@ -154,6 +154,8 @@
   <ItemGroup>
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\BufferResource.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\BufferResourceInitParam.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\BufferType.h" />
+    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\DepthStencilBuffer\DepthStencilBufferInitParam.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeap.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeapData.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeapInitParam.h" />

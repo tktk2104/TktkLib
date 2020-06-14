@@ -50,4 +50,9 @@ namespace tktk
 	{
 		m_renderTargetBufferDataArray.at(id)->createShaderResourceView(device, heapHandle);
 	}
+
+	const tktkMath::Vector2& RenderTargetBuffer::getRenderTargetSize(unsigned int id) const
+	{
+		return m_renderTargetBufferDataArray.at(id)->getRenderTargetSize();
+	}
 }

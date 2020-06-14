@@ -10,17 +10,53 @@ namespace tktk
 		, m_blendRate(initParam.blendRate)
 		, m_textureUvOffset(initParam.textureUvOffset)
 		, m_textureUvMulRate(initParam.textureUvMulRate)
-		, m_textureSize(DX12GameManager::getTextureSize(initParam.useTextureId).x, DX12GameManager::getTextureSize(initParam.useTextureId).y)
 		, m_spriteCenterRate(initParam.spriteCenterRate)
 	{
 		// ディスクリプタヒープを作る
 		BasicDescriptorHeapInitParam descriptorHeapInitParam{};
-		descriptorHeapInitParam.m_shaderVisible = true;
-		descriptorHeapInitParam.m_descriptorParamArray.resize(2U);
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).type = BasicDescriptorType::textureBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).id = initParam.useTextureId;
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).type = BasicDescriptorType::constantBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).id = DX12GameManager::getSystemId(SystemConstantBufferType::Sprite);
+		descriptorHeapInitParam.shaderVisible = true;
+		descriptorHeapInitParam.descriptorTableParamArray.resize(2U);
+
+		{ /* シェーダーリソースビューのディスクリプタの情報 */
+			auto& srvDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(0U);
+			srvDescriptorParam.type = BasicDescriptorType::textureBuffer;
+
+			// スプライトテクスチャの１種類
+			srvDescriptorParam.descriptorParamArray = {
+				{ initParam.srvBufferType, initParam.useBufferId }
+			};
+		}
+
+		{ /* コンスタントバッファービューのディスクリプタの情報 */
+			auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(1U);
+			cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
+
+			// スプライト定数バッファの１種類
+			cbufferViewDescriptorParam.descriptorParamArray = {
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::Sprite) }
+			};
+		}
+
+		auto textureBufferSize = tktkMath::vec3Zero;
+
+		switch (initParam.srvBufferType)
+		{
+		case BufferType::texture:
+
+			textureBufferSize = DX12GameManager::getTextureSize(initParam.useBufferId);
+			m_textureSize = { textureBufferSize.x, textureBufferSize.y };
+			break;
+
+		case BufferType::renderTarget:
+
+			m_textureSize = DX12GameManager::getRenderTargetSize(initParam.useBufferId);
+			break;
+
+		case BufferType::depthStencil:
+
+			m_textureSize = DX12GameManager::getDepthStencilSize(initParam.useBufferId);
+			break;
+		}
 
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
 	}

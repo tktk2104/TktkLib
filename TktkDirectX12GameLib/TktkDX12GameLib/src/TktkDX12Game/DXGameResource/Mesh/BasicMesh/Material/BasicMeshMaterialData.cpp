@@ -15,15 +15,39 @@ namespace tktk
 	{
 		// ディスクリプタヒープを作る
 		BasicDescriptorHeapInitParam descriptorHeapInitParam{};
-		descriptorHeapInitParam.m_shaderVisible = true;
-		descriptorHeapInitParam.m_descriptorParamArray.resize(3U);
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).type	= BasicDescriptorType::textureBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).id	= initParam.useAlbedoMapTextureId;
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).type	= BasicDescriptorType::constantBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(1U).id	= DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh);
-		descriptorHeapInitParam.m_descriptorParamArray.at(2U).type	= BasicDescriptorType::constantBuffer;
-		descriptorHeapInitParam.m_descriptorParamArray.at(2U).id	= DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat);
+		descriptorHeapInitParam.shaderVisible = true;
+		descriptorHeapInitParam.descriptorTableParamArray.resize(3U);
 
+		{ /* シェーダーリソースビューのディスクリプタの情報 */
+			auto& srvDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(0U);
+			srvDescriptorParam.type = BasicDescriptorType::textureBuffer;
+
+			// アルベドマップとシャドウマップの２種類
+			srvDescriptorParam.descriptorParamArray = {
+				{ BufferType::texture,		initParam.useAlbedoMapTextureId											},
+				{ BufferType::depthStencil, DX12GameManager::getSystemId(SystemDepthStencilBufferType::ShadowMap)	}
+			};
+		}
+
+		{ /* コンスタントバッファービューのディスクリプタの情報 */
+			auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(1U);
+			cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
+
+			// 
+			cbufferViewDescriptorParam.descriptorParamArray = {
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh)			}
+			};
+		}
+
+		{ /* コンスタントバッファービューのディスクリプタの情報 */
+			auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(2U);
+			cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
+
+			// 
+			cbufferViewDescriptorParam.descriptorParamArray = {
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat)	}
+			};
+		}
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
 	}
 
@@ -72,6 +96,9 @@ namespace tktk
 			DX12GameManager::unSetRenderTarget(baseArgs.rtvDescriptorHeapId, 0U, 1U);
 		}
 
+		// 深度ステンシルバッファーをシェーダーで使える状態にする
+		DX12GameManager::unSetDepthStencil(baseArgs.dsvDescriptorHeapId);
+
 		// コマンドリストを実行する
 		DX12GameManager::executeCommandList();
 	}
@@ -90,13 +117,14 @@ namespace tktk
 			constantBufferData.boneMatrix[i] = baseArgs.boneMatrix[i];
 		}*/
 
-		constantBufferData.lightAmbient = baseArgs.lightAmbient;
-		constantBufferData.lightDiffuse = baseArgs.lightDiffuse;
-		constantBufferData.lightSpeqular = baseArgs.lightSpeqular;
-		constantBufferData.lightPosition = baseArgs.lightPosition;
+		constantBufferData.lightAmbient		= baseArgs.lightAmbient;
+		constantBufferData.lightDiffuse		= baseArgs.lightDiffuse;
+		constantBufferData.lightSpeqular	= baseArgs.lightSpeqular;
+		constantBufferData.lightPosition	= baseArgs.lightPosition;
+		constantBufferData.lightMatrix		= baseArgs.lightMatrix;
 
-		constantBufferData.materialAmbient = m_materialAmbient;
-		constantBufferData.materialDiffuse = m_materialDiffuse;
+		constantBufferData.materialAmbient	= m_materialAmbient;
+		constantBufferData.materialDiffuse	= m_materialDiffuse;
 		constantBufferData.materialSpecular = m_materialSpecular;
 		constantBufferData.materialEmissive = m_materialEmissive;
 		constantBufferData.materialShiniess = m_materialShiniess;

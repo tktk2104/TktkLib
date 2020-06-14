@@ -18,6 +18,7 @@
 
 #include <TktkDX12Game/Component/DefaultComponents/2DComponents/PostEffectDrawer/PostEffectDrawer.h>
 #include <TktkDX12Game/Component/DefaultComponents/2DComponents/RenderTargetClearer/RenderTargetClearer.h>
+#include <TktkDX12Game/Component/DefaultComponents/3DComponents/ShadowMapWriter/BasicMeshShadowMapWriter.h>
 
 struct TestScene
 {
@@ -198,7 +199,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	{
 		tktk::SpriteMaterialInitParam initParam{};
 		initParam.createDescriptorHeapId = 1U;
-		initParam.useTextureId = 0U;//tktk::DX12GameManager::getSystemId(tktk::SystemTextureBufferType::White);
+		//initParam.srvBufferType = tktk::BufferType::texture;
+		//initParam.useBufferId = 0U;
+		initParam.srvBufferType = tktk::BufferType::depthStencil;
+		initParam.useBufferId = tktk::DX12GameManager::getSystemId(tktk::SystemDepthStencilBufferType::ShadowMap);
 
 		tktk::DX12GameManager::createSpriteMaterial(0U, initParam);
 	}
@@ -230,10 +234,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	// レンダーターゲットビューを作る
 	{
 		tktk::RtvDescriptorHeapInitParam initParam{};
-		initParam.m_shaderVisible = false;
-		initParam.m_descriptorParamArray.resize(1U);
-		initParam.m_descriptorParamArray.at(0U).m_type = tktk::RtvDescriptorType::normal;
-		initParam.m_descriptorParamArray.at(0U).m_id = 0U;
+		initParam.shaderVisible = false;
+		initParam.descriptorParamArray.resize(1U);
+		initParam.descriptorParamArray.at(0U).type = tktk::RtvDescriptorType::normal;
+		initParam.descriptorParamArray.at(0U).id = 0U;
 
 		tktk::DX12GameManager::createRtvDescriptorHeap(0U, initParam);
 	}
@@ -242,10 +246,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	{
 		// ディスクリプタヒープを作る
 		tktk::BasicDescriptorHeapInitParam descriptorHeapInitParam{};
-		descriptorHeapInitParam.m_shaderVisible = true;
-		descriptorHeapInitParam.m_descriptorParamArray.resize(1U);
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).type = tktk::BasicDescriptorType::renderTarget;
-		descriptorHeapInitParam.m_descriptorParamArray.at(0U).id = 0U;
+		descriptorHeapInitParam.shaderVisible = true;
+		descriptorHeapInitParam.descriptorTableParamArray.resize(1U);
+
+		{ /* シェーダーリソースビューのディスクリプタの情報 */
+			auto& srvDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(0U);
+			srvDescriptorParam.type = tktk::BasicDescriptorType::textureBuffer;
+
+			// レンダーターゲットテクスチャの１種類
+			srvDescriptorParam.descriptorParamArray = {
+				{ tktk::BufferType::renderTarget,		0U }
+			};
+		}
 		
 		tktk::DX12GameManager::createBasicDescriptorHeap(0U, descriptorHeapInitParam);
 	}
@@ -269,9 +281,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		auto player = tktk::DX12GameManager::createGameObject();
 		player->createComponent<Player>();
 		player->createComponent<tktk::Transform2D>(
-			tktkMath::Vector2(100.0f, 100.0f),
+			tktkMath::Vector2(1000.0f, 520.0f),
 			tktkMath::vec2One,
-			45.0f,
+			0.0f,
 			tktk::TraceParentType::trace_All
 			);
 		player->createComponent<tktk::SpriteDrawer>(
@@ -291,9 +303,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 				tktkMath::quaternionIdentity,
 				tktk::TraceParentType::trace_All
 				);
-			miku->createComponent<tktk::BasicMeshDrawer>(
+			/*miku->createComponent<tktk::BasicMeshDrawer>(
 				0.0f,
 				0U,
+				0U
+				);*/
+
+			miku->createComponent<tktk::BasicMeshShadowMapWriter>(
+				-10.0f,
 				0U
 				);
 		}
@@ -306,9 +323,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 				tktkMath::quaternionIdentity,
 				tktk::TraceParentType::trace_All
 				);
-			mikuMiku->createComponent<tktk::BasicMeshDrawer>(
+			/*mikuMiku->createComponent<tktk::BasicMeshDrawer>(
 				0.0f,
 				0U,
+				0U
+				);*/
+
+			mikuMiku->createComponent<tktk::BasicMeshShadowMapWriter>(
+				-10.0f,
 				0U
 				);
 		}
@@ -321,9 +343,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 				tktkMath::quaternionIdentity,
 				tktk::TraceParentType::trace_All
 				);
-			mikuMikuMiku->createComponent<tktk::BasicMeshDrawer>(
+			/*mikuMikuMiku->createComponent<tktk::BasicMeshDrawer>(
 				0.0f,
 				0U,
+				0U
+				);*/
+
+			mikuMikuMiku->createComponent<tktk::BasicMeshShadowMapWriter>(
+				-10.0f,
 				0U
 				);
 		}

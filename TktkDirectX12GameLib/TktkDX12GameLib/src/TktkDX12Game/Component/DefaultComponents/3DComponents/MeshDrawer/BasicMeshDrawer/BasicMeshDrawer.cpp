@@ -15,7 +15,7 @@ namespace tktk
 
 		if (m_transform.expired())
 		{
-			throw std::runtime_error("SpriteDrawer not found Transform3D");
+			throw std::runtime_error("BasicMeshDrawer not found Transform3D");
 		}
 	}
 
@@ -27,11 +27,11 @@ namespace tktk
 		// ÉJÉÅÉâèÓïÒ
 		{
 			baseArgs.viewMatrix = tktkMath::Matrix4::createLookAtLH(
-				tktkMath::Vector3(0.0f, 20.0f, -20.0f),
+				tktkMath::Vector3(0.0f, 20.0f, -40.0f),
 				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
 				tktkMath::vec3Up
 			);
-
+			
 			baseArgs.projectionMatrix = tktkMath::Matrix4::createPerspectiveFieldOfViewLH(
 				90.0f,
 				tktk::DX12GameManager::getWindowSize().x / tktk::DX12GameManager::getWindowSize().y,
@@ -40,7 +40,7 @@ namespace tktk
 			);
 		}
 
-		baseArgs.lightPosition = { 0.0f, 10.0f, -100.0f };
+		baseArgs.lightPosition = { 60.0f, 10.0f, -60.0f };
 		for (auto& node : baseArgs.boneMatrix)
 		{
 			node = tktkMath::mat4Identity;
@@ -51,6 +51,12 @@ namespace tktk
 		baseArgs.dsvDescriptorHeapId	= DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::Basic);
 
 		baseArgs.lightPosition = tktkMath::Vector3(10.0f, 10.0f, 10.0f);
+
+		baseArgs.lightMatrix = tktkMath::Matrix4::createLookAtLH(
+			tktkMath::Vector3(10.0f, 10.0f, 10.0f),
+			tktkMath::Vector3(0.0f, 8.0f, 0.0f),
+			tktkMath::vec3Up
+		);
 
 		DX12GameManager::drawBasicMesh(m_meshId, baseArgs);
 	}

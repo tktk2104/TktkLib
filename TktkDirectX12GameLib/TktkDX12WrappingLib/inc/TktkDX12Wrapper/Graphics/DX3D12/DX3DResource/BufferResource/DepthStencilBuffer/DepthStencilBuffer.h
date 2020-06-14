@@ -14,9 +14,21 @@ namespace tktk
 
 	public:
 
-		void create(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& depthStencilSize);
+		void create(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam);
+
+		void use(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		void unUse(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		void allUse(ID3D12GraphicsCommandList* commandList);
+
+		void allUnUse(ID3D12GraphicsCommandList* commandList);
 
 		void createDepthStencilView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+
+		void createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+
+		const tktkMath::Vector2& getDepthStencilSize(unsigned int id) const;
 
 	private:
 
