@@ -20,8 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{EF44EEC4-35A8-49F1-8A32-AC0C047E157F}</ProjectGuid>
-    <RootNamespace>TktkMathLib</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{dd40d28c-1a18-41f3-94d3-3fa0ee95be1c}</ProjectGuid>
+    <RootNamespace>TktkConstexprMathLib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -29,14 +30,14 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -71,18 +72,18 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)TktkTemplateMetaLib\inc;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)lib\</OutDir>
     <TargetName>$(ProjectName)_mtd</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)TktkTemplateMetaLib\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)TktkTemplateMetaLib\inc;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)lib\</OutDir>
     <TargetName>$(ProjectName)_mt</TargetName>
+    <IncludePath>$(SolutionDir)TktkTemplateMetaLib\inc;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -91,24 +92,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,17 +110,29 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>.\inc</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -152,25 +153,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="inc\TktkMathLibDefinition.h" />
-    <ClInclude Include="inc\TktkMath\Random.h" />
-    <ClInclude Include="inc\TktkMath\Structs\Color.h" />
-    <ClInclude Include="inc\TktkMath\MathHelper.h" />
-    <ClInclude Include="inc\TktkMath\Structs\Matrix3.h" />
-    <ClInclude Include="inc\TktkMath\Structs\Matrix4.h" />
-    <ClInclude Include="inc\TktkMath\Structs\Quaternion.h" />
-    <ClInclude Include="inc\TktkMath\Structs\Vector2.h" />
-    <ClInclude Include="inc\TktkMath\Structs\Vector3.h" />
+    <ClInclude Include="inc\TktkConstexprMathLibDefinition.h" />
+    <ClInclude Include="inc\TktkConstexprMath\ConstexprMathHelper.h" />
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprColor.h" />
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprMatrix3.h" />
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprMatrix4.h" />
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprQuaternion.h" />
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprVector2.h" />
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprVector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\TktkMath\MathHelper.cpp" />
-    <ClCompile Include="src\TktkMath\Random.cpp" />
-    <ClCompile Include="src\TktkMath\Structs\Color.cpp" />
-    <ClCompile Include="src\TktkMath\Structs\Matrix3.cpp" />
-    <ClCompile Include="src\TktkMath\Structs\Matrix4.cpp" />
-    <ClCompile Include="src\TktkMath\Structs\Quaternion.cpp" />
-    <ClCompile Include="src\TktkMath\Structs\Vector2.cpp" />
-    <ClCompile Include="src\TktkMath\Structs\Vector3.cpp" />
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprColor.cpp" />
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprMatrix3.cpp" />
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprMatrix4.cpp" />
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprQuaternion.cpp" />
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprVector2.cpp" />
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprVector3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

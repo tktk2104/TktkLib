@@ -15,57 +15,48 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\TktkMath\MathHelper.h">
+    <ClInclude Include="inc\TktkConstexprMathLibDefinition.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkMath\Random.h">
+    <ClInclude Include="inc\TktkConstexprMath\ConstexprMathHelper.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkMath\Structs\Color.h">
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprColor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkMath\Structs\Matrix3.h">
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprMatrix3.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkMath\Structs\Matrix4.h">
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprMatrix4.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkMath\Structs\Quaternion.h">
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprQuaternion.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkMath\Structs\Vector2.h">
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprVector2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkMath\Structs\Vector3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkMathLibDefinition.h">
+    <ClInclude Include="inc\TktkConstexprMath\Structs\ConstexprVector3.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\TktkMath\Random.cpp">
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprColor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkMath\Structs\Color.cpp">
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprMatrix3.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkMath\Structs\Matrix3.cpp">
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprMatrix4.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkMath\Structs\Matrix4.cpp">
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprQuaternion.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkMath\Structs\Quaternion.cpp">
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprVector2.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkMath\Structs\Vector2.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkMath\Structs\Vector3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkMath\MathHelper.cpp">
+    <ClCompile Include="src\TktkConstexprMath\Structs\ConstexprVector3.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
