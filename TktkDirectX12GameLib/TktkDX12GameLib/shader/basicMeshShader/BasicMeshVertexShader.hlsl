@@ -52,8 +52,6 @@ VS_OUTPUT main(VS_INPUT Input)
 	float4x4 LocalMatrix
 		= mul(BoneMatrices[Input.BlendIndices.x], Input.BlendWeight.x)
 		+ mul(BoneMatrices[Input.BlendIndices.y], Input.BlendWeight.y);
-		
-		//BoneMatrices[Input.BlendIndices.y] * Input.BlendWeight.y;
 
 	// 【この頂点座標の座標変換】
 	// ボーンのローカル行列を使って座標変換する
@@ -98,7 +96,7 @@ VS_OUTPUT main(VS_INPUT Input)
 	//
 	Output.Light = mul((ViewLight - ViewPosition.xyz), matTBN);
 
-	Output.LightBasePos = Output.Position;//mul(lightMatrix, Output.Position);
+	Output.LightBasePos = mul(lightMatrix, Input.Position);
 
 	Output.Normal = float4(viewNormal, 1.0f);
 

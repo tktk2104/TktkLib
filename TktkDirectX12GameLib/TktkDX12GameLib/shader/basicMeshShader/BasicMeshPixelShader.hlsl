@@ -59,13 +59,20 @@ float4 main(PS_INPUT Input) : SV_TARGET
 	float2 shadowUV = (posFromLightVP.xy + float2(1, - 1)) * float2(0.5, -0.5);
 	float depthFromLight = g_LightDepthTexture.Sample(g_LightDepthSampler, shadowUV);
 
-	float4 baseColor = g_AlbedoMapTexture.Sample(g_AlbedoMapSampler, Input.TexCoord);
+	float shadowWeight = 1.0;
+
+	if (depthFromLight < posFromLightVP.z - 0.001)
+	{
+		shadowWeight = 0.5;
+	}
+
+	float4 baseColor = g_AlbedoMapTexture.Sample(g_AlbedoMapSampler, Input.TexCoord) * shadowWeight;
 	
-	float4 resultColor = float4(depthFromLight, depthFromLight, depthFromLight, 1.0f);
-		//= materialAmbient	* lightAmbient	* baseColor
-		//+ materialDiffuse	* lightDiffuse	* diffuse * baseColor
-		//+ materialSpecular	* lightSpeqular * specular
-		//+ materialEmissive	* baseColor;
+	float4 resultColor
+		= materialAmbient	* lightAmbient	* baseColor
+		+ materialDiffuse	* lightDiffuse	* diffuse * baseColor
+		+ materialSpecular	* lightSpeqular * specular
+		+ materialEmissive	* baseColor;
 	
 	resultColor.a = baseColor.a * materialDiffuse.a;
 	

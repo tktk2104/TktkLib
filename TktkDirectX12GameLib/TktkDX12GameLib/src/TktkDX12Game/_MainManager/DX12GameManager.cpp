@@ -45,7 +45,7 @@ namespace tktk
 		// シャドウマップの深度バッファーを作る
 		{
 			DepthStencilBufferInitParam initParam{};
-			initParam.depthStencilSize = { 1024.0f, 1024.0f };
+			initParam.depthStencilSize = windowInitParam.windowSize;//{ 1024.0f, 1024.0f };
 			initParam.useAsShaderResource = true;
 
 			createDepthStencilBuffer(getSystemId(SystemDepthStencilBufferType::ShadowMap), initParam);

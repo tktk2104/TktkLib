@@ -27,7 +27,7 @@ namespace tktk
 		// ÉJÉÅÉâèÓïÒ
 		{
 			baseArgs.viewMatrix = tktkMath::Matrix4::createLookAtLH(
-				tktkMath::Vector3(0.0f, 20.0f, -40.0f),
+				tktkMath::Vector3(0.0f, 10.0f, -20.0f),
 				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
 				tktkMath::vec3Up
 			);
@@ -40,7 +40,6 @@ namespace tktk
 			);
 		}
 
-		baseArgs.lightPosition = { 60.0f, 10.0f, -60.0f };
 		for (auto& node : baseArgs.boneMatrix)
 		{
 			node = tktkMath::mat4Identity;
@@ -50,13 +49,15 @@ namespace tktk
 		baseArgs.rtvDescriptorHeapId	= m_useRtvDescriptorHeapId;
 		baseArgs.dsvDescriptorHeapId	= DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::Basic);
 
-		baseArgs.lightPosition = tktkMath::Vector3(10.0f, 10.0f, 10.0f);
+		baseArgs.lightPosition = tktkMath::Vector3(60.0f, 10.0f, -60.0f);
 
-		baseArgs.lightMatrix = tktkMath::Matrix4::createLookAtLH(
-			tktkMath::Vector3(10.0f, 10.0f, 10.0f),
-			tktkMath::Vector3(0.0f, 8.0f, 0.0f),
-			tktkMath::vec3Up
-		);
+		baseArgs.lightMatrix
+			= tktkMath::Matrix4::createLookAtLH(
+				baseArgs.lightPosition,
+				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
+				tktkMath::vec3Up
+			)
+			* tktkMath::Matrix4::createOrthographicLH(40, 40, 1.0f, 100.0f);
 
 		DX12GameManager::drawBasicMesh(m_meshId, baseArgs);
 	}
