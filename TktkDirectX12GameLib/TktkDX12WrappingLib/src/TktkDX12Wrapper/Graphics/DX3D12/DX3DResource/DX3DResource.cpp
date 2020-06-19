@@ -117,24 +117,6 @@ namespace tktk
 				curDescriptorIndex++;
 			}
 		}
-
-		/*for (unsigned int i = 0; i < initParam.descriptorParamArray.size(); i++)
-		{
-			const auto& descriptorParam = initParam.descriptorParamArray.at(i);
-
-			switch (descriptorParam.type)
-			{
-			case BasicDescriptorType::constantBuffer:
-
-				createBasicDescriptorCbufferView(device, cpuHeapHandleArray.at(i), descriptorParam.useBufferParamArray);
-				break;
-
-			case BasicDescriptorType::textureBuffer:
-
-				createBasicDescriptorShaderResourceView(device, cpuHeapHandleArray.at(i), descriptorParam.useBufferParamArray);
-				break;
-			}
-		}*/
 	}
 
 	void DX3DResource::createRtvDescriptorHeap(unsigned int id, ID3D12Device* device, const RtvDescriptorHeapInitParam& initParam)
@@ -175,9 +157,9 @@ namespace tktk
 		}
 	}
 
-	void DX3DResource::updateConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	void DX3DResource::updateConstantBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
-		m_bufferResource.updateConstantBuffer(id, device, constantBufferTypeSize, constantBufferDataTopPos);
+		m_bufferResource.updateConstantBuffer(id, device, commandList, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
 	void DX3DResource::clearRenderTargetView(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)

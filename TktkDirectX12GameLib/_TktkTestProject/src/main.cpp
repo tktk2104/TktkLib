@@ -57,9 +57,14 @@ public:
 
 public:
 
+	void start()
+	{
+		tra = getComponent<tktk::Transform3D>();
+	}
+
 	void awake()
 	{
-
+		
 	}
 
 	void onEnable()
@@ -79,6 +84,14 @@ public:
 
 	void update()
 	{
+		tra->addLocalRotation(tktkMath::Quaternion::createFromAxisAngle({ 0, 1, 0 }, 1.0f));
+
+		//tra->addLocalPosition({ 1, 0, 0 });
+
+		/*auto a = tra->calculateWorldEulerAngles();
+
+		tra->addLocalEulerAngles({ 0.0f, 10.0f, 0.0f });*/
+
 		//setActive(false);
 		//destroy();
 	}
@@ -107,6 +120,10 @@ public:
 	{
 
 	}
+
+private:
+
+	tktk::ComponentPtr<tktk::Transform3D> tra;
 };
 
 struct Enemy
@@ -278,22 +295,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	
 		tktk::DX12GameManager::addCollisionGroup(1, 2);
 	
-		auto player = tktk::DX12GameManager::createGameObject();
-		player->createComponent<Player>();
-		player->createComponent<tktk::Transform2D>(
-			tktkMath::Vector2(1000.0f, 520.0f),
-			tktkMath::vec2One,
-			0.0f,
-			tktk::TraceParentType::trace_All
-			);
-		player->createComponent<tktk::SpriteDrawer>(
-			0.0f,
-			0U,
-			0U
-			);
-	
-		auto enemy = tktk::DX12GameManager::createGameObject();
-		enemy->createComponent<Enemy>();
+		//{
+		//	auto player = tktk::DX12GameManager::createGameObject();
+		//	player->createComponent<tktk::Transform2D>(
+		//		tktkMath::Vector2(1000.0f, 520.0f),
+		//		tktkMath::vec2One,
+		//		0.0f,
+		//		tktk::TraceParentType::trace_All
+		//		);
+		//	/*player->createComponent<tktk::SpriteDrawer>(
+		//		0.0f,
+		//		0U,
+		//		0U
+		//		);*/
+		//}
 
 		{
 			auto miku = tktk::DX12GameManager::createGameObject();
@@ -303,68 +318,76 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 				tktkMath::quaternionIdentity,
 				tktk::TraceParentType::trace_All
 				);
-			/*miku->createComponent<tktk::BasicMeshDrawer>(
+			miku->createComponent<tktk::BasicMeshDrawer>(
 				0.0f,
 				0U,
 				0U
-				);*/
+				);
 
 			miku->createComponent<tktk::BasicMeshShadowMapWriter>(
 				-10.0f,
 				0U
 				);
+
+			miku->createComponent<Player>();
 		}
 
-		{
+		/*{
 			auto mikuMiku = tktk::DX12GameManager::createGameObject();
 			mikuMiku->createComponent<tktk::Transform3D>(
-				tktkMath::Vector3(10.0f, 0.0f, 0.0f),
+				tktkMath::Vector3(10.0f, 0.0f, 10.0f),
 				tktkMath::vec3One,
 				tktkMath::quaternionIdentity,
 				tktk::TraceParentType::trace_All
 				);
-			/*mikuMiku->createComponent<tktk::BasicMeshDrawer>(
+			mikuMiku->createComponent<tktk::BasicMeshDrawer>(
 				0.0f,
 				0U,
 				0U
-				);*/
+				);
 
 			mikuMiku->createComponent<tktk::BasicMeshShadowMapWriter>(
 				-10.0f,
 				0U
 				);
+
+			mikuMiku->createComponent<Player>();
 		}
 
 		{
 			auto mikuMikuMiku = tktk::DX12GameManager::createGameObject();
 			mikuMikuMiku->createComponent<tktk::Transform3D>(
-				tktkMath::Vector3(-10.0f, 0.0f, 0.0f),
+				tktkMath::Vector3(-10.0f, 0.0f, -10.0f),
 				tktkMath::vec3One,
 				tktkMath::quaternionIdentity,
 				tktk::TraceParentType::trace_All
 				);
-			/*mikuMikuMiku->createComponent<tktk::BasicMeshDrawer>(
+			mikuMikuMiku->createComponent<tktk::BasicMeshDrawer>(
 				0.0f,
 				0U,
 				0U
-				);*/
+				);
 
 			mikuMikuMiku->createComponent<tktk::BasicMeshShadowMapWriter>(
 				-10.0f,
 				0U
 				);
-		}
 
-		auto postEffectObject = tktk::DX12GameManager::createGameObject();
-		postEffectObject->createComponent<tktk::PostEffectDrawer>(
-			1.0f,
-			0U,
-			tktk::DX12GameManager::getSystemId(tktk::SystemRtvDescriptorHeapType::BackBuffer)
-			);
-		/*postEffectObject->createComponent<tktk::RenderTargetClearer>(
-			0U,
-			tktkMath::colorBlack
-			);*/
+			mikuMikuMiku->createComponent<Player>();
+		}*/
+
+		{
+			auto postEffectObject = tktk::DX12GameManager::createGameObject();
+			postEffectObject->createComponent<tktk::PostEffectDrawer>(
+				1.0f,
+				0U,
+				tktk::DX12GameManager::getSystemId(tktk::SystemRtvDescriptorHeapType::BackBuffer)
+				);
+			/*postEffectObject->createComponent<tktk::RenderTargetClearer>(
+				0U,
+				tktkMath::colorBlack
+				);*/
+		}
 	}
 
 	// プログラム開始

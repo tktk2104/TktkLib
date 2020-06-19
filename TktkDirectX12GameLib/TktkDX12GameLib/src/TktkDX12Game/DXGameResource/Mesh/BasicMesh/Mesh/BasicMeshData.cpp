@@ -58,6 +58,7 @@ namespace tktk
 		materialDrawFuncArgs.useVertexBufferId		= m_useVertexBufferId;
 		materialDrawFuncArgs.useIndexBufferId		= m_useIndexBufferId;
 
+
 		for (const auto& node : m_materialSlots)
 		{
 			materialDrawFuncArgs.indexBufferStartPos = node.indexBufferStartPos;
@@ -65,6 +66,9 @@ namespace tktk
 		
 			DX12GameManager::drawBasicMeshMaterial(node.useMaterialId, baseArgs, materialDrawFuncArgs);
 		}
+
+		// コマンドリストを実行する
+		DX12GameManager::executeCommandList();
 	}
 
 	void BasicMeshData::updateShadowMapCbuffer(const MeshWriteShadowFuncBaseArgs& baseArgs)

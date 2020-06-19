@@ -169,10 +169,10 @@ namespace tktk
 	{
 		// 現在のバックバッファーのインデックスを取得する
 		m_curBackBufferIndex = static_cast<IDXGISwapChain3*>(m_swapChain)->GetCurrentBackBufferIndex();
-
+		
 		// 現在のバックバッファーの種類を「m_curBackBufferIndex」から求める
 		auto curBackBufferType = (m_curBackBufferIndex == 0) ? SystemRenderTargetBufferType::BackBuffer_1 : SystemRenderTargetBufferType::BackBuffer_2;
-
+		
 		// バックバッファをレンダーターゲット状態にする
 		m_dX3DResource.useAsBackBuffer(getSystemId(curBackBufferType), m_commandList);
 
@@ -196,7 +196,7 @@ namespace tktk
 	{
 		// 現在のバックバッファーの種類を「m_curBackBufferIndex」から求める
 		auto curBackBufferType = (m_curBackBufferIndex == 0) ? SystemRenderTargetBufferType::BackBuffer_1 : SystemRenderTargetBufferType::BackBuffer_2;
-
+		
 		// バックバッファをプリセット状態にする
 		m_dX3DResource.unUseAsBackBuffer(getSystemId(curBackBufferType), m_commandList);
 
@@ -279,7 +279,7 @@ namespace tktk
 
 	void DX3DBaseObjects::updateConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
-		m_dX3DResource.updateConstantBuffer(id, m_device, constantBufferTypeSize, constantBufferDataTopPos);
+		m_dX3DResource.updateConstantBuffer(id, m_device, m_commandList, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
 	void DX3DBaseObjects::clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color)

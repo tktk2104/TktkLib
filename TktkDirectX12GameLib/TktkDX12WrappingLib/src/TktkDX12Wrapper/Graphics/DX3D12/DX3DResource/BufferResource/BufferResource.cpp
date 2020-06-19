@@ -42,9 +42,9 @@ namespace tktk
 		m_constantBuffer.createConstantBufferView(id, device, heapHandle);
 	}
 
-	void BufferResource::updateConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	void BufferResource::updateConstantBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
-		m_constantBuffer.updateBuffer(id, device, constantBufferTypeSize, constantBufferDataTopPos);
+		m_constantBuffer.updateBuffer(id, device, commandList, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
 	void BufferResource::cpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)

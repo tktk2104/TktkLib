@@ -99,8 +99,8 @@ namespace tktk
 		// 深度ステンシルバッファーをシェーダーで使える状態にする
 		DX12GameManager::unSetDepthStencil(baseArgs.dsvDescriptorHeapId);
 
-		// コマンドリストを実行する
-		DX12GameManager::executeCommandList();
+		//// コマンドリストを実行する
+		//DX12GameManager::executeCommandList();
 	}
 
 	// 通常メッシュ用の定数バッファを更新する

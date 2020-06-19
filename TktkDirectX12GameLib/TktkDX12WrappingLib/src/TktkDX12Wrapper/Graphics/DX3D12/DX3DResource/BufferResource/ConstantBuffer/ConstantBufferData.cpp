@@ -1,15 +1,12 @@
 #include "TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/ConstantBuffer/ConstantBufferData.h"
 
+#include <algorithm>
+
 namespace tktk
 {
 	ConstantBufferData::ConstantBufferData(ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		createBuffer(device, constantBufferTypeSize);
-
-		void* mappedBuffer{ nullptr };
-		m_constantBuffer->Map(0, nullptr, &mappedBuffer);
-		memcpy(mappedBuffer, constantBufferDataTopPos, constantBufferTypeSize);
-		m_constantBuffer->Unmap(0, nullptr);
 	}
 
 	ConstantBufferData::~ConstantBufferData()
@@ -29,48 +26,97 @@ namespace tktk
 		device->CreateConstantBufferView(&cbvDesc, heapHandle);
 	}
 
-	void ConstantBufferData::updateBuffer(ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	void ConstantBufferData::updateBuffer(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
+		// 定数バッファをCPUアクセス特化ヒープにコピーする
 		void* mappedBuffer{ nullptr };
-		m_constantBuffer->Map(0, nullptr, &mappedBuffer);
+		m_uploadBuff->Map(0, nullptr, &mappedBuffer);
 		memcpy(mappedBuffer, constantBufferDataTopPos, constantBufferTypeSize);
-		m_constantBuffer->Unmap(0, nullptr);
+		m_uploadBuff->Unmap(0, nullptr);
+
+		// テクスチャバッファーのバリアを「読み取り」状態から「コピー先」状態に変更する
+		D3D12_RESOURCE_BARRIER barrierDesc{};
+		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+		barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+		barrierDesc.Transition.pResource = m_constantBuffer;
+		barrierDesc.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_GENERIC_READ;
+		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_COPY_DEST;
+		commandList->ResourceBarrier(1, &barrierDesc);
+
+		// GPU間のメモリのコピーを行う
+		commandList->CopyBufferRegion(m_constantBuffer, 0, m_uploadBuff, 0, constantBufferTypeSize);
+
+		// テクスチャバッファーのバリアを「コピー先」状態から「読み取り」状態に変更する
+		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
+		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
+		commandList->ResourceBarrier(1, &barrierDesc);
 	}
 
 	void ConstantBufferData::createBuffer(ID3D12Device* device, unsigned int bufferSize)
 	{
-		if (m_constantBuffer != nullptr)
+		// CPUアクセスに特化したヒープを作る（CPUからデータをコピーする時に使用する）
 		{
-			m_constantBuffer->Release();
+			D3D12_HEAP_PROPERTIES uploadHeapProp{};
+			uploadHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+			uploadHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+			uploadHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+			uploadHeapProp.CreationNodeMask = 0;
+			uploadHeapProp.VisibleNodeMask = 0;
+
+			// 中間バッファなのでバッファはただのバイナリデータの塊として解釈させる
+			D3D12_RESOURCE_DESC resDesc{};
+			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+			resDesc.Format = DXGI_FORMAT_UNKNOWN;
+			resDesc.Width = (bufferSize + 0xff) & ~0xff;
+			resDesc.Height = 1;
+			resDesc.DepthOrArraySize = 1;
+			resDesc.MipLevels = 1;
+			resDesc.SampleDesc.Count = 1;
+			resDesc.SampleDesc.Quality = 0;
+			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+			device->CreateCommittedResource(
+				&uploadHeapProp,
+				D3D12_HEAP_FLAG_NONE,
+				&resDesc,
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				nullptr,
+				IID_PPV_ARGS(&m_uploadBuff)
+			);
 		}
 
-		D3D12_HEAP_PROPERTIES constBuffHeapProp{};
-		constBuffHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-		constBuffHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-		constBuffHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-		constBuffHeapProp.CreationNodeMask = 0U;
-		constBuffHeapProp.VisibleNodeMask = 0U;
+		// GPUアクセスに特化したヒープを作る（シェーダーが使用する）
+		{
+			D3D12_HEAP_PROPERTIES constBuffHeapProp{};
+			constBuffHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;//D3D12_HEAP_TYPE_UPLOAD;
+			constBuffHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+			constBuffHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+			constBuffHeapProp.CreationNodeMask = 0U;
+			constBuffHeapProp.VisibleNodeMask = 0U;
 
-		D3D12_RESOURCE_DESC resDesc{};
-		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-		resDesc.Format = DXGI_FORMAT_UNKNOWN;
-		resDesc.Width = (bufferSize + 0xff) & ~0xff;
-		resDesc.Height = 1;
-		resDesc.DepthOrArraySize = 1;
-		resDesc.MipLevels = 1;
-		resDesc.SampleDesc.Count = 1;
-		resDesc.SampleDesc.Quality = 0;
-		resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-		resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+			D3D12_RESOURCE_DESC resDesc{};
+			resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+			resDesc.Format = DXGI_FORMAT_UNKNOWN;
+			resDesc.Width = (bufferSize + 0xff) & ~0xff;
+			resDesc.Height = 1;
+			resDesc.DepthOrArraySize = 1;
+			resDesc.MipLevels = 1;
+			resDesc.SampleDesc.Count = 1;
+			resDesc.SampleDesc.Quality = 0;
+			resDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+			resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-
-		device->CreateCommittedResource(
-			&constBuffHeapProp,
-			D3D12_HEAP_FLAG_NONE,
-			&resDesc,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&m_constantBuffer)
-		);
+			device->CreateCommittedResource(
+				&constBuffHeapProp,
+				D3D12_HEAP_FLAG_NONE,
+				&resDesc,
+				D3D12_RESOURCE_STATE_GENERIC_READ,
+				nullptr,
+				IID_PPV_ARGS(&m_constantBuffer)
+			);
+		}
+		
 	}
 }
