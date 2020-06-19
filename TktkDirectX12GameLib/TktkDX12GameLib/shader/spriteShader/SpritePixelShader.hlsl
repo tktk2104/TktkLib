@@ -16,12 +16,10 @@ struct PS_INPUT
 	float4 position : SV_POSITION;
 };
 
-Texture2D<float>	TextureMapTexture : register(t0);
-SamplerState		TextureMapSampler : register(s0);
+Texture2D		TextureMapTexture : register(t0);
+SamplerState	TextureMapSampler : register(s0);
 
 float4 main(PS_INPUT input) : SV_Target
 {
-	float temp = TextureMapTexture.Sample(TextureMapSampler, input.texcoord);
-	
-	return float4(temp, temp, temp, 1.0) * blendRate;
+	return TextureMapTexture.Sample(TextureMapSampler, input.texcoord) * blendRate;
 }

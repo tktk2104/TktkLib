@@ -295,20 +295,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	
 		tktk::DX12GameManager::addCollisionGroup(1, 2);
 	
-		//{
-		//	auto player = tktk::DX12GameManager::createGameObject();
-		//	player->createComponent<tktk::Transform2D>(
-		//		tktkMath::Vector2(1000.0f, 520.0f),
-		//		tktkMath::vec2One,
-		//		0.0f,
-		//		tktk::TraceParentType::trace_All
-		//		);
-		//	/*player->createComponent<tktk::SpriteDrawer>(
-		//		0.0f,
-		//		0U,
-		//		0U
-		//		);*/
-		//}
+		/*{
+			auto player = tktk::DX12GameManager::createGameObject();
+			player->createComponent<tktk::Transform2D>(
+				tktkMath::Vector2(1000.0f, 520.0f),
+				tktkMath::vec2One,
+				0.0f,
+				tktk::TraceParentType::trace_All
+				);
+			player->createComponent<tktk::SpriteDrawer>(
+				0.0f,
+				0U,
+				0U
+				);
+		}*/
 
 		{
 			auto miku = tktk::DX12GameManager::createGameObject();

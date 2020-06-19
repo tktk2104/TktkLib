@@ -96,7 +96,7 @@ VS_OUTPUT main(VS_INPUT Input)
 	//
 	Output.Light = mul((ViewLight - ViewPosition.xyz), matTBN);
 
-	Output.LightBasePos = mul(lightMatrix, Input.Position);
+	Output.LightBasePos = mul(lightMatrix, WorldPosition);
 
 	Output.Normal = float4(viewNormal, 1.0f);
 

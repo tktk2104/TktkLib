@@ -32,7 +32,6 @@ VS_OUTPUT main(VS_INPUT input)
 	output.position.xyz = mul(worldMatrix, output.position.xyz);
 	
 	output.position.xy = output.position.xy * float2(2.0 / screenSize.x, 2.0 / -screenSize.y) + float2(-1.0, 1.0);
-	//output.position.xy = output.position.xy * float2(2.0 / 1920.0, 2.0 / -1080.0) + float2(-1.0, 1.0);
 	output.texcoord.xy = (input.position.xy * textureUvMulRate) + textureUvOffset;
 
 	return output;
