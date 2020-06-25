@@ -37,6 +37,8 @@ namespace tktk
 			initParam.spriteNum				= dx3dInitParam.spriteNum;
 			initParam.basicMeshNum			= dx3dInitParam.basicMeshNum;
 			initParam.basicMeshMaterialNum	= dx3dInitParam.basicMeshMaterialNum;
+			initParam.skeletonNum			= dx3dInitParam.skeletonNum;
+			initParam.motionNum				= dx3dInitParam.motionNum;
 			initParam.postEffectMaterialNum = dx3dInitParam.postEffectMaterialNum;
 
 			m_dxGameResource = std::make_unique<DXGameResource>(initParam);
@@ -364,19 +366,39 @@ namespace tktk
 		m_dxGameResource->writeBasicMeshShadowMap(id, baseArgs);
 	}
 
+	void DX12GameManager::setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
+	{
+		m_dxGameResource->setMaterialData(id, baseArgs);
+	}
+
 	void DX12GameManager::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
 	{
 		m_dxGameResource->drawBasicMesh(id, baseArgs);
 	}
 
-	void DX12GameManager::drawBasicMeshMaterial(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs)
-	{
-		m_dxGameResource->drawBasicMeshMaterial(id, baseArgs, materialArgs);
-	}
-
 	BasicMeshLoadPmdReturnValue DX12GameManager::loadPmd(const BasicMeshLoadPmdArgs& args)
 	{
 		return m_dxGameResource->loadPmd(args);
+	}
+
+	void DX12GameManager::createSkeleton(unsigned int id, const SkeletonInitParam& initParam)
+	{
+		m_dxGameResource->createSkeleton(id, initParam);
+	}
+
+	void DX12GameManager::updateBoneMatrixCbuffer(unsigned int id)
+	{
+		m_dxGameResource->updateBoneMatrixCbuffer(id);
+	}
+
+	void DX12GameManager::loadMotion(unsigned int id, const std::string& motionFileName)
+	{
+		m_dxGameResource->loadMotion(id, motionFileName);
+	}
+
+	void DX12GameManager::updateMotion(unsigned int skeletonId, unsigned int motionId, unsigned int curFrame)
+	{
+		m_dxGameResource->updateMotion(skeletonId, motionId, curFrame);
 	}
 
 	void DX12GameManager::createPostEffectMaterial(unsigned int id, const PostEffectMaterialInitParam& initParam)

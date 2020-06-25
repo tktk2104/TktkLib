@@ -20,6 +20,9 @@ namespace tktk
 	
 		void updateBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
+		// 全てのアップロード用のバッファを削除する
+		void deleteUploadBufferAll();
+
 	private:
 
 		HeapArray<ConstantBufferData> m_constantBufferDataArray;

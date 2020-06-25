@@ -6,8 +6,10 @@ namespace tktk
 {
 	DXGameResource::DXGameResource(const DXGameResourceInitParam& initParam)
 		: m_spriteMaterial(initParam.spriteShaderFilePaths, initParam.spriteNum)
+		, m_skeleton(initParam.skeletonNum) // ※メッシュクラスの初期化にボーン行列定数バッファが必要なので先にコンストラクトする必要がある
 		, m_basicMesh(initParam.writeShadowMapVsFilePath, initParam.basicMeshNum)
 		, m_basicMeshMaterial(initParam.basicMeshShaderFilePaths, initParam.basicMeshMaterialNum)
+		, m_motion(initParam.motionNum)
 		, m_postEffectMaterial(initParam.postEffectShaderFilePaths, initParam.postEffectMaterialNum)
 	{
 	}
@@ -37,19 +39,39 @@ namespace tktk
 		m_basicMesh.writeShadowMap(id, baseArgs);
 	}
 
+	void DXGameResource::setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
+	{
+		m_basicMeshMaterial.setMaterialData(id, baseArgs);
+	}
+
 	void DXGameResource::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
 	{
 		m_basicMesh.drawMesh(id, baseArgs);
 	}
 
-	void DXGameResource::drawBasicMeshMaterial(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs)
-	{
-		m_basicMeshMaterial.drawUseMaterial(id, baseArgs, materialArgs);
-	}
-
 	BasicMeshLoadPmdReturnValue DXGameResource::loadPmd(const BasicMeshLoadPmdArgs& args)
 	{
 		return BasicMeshPmdLoader::loadPmd(args);
+	}
+
+	void DXGameResource::createSkeleton(unsigned int id, const SkeletonInitParam& initParam)
+	{
+		m_skeleton.create(id, initParam);
+	}
+
+	void DXGameResource::updateBoneMatrixCbuffer(unsigned int id)
+	{
+		m_skeleton.updateBoneMatrixCbuffer(id);
+	}
+
+	void DXGameResource::loadMotion(unsigned int id, const std::string& motionFileName)
+	{
+		m_motion.load(id, motionFileName);
+	}
+
+	void DXGameResource::updateMotion(unsigned int skeletonId, unsigned int motionId, unsigned int curFrame)
+	{
+		m_skeleton.transform(skeletonId, m_motion.calculateBoneTransformMatrices(motionId, curFrame));
 	}
 
 	void DXGameResource::createPostEffectMaterial(unsigned int id, const PostEffectMaterialInitParam& initParam)

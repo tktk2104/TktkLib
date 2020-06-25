@@ -78,6 +78,16 @@ namespace tktk
 		}
 		DX12GameManager::createBasicMesh(args.createBasicMeshId, meshInitParam);
 
+		SkeletonInitParam skeletonInitParam{};
+		skeletonInitParam.boneDataArray.reserve(outData.boneData.size());
+
+		for (const auto& node : outData.boneData)
+		{
+			skeletonInitParam.boneDataArray.push_back({ node.name, node.parentNo, node.pos });
+		}
+
+		DX12GameManager::createSkeleton(args.createSkeletonId, skeletonInitParam);
+
 		BasicMeshLoadPmdReturnValue returnValue{};
 		returnValue.createBasicMeshMaterialIdEndNum = curMaterialId--;
 

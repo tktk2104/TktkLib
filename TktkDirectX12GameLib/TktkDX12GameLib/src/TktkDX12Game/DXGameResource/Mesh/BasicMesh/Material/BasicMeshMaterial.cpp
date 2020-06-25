@@ -5,6 +5,7 @@
 #endif // _DEBUG
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshConstantBufferData.h"
+#include "..\..\..\..\..\..\inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterial.h"
 
 namespace tktk
 {
@@ -16,7 +17,6 @@ namespace tktk
 
 		// 通常メッシュ用の定数バッファを作る
 		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), BasicMeshConstantBufferData());
-		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat), BasicMeshBoneMatrix());
 	}
 
 	void BasicMeshMaterial::create(unsigned int id, const BasicMeshMaterialInitParam& initParam)
@@ -24,7 +24,7 @@ namespace tktk
 		m_basicMeshMaterialArray.emplaceAt(id, initParam);
 	}
 
-	void BasicMeshMaterial::drawUseMaterial(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs)
+	void BasicMeshMaterial::setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
 	{
 		auto basicMeshPtr = m_basicMeshMaterialArray.at(id);
 
@@ -35,7 +35,7 @@ namespace tktk
 		}
 #endif // _DEBUG
 
-		basicMeshPtr->drawUseMaterial(baseArgs, materialArgs);
+		basicMeshPtr->setMaterialData(baseArgs);
 	}
 
 	void BasicMeshMaterial::createRootSignature()

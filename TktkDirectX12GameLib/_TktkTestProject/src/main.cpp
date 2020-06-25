@@ -15,6 +15,7 @@
 #include <TktkDX12Game/Component/DefaultComponents/2DComponents/SpriteDrawer/SpriteDrawer.h>
 #include <TktkDX12Game/Component/DefaultComponents/3DComponents/Transform3D/Transform3D.h>
 #include <TktkDX12Game/Component/DefaultComponents/3DComponents/MeshDrawer/BasicMeshDrawer/BasicMeshDrawer.h>
+#include <TktkDX12Game/Component/DefaultComponents/3DComponents/MeshAnimator/MeshAnimator.h>
 
 #include <TktkDX12Game/Component/DefaultComponents/2DComponents/PostEffectDrawer/PostEffectDrawer.h>
 #include <TktkDX12Game/Component/DefaultComponents/2DComponents/RenderTargetClearer/RenderTargetClearer.h>
@@ -195,6 +196,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		initParam.spriteNum					= 1U;
 		initParam.basicMeshNum				= 1U;
 		initParam.basicMeshMaterialNum		= 17U;
+		initParam.skeletonNum				= 1U;
+		initParam.motionNum					= 2U;
 		initParam.postEffectMaterialNum		= 1U;
 
 		tktk::DX12GameManager::initialize(1U, initParam, { hInstance, nCmdShow, "TestProject", { 1920.0f, 1080.0f } });
@@ -232,6 +235,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		loadArgs.createVertexBufferId = 0U;
 		loadArgs.createIndexBufferId = 0U;
 		loadArgs.createBasicMeshId = 0U;
+		loadArgs.createSkeletonId = 0U;
 		loadArgs.createBasicMeshMaterialIdStartNum = 0U;
 		loadArgs.loadTextureIdStartNum = 1U;
 
@@ -241,6 +245,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		{
 			//throw std::runtime_error("load Pmd error");
 		}
+	}
+
+	// モーションをロードする
+	{
+		tktk::DX12GameManager::loadMotion(0U, "res/Motion/pose.vmd");
+		tktk::DX12GameManager::loadMotion(1U, "res/Motion/motion.vmd");
 	}
 
 	// レンダーターゲットバッファを作る
@@ -321,12 +331,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			miku->createComponent<tktk::BasicMeshDrawer>(
 				0.0f,
 				0U,
+				0U,
 				0U
 				);
 
-			miku->createComponent<tktk::BasicMeshShadowMapWriter>(
+			/*miku->createComponent<tktk::BasicMeshShadowMapWriter>(
 				-10.0f,
+				0U,
 				0U
+				);*/
+
+			miku->createComponent<tktk::MeshAnimator>(
+				1U
 				);
 
 			miku->createComponent<Player>();

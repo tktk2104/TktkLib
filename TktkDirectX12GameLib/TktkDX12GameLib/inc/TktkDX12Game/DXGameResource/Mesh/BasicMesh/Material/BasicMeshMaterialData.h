@@ -3,7 +3,6 @@
 
 #include "BasicMeshMaterialInitParam.h"
 #include "../../MeshDrawFuncBaseArgs.h"
-#include "../../MeshMaterialDrawFuncArgs.h"
 
 namespace tktk
 {
@@ -16,12 +15,7 @@ namespace tktk
 
 	public:
 
-		void drawUseMaterial(const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs);
-
-	private:
-
-		// 通常メッシュ用の定数バッファを更新する
-		void updateBasicMeshConstantBuffer(const MeshDrawFuncBaseArgs& baseArgs);
+		void setMaterialData(const MeshDrawFuncBaseArgs& baseArgs);
 
 	private:
 

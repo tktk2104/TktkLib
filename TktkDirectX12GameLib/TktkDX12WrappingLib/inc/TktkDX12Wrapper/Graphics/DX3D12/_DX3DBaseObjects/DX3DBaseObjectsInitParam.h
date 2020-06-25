@@ -12,6 +12,8 @@ namespace tktk
 		unsigned int spriteNum;
 		unsigned int basicMeshNum;
 		unsigned int basicMeshMaterialNum;
+		unsigned int skeletonNum;
+		unsigned int motionNum;
 		unsigned int postEffectMaterialNum;
 	};
 }

@@ -8,6 +8,8 @@
 #include "Mesh/BasicMesh/Material/BasicMeshMaterial.h"
 #include "Mesh/BasicMesh/Loader/BasicMeshLoadPmdArgs.h"
 #include "Mesh/BasicMesh/Loader/BasicMeshLoadPmdReturnValue.h"
+#include "Mesh/Skeleton/Skeleton.h"
+#include "Mesh/Motion/Motion.h"
 
 namespace tktk
 {
@@ -32,11 +34,23 @@ namespace tktk
 
 		void writeBasicMeshShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs);
 
+		void setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
+
 		void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 
-		void drawBasicMeshMaterial(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs);
-
 		BasicMeshLoadPmdReturnValue loadPmd(const BasicMeshLoadPmdArgs& args);
+
+	public: /* スケルトン関連の処理 */
+
+		void createSkeleton(unsigned int id, const SkeletonInitParam& initParam);
+
+		void updateBoneMatrixCbuffer(unsigned int id);
+
+	public: /* モーション関係の処理 */
+
+		void loadMotion(unsigned int id, const std::string& motionFileName);
+
+		void updateMotion(unsigned int skeletonId, unsigned int motionId, unsigned int curFrame);
 
 	public: /* ポストエフェクト関係の処理 */
 
@@ -47,8 +61,10 @@ namespace tktk
 	private:
 
 		SpriteMaterial		m_spriteMaterial;
+		Skeleton			m_skeleton;
 		BasicMesh			m_basicMesh;
 		BasicMeshMaterial	m_basicMeshMaterial;
+		Motion				m_motion;
 		PostEffectMaterial	m_postEffectMaterial;
 	};
 }

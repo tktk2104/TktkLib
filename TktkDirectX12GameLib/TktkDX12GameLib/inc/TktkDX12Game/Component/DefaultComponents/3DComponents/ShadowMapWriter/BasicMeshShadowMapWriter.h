@@ -12,7 +12,7 @@ namespace tktk
 	{
 	public:
 
-		BasicMeshShadowMapWriter(float drawPriority, unsigned int meshId);
+		BasicMeshShadowMapWriter(float drawPriority, unsigned int meshId, unsigned int skeletonId);
 
 	public:
 
@@ -22,6 +22,7 @@ namespace tktk
 	private:
 
 		unsigned int				m_meshId;
+		unsigned int				m_skeletonId;
 		ComponentPtr<Transform3D>	m_transform{ };
 	};
 }

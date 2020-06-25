@@ -203,6 +203,9 @@ namespace tktk
 		// コマンドリストを実行する
 		executeCommandList();
 
+		// コピー元バッファを削除する
+		m_dX3DResource.deleteUploadBufferAll();
+
 		// 画面をフリップする
 		m_swapChain->Present(1, 0);
 	}

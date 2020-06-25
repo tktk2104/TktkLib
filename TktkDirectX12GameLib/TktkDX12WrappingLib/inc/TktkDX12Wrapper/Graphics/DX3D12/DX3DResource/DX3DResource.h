@@ -76,6 +76,9 @@ namespace tktk
 		// 指定の定数バッファを更新する
 		void updateConstantBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
+		// 全てのアップロード用のバッファを削除する
+		void deleteUploadBufferAll();
+
 		// 指定のレンダーターゲットビューを指定の色でクリアする
 		void clearRenderTargetView(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color);
 

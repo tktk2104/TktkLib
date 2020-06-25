@@ -18,6 +18,11 @@ namespace tktk
 		BufferResource(const BufferResourceInitParam& initParam);
 		~BufferResource() = default;
 
+	public: /* バッファ共通の処理 */
+
+		// 全てのアップロード用のバッファを削除する
+		void deleteUploadBufferAll();
+
 	public: /* 頂点バッファの処理 */
 
 		void createVertexBuffer(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);

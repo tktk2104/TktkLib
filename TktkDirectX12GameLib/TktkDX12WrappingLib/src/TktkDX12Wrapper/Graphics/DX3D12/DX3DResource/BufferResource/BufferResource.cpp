@@ -1,4 +1,5 @@
 #include "TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/BufferResource.h"
+#include "..\..\..\..\..\..\inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\BufferResource\BufferResource.h"
 
 namespace tktk
 {
@@ -10,6 +11,11 @@ namespace tktk
 		, m_depthStencilBuffer(initParam.depthStencilBufferNum)
 		, m_renderTargetBuffer(initParam.renderTargetBufferNum)
 	{
+	}
+
+	void BufferResource::deleteUploadBufferAll()
+	{
+		m_constantBuffer.deleteUploadBufferAll();
 	}
 
 	void BufferResource::createVertexBuffer(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)

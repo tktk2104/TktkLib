@@ -12,7 +12,6 @@ namespace tktk
 		tktkMath::Matrix4					worldMatrix{ tktkMath::mat4Identity };
 		tktkMath::Matrix4					viewMatrix{ tktkMath::mat4Identity };
 		tktkMath::Matrix4					projectionMatrix{ tktkMath::mat4Identity };
-		tktkMath::Matrix4					boneMatrix[128U]{ };
 	};
 }
 #endif // !MESH_WRITE_SHADOW_FUNC_BASE_ARGS_H_

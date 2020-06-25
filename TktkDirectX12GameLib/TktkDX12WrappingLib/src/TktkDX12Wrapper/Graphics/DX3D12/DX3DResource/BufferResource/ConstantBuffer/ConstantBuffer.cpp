@@ -21,4 +21,14 @@ namespace tktk
 	{
 		m_constantBufferDataArray.at(id)->updateBuffer(device, commandList, constantBufferTypeSize, constantBufferDataTopPos);
 	}
+
+	void ConstantBuffer::deleteUploadBufferAll()
+	{
+		for (unsigned int i = 0; i < m_constantBufferDataArray.arrayMaxSize(); i++)
+		{
+			auto ptr = m_constantBufferDataArray.at(i);
+
+			if (ptr != nullptr) ptr->deleteUploadBuffer();
+		}
+	}
 }

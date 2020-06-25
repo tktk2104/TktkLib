@@ -159,9 +159,6 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshDrawFuncBaseArgs.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshMaterialDrawFuncArgs.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterial.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -210,9 +207,6 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterialDrawFuncArgs.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\ShadowMap\ShadowMap.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -220,6 +214,30 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshShadowMapCbufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Skeleton\Skeleton.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Skeleton\SkeletonData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Motion\Motion.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Motion\MotionData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Skeleton\SkeletonInitParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Skeleton\BoneMatrixCbufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshAnimator\MeshAnimator.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Motion\MotionBoneParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -356,10 +374,22 @@
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\2DComponents\RenderTargetClearer\RenderTargetClearer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\DXGameResource\ShadowMap\ShadowMap.cpp">
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriter.cpp">
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\Skeleton\Skeleton.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\Skeleton\SkeletonData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\Motion\Motion.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\Motion\MotionData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshAnimator\MeshAnimator.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

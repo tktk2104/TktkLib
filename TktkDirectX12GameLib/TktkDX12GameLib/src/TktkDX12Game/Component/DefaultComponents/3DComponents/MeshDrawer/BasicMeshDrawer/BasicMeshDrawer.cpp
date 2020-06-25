@@ -2,9 +2,10 @@
 
 namespace tktk
 {
-	BasicMeshDrawer::BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int useRtvDescriptorHeapId)
+	BasicMeshDrawer::BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int useRtvDescriptorHeapId)
 		: ComponentBase(drawPriority)
 		, m_meshId(meshId)
+		, m_skeletonId(skeletonId)
 		, m_useRtvDescriptorHeapId(useRtvDescriptorHeapId)
 	{
 	}
@@ -17,17 +18,43 @@ namespace tktk
 		{
 			throw std::runtime_error("BasicMeshDrawer not found Transform3D");
 		}
+
+		m_animator = getComponent<MeshAnimator>();
 	}
 
 	void BasicMeshDrawer::draw() const
 	{
-		MeshDrawFuncBaseArgs baseArgs{};
-		baseArgs.worldMatrix = m_transform->calculateWorldMatrix();
+		if (!m_animator.expired())
+		{
+			m_animator->transformSkeleton(m_skeletonId);
+		}
 
+		// ボーン行列の定数バッファを更新する
+		DX12GameManager::updateBoneMatrixCbuffer(m_skeletonId);
+
+		// メッシュ描画に必要な値
+		MeshDrawFuncBaseArgs baseArgs{};
+		{
+			// Transform3Dからワールド行列を取得
+			baseArgs.worldMatrix = m_transform->calculateWorldMatrix();
+
+			// 使用するビューポート番号
+			baseArgs.viewportId = DX12GameManager::getSystemId(SystemViewportType::Basic);
+
+			// 使用するシザー矩形番号
+			baseArgs.scissorRectId = DX12GameManager::getSystemId(SystemScissorRectType::Basic);
+
+			// 使用するレンダーターゲットディスクリプタヒープ番号
+			baseArgs.rtvDescriptorHeapId = m_useRtvDescriptorHeapId;
+
+			// 使用する深度ステンシルディスクリプタヒープ番号
+			baseArgs.dsvDescriptorHeapId = DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::Basic);
+		}
+		
 		// カメラ情報
 		{
 			baseArgs.viewMatrix = tktkMath::Matrix4::createLookAtLH(
-				tktkMath::Vector3(0.0f, 10.0f, -20.0f),
+				tktkMath::Vector3(0.0f, 15.0f, -20.0f),
 				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
 				tktkMath::vec3Up
 			);
@@ -40,25 +67,20 @@ namespace tktk
 			);
 		}
 
-		for (auto& node : baseArgs.boneMatrix)
+		// ライト情報
 		{
-			node = tktkMath::mat4Identity;
+			baseArgs.lightPosition = tktkMath::Vector3(60.0f, 10.0f, -60.0f);
+
+			baseArgs.lightMatrix
+				= tktkMath::Matrix4::createLookAtLH(
+					baseArgs.lightPosition,
+					tktkMath::Vector3(0.0f, 0.0f, 0.0f),
+					tktkMath::vec3Up
+				)
+				* tktkMath::Matrix4::createOrthographicLH(40, 40, 1.0f, 100.0f);
 		}
-		baseArgs.viewportId				= DX12GameManager::getSystemId(SystemViewportType::Basic);
-		baseArgs.scissorRectId			= DX12GameManager::getSystemId(SystemScissorRectType::Basic);
-		baseArgs.rtvDescriptorHeapId	= m_useRtvDescriptorHeapId;
-		baseArgs.dsvDescriptorHeapId	= DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::Basic);
 
-		baseArgs.lightPosition = tktkMath::Vector3(60.0f, 10.0f, -60.0f);
-
-		baseArgs.lightMatrix
-			= tktkMath::Matrix4::createLookAtLH(
-				baseArgs.lightPosition,
-				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
-				tktkMath::vec3Up
-			)
-			* tktkMath::Matrix4::createOrthographicLH(40, 40, 1.0f, 100.0f);
-
+		// メッシュを描画する
 		DX12GameManager::drawBasicMesh(m_meshId, baseArgs);
 	}
 }

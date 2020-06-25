@@ -25,11 +25,11 @@
 #include "../DXGameResource/Sprite/SpriteMaterialDrawFuncArgs.h"
 #include "../DXGameResource/Mesh/MeshWriteShadowFuncBaseArgs.h"
 #include "../DXGameResource/Mesh/MeshDrawFuncBaseArgs.h"
-#include "../DXGameResource/Mesh/MeshMaterialDrawFuncArgs.h"
 #include "../DXGameResource/Mesh/BasicMesh/Mesh/BasicMeshInitParam.h"
 #include "../DXGameResource/Mesh/BasicMesh/Material/BasicMeshMaterialInitParam.h"
 #include "../DXGameResource/Mesh/BasicMesh/Loader/BasicMeshLoadPmdArgs.h"
 #include "../DXGameResource/Mesh/BasicMesh/Loader/BasicMeshLoadPmdReturnValue.h"
+#include "../DXGameResource/Mesh/Skeleton/SkeletonInitParam.h"
 #include "../DXGameResource/PostEffect/PostEffectMaterialInitParam.h"
 #include "../DXGameResource/PostEffect/PostEffectMaterialDrawFuncArgs.h"
 
@@ -196,11 +196,23 @@ namespace tktk
 
 		static void writeBasicMeshShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs);
 
+		static void setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
+
 		static void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 
-		static void drawBasicMeshMaterial(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs);
-
 		static BasicMeshLoadPmdReturnValue loadPmd(const BasicMeshLoadPmdArgs& args);
+
+	public: /* スケルトン関連の処理 */
+
+		static void createSkeleton(unsigned int id, const SkeletonInitParam& initParam);
+
+		static void updateBoneMatrixCbuffer(unsigned int id);
+
+	public: /* モーション関係の処理 */
+
+		static void loadMotion(unsigned int id, const std::string& motionFileName);
+
+		static void updateMotion(unsigned int skeletonId, unsigned int motionId, unsigned int curFrame);
 
 	public: /* ポストエフェクト関係の処理 */
 

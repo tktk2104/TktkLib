@@ -24,9 +24,10 @@ namespace tktk
 				auto& cbufferViewDescriptorParam = initParam.descriptorTableParamArray.at(0U);
 				cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
 
-				// シャドウマップ定数バッファの１種類
+				// シャドウマップ定数バッファとボーン行列定数バッファの２種類
 				cbufferViewDescriptorParam.descriptorParamArray = {
-					{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshShadowMap)	}
+					{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshShadowMap)	},
+					{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat)	}
 				};
 			}
 
@@ -59,7 +60,7 @@ namespace tktk
 			initParam.rootParamArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
 			initParam.rootParamArray.at(0).descriptorTable.resize(1U);
 			{
-				initParam.rootParamArray.at(0).descriptorTable.at(0).numDescriptors = 1U;
+				initParam.rootParamArray.at(0).descriptorTable.at(0).numDescriptors = 2U;
 				initParam.rootParamArray.at(0).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
 				initParam.rootParamArray.at(0).descriptorTable.at(0).startRegisterNum = 0U;
 			}

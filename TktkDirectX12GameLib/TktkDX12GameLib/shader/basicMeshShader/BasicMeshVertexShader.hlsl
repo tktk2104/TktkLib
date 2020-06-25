@@ -3,7 +3,6 @@ cbuffer ConstantBuffer : register(b0)
 	float4x4    WorldMatrix;
 	float4x4    ViewMatrix;
 	float4x4    ProjectionMatrix;
-	//float4x4    BoneMatrices[128];
 	float4		lightAmbient;
 	float4		lightDiffuse;
 	float4		lightSpeqular;

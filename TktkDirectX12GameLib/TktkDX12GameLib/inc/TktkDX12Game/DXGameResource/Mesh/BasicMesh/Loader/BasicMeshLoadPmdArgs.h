@@ -10,8 +10,9 @@ namespace tktk
 		unsigned int createDescriptorHeapIdStartNum;
 		unsigned int createVertexBufferId;
 		unsigned int createIndexBufferId;
-
+		
 		unsigned int createBasicMeshId;
+		unsigned int createSkeletonId;
 		unsigned int createBasicMeshMaterialIdStartNum;
 		unsigned int loadTextureIdStartNum;
 

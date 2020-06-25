@@ -8,15 +8,17 @@ namespace tktk
 {
 	struct DXGameResourceInitParam
 	{
-		tktk::ShaderFilePaths		spriteShaderFilePaths;
-		tktk::ShaderFilePaths		basicMeshShaderFilePaths;
-		std::string					writeShadowMapVsFilePath;
-		PostEffectShaderFilePaths	postEffectShaderFilePaths;
+		tktk::ShaderFilePaths		spriteShaderFilePaths		{};
+		tktk::ShaderFilePaths		basicMeshShaderFilePaths	{};
+		std::string					writeShadowMapVsFilePath	{};
+		PostEffectShaderFilePaths	postEffectShaderFilePaths	{};
 
-		unsigned int spriteNum;
-		unsigned int basicMeshNum;
-		unsigned int basicMeshMaterialNum;
-		unsigned int postEffectMaterialNum;
+		unsigned int spriteNum				{};
+		unsigned int basicMeshNum			{};
+		unsigned int basicMeshMaterialNum	{};
+		unsigned int motionNum				{};
+		unsigned int skeletonNum			{};
+		unsigned int postEffectMaterialNum	{};
 	};
 }
 #endif // !DX_GAME_RESOURCE_INIT_PARAM_H_

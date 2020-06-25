@@ -37,9 +37,17 @@ namespace tktk
 				std::string			textureFilePath;
 			};
 
+			struct OutBone
+			{
+				std::string			name;
+				unsigned short		parentNo;
+				tktkMath::Vector3	pos;
+			};
+
 			std::vector<OutVertex> vertexData;
 			std::vector<unsigned short> indexData;
 			std::vector<OutMaterial> materialData;
+			std::vector<OutBone> boneData;
 		};
 
 	public:

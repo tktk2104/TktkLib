@@ -2,9 +2,10 @@
 
 namespace tktk
 {
-	BasicMeshShadowMapWriter::BasicMeshShadowMapWriter(float drawPriority, unsigned int meshId)
+	BasicMeshShadowMapWriter::BasicMeshShadowMapWriter(float drawPriority, unsigned int meshId, unsigned int skeletonId)
 		: ComponentBase(drawPriority)
 		, m_meshId(meshId)
+		, m_skeletonId(skeletonId)
 	{
 	}
 
@@ -20,23 +21,26 @@ namespace tktk
 
 	void BasicMeshShadowMapWriter::draw() const
 	{
-		MeshWriteShadowFuncBaseArgs baseArgs{};
-		baseArgs.worldMatrix = m_transform->calculateWorldMatrix();
+		// ボーン行列の定数バッファを更新する
+		DX12GameManager::updateBoneMatrixCbuffer(m_skeletonId);
 
+		// 深度マップ書き出しに必要な値
+		MeshWriteShadowFuncBaseArgs baseArgs{};
+		{
+			// Transform3Dからワールド行列を取得
+			baseArgs.worldMatrix = m_transform->calculateWorldMatrix();
+		}
+		
 		// カメラ情報
 		{
 			baseArgs.viewMatrix = tktkMath::Matrix4::createLookAtLH(
-				tktkMath::Vector3(60.0f, 10.0f, -60.0f),
+				tktkMath::Vector3(60.0f, 15.0f, -60.0f),
 				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
 				tktkMath::vec3Up
 			);
 			baseArgs.projectionMatrix = tktkMath::Matrix4::createOrthographicLH(40, 40, 1.0f, 100.0f);
 		}
-		// 骨情報
-		for (auto& node : baseArgs.boneMatrix)
-		{
-			node = tktkMath::mat4Identity;
-		}
+
 		DX12GameManager::writeBasicMeshShadowMap(m_meshId, baseArgs);
 	}
 }

@@ -1,6 +1,7 @@
 #include "TktkFileIo/lodepmd.h"
 
 #include <filesystem>
+#include <unordered_map>
 
 namespace tktk
 {
@@ -33,7 +34,25 @@ namespace tktk
 		unsigned int		indicesNum;
 		char				textureFilePath[20];
 	};
+
+	struct PmdBone
+	{
+		char				boneName[20];
+		unsigned short		parentNo;
+		unsigned short		nextNo;
+		unsigned char		type;
+		unsigned short		ikBoneNo;
+		tktkMath::Vector3	pos;
+	};
 #pragma pack(pop)
+
+	struct BoneNode
+	{
+		int						boneIndex;
+		tktkMath::Vector3		startPos;
+		tktkMath::Vector3		endPos;
+		std::vector<BoneNode*>	children;
+	};
 
 	void lodepmd::load(loadData* out, const std::string& fileName)
 	{
@@ -65,6 +84,12 @@ namespace tktk
 		std::vector<PmdMaterial> tempMaterialData(materialNum);
 		fread(tempMaterialData.data(), tempMaterialData.size() * sizeof(PmdMaterial), 1, fp);
 
+		unsigned short boneNum;
+		fread(&boneNum, sizeof(unsigned short), 1, fp);
+
+		std::vector<PmdBone> tempBoneData(boneNum);
+		fread(tempBoneData.data(), tempBoneData.size() * sizeof(PmdBone), 1, fp);
+
 		fclose(fp);
 
 		out->vertexData.clear();
@@ -80,7 +105,8 @@ namespace tktk
 			out->vertexData.at(i).bones[2] = 0U;
 			out->vertexData.at(i).bones[3] = 0U;
 
-			out->vertexData.at(i).weight[0] = static_cast<float>(tempVertices.at(i).boneWeight) / 256.0f;
+			// TODO : 教材の仕様上ボーン１のみでの実装
+			out->vertexData.at(i).weight[0] = static_cast<float>(tempVertices.at(i).boneWeight) / 100.0f;
 			out->vertexData.at(i).weight[1] = (1.0f - out->vertexData.at(i).weight[0]);
 			out->vertexData.at(i).weight[2] = 0.0f;
 			out->vertexData.at(i).weight[3] = 0.0f;
@@ -120,6 +146,16 @@ namespace tktk
 			out->materialData.at(i).emissive = tktkMath::colorWhite;
 			out->materialData.at(i).shiniess = 1.0f;
 			out->materialData.at(i).textureFilePath = (std::string(tempMaterialData.at(i).textureFilePath) == "") ? "" : baseTexturePath + tempMaterialData.at(i).textureFilePath;
+		}
+
+		out->boneData.clear();
+		out->boneData.resize(boneNum);
+
+		for (unsigned int i = 0; i < boneNum; i++)
+		{
+			out->boneData.at(i).name		= tempBoneData.at(i).boneName;
+			out->boneData.at(i).parentNo	= tempBoneData.at(i).parentNo;
+			out->boneData.at(i).pos			= tempBoneData.at(i).pos;
 		}
 	}
 }

@@ -54,18 +54,52 @@ namespace tktk
 
 	void BasicMeshData::drawMesh(const MeshDrawFuncBaseArgs& baseArgs)
 	{
-		MeshMaterialDrawFuncArgs materialDrawFuncArgs{};
-		materialDrawFuncArgs.useVertexBufferId		= m_useVertexBufferId;
-		materialDrawFuncArgs.useIndexBufferId		= m_useIndexBufferId;
+		// ビューポートを設定する
+		DX12GameManager::setViewport(baseArgs.viewportId);
 
+		// シザー矩形を設定する
+		DX12GameManager::setScissorRect(baseArgs.scissorRectId);
 
+		// 通常メッシュ用のパイプラインステートを設定する
+		DX12GameManager::setPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMesh));
+
+		// トライアングルリストで描画を行う
+		DX12GameManager::setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		// 描画で使用する頂点バッファを設定する
+		DX12GameManager::setVertexBuffer(m_useVertexBufferId);
+
+		// 描画で使用するインデックスバッファを設定する
+		DX12GameManager::setIndexBuffer(m_useIndexBufferId);
+
+		// レンダーターゲットと深度ステンシルを設定する（バックバッファーに直で描画する場合は特殊処理）
+		if (baseArgs.rtvDescriptorHeapId == DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
+		{
+			DX12GameManager::setBackBufferAndDepthStencil(baseArgs.dsvDescriptorHeapId);
+		}
+		else
+		{
+			DX12GameManager::setRenderTargetAndDepthStencil(baseArgs.rtvDescriptorHeapId, baseArgs.dsvDescriptorHeapId, 0U, 1U);
+		}
+
+		// マテリアルの数だけ描画する
 		for (const auto& node : m_materialSlots)
 		{
-			materialDrawFuncArgs.indexBufferStartPos = node.indexBufferStartPos;
-			materialDrawFuncArgs.indexBufferUseCount = node.indexBufferUseCount;
-		
-			DX12GameManager::drawBasicMeshMaterial(node.useMaterialId, baseArgs, materialDrawFuncArgs);
+			// マテリアルの情報を設定する
+			DX12GameManager::setMaterialData(node.useMaterialId, baseArgs);
+
+			// ドローコール
+			DX12GameManager::drawIndexedInstanced(node.indexBufferUseCount, 1U, node.indexBufferStartPos, 0U, 0U);
 		}
+
+		// バックバッファ以外に描画していたら使用したレンダーターゲットバッファをシェーダーで使用する状態にする
+		if (baseArgs.rtvDescriptorHeapId != DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
+		{
+			DX12GameManager::unSetRenderTarget(baseArgs.rtvDescriptorHeapId, 0U, 1U);
+		}
+
+		// 深度ステンシルバッファーをシェーダーで使える状態にする
+		DX12GameManager::unSetDepthStencil(baseArgs.dsvDescriptorHeapId);
 
 		// コマンドリストを実行する
 		DX12GameManager::executeCommandList();
@@ -78,11 +112,6 @@ namespace tktk
 		cbufferData.worldMatrix = baseArgs.worldMatrix;
 		cbufferData.viewMatrix = baseArgs.viewMatrix;
 		cbufferData.projectionMatrix = baseArgs.projectionMatrix;
-
-		for (unsigned int i = 0; i < 128U; i++)
-		{
-			cbufferData.boneMatrix[i] = baseArgs.boneMatrix[i];
-		}
 
 		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshShadowMap), cbufferData);
 	}

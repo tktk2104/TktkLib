@@ -51,92 +51,32 @@ namespace tktk
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
 	}
 
-	void BasicMeshMaterialData::drawUseMaterial(const MeshDrawFuncBaseArgs& baseArgs, const MeshMaterialDrawFuncArgs& materialArgs)
+	void BasicMeshMaterialData::setMaterialData(const MeshDrawFuncBaseArgs& baseArgs)
 	{
 		// 通常メッシュ用の定数バッファを更新する
-		updateBasicMeshConstantBuffer(baseArgs);
-
-		// ビューポートを設定する
-		DX12GameManager::setViewport(baseArgs.viewportId);
-
-		// シザー矩形を設定する
-		DX12GameManager::setScissorRect(baseArgs.scissorRectId);
-
-		// レンダーターゲットと深度ステンシルを設定する（バックバッファーに直で描画する場合は特殊処理）
-		if (baseArgs.rtvDescriptorHeapId == DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
 		{
-			DX12GameManager::setBackBufferAndDepthStencil(baseArgs.dsvDescriptorHeapId);
-		}
-		else
-		{
-			DX12GameManager::setRenderTargetAndDepthStencil(baseArgs.rtvDescriptorHeapId, baseArgs.dsvDescriptorHeapId, 0U, 1U);
+			BasicMeshConstantBufferData constantBufferData;
+
+			constantBufferData.worldMatrix = baseArgs.worldMatrix;
+			constantBufferData.viewMatrix = baseArgs.viewMatrix;
+			constantBufferData.projectionMatrix = baseArgs.projectionMatrix;
+
+			constantBufferData.lightAmbient = baseArgs.lightAmbient;
+			constantBufferData.lightDiffuse = baseArgs.lightDiffuse;
+			constantBufferData.lightSpeqular = baseArgs.lightSpeqular;
+			constantBufferData.lightPosition = baseArgs.lightPosition;
+			constantBufferData.lightMatrix = baseArgs.lightMatrix;
+
+			constantBufferData.materialAmbient = m_materialAmbient;
+			constantBufferData.materialDiffuse = m_materialDiffuse;
+			constantBufferData.materialSpecular = m_materialSpecular;
+			constantBufferData.materialEmissive = m_materialEmissive;
+			constantBufferData.materialShiniess = m_materialShiniess;
+
+			DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), constantBufferData);
 		}
 
-		// 通常メッシュ用のパイプラインステートを設定する
-		DX12GameManager::setPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMesh));
-		
 		// 通常メッシュ用のディスクリプタヒープを設定する
 		DX12GameManager::setDescriptorHeap({ { DescriptorHeapType::basic, m_createDescriptorHeapId } });
-		
-		// トライアングルリストで描画を行う
-		DX12GameManager::setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		// 描画で使用する頂点バッファを設定する
-		DX12GameManager::setVertexBuffer(materialArgs.useVertexBufferId);
-
-		// 描画で使用するインデックスバッファを設定する
-		DX12GameManager::setIndexBuffer(materialArgs.useIndexBufferId);
-
-		// ドローコール
-		DX12GameManager::drawIndexedInstanced(materialArgs.indexBufferUseCount, 1U, materialArgs.indexBufferStartPos, 0U, 0U);
-	
-		// バックバッファ以外に描画していたら使用したレンダーターゲットバッファをシェーダーで使用する状態にする
-		if (baseArgs.rtvDescriptorHeapId != DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
-		{
-			DX12GameManager::unSetRenderTarget(baseArgs.rtvDescriptorHeapId, 0U, 1U);
-		}
-
-		// 深度ステンシルバッファーをシェーダーで使える状態にする
-		DX12GameManager::unSetDepthStencil(baseArgs.dsvDescriptorHeapId);
-
-		//// コマンドリストを実行する
-		//DX12GameManager::executeCommandList();
-	}
-
-	// 通常メッシュ用の定数バッファを更新する
-	void BasicMeshMaterialData::updateBasicMeshConstantBuffer(const MeshDrawFuncBaseArgs& baseArgs)
-	{
-		BasicMeshConstantBufferData constantBufferData;
-
-		constantBufferData.worldMatrix = baseArgs.worldMatrix;
-		constantBufferData.viewMatrix = baseArgs.viewMatrix;
-		constantBufferData.projectionMatrix = baseArgs.projectionMatrix;
-
-		/*for (unsigned int i = 0; i < 128U; i++)
-		{
-			constantBufferData.boneMatrix[i] = baseArgs.boneMatrix[i];
-		}*/
-
-		constantBufferData.lightAmbient		= baseArgs.lightAmbient;
-		constantBufferData.lightDiffuse		= baseArgs.lightDiffuse;
-		constantBufferData.lightSpeqular	= baseArgs.lightSpeqular;
-		constantBufferData.lightPosition	= baseArgs.lightPosition;
-		constantBufferData.lightMatrix		= baseArgs.lightMatrix;
-
-		constantBufferData.materialAmbient	= m_materialAmbient;
-		constantBufferData.materialDiffuse	= m_materialDiffuse;
-		constantBufferData.materialSpecular = m_materialSpecular;
-		constantBufferData.materialEmissive = m_materialEmissive;
-		constantBufferData.materialShiniess = m_materialShiniess;
-
-		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), constantBufferData);
-
-		BasicMeshBoneMatrix boneMatBuf;
-
-		for (unsigned int i = 0; i < 128U; i++)
-		{
-			boneMatBuf.boneMatrix[i] = baseArgs.boneMatrix[i];
-		}
-		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat), boneMatBuf);
 	}
 }

@@ -8,8 +8,8 @@ namespace tktk
 {
 	struct BasicDescriptorParam
 	{
-		BufferType			type;
-		unsigned int		id;
+		BufferType			type	{};
+		unsigned int		id		{};
 	};
 
 	enum class BasicDescriptorType
@@ -20,15 +20,15 @@ namespace tktk
 
 	struct BasicDescriptorTableParam
 	{
-		BasicDescriptorType					type;
+		BasicDescriptorType					type				{};
 		std::vector<BasicDescriptorParam>	descriptorParamArray{};
 	};
 
 	// 「CBV_SRV_UAV」のディスクリプタヒープを作るためのデータ
 	struct BasicDescriptorHeapInitParam
 	{
-		bool									shaderVisible{ true };
-		std::vector<BasicDescriptorTableParam>	descriptorTableParamArray{ };
+		bool									shaderVisible				{ true };
+		std::vector<BasicDescriptorTableParam>	descriptorTableParamArray	{ };
 	};
 }
 #endif // !BASIC_DESCRIPTOR_HEAP_INIT_PARAM_H_

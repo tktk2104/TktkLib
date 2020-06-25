@@ -158,6 +158,7 @@
     <ClInclude Include="inc\TktkFileIo\lodedds.h" />
     <ClInclude Include="inc\TktkFileIo\lodepmd.h" />
     <ClInclude Include="inc\TktkFileIo\lodepng.h" />
+    <ClInclude Include="inc\TktkFileIo\lodevmd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TktkFileIo\BinaryFileReader.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\TktkFileIo\lodedds.cpp" />
     <ClCompile Include="src\TktkFileIo\lodepmd.cpp" />
     <ClCompile Include="src\TktkFileIo\lodepng.cpp" />
+    <ClCompile Include="src\TktkFileIo\lodevmd.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

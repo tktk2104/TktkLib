@@ -162,6 +162,11 @@ namespace tktk
 		m_bufferResource.updateConstantBuffer(id, device, commandList, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
+	void DX3DResource::deleteUploadBufferAll()
+	{
+		m_bufferResource.deleteUploadBufferAll();
+	}
+
 	void DX3DResource::clearRenderTargetView(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
 	{
 		m_descriptorHeap.clearRenderTarget(id, device, commandList, rtvLocationIndex, color);
