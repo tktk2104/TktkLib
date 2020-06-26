@@ -33,6 +33,9 @@ namespace tktk
 		// 確保したメモリの特定位置（先頭アドレス + (index * sizeof(NodeType))）のメモリが使用中ならば、そのメモリに存在するインスタンスをデストラクトする
 		void eraseAt(unsigned int index);
 
+		// 使用中のメモリに存在するインスタンスを全てデストラクトする
+		void clear();
+
 	public:
 
 		// 指定したインデックスのポインタを取得する（インデックスが指し示すメモリが未使用ならnullPtrを返す）
@@ -181,6 +184,23 @@ namespace tktk
 
 			// 削除したインスタンスのメモリを未使用にする
 			m_arrayNodeUseCheckBitFlag[index / 32U] ^= (1U << (index % 32U));
+		}
+	}
+
+	// 使用中のメモリに存在するインスタンスを全てデストラクトする
+	template<class NodeType, class Allocator>
+	inline void HeapArray<NodeType, Allocator>::clear()
+	{
+		// 使用中メモリのみをデストラクトする
+		for (unsigned int i = 0; i < m_arrayMaxSize; i++)
+		{
+			if ((m_arrayNodeUseCheckBitFlag[i / 32U] & (1U << (i % 32U))) != 0U)
+			{
+				std::allocator_traits<Allocator>::destroy(m_allocator, m_arrayTopPos + i);
+
+				// 削除したインスタンスのメモリを未使用にする
+				m_arrayNodeUseCheckBitFlag[i / 32U] ^= (1U << (i % 32U));
+			}
 		}
 	}
 

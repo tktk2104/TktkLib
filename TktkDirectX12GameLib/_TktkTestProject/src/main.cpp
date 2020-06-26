@@ -199,6 +199,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		initParam.skeletonNum				= 1U;
 		initParam.motionNum					= 2U;
 		initParam.postEffectMaterialNum		= 1U;
+		initParam.soundDataNum				= 2U;
 
 		tktk::DX12GameManager::initialize(1U, initParam, { hInstance, nCmdShow, "TestProject", { 1920.0f, 1080.0f } });
 	}
@@ -298,6 +299,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		tktk::DX12GameManager::createPostEffectMaterial(0U, initParam);
 	}
 
+	// サウンドをロードする
+	{
+		tktk::DX12GameManager::loadSound(0U, "res/Sound/damage.wav");
+		tktk::DX12GameManager::loadSound(1U, "res/Sound/kendo.wav");
+	}
+
 	// テスト
 	{
 		tktk::DX12GameManager::addUpdatePriority<Player>(2.0f);
@@ -305,6 +312,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 	
 		tktk::DX12GameManager::addCollisionGroup(1, 2);
 	
+		tktk::DX12GameManager::playSound(0U, false);
+		tktk::DX12GameManager::playSound(1U, true);
+
 		/*{
 			auto player = tktk::DX12GameManager::createGameObject();
 			player->createComponent<tktk::Transform2D>(

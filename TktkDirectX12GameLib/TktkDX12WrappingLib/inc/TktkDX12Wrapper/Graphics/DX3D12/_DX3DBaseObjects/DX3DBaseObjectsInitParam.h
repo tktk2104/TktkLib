@@ -15,6 +15,8 @@ namespace tktk
 		unsigned int skeletonNum;
 		unsigned int motionNum;
 		unsigned int postEffectMaterialNum;
+
+		unsigned int soundDataNum;
 	};
 }
 #endif // !DX3D_BASE_OBJECTS_INIT_PARAM_H_

@@ -225,8 +225,15 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterial.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialInitParam.h" />
+    <ClInclude Include="inc\TktkDX12Game\Sound\CSoundCallback.h" />
+    <ClInclude Include="inc\TktkDX12Game\Sound\Sound.h" />
+    <ClInclude Include="inc\TktkDX12Game\Sound\SoundData.h" />
+    <ClInclude Include="inc\TktkDX12Game\Sound\SoundPlayState.h" />
+    <ClInclude Include="inc\TktkDX12Game\Sound\SoundPlayer.h" />
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManager.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\_SystemDXGameResourceIdGetter\SystemDXGameResourceType\SystemPostEffectMaterialType.h" />
+    <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManagerFuncInOutValueType.h" />
+    <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManagerUseInitParams.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TktkDX12Game\Component\ComponentBasePtr.cpp" />
@@ -278,6 +285,10 @@
     <ClCompile Include="src\TktkDX12Game\Scene\SceneManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Sprite\SpriteMaterial.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialData.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Sound\CSoundCallback.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Sound\Sound.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Sound\SoundData.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Sound\SoundPlayer.cpp" />
     <ClCompile Include="src\TktkDX12Game\_MainManager\DX12GameManager.cpp" />
   </ItemGroup>
   <ItemGroup>

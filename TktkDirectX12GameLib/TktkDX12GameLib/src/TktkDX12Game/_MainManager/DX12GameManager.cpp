@@ -5,6 +5,7 @@
 #include "TktkDX12Game/GameObject/GameObjectManager.h"
 #include "TktkDX12Game/GameObject/GameObject.h"
 #include "TktkDX12Game/DXGameResource/DXGameResource.h"
+#include "TktkDX12Game/Sound/SoundPlayer.h"
 
 namespace tktk
 {
@@ -14,6 +15,7 @@ namespace tktk
 	std::unique_ptr<Window>					DX12GameManager::m_window;
 	std::unique_ptr<DX3DBaseObjects>		DX12GameManager::m_dx3dBaseObjects;
 	std::unique_ptr<DXGameResource>			DX12GameManager::m_dxGameResource;
+	std::unique_ptr<SoundPlayer>			DX12GameManager::m_soundPlayer;
 
 	void DX12GameManager::initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath)
 	{
@@ -42,6 +44,8 @@ namespace tktk
 			initParam.postEffectMaterialNum = dx3dInitParam.postEffectMaterialNum;
 
 			m_dxGameResource = std::make_unique<DXGameResource>(initParam);
+
+			m_soundPlayer = std::make_unique<SoundPlayer>(dx3dInitParam.soundDataNum);
 		}
 
 		// シャドウマップの深度バッファーを作る
@@ -134,11 +138,15 @@ namespace tktk
 				m_sceneManager->update();
 				m_gameObjectManager->update();
 				m_componentManager->update();
+				m_soundPlayer->update();
+
 				m_dx3dBaseObjects->beginDraw();
 				m_componentManager->draw();
 				m_dx3dBaseObjects->endDraw();
 			}
 		}
+
+		m_soundPlayer->finalize();
 	}
 
 	const tktkMath::Vector2& DX12GameManager::getWindowSize()
@@ -409,6 +417,31 @@ namespace tktk
 	void DX12GameManager::drawPostEffect(unsigned int id, const PostEffectMaterialDrawFuncArgs& drawFuncArgs)
 	{
 		m_dxGameResource->drawPostEffect(id, drawFuncArgs);
+	}
+
+	void DX12GameManager::loadSound(unsigned int id, const std::string& fileName)
+	{
+		m_soundPlayer->load(id, fileName);
+	}
+
+	void DX12GameManager::playSound(unsigned int id, bool loopPlay)
+	{
+		m_soundPlayer->play(id, loopPlay);
+	}
+
+	void DX12GameManager::stopSound(unsigned int id)
+	{
+		m_soundPlayer->stop(id);
+	}
+
+	void DX12GameManager::pauseSound(unsigned int id)
+	{
+		m_soundPlayer->pause(id);
+	}
+
+	void DX12GameManager::setMasterVolume(float volume)
+	{
+		m_soundPlayer->setMasterVolume(volume);
 	}
 
 	unsigned int DX12GameManager::getSystemId(SystemViewportType type)

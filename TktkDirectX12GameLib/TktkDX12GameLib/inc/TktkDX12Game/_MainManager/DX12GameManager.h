@@ -7,31 +7,12 @@
 #include <memory>
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector3.h>
-#include <TktkDX12Wrapper/Graphics/Window/WindowInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjectsInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/RootSignature/RootSignatureInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/BasicDescriptorHeap/BasicDescriptorHeapInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/RtvDescriptorHeap/RtvDescriptorHeapInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DsvDescriptorHeap/DsvDescriptorHeapInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/TextureBuffer/TextureBufferInitParam.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/DepthStencilBuffer/DepthStencilBufferInitParam.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/_SystemResourceIdGetter/SystemResourceType.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DescriptorHeap/DescriptorHeapParam.h>
 #include "../Scene/SceneManager.h"
 #include "../GameObject/GameObjectPtr.h"
 #include "../Component/ComponentManager.h"
-#include "../DXGameResource/Sprite/SpriteMaterialInitParam.h"
-#include "../DXGameResource/Sprite/SpriteMaterialDrawFuncArgs.h"
-#include "../DXGameResource/Mesh/MeshWriteShadowFuncBaseArgs.h"
-#include "../DXGameResource/Mesh/MeshDrawFuncBaseArgs.h"
-#include "../DXGameResource/Mesh/BasicMesh/Mesh/BasicMeshInitParam.h"
-#include "../DXGameResource/Mesh/BasicMesh/Material/BasicMeshMaterialInitParam.h"
-#include "../DXGameResource/Mesh/BasicMesh/Loader/BasicMeshLoadPmdArgs.h"
-#include "../DXGameResource/Mesh/BasicMesh/Loader/BasicMeshLoadPmdReturnValue.h"
-#include "../DXGameResource/Mesh/Skeleton/SkeletonInitParam.h"
-#include "../DXGameResource/PostEffect/PostEffectMaterialInitParam.h"
-#include "../DXGameResource/PostEffect/PostEffectMaterialDrawFuncArgs.h"
+#include "DX12GameManagerUseInitParams.h"
+#include "DX12GameManagerFuncInOutValueType.h"
 
 namespace tktk
 {
@@ -39,6 +20,7 @@ namespace tktk
 	class Window;
 	class DX3DBaseObjects;
 	class DXGameResource;
+	class SoundPlayer;
 
 	class DX12GameManager
 	{
@@ -220,6 +202,24 @@ namespace tktk
 
 		static void drawPostEffect(unsigned int id, const PostEffectMaterialDrawFuncArgs& drawFuncArgs);
 
+	public: /* サウンド関係の処理 */
+
+		// 新しいサウンドを読み込む
+		// ※この関数で読み込めるサウンドの形式は「.wav」のみ
+		static void loadSound(unsigned int id, const std::string& fileName);
+
+		// 指定したサウンドを再生する
+		static void playSound(unsigned int id, bool loopPlay);
+
+		// 指定したサウンドを停止する
+		static void stopSound(unsigned int id);
+
+		// 指定したサウンドを一時停止する
+		static void pauseSound(unsigned int id);
+
+		// 大元の音量を変更する（0.0f～1.0f）
+		static void setMasterVolume(float volume);
+
 	public: /* デフォルトのリソースを使うためのIDを取得する */
 
 		static unsigned int getSystemId(SystemViewportType type);
@@ -249,6 +249,7 @@ namespace tktk
 		static std::unique_ptr<Window>				m_window;
 		static std::unique_ptr<DX3DBaseObjects>		m_dx3dBaseObjects;
 		static std::unique_ptr<DXGameResource>		m_dxGameResource;
+		static std::unique_ptr<SoundPlayer>			m_soundPlayer;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装

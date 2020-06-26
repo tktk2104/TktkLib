@@ -1,6 +1,9 @@
 #ifndef TKTK_DX12_GAME_LIB_DEFINITION_H_
 #define TKTK_DX12_GAME_LIB_DEFINITION_H_
 
+#pragma comment(lib,"winmm.lib")
+#pragma comment(lib,"xaudio2.lib")
+
 #if defined(NDEBUG) || !defined(_DEBUG)
 #pragma comment( lib, "TktkDX12GameLib_mt.lib" )
 #else
