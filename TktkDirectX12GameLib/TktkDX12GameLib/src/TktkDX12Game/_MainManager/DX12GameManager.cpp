@@ -6,6 +6,7 @@
 #include "TktkDX12Game/GameObject/GameObject.h"
 #include "TktkDX12Game/DXGameResource/DXGameResource.h"
 #include "TktkDX12Game/Sound/SoundPlayer.h"
+#include "TktkDX12Game/Input/Keyboard/Keyboard.h"
 
 namespace tktk
 {
@@ -16,6 +17,7 @@ namespace tktk
 	std::unique_ptr<DX3DBaseObjects>		DX12GameManager::m_dx3dBaseObjects;
 	std::unique_ptr<DXGameResource>			DX12GameManager::m_dxGameResource;
 	std::unique_ptr<SoundPlayer>			DX12GameManager::m_soundPlayer;
+	std::unique_ptr<Keyboard>				DX12GameManager::m_keyboard;
 
 	void DX12GameManager::initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath)
 	{
@@ -44,9 +46,9 @@ namespace tktk
 			initParam.postEffectMaterialNum = dx3dInitParam.postEffectMaterialNum;
 
 			m_dxGameResource = std::make_unique<DXGameResource>(initParam);
-
-			m_soundPlayer = std::make_unique<SoundPlayer>(dx3dInitParam.soundDataNum);
 		}
+		m_soundPlayer	= std::make_unique<SoundPlayer>(dx3dInitParam.soundDataNum);
+		m_keyboard		= std::make_unique<Keyboard>(windowInitParam.hInstance, m_window->getHWND());
 
 		// シャドウマップの深度バッファーを作る
 		{
@@ -135,6 +137,7 @@ namespace tktk
 
 			if (canRunDX12Func)
 			{
+				m_keyboard->update();
 				m_sceneManager->update();
 				m_gameObjectManager->update();
 				m_componentManager->update();
@@ -442,6 +445,16 @@ namespace tktk
 	void DX12GameManager::setMasterVolume(float volume)
 	{
 		m_soundPlayer->setMasterVolume(volume);
+	}
+
+	bool DX12GameManager::isPush(KeybordKeyType keyType)
+	{
+		return m_keyboard->isPush(keyType);
+	}
+
+	bool DX12GameManager::isTrigger(KeybordKeyType keyType)
+	{
+		return m_keyboard->isTrigger(keyType);
 	}
 
 	unsigned int DX12GameManager::getSystemId(SystemViewportType type)

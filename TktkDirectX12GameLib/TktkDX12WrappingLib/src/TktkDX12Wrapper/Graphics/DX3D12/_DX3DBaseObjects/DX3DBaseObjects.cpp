@@ -203,9 +203,6 @@ namespace tktk
 		// コマンドリストを実行する
 		executeCommandList();
 
-		// コピー元バッファを削除する
-		m_dX3DResource.deleteUploadBufferAll();
-
 		// 画面をフリップする
 		m_swapChain->Present(1, 0);
 	}
@@ -218,6 +215,9 @@ namespace tktk
 	void DX3DBaseObjects::createPipeLineState(unsigned int id, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath)
 	{
 		m_dX3DResource.createPipeLineState(id, m_device, initParam, shaderFilePath);
+
+		// 初回セット（※最初にセットした時のみ重たい処理となるので、作成直後に先行でセットする）
+		m_dX3DResource.setPipeLineState(id, m_commandList);
 	}
 
 	void DX3DBaseObjects::createVertexBuffer(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
@@ -402,5 +402,8 @@ namespace tktk
 
 		// コマンドリストをリセットする
 		m_commandList->Reset(m_commandAllocator, nullptr);
+
+		// コピー元バッファを削除する
+		m_dX3DResource.deleteUploadBufferAll();
 	}
 }

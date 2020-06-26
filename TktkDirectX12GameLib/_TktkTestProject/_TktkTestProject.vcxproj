@@ -149,6 +149,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Scene\LoadingScene.cpp" />
+    <ClCompile Include="src\Scene\MainScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Scene\LoadingScene.h" />
+    <ClInclude Include="src\Scene\MainScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

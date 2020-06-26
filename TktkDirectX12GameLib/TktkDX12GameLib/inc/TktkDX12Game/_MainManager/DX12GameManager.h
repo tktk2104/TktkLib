@@ -7,7 +7,6 @@
 #include <memory>
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector3.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/_SystemResourceIdGetter/SystemResourceType.h>
 #include "../Scene/SceneManager.h"
 #include "../GameObject/GameObjectPtr.h"
 #include "../Component/ComponentManager.h"
@@ -21,6 +20,7 @@ namespace tktk
 	class DX3DBaseObjects;
 	class DXGameResource;
 	class SoundPlayer;
+	class Keyboard;
 
 	class DX12GameManager
 	{
@@ -220,6 +220,14 @@ namespace tktk
 		// 大元の音量を変更する（0.0f～1.0f）
 		static void setMasterVolume(float volume);
 
+	public: /* キーボード入力関係の処理 */
+
+		// 指定のキーが押されているかを判定
+		static bool isPush(KeybordKeyType keyType);
+
+		// 指定のキーが押され始めたかを判定
+		static bool isTrigger(KeybordKeyType keyType);
+
 	public: /* デフォルトのリソースを使うためのIDを取得する */
 
 		static unsigned int getSystemId(SystemViewportType type);
@@ -250,6 +258,7 @@ namespace tktk
 		static std::unique_ptr<DX3DBaseObjects>		m_dx3dBaseObjects;
 		static std::unique_ptr<DXGameResource>		m_dxGameResource;
 		static std::unique_ptr<SoundPlayer>			m_soundPlayer;
+		static std::unique_ptr<Keyboard>			m_keyboard;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
