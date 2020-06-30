@@ -2,12 +2,8 @@
 #define KEY_BOARD_UPDATER_H_
 
 #include <array>
-#define DIRECTINPUT_VERSION     0x0800
-#include <dinput.h>
+#include "../DirectInputIncluder.h"
 #include "KeybordKeyType.h"
-#include <Windows.h>
-#undef min
-#undef max
 
 namespace tktk
 {
@@ -16,7 +12,7 @@ namespace tktk
 	{
 	public:
 
-		Keyboard(HINSTANCE hInstance, HWND handle);
+		Keyboard(LPDIRECTINPUT8 input, HWND handle);
 		~Keyboard();
 
 		Keyboard(const Keyboard& other) = delete;
@@ -36,11 +32,8 @@ namespace tktk
 
 	private:
 
-		// インプット
-		LPDIRECTINPUT8 m_input;
-
 		// インプットデバイス
-		LPDIRECTINPUTDEVICE8 m_inputDevice;
+		LPDIRECTINPUTDEVICE8 m_inputDevice{ nullptr };
 
 		// 現在のキー入力情報
 		std::array<unsigned char, 256U> m_curKeys;

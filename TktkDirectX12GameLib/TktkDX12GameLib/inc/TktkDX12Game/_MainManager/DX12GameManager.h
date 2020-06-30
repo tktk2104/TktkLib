@@ -20,8 +20,8 @@ namespace tktk
 	class DX3DBaseObjects;
 	class DXGameResource;
 	class SoundPlayer;
-	class Keyboard;
 	class Mouse;
+	class DirectInputWrapper;
 
 	class DX12GameManager
 	{
@@ -240,6 +240,20 @@ namespace tktk
 		// 指定のキーが押され始めたかを判定
 		static bool isTrigger(KeybordKeyType keyType);
 
+	public: /* ゲームパッド入力関係の処理 */
+
+		// 左スティックの傾きを取得（-1.0～1.0の間）
+		static tktkMath::Vector2 getLstick();
+
+		// 右スティックの傾きを取得（-1.0～1.0の間）
+		static tktkMath::Vector2 getRstick();
+
+		// 指定のボタンが押されているかを判定
+		static bool isPush(GamePadBtnType btnType);
+
+		// 指定のボタンが押され始めたかを判定
+		static bool isTrigger(GamePadBtnType btnType);
+
 	public: /* デフォルトのリソースを使うためのIDを取得する */
 
 		static unsigned int getSystemId(SystemViewportType type);
@@ -270,8 +284,8 @@ namespace tktk
 		static std::unique_ptr<DX3DBaseObjects>		m_dx3dBaseObjects;
 		static std::unique_ptr<DXGameResource>		m_dxGameResource;
 		static std::unique_ptr<SoundPlayer>			m_soundPlayer;
-		static std::unique_ptr<Keyboard>			m_keyboard;
 		static std::unique_ptr<Mouse>				m_mouse;
+		static std::unique_ptr<DirectInputWrapper>	m_directInputWrapper;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装

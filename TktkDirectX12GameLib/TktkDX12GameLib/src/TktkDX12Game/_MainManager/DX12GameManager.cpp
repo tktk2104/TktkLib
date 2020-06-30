@@ -7,7 +7,7 @@
 #include "TktkDX12Game/DXGameResource/DXGameResource.h"
 #include "TktkDX12Game/Sound/SoundPlayer.h"
 #include "TktkDX12Game/Input/Mouse/Mouse.h"
-#include "TktkDX12Game/Input/Keyboard/Keyboard.h"
+#include "TktkDX12Game/Input/DirectInputWrapper/DirectInputWrapper.h"
 
 namespace tktk
 {
@@ -18,7 +18,7 @@ namespace tktk
 	std::unique_ptr<DX3DBaseObjects>		DX12GameManager::m_dx3dBaseObjects;
 	std::unique_ptr<DXGameResource>			DX12GameManager::m_dxGameResource;
 	std::unique_ptr<SoundPlayer>			DX12GameManager::m_soundPlayer;
-	std::unique_ptr<Keyboard>				DX12GameManager::m_keyboard;
+	std::unique_ptr<DirectInputWrapper>		DX12GameManager::m_directInputWrapper;
 	std::unique_ptr<Mouse>					DX12GameManager::m_mouse;
 
 	void DX12GameManager::initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath)
@@ -49,10 +49,10 @@ namespace tktk
 
 			m_dxGameResource = std::make_unique<DXGameResource>(initParam);
 		}
-		m_soundPlayer	= std::make_unique<SoundPlayer>(dx3dInitParam.soundDataNum);
-		m_keyboard		= std::make_unique<Keyboard>(windowInitParam.hInstance, m_window->getHWND());
-		m_mouse			= std::make_unique<Mouse>();
-
+		m_soundPlayer			= std::make_unique<SoundPlayer>(dx3dInitParam.soundDataNum);
+		m_mouse					= std::make_unique<Mouse>();
+		m_directInputWrapper	= std::make_unique<DirectInputWrapper>(windowInitParam.hInstance, m_window->getHWND());
+		
 		// シャドウマップの深度バッファーを作る
 		{
 			DepthStencilBufferInitParam initParam{};
@@ -140,7 +140,7 @@ namespace tktk
 
 			if (canRunDX12Func)
 			{
-				m_keyboard->update();
+				m_directInputWrapper->update();
 				m_mouse->update();
 				m_sceneManager->update();
 				m_gameObjectManager->update();
@@ -468,12 +468,32 @@ namespace tktk
 
 	bool DX12GameManager::isPush(KeybordKeyType keyType)
 	{
-		return m_keyboard->isPush(keyType);
+		return m_directInputWrapper->isPush(keyType);
 	}
 
 	bool DX12GameManager::isTrigger(KeybordKeyType keyType)
 	{
-		return m_keyboard->isTrigger(keyType);
+		return m_directInputWrapper->isTrigger(keyType);
+	}
+
+	tktkMath::Vector2 DX12GameManager::getLstick()
+	{
+		return m_directInputWrapper->getLstick();
+	}
+
+	tktkMath::Vector2 DX12GameManager::getRstick()
+	{
+		return m_directInputWrapper->getRstick();
+	}
+
+	bool DX12GameManager::isPush(GamePadBtnType btnType)
+	{
+		return m_directInputWrapper->isPush(btnType);
+	}
+
+	bool DX12GameManager::isTrigger(GamePadBtnType btnType)
+	{
+		return m_directInputWrapper->isTrigger(btnType);
 	}
 
 	unsigned int DX12GameManager::getSystemId(SystemViewportType type)

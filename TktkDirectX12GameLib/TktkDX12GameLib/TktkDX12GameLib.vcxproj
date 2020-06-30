@@ -215,8 +215,12 @@
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectManager.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectPtr.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectTagList.h" />
-    <ClInclude Include="inc\TktkDX12Game\Input\Keyboard\Keyboard.h" />
-    <ClInclude Include="inc\TktkDX12Game\Input\Keyboard\KeybordKeyType.h" />
+    <ClInclude Include="inc\TktkDX12Game\Input\DirectInputWrapper\DirectInputIncluder.h" />
+    <ClInclude Include="inc\TktkDX12Game\Input\DirectInputWrapper\DirectInputWrapper.h" />
+    <ClInclude Include="inc\TktkDX12Game\Input\DirectInputWrapper\GamePad\GamePad.h" />
+    <ClInclude Include="inc\TktkDX12Game\Input\DirectInputWrapper\GamePad\GamePadBtnType.h" />
+    <ClInclude Include="inc\TktkDX12Game\Input\DirectInputWrapper\Keyboard\Keyboard.h" />
+    <ClInclude Include="inc\TktkDX12Game\Input\DirectInputWrapper\Keyboard\KeybordKeyType.h" />
     <ClInclude Include="inc\TktkDX12Game\Input\Mouse\Mouse.h" />
     <ClInclude Include="inc\TktkDX12Game\Input\Mouse\MouseButtonType.h" />
     <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.h" />
@@ -281,7 +285,9 @@
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectPtr.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectTagList.cpp" />
-    <ClCompile Include="src\TktkDX12Game\Input\Keyboard\Keyboard.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Input\DirectInputWrapper\DirectInputWrapper.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Input\DirectInputWrapper\GamePad\GamePad.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Input\DirectInputWrapper\Keyboard\Keyboard.cpp" />
     <ClCompile Include="src\TktkDX12Game\Input\Mouse\Mouse.cpp" />
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.cpp" />
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyOriginalVoidPtr.cpp" />

@@ -10,5 +10,4 @@ namespace tktk
 		centerBtn	= 0x04,	// ’†‰›ƒ{ƒ^ƒ“
 	};
 }
-
 #endif // !MOUSE_BUTTON_TYPE_H_

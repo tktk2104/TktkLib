@@ -55,7 +55,22 @@ public:
 	{
 		if (tktk::DX12GameManager::isPush(tktk::KeybordKeyType::key_Space))
 		{
-			tra->addLocalRotation(tktkMath::Quaternion::createFromAxisAngle({ 0, 1, 0 }, 1.0f));
+			tra->addLocalEulerAngles({ 0.0f, 10.0f, 0.0f });
+			//tra->addLocalRotation(tktkMath::Quaternion::createFromAxisAngle({ 0, 1, 0 }, 1.0f));
+		}
+
+		auto inputL = tktk::DX12GameManager::getLstick();
+
+		if (inputL.length() > 0.3f)
+		{
+			tra->addLocalPosition(tktkMath::Vector3(inputL.x, 0.0f, inputL.y));
+		}
+
+		auto inputR = tktk::DX12GameManager::getRstick();
+
+		if (inputR.length() > 0.3f)
+		{
+			tra->addLocalPosition(tktkMath::Vector3(inputR.x, 0.0f, inputR.y));
 		}
 
 		//tra->addLocalPosition({ 1, 0, 0 });
