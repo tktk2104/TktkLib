@@ -1,7 +1,7 @@
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Material/BasicMeshMaterialData.h"
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
-#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshConstantBufferData.h"
+#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshMaterialCbuffer.h"
 
 namespace tktk
 {
@@ -29,51 +29,45 @@ namespace tktk
 			};
 		}
 
-		{ /* コンスタントバッファービューのディスクリプタの情報 */
+		{ /* 頂点シェーダー用のコンスタントバッファービューのディスクリプタの情報 */
 			auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(1U);
 			cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
 
 			// 
 			cbufferViewDescriptorParam.descriptorParamArray = {
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh)			}
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::MeshTransform)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BoneMatCbuffer)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshLight)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial)	}
 			};
 		}
 
-		{ /* コンスタントバッファービューのディスクリプタの情報 */
+		{ /* ピクセルシェーダー用のコンスタントバッファービューのディスクリプタの情報 */
 			auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(2U);
 			cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
 
 			// 
 			cbufferViewDescriptorParam.descriptorParamArray = {
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat)	}
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshLight)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial)	}
 			};
 		}
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
 	}
 
-	void BasicMeshMaterialData::setMaterialData(const MeshDrawFuncBaseArgs& baseArgs)
+	void BasicMeshMaterialData::setMaterialData()
 	{
-		// 通常メッシュ用の定数バッファを更新する
+		// マテリアルの情報を定数バッファに書き込む
 		{
-			BasicMeshConstantBufferData constantBufferData;
+			BasicMeshMaterialCbuffer materialBufferData{};
 
-			constantBufferData.worldMatrix = baseArgs.worldMatrix;
-			constantBufferData.viewMatrix = baseArgs.viewMatrix;
-			constantBufferData.projectionMatrix = baseArgs.projectionMatrix;
+			materialBufferData.materialAmbient = m_materialAmbient;
+			materialBufferData.materialDiffuse = m_materialDiffuse;
+			materialBufferData.materialSpecular = m_materialSpecular;
+			materialBufferData.materialEmissive = m_materialEmissive;
+			materialBufferData.materialShiniess = m_materialShiniess;
 
-			constantBufferData.lightAmbient = baseArgs.lightAmbient;
-			constantBufferData.lightDiffuse = baseArgs.lightDiffuse;
-			constantBufferData.lightSpeqular = baseArgs.lightSpeqular;
-			constantBufferData.lightPosition = baseArgs.lightPosition;
-			constantBufferData.lightMatrix = baseArgs.lightMatrix;
-
-			constantBufferData.materialAmbient = m_materialAmbient;
-			constantBufferData.materialDiffuse = m_materialDiffuse;
-			constantBufferData.materialSpecular = m_materialSpecular;
-			constantBufferData.materialEmissive = m_materialEmissive;
-			constantBufferData.materialShiniess = m_materialShiniess;
-
-			DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), constantBufferData);
+			DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial), materialBufferData);
 		}
 
 		// 通常メッシュ用のディスクリプタヒープを設定する

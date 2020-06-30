@@ -1,6 +1,8 @@
 #include "TktkDX12Game/DXGameResource/DXGameResource.h"
 
+#include "TktkDX12Game/_MainManager/DX12GameManager.h"
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Loader/BasicMeshPmdLoader.h"
+#include "TktkDX12Game/DXGameResource/Mesh/MeshTransformCbuffer.h"
 
 namespace tktk
 {
@@ -34,14 +36,14 @@ namespace tktk
 		m_basicMeshMaterial.create(id, initParam);
 	}
 
-	void DXGameResource::writeBasicMeshShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs)
+	void DXGameResource::writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData)
 	{
-		m_basicMesh.writeShadowMap(id, baseArgs);
+		m_basicMesh.writeShadowMap(id, transformBufferData);
 	}
 
-	void DXGameResource::setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
+	void DXGameResource::setMaterialData(unsigned int id)
 	{
-		m_basicMeshMaterial.setMaterialData(id, baseArgs);
+		m_basicMeshMaterial.setMaterialData(id);
 	}
 
 	void DXGameResource::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)

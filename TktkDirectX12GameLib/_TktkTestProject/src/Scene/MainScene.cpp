@@ -1,6 +1,7 @@
 #include "MainScene.h"
 
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
+#include "../GameObject/Cursor/Cursor.h"
 
 #include <TktkDX12Game/Component/DefaultComponents/2DComponents/Transform2D/Transform2D.h>
 #include <TktkDX12Game/Component/DefaultComponents/2DComponents/SpriteDrawer/SpriteDrawer.h>
@@ -99,23 +100,10 @@ private:
 
 void MainScene::start()
 {
+	Cursor::create();
+
 	/*tktk::DX12GameManager::playSound(0U, false);
 	tktk::DX12GameManager::playSound(1U, true);*/
-
-	/*{
-			auto player = tktk::DX12GameManager::createGameObject();
-			player->createComponent<tktk::Transform2D>(
-				tktkMath::Vector2(1000.0f, 520.0f),
-				tktkMath::vec2One,
-				0.0f,
-				tktk::TraceParentType::trace_All
-				);
-			player->createComponent<tktk::SpriteDrawer>(
-				0.0f,
-				0U,
-				0U
-				);
-		}*/
 
 	{
 		auto miku = tktk::DX12GameManager::createGameObject();

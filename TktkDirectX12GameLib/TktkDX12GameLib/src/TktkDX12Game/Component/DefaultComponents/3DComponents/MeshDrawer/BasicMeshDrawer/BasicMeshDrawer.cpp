@@ -36,7 +36,7 @@ namespace tktk
 		MeshDrawFuncBaseArgs baseArgs{};
 		{
 			// Transform3Dからワールド行列を取得
-			baseArgs.worldMatrix = m_transform->calculateWorldMatrix();
+			baseArgs.transformBufferData.worldMatrix = m_transform->calculateWorldMatrix();
 
 			// 使用するビューポート番号
 			baseArgs.viewportId = DX12GameManager::getSystemId(SystemViewportType::Basic);
@@ -53,13 +53,13 @@ namespace tktk
 		
 		// カメラ情報
 		{
-			baseArgs.viewMatrix = tktkMath::Matrix4::createLookAtLH(
+			baseArgs.transformBufferData.viewMatrix = tktkMath::Matrix4::createLookAtLH(
 				tktkMath::Vector3(0.0f, 15.0f, -20.0f),
 				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
 				tktkMath::vec3Up
 			);
 			
-			baseArgs.projectionMatrix = tktkMath::Matrix4::createPerspectiveFieldOfViewLH(
+			baseArgs.transformBufferData.projectionMatrix = tktkMath::Matrix4::createPerspectiveFieldOfViewLH(
 				90.0f,
 				tktk::DX12GameManager::getWindowSize().x / tktk::DX12GameManager::getWindowSize().y,
 				1.0f,
@@ -69,11 +69,11 @@ namespace tktk
 
 		// ライト情報
 		{
-			baseArgs.lightPosition = tktkMath::Vector3(60.0f, 10.0f, -60.0f);
+			baseArgs.lightBufferData.lightPosition = tktkMath::Vector3(60.0f, 10.0f, -60.0f);
 
-			baseArgs.lightMatrix
+			baseArgs.lightBufferData.lightMatrix
 				= tktkMath::Matrix4::createLookAtLH(
-					baseArgs.lightPosition,
+					baseArgs.lightBufferData.lightPosition,
 					tktkMath::Vector3(0.0f, 0.0f, 0.0f),
 					tktkMath::vec3Up
 				)

@@ -1,6 +1,7 @@
 #include "LoadingScene.h"
 
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
+#include "../GameObject/Cursor/CursorScript.h"
 
 void LoadingScene::start()
 {
@@ -14,10 +15,10 @@ void LoadingScene::start()
 	{
 		tktk::SpriteMaterialInitParam initParam{};
 		initParam.createDescriptorHeapId = 1U;
-		//initParam.srvBufferType = tktk::BufferType::texture;
-		//initParam.useBufferId = 0U;
-		initParam.srvBufferType = tktk::BufferType::depthStencil;
-		initParam.useBufferId = tktk::DX12GameManager::getSystemId(tktk::SystemDepthStencilBufferType::ShadowMap);
+		initParam.srvBufferType = tktk::BufferType::texture;
+		initParam.useBufferId = 0U;
+		//initParam.srvBufferType = tktk::BufferType::depthStencil;
+		//initParam.useBufferId = tktk::DX12GameManager::getSystemId(tktk::SystemDepthStencilBufferType::ShadowMap);
 
 		tktk::DX12GameManager::createSpriteMaterial(0U, initParam);
 	}
@@ -98,6 +99,8 @@ void LoadingScene::start()
 		tktk::DX12GameManager::loadSound(0U, "res/Sound/damage.wav");
 		tktk::DX12GameManager::loadSound(1U, "res/Sound/kendo.wav");
 	}
+
+	tktk::DX12GameManager::addUpdatePriority<CursorScript>(-10.0f);
 
 	// ì«Ç›çûÇ›ÉVÅ[ÉìÇñ≥å¯Ç…Ç∑ÇÈ
 	tktk::DX12GameManager::disableScene(0U);

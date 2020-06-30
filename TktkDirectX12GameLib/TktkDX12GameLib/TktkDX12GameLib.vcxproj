@@ -183,11 +183,11 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameDrawFuncArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameResource.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameResourceInitParam.h" />
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshShadowMapCbufferData.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshLightCbuffer.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshMaterialCbuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshLoadPmdReturnValue.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshPmdLoader.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMesh.h" />
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshConstantBufferData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshLoadPmdArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterial.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterialData.h" />
@@ -196,7 +196,7 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMeshInitParam.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Subset.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshDrawFuncBaseArgs.h" />
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshWriteShadowFuncBaseArgs.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshTransformCbuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Motion\Motion.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Motion\MotionBoneParam.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Motion\MotionData.h" />
@@ -217,6 +217,8 @@
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectTagList.h" />
     <ClInclude Include="inc\TktkDX12Game\Input\Keyboard\Keyboard.h" />
     <ClInclude Include="inc\TktkDX12Game\Input\Keyboard\KeybordKeyType.h" />
+    <ClInclude Include="inc\TktkDX12Game\Input\Mouse\Mouse.h" />
+    <ClInclude Include="inc\TktkDX12Game\Input\Mouse\MouseButtonType.h" />
     <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.h" />
     <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyOriginalVoidPtr.h" />
     <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyReplicaVoidPtr.h" />
@@ -280,6 +282,7 @@
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectPtr.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectTagList.cpp" />
     <ClCompile Include="src\TktkDX12Game\Input\Keyboard\Keyboard.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Input\Mouse\Mouse.cpp" />
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.cpp" />
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyOriginalVoidPtr.cpp" />
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyReplicaVoidPtr.cpp" />

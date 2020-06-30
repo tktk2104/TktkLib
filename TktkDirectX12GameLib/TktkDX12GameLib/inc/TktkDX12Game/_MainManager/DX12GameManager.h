@@ -21,6 +21,7 @@ namespace tktk
 	class DXGameResource;
 	class SoundPlayer;
 	class Keyboard;
+	class Mouse;
 
 	class DX12GameManager
 	{
@@ -176,9 +177,9 @@ namespace tktk
 
 		static void createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam);
 
-		static void writeBasicMeshShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs);
+		static void writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData);
 
-		static void setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
+		static void setMaterialData(unsigned int id);
 
 		static void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 
@@ -220,6 +221,17 @@ namespace tktk
 		// 大元の音量を変更する（0.0f～1.0f）
 		static void setMasterVolume(float volume);
 
+	public: /* マウス入力関係の処理 */
+
+		// 指定のボタンが押されているか
+		static bool isPush(MouseButtonType buttonType);
+
+		// 指定のボタンが押され始めたかを判定
+		static bool isTrigger(MouseButtonType buttonType);
+
+		// マウスカーソルの座標を取得する
+		static tktkMath::Vector2 mousePos();
+
 	public: /* キーボード入力関係の処理 */
 
 		// 指定のキーが押されているかを判定
@@ -259,6 +271,7 @@ namespace tktk
 		static std::unique_ptr<DXGameResource>		m_dxGameResource;
 		static std::unique_ptr<SoundPlayer>			m_soundPlayer;
 		static std::unique_ptr<Keyboard>			m_keyboard;
+		static std::unique_ptr<Mouse>				m_mouse;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装

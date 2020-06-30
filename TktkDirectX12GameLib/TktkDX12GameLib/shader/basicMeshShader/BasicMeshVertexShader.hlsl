@@ -1,27 +1,41 @@
-cbuffer ConstantBuffer : register(b0)
+
+// 基本の座標変換に使用する情報
+cbuffer TransformBuffer : register(b0)
 {
 	float4x4    WorldMatrix;
 	float4x4    ViewMatrix;
 	float4x4    ProjectionMatrix;
+};
+
+// スキニングメッシュアニメーションに必要な情報
+cbuffer BoneMatBuffer : register(b1)
+{
+	float4x4    boneMatrices[128];
+};
+
+// ライト計算に必要な情報
+cbuffer LightBuffer : register(b2)
+{
 	float4		lightAmbient;
 	float4		lightDiffuse;
 	float4		lightSpeqular;
 	float3		lightPosition;
 	float		lightDataPad;
 	float4x4	lightMatrix;
+}
+
+// マテリアルの情報
+cbuffer MaterialBuffer : register(b3)
+{
 	float4		materialAmbient;
 	float4		materialDiffuse;
 	float4		materialSpecular;
 	float4		materialEmissive;
 	float		materialShiniess;
 	float3		materialDataPad;
-};
+}
 
-cbuffer BoneMat : register(b1)
-{
-	float4x4    BoneMatrices[128];
-};
-
+// 入力頂点情報
 struct VS_INPUT
 {
 	float4  Position     : POSITION;
@@ -33,10 +47,10 @@ struct VS_INPUT
 	float3	Binormal	 : BINORMAL;
 };
 
+// 出力頂点情報
 struct VS_OUTPUT
 {
 	float4 Position     : SV_POSITION;
-	float4 Normal		: NORMAL;
 	float2 TexCoord     : TEXCOORD0;
 	float3 View			: TEXCOORD1;
 	float3 Light		: TEXCOORD2;
@@ -49,8 +63,8 @@ VS_OUTPUT main(VS_INPUT Input)
 
 	// この頂点が使用するメッシュのボーンのローカル行列を計算する
 	float4x4 LocalMatrix
-		= mul(BoneMatrices[Input.BlendIndices.x], Input.BlendWeight.x)
-		+ mul(BoneMatrices[Input.BlendIndices.y], Input.BlendWeight.y);
+		= mul(boneMatrices[Input.BlendIndices.x], Input.BlendWeight.x)
+		+ mul(boneMatrices[Input.BlendIndices.y], Input.BlendWeight.y);
 
 	// 【この頂点座標の座標変換】
 	// ボーンのローカル行列を使って座標変換する
@@ -96,8 +110,6 @@ VS_OUTPUT main(VS_INPUT Input)
 	Output.Light = mul((ViewLight - ViewPosition.xyz), matTBN);
 
 	Output.LightBasePos = mul(lightMatrix, WorldPosition);
-
-	Output.Normal = float4(viewNormal, 1.0f);
 
 	return Output;
 }

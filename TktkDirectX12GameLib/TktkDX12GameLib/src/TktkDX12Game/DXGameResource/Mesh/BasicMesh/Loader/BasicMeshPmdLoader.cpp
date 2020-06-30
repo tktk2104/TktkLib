@@ -2,7 +2,6 @@
 
 #include <TktkFileIo/lodepmd.h>
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
-#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshConstantBufferData.h"
 
 namespace tktk
 {

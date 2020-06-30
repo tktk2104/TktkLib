@@ -20,7 +20,7 @@ namespace tktk
 
 		void create(unsigned int id, const BasicMeshMaterialInitParam& initParam);
 
-		void setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
+		void setMaterialData(unsigned int id);
 
 	private:
 

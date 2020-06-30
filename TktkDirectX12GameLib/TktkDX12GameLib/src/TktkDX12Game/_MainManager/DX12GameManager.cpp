@@ -6,6 +6,7 @@
 #include "TktkDX12Game/GameObject/GameObject.h"
 #include "TktkDX12Game/DXGameResource/DXGameResource.h"
 #include "TktkDX12Game/Sound/SoundPlayer.h"
+#include "TktkDX12Game/Input/Mouse/Mouse.h"
 #include "TktkDX12Game/Input/Keyboard/Keyboard.h"
 
 namespace tktk
@@ -18,6 +19,7 @@ namespace tktk
 	std::unique_ptr<DXGameResource>			DX12GameManager::m_dxGameResource;
 	std::unique_ptr<SoundPlayer>			DX12GameManager::m_soundPlayer;
 	std::unique_ptr<Keyboard>				DX12GameManager::m_keyboard;
+	std::unique_ptr<Mouse>					DX12GameManager::m_mouse;
 
 	void DX12GameManager::initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath)
 	{
@@ -49,6 +51,7 @@ namespace tktk
 		}
 		m_soundPlayer	= std::make_unique<SoundPlayer>(dx3dInitParam.soundDataNum);
 		m_keyboard		= std::make_unique<Keyboard>(windowInitParam.hInstance, m_window->getHWND());
+		m_mouse			= std::make_unique<Mouse>();
 
 		// シャドウマップの深度バッファーを作る
 		{
@@ -138,6 +141,7 @@ namespace tktk
 			if (canRunDX12Func)
 			{
 				m_keyboard->update();
+				m_mouse->update();
 				m_sceneManager->update();
 				m_gameObjectManager->update();
 				m_componentManager->update();
@@ -372,14 +376,14 @@ namespace tktk
 		m_dxGameResource->createBasicMeshMaterial(id, initParam);
 	}
 
-	void DX12GameManager::writeBasicMeshShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs)
+	void DX12GameManager::writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData)
 	{
-		m_dxGameResource->writeBasicMeshShadowMap(id, baseArgs);
+		m_dxGameResource->writeBasicMeshShadowMap(id, transformBufferData);
 	}
 
-	void DX12GameManager::setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
+	void DX12GameManager::setMaterialData(unsigned int id)
 	{
-		m_dxGameResource->setMaterialData(id, baseArgs);
+		m_dxGameResource->setMaterialData(id);
 	}
 
 	void DX12GameManager::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
@@ -445,6 +449,21 @@ namespace tktk
 	void DX12GameManager::setMasterVolume(float volume)
 	{
 		m_soundPlayer->setMasterVolume(volume);
+	}
+
+	bool DX12GameManager::isPush(MouseButtonType buttonType)
+	{
+		return m_mouse->isPush(buttonType);
+	}
+
+	bool DX12GameManager::isTrigger(MouseButtonType buttonType)
+	{
+		return m_mouse->isTrigger(buttonType);
+	}
+
+	tktkMath::Vector2 DX12GameManager::mousePos()
+	{
+		return m_mouse->mousePos();
 	}
 
 	bool DX12GameManager::isPush(KeybordKeyType keyType)

@@ -4,7 +4,6 @@
 #include <vector>
 #include "BasicMeshInitParam.h"
 #include "../Subset.h"
-#include "../../MeshWriteShadowFuncBaseArgs.h"
 #include "../../MeshDrawFuncBaseArgs.h"
 
 namespace tktk
@@ -17,14 +16,9 @@ namespace tktk
 
 	public:
 
-		void writeShadowMap(const MeshWriteShadowFuncBaseArgs& baseArgs);
+		void writeShadowMap();
 
 		void drawMesh(const MeshDrawFuncBaseArgs& baseArgs);
-
-	private:
-
-		// 通常メッシュ版シャドウマップ描画用の定数バッファを更新する
-		void updateShadowMapCbuffer(const MeshWriteShadowFuncBaseArgs& baseArgs);
 
 	private:
 

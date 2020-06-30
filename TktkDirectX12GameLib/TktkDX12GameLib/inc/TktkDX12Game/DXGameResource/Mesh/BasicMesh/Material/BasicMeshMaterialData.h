@@ -15,7 +15,7 @@ namespace tktk
 
 	public:
 
-		void setMaterialData(const MeshDrawFuncBaseArgs& baseArgs);
+		void setMaterialData();
 
 	private:
 

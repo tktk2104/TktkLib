@@ -3,14 +3,15 @@
 
 namespace tktk
 {
-	constexpr unsigned int SystemConstantBufferNum = 4U;
+	constexpr unsigned int SystemConstantBufferNum = 6U;
 
 	enum class SystemConstantBufferType
 	{
 		Sprite				= 0U,
-		BasicMesh			= 1U,
-		BasicMeshBoneMat	= 2U,
-		BasicMeshShadowMap	= 3U
+		MeshTransform		= 1U,
+		BoneMatCbuffer		= 2U,
+		BasicMeshLight		= 3U,
+		BasicMeshMaterial	= 4U
 	};
 }
 #endif // !SYSTEM_CONSTANT_BUFFER_TYPE_H_

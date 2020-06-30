@@ -24,10 +24,6 @@ namespace tktk
 
 	private:
 
-		void createBuffer(ID3D12Device* device, unsigned int bufferSize);
-
-	private:
-
 		ID3D12Resource* m_constantBuffer{ nullptr };
 		std::forward_list<ID3D12Resource*> m_uploadBufferList{};
 	};

@@ -25,22 +25,22 @@ namespace tktk
 		DX12GameManager::updateBoneMatrixCbuffer(m_skeletonId);
 
 		// 深度マップ書き出しに必要な値
-		MeshWriteShadowFuncBaseArgs baseArgs{};
+		MeshTransformCbuffer transformBufferData{};
 		{
 			// Transform3Dからワールド行列を取得
-			baseArgs.worldMatrix = m_transform->calculateWorldMatrix();
+			transformBufferData.worldMatrix = m_transform->calculateWorldMatrix();
 		}
 		
 		// カメラ情報
 		{
-			baseArgs.viewMatrix = tktkMath::Matrix4::createLookAtLH(
+			transformBufferData.viewMatrix = tktkMath::Matrix4::createLookAtLH(
 				tktkMath::Vector3(60.0f, 15.0f, -60.0f),
 				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
 				tktkMath::vec3Up
 			);
-			baseArgs.projectionMatrix = tktkMath::Matrix4::createOrthographicLH(40, 40, 1.0f, 100.0f);
+			transformBufferData.projectionMatrix = tktkMath::Matrix4::createOrthographicLH(40, 40, 1.0f, 100.0f);
 		}
 
-		DX12GameManager::writeBasicMeshShadowMap(m_meshId, baseArgs);
+		DX12GameManager::writeBasicMeshShadowMap(m_meshId, transformBufferData);
 	}
 }

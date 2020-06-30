@@ -32,9 +32,9 @@ namespace tktk
 
 		void createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam);
 
-		void writeBasicMeshShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs);
+		void writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData);
 
-		void setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
+		void setMaterialData(unsigned int id);
 
 		void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 

@@ -1,18 +1,19 @@
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Mesh/BasicMesh.h"
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
-#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshShadowMapCbufferData.h"
+#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshLightCbuffer.h"
 
 namespace tktk
 {
 	BasicMesh::BasicMesh(const std::string& writeShadowMapVsFilePath, unsigned int basicMeshNum)
 		: m_basicMeshArray(basicMeshNum)
 	{
+		// TODO : Meshクラスを作ってこのクラスを持たせて、下の処理をMeshクラスに移動する
+		// メッシュ共通で使用する座標変換定数バッファを作る
+		tktk::DX12GameManager::createConstantBuffer(tktk::DX12GameManager::getSystemId(tktk::SystemConstantBufferType::MeshTransform), MeshTransformCbuffer());
+
 		createWriteShadowMapRootSignature();
 		createWriteShadowMapGraphicsPipeLineState(writeShadowMapVsFilePath);
-
-		// 通常メッシュ版シャドウマップ描画用の定数バッファを作る
-		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshShadowMap), BasicMeshShadowMapCbufferData());
 	
 		// 通常メッシュ版シャドウマップ描画用のディスクリプタヒープを作る
 		{
@@ -24,10 +25,10 @@ namespace tktk
 				auto& cbufferViewDescriptorParam = initParam.descriptorTableParamArray.at(0U);
 				cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
 
-				// シャドウマップ定数バッファとボーン行列定数バッファの２種類
+				// 
 				cbufferViewDescriptorParam.descriptorParamArray = {
-					{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshShadowMap)	},
-					{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshBoneMat)	}
+					{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::MeshTransform)	},
+					{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BoneMatCbuffer)	}
 				};
 			}
 
@@ -40,13 +41,24 @@ namespace tktk
 		m_basicMeshArray.emplaceAt(id, initParam);
 	}
 
-	void BasicMesh::writeShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs)
+	void BasicMesh::writeShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData)
 	{
-		m_basicMeshArray.at(id)->writeShadowMap(baseArgs);
+		// メッシュの座標変換に使用する情報を定数バッファに書き込む
+		updateMeshTransformCbuffer(transformBufferData);
+
+		// シャドウマップへの書き込みを行う
+		m_basicMeshArray.at(id)->writeShadowMap();
 	}
 
 	void BasicMesh::drawMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
 	{
+		// メッシュの座標変換に使用する情報を定数バッファに書き込む
+		updateMeshTransformCbuffer(baseArgs.transformBufferData);
+
+		// メッシュのライティングに使用するライト情報を定数バッファに書き込む
+		updateBasicMeshLightCbuffer(baseArgs.lightBufferData);
+
+		// メッシュの描画を行う
 		m_basicMeshArray.at(id)->drawMesh(baseArgs);
 	}
 
@@ -58,12 +70,9 @@ namespace tktk
 		initParam.rootParamArray.resize(1U);
 		{/* 定数バッファ用のルートパラメータ */
 			initParam.rootParamArray.at(0).shaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-			initParam.rootParamArray.at(0).descriptorTable.resize(1U);
-			{
-				initParam.rootParamArray.at(0).descriptorTable.at(0).numDescriptors = 2U;
-				initParam.rootParamArray.at(0).descriptorTable.at(0).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-				initParam.rootParamArray.at(0).descriptorTable.at(0).startRegisterNum = 0U;
-			}
+			initParam.rootParamArray.at(0).descriptorTable = {
+				{ 2U, D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 0U }
+			};
 		}
 
 		initParam.samplerDescArray.resize(1U);
@@ -111,5 +120,15 @@ namespace tktk
 		shaderFilePaths.psFilePath = "";
 
 		DX12GameManager::createPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::ShadowMap), initParam, shaderFilePaths);
+	}
+
+	void BasicMesh::updateMeshTransformCbuffer(const MeshTransformCbuffer& transformBufferData)
+	{
+		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::MeshTransform), transformBufferData);
+	}
+
+	void BasicMesh::updateBasicMeshLightCbuffer(const BasicMeshLightCbuffer& lightBufferData)
+	{
+		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshLight), lightBufferData);
 	}
 }

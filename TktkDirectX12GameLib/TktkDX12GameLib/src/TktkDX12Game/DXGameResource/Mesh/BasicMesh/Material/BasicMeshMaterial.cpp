@@ -4,8 +4,8 @@
 #include <stdexcept>
 #endif // _DEBUG
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
-#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshConstantBufferData.h"
-#include "..\..\..\..\..\..\inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterial.h"
+#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshLightCbuffer.h"
+#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshMaterialCbuffer.h"
 
 namespace tktk
 {
@@ -15,8 +15,11 @@ namespace tktk
 		createRootSignature();
 		createGraphicsPipeLineState(shaderFilePaths);
 
-		// 通常メッシュ用の定数バッファを作る
-		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMesh), BasicMeshConstantBufferData());
+		// 通常メッシュライト情報の定数バッファを作る
+		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshLight),		BasicMeshLightCbuffer());
+
+		// 通常メッシュマテリアル情報の定数バッファを作る
+		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial),	BasicMeshMaterialCbuffer());
 	}
 
 	void BasicMeshMaterial::create(unsigned int id, const BasicMeshMaterialInitParam& initParam)
@@ -24,7 +27,7 @@ namespace tktk
 		m_basicMeshMaterialArray.emplaceAt(id, initParam);
 	}
 
-	void BasicMeshMaterial::setMaterialData(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
+	void BasicMeshMaterial::setMaterialData(unsigned int id)
 	{
 		auto basicMeshPtr = m_basicMeshMaterialArray.at(id);
 
@@ -35,7 +38,7 @@ namespace tktk
 		}
 #endif // _DEBUG
 
-		basicMeshPtr->setMaterialData(baseArgs);
+		basicMeshPtr->setMaterialData();
 	}
 
 	void BasicMeshMaterial::createRootSignature()
@@ -46,30 +49,23 @@ namespace tktk
 		initParam.rootParamArray.resize(3U);
 		{/* テクスチャ用のルートパラメータ */
 			initParam.rootParamArray.at(0U).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			initParam.rootParamArray.at(0U).descriptorTable.resize(1U);
-			{
-				initParam.rootParamArray.at(0U).descriptorTable.at(0U).numDescriptors = 2U;
-				initParam.rootParamArray.at(0U).descriptorTable.at(0U).type = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-				initParam.rootParamArray.at(0U).descriptorTable.at(0U).startRegisterNum = 0U;
-			}
+			initParam.rootParamArray.at(0U).descriptorTable = {
+				{ 2U, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 0U }
+			};
 		}
-		{/* 定数バッファ用のルートパラメータ */
-			initParam.rootParamArray.at(1U).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-			initParam.rootParamArray.at(1U).descriptorTable.resize(1U);
-			{
-				initParam.rootParamArray.at(1U).descriptorTable.at(0U).numDescriptors = 1U;
-				initParam.rootParamArray.at(1U).descriptorTable.at(0U).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-				initParam.rootParamArray.at(1U).descriptorTable.at(0U).startRegisterNum = 0U;
-			}
+
+		{/* 頂点シェーダー用の定数バッファ用のルートパラメータ */
+			initParam.rootParamArray.at(1U).shaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+			initParam.rootParamArray.at(1U).descriptorTable = {
+				{ 4U, D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 0U }
+			};
 		}
-		{
-			initParam.rootParamArray.at(2U).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-			initParam.rootParamArray.at(2U).descriptorTable.resize(1U);
-			{
-				initParam.rootParamArray.at(2U).descriptorTable.at(0U).numDescriptors = 1U;
-				initParam.rootParamArray.at(2U).descriptorTable.at(0U).type = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-				initParam.rootParamArray.at(2U).descriptorTable.at(0U).startRegisterNum = 1U;
-			}
+
+		{/* ピクセルシェーダー用の定数バッファ用のルートパラメータ */
+			initParam.rootParamArray.at(2U).shaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+			initParam.rootParamArray.at(2U).descriptorTable = {
+				{ 2U, D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 0U }
+			};
 		}
 
 		initParam.samplerDescArray.resize(2U);

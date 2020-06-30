@@ -1,9 +1,9 @@
 #ifndef BASIC_MESH_H_
 #define BASIC_MESH_H_
 
-#include "BasicMeshData.h"
 #include <string>
 #include <TktkContainer/HeapArray/HeapArray.h>
+#include "BasicMeshData.h"
 
 namespace tktk
 {
@@ -17,7 +17,7 @@ namespace tktk
 
 		void craete(unsigned int id, const BasicMeshInitParam& initParam);
 
-		void writeShadowMap(unsigned int id, const MeshWriteShadowFuncBaseArgs& baseArgs);
+		void writeShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData);
 
 		void drawMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 
@@ -26,6 +26,10 @@ namespace tktk
 		void createWriteShadowMapRootSignature();
 
 		void createWriteShadowMapGraphicsPipeLineState(const std::string& writeShadowMapVsFilePath);
+
+		void updateMeshTransformCbuffer(const MeshTransformCbuffer& transformBufferData);
+
+		void updateBasicMeshLightCbuffer(const BasicMeshLightCbuffer& lightBufferData);
 
 	private:
 

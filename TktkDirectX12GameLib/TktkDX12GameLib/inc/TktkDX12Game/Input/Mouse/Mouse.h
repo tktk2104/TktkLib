@@ -1,24 +1,42 @@
-#ifndef MOUSE_H_
-#define MOUSE_H_
+#ifndef MOUSE_UPDATER_H_
+#define MOUSE_UPDATER_H_
 
-#include <TktkMath/Vector2.h>
+#include <unordered_map>
+#include <TktkMath/Structs/Vector2.h>
 #include "MouseButtonType.h"
 
 namespace tktk
 {
-	// 「MouseManager」の実装の一部を隠すためのクラス
 	class Mouse
 	{
 	public:
 
-		// 指定のボタンが押されているかを判定
-		static bool isPush(MouseButtonType button);
+		Mouse();
+		~Mouse() = default;
+
+		// コピー禁止
+		Mouse(const Mouse& other) = delete;
+		Mouse& operator = (const Mouse& other) = delete;
+
+	public:
+
+		void update();
+
+	public:
+
+		// 指定のボタンが押されているか
+		bool isPush(MouseButtonType buttonType) const;
 
 		// 指定のボタンが押され始めたかを判定
-		static bool isTrigger(MouseButtonType button);
+		bool isTrigger(MouseButtonType buttonType) const;
 
 		// マウスカーソルの座標を取得する
-		static Vector2 mousePos();
+		tktkMath::Vector2 mousePos() const;
+
+	private:
+
+		std::unordered_map<MouseButtonType, bool> m_curMouseButtonState;
+		std::unordered_map<MouseButtonType, bool> m_preMouseButtonState;
 	};
 }
-#endif // !MOUSE_H_
+#endif // !MOUSE_UPDATER_H_

@@ -1,7 +1,6 @@
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Mesh/BasicMeshData.h"
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
-#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshShadowMapCbufferData.h"
 
 namespace tktk
 {
@@ -13,11 +12,8 @@ namespace tktk
 	{
 	}
 
-	void BasicMeshData::writeShadowMap(const MeshWriteShadowFuncBaseArgs& baseArgs)
+	void BasicMeshData::writeShadowMap()
 	{
-		// 通常メッシュ版シャドウマップ描画用の定数バッファを更新する
-		updateShadowMapCbuffer(baseArgs);
-
 		// シャドウマップ描画用の深度バッファー“のみ”を設定する
 		DX12GameManager::setOnlyDepthStencil(DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::ShadowMap));
 
@@ -86,7 +82,7 @@ namespace tktk
 		for (const auto& node : m_materialSlots)
 		{
 			// マテリアルの情報を設定する
-			DX12GameManager::setMaterialData(node.useMaterialId, baseArgs);
+			DX12GameManager::setMaterialData(node.useMaterialId);
 
 			// ドローコール
 			DX12GameManager::drawIndexedInstanced(node.indexBufferUseCount, 1U, node.indexBufferStartPos, 0U, 0U);
@@ -103,16 +99,5 @@ namespace tktk
 
 		// コマンドリストを実行する
 		DX12GameManager::executeCommandList();
-	}
-
-	void BasicMeshData::updateShadowMapCbuffer(const MeshWriteShadowFuncBaseArgs& baseArgs)
-	{
-		BasicMeshShadowMapCbufferData cbufferData{};
-
-		cbufferData.worldMatrix = baseArgs.worldMatrix;
-		cbufferData.viewMatrix = baseArgs.viewMatrix;
-		cbufferData.projectionMatrix = baseArgs.projectionMatrix;
-
-		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshShadowMap), cbufferData);
 	}
 }

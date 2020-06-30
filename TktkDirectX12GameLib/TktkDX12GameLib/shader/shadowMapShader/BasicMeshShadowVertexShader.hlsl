@@ -1,15 +1,19 @@
-cbuffer ConstantBuffer : register(b0)
+
+// 基本の座標変換に使用する情報
+cbuffer TransformBuffer : register(b0)
 {
 	float4x4    WorldMatrix;
 	float4x4    ViewMatrix;
 	float4x4    ProjectionMatrix;
 };
 
-cbuffer BoneMat : register(b1)
+// スキニングメッシュアニメーションに必要な情報
+cbuffer BoneMatBuffer : register(b1)
 {
-	float4x4    BoneMatrices[128];
+	float4x4    boneMatrices[128];
 };
 
+// 入力頂点情報
 struct VS_INPUT
 {
 	float4  Position     : POSITION;
@@ -21,6 +25,7 @@ struct VS_INPUT
 	float3	Binormal	 : BINORMAL;
 };
 
+// 出力頂点情報
 struct VS_OUTPUT
 {
 	float4 Position     : SV_POSITION;
@@ -32,8 +37,8 @@ VS_OUTPUT main(VS_INPUT Input)
 
 	// この頂点が使用するメッシュのボーンのローカル行列を計算する
 	float4x4 LocalMatrix
-		= mul(BoneMatrices[Input.BlendIndices.x], Input.BlendWeight.x)
-		+ mul(BoneMatrices[Input.BlendIndices.y], Input.BlendWeight.y);
+		= mul(boneMatrices[Input.BlendIndices.x], Input.BlendWeight.x)
+		+ mul(boneMatrices[Input.BlendIndices.y], Input.BlendWeight.y);
 
 	// 【この頂点座標の座標変換】
 	// ボーンのローカル行列を使って座標変換する

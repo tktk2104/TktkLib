@@ -1,32 +1,30 @@
-cbuffer ConstantBuffer : register(b0)
+
+// ライト計算に必要な情報
+cbuffer LightBuffer : register(b0)
 {
-	float4x4    WorldMatrix;
-	float4x4    ViewMatrix;
-	float4x4    ProjectionMatrix;
-	//float4x4    BoneMatrices[128];
 	float4		lightAmbient;
 	float4		lightDiffuse;
 	float4		lightSpeqular;
 	float3		lightPosition;
 	float		lightDataPad;
 	float4x4	lightMatrix;
+}
+
+// マテリアルの情報
+cbuffer MaterialBuffer : register(b1)
+{
 	float4		materialAmbient;
 	float4		materialDiffuse;
 	float4		materialSpecular;
 	float4		materialEmissive;
 	float		materialShiniess;
 	float3		materialDataPad;
-};
+}
 
-cbuffer BoneMat : register(b1)
-{
-	float4x4    BoneMatrices[128];
-};
-
+// 入力頂点情報
 struct PS_INPUT
 {
 	float4 Position     : SV_POSITION;
-	float4 Normal		: NORMAL;
 	float2 TexCoord     : TEXCOORD0;
 	float3 View			: TEXCOORD1;
 	float3 Light		: TEXCOORD2;
