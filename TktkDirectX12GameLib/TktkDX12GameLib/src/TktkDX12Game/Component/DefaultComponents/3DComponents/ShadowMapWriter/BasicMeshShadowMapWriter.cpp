@@ -34,8 +34,8 @@ namespace tktk
 		// ƒJƒƒ‰î•ñ
 		{
 			transformBufferData.viewMatrix = tktkMath::Matrix4::createLookAtLH(
-				tktkMath::Vector3(60.0f, 15.0f, -60.0f),
-				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
+				tktkMath::Vector3(60.0f, 10.0f, -60.0f),
+				tktkMath::Vector3(0.0f, 0.0f, 0.0f),
 				tktkMath::vec3Up
 			);
 			transformBufferData.projectionMatrix = tktkMath::Matrix4::createOrthographicLH(40, 40, 1.0f, 100.0f);

@@ -189,9 +189,6 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectShaderFilePaths.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\2DComponents\RenderTargetClearer\RenderTargetClearer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshLoadPmdReturnValue.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -283,6 +280,27 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDX12Game\Input\DirectInputWrapper\DirectInputIncluder.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\2DComponents\PostEffectDrawer\PostEffectDrawerMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\2DComponents\SpriteDrawer\SpriteDrawerMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\2DComponents\Transform2D\Transform2DMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshAnimator\MeshAnimatorMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshDrawer\BasicMeshDrawer\BasicMeshDrawerMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriterMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\3DComponents\Transform3D\Transform3DMaker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -416,9 +434,6 @@
     <ClCompile Include="src\TktkDX12Game\DXGameResource\DXGameResource.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\2DComponents\RenderTargetClearer\RenderTargetClearer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -459,6 +474,27 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\TktkDX12Game\Input\DirectInputWrapper\DirectInputWrapper.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\2DComponents\PostEffectDrawer\PostEffectDrawerMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\2DComponents\SpriteDrawer\SpriteDrawerMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\2DComponents\Transform2D\Transform2DMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshAnimator\MeshAnimatorMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\MeshDrawer\BasicMeshDrawer\BasicMeshDrawerMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\ShadowMapWriter\BasicMeshShadowMapWriterMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\3DComponents\Transform3D\Transform3DMaker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

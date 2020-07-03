@@ -2,8 +2,8 @@
 
 namespace tktk
 {
-	MeshAnimator::MeshAnimator(unsigned int motionId)
-		: m_motionId(motionId)
+	MeshAnimator::MeshAnimator(unsigned int initMotionId)
+		: m_motionId(initMotionId)
 	{
 	}
 

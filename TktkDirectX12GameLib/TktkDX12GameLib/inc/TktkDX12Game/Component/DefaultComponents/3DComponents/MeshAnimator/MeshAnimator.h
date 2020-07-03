@@ -10,7 +10,7 @@ namespace tktk
 	{
 	public:
 
-		MeshAnimator(unsigned int motionId);
+		MeshAnimator(unsigned int initMotionId);
 
 	public:
 
