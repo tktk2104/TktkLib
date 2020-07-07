@@ -1,5 +1,6 @@
 #include "TktkDX12Game/DXGameResource/Mesh/Motion/MotionData.h"
 
+#include <algorithm>
 #include <TktkFileIo/lodevmd.h>
 
 namespace tktk
@@ -13,6 +14,16 @@ namespace tktk
         for (const auto& node : outData.motionData)
         {
             m_boneKeyFrames[node.boneName].push_back({ node.frameNo, node.location, tktkMath::vec3One, node.rotation });
+        }
+
+        // キーフレームの順番を整理する
+        for (auto& motion : m_boneKeyFrames)
+        {
+            std::sort(
+                motion.second.begin(),
+                motion.second.end(),
+                [](const KeyFrame& lval, const KeyFrame& rval) { return lval.frameNo <= rval.frameNo; }
+            );
         }
     }
 
