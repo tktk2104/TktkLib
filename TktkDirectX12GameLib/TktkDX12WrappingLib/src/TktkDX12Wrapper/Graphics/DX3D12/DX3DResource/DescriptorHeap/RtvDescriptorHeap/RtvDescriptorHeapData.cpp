@@ -11,11 +11,11 @@ namespace tktk
 		descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&m_descriptorHeap));
 
-		m_renderTargetBufferIdArray.reserve(descHeapDesc.NumDescriptors);
+		m_rtBufferIdArray.reserve(descHeapDesc.NumDescriptors);
 
 		for (const auto& node : initParam.descriptorParamArray)
 		{
-			m_renderTargetBufferIdArray.push_back(node.id);
+			m_rtBufferIdArray.push_back(node.id);
 		}
 	}
 
@@ -41,9 +41,9 @@ namespace tktk
 		return handleArray;
 	}
 
-	const std::vector<unsigned int>& RtvDescriptorHeapData::getRenderTargetBufferIdArray() const
+	const std::vector<unsigned int>& RtvDescriptorHeapData::getRtBufferIdArray() const
 	{
-		return m_renderTargetBufferIdArray;
+		return m_rtBufferIdArray;
 	}
 
 	ID3D12DescriptorHeap* RtvDescriptorHeapData::getPtr() const
@@ -51,7 +51,7 @@ namespace tktk
 		return m_descriptorHeap;
 	}
 
-	void RtvDescriptorHeapData::setDescriptor(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
+	void RtvDescriptorHeapData::setRootDescriptorTable(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		auto gpuHandle = m_descriptorHeap->GetGPUDescriptorHandleForHeapStart();
 		for (unsigned int i = 0; i < m_descriptorHeap->GetDesc().NumDescriptors; i++)
@@ -61,13 +61,13 @@ namespace tktk
 		}
 	}
 
-	void RtvDescriptorHeapData::setRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount, const D3D12_CPU_DESCRIPTOR_HANDLE* useDsvHandle) const
+	void RtvDescriptorHeapData::setRtv(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount, const D3D12_CPU_DESCRIPTOR_HANDLE* useDsvHandle) const
 	{
 		auto cpuHeapHandleArray = getCpuHeapHandleArray(device);
 		commandList->OMSetRenderTargets(rtvCount, &cpuHeapHandleArray.at(startRtvLocationIndex), true, useDsvHandle);
 	}
 
-	void RtvDescriptorHeapData::clearRenderTarget(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	void RtvDescriptorHeapData::clearRtv(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color) const
 	{
 		auto cpuHeapHandleArray = getCpuHeapHandleArray(device);
 		commandList->ClearRenderTargetView(cpuHeapHandleArray.at(rtvLocationIndex), (float*)&color, 0U, nullptr);

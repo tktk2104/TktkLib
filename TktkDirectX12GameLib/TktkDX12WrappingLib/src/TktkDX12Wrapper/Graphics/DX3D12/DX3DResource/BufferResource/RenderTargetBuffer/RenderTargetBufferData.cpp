@@ -58,20 +58,59 @@ namespace tktk
 		}
 	}
 
-
-	D3D12_RESOURCE_BARRIER RenderTargetBufferData::createBarrierDesc(D3D12_RESOURCE_STATES beforState, D3D12_RESOURCE_STATES afterState) const
+	void RenderTargetBufferData::beginWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList)
 	{
 		D3D12_RESOURCE_BARRIER barrierDesc{};
 		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 		barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
 		barrierDesc.Transition.pResource = m_renderTargetBuffer;
 		barrierDesc.Transition.Subresource = 0;
-		barrierDesc.Transition.StateBefore = beforState;
-		barrierDesc.Transition.StateAfter = afterState;
-		return barrierDesc;
+		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+
+		commandList->ResourceBarrier(1, &barrierDesc);
 	}
 
-	void RenderTargetBufferData::createRenderTargetView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void RenderTargetBufferData::endWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList)
+	{
+		D3D12_RESOURCE_BARRIER barrierDesc{};
+		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+		barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+		barrierDesc.Transition.pResource = m_renderTargetBuffer;
+		barrierDesc.Transition.Subresource = 0;
+		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+
+		commandList->ResourceBarrier(1, &barrierDesc);
+	}
+
+	void RenderTargetBufferData::beginWriteBackBuffer(ID3D12GraphicsCommandList* commandList)
+	{
+		D3D12_RESOURCE_BARRIER barrierDesc{};
+		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+		barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+		barrierDesc.Transition.pResource = m_renderTargetBuffer;
+		barrierDesc.Transition.Subresource = 0;
+		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+
+		commandList->ResourceBarrier(1, &barrierDesc);
+	}
+
+	void RenderTargetBufferData::endWriteBackBuffer(ID3D12GraphicsCommandList* commandList)
+	{
+		D3D12_RESOURCE_BARRIER barrierDesc{};
+		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+		barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+		barrierDesc.Transition.pResource = m_renderTargetBuffer;
+		barrierDesc.Transition.Subresource = 0;
+		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+
+		commandList->ResourceBarrier(1, &barrierDesc);
+	}
+
+	void RenderTargetBufferData::createRtv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
 		D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 		rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
@@ -80,7 +119,7 @@ namespace tktk
 		device->CreateRenderTargetView(m_renderTargetBuffer, &rtvDesc, heapHandle);
 	}
 
-	void RenderTargetBufferData::createShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void RenderTargetBufferData::createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
 		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
@@ -91,7 +130,7 @@ namespace tktk
 		device->CreateShaderResourceView(m_renderTargetBuffer, &srvDesc, heapHandle);
 	}
 
-	const tktkMath::Vector2& RenderTargetBufferData::getRenderTargetSize() const
+	const tktkMath::Vector2& RenderTargetBufferData::getRenderTargetSizePx() const
 	{
 		return m_renderTargetSize;
 	}

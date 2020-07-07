@@ -10,6 +10,7 @@
 
 namespace tktk
 {
+	// 深度ステンシルビュー用のディスクリプタヒープクラス
 	class DsvDescriptorHeapData
 	{
 	public:
@@ -19,21 +20,27 @@ namespace tktk
 
 	public:
 
+		// 各ビューのCPUアドレスの配列を取得する
 		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> getCpuHeapHandleArray(ID3D12Device* device) const;
 
-		const std::vector<unsigned int>& getDepthStencilBufferIdArray() const;
+		// 各ビューが参照している深度ステンシルバッファのIDの配列を取得する
+		const std::vector<unsigned int>& getDsBufferIdArray() const;
 
+		// ディスクリプタヒープをまとめてコマンドリストに登録するためにあるゲッター
 		ID3D12DescriptorHeap* getPtr() const;
 
-		void setDescriptor(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
+		// 各ビューのGPUアドレスをコマンドリストに登録する
+		void setRootDescriptorTable(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 
-		void setOnlyDepthStencil(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
+		// レンダーターゲットビューを登録せずに深度ステンシルビューをコマンドリストに登録する
+		void setOnlyDsv(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
 
-		void clearView(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
+		// 指定の深度ステンシルビューをクリアする
+		void clearDsv(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
 
 	private:
 
-		std::vector<unsigned int> m_depthStencilBufferIdArray{};
+		std::vector<unsigned int> m_dsBufferIdArray{};
 
 		ID3D12DescriptorHeap* m_descriptorHeap{ nullptr };
 	};

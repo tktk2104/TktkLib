@@ -17,42 +17,38 @@ namespace tktk
 		m_renderTargetBufferDataArray.emplaceAt(id, swapChain, backBufferIndex);
 	}
 
-	void RenderTargetBuffer::useAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBuffer::beginWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		auto barrierDesc = m_renderTargetBufferDataArray.at(id)->createBarrierDesc(D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
-		commandList->ResourceBarrier(1, &barrierDesc);
+		m_renderTargetBufferDataArray.at(id)->beginWriteBasicRtBuffer(commandList);
 	}
 
-	void RenderTargetBuffer::unUseAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBuffer::endWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		auto barrierDesc = m_renderTargetBufferDataArray.at(id)->createBarrierDesc(D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
-		commandList->ResourceBarrier(1, &barrierDesc);
+		m_renderTargetBufferDataArray.at(id)->endWriteBasicRtBuffer(commandList);
 	}
 
-	void RenderTargetBuffer::useAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBuffer::beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		auto barrierDesc = m_renderTargetBufferDataArray.at(id)->createBarrierDesc(D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
-		commandList->ResourceBarrier(1, &barrierDesc);
+		m_renderTargetBufferDataArray.at(id)->beginWriteBackBuffer(commandList);
 	}
 
-	void RenderTargetBuffer::unUseAsBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBuffer::endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		auto barrierDesc = m_renderTargetBufferDataArray.at(id)->createBarrierDesc(D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
-		commandList->ResourceBarrier(1, &barrierDesc);
+		m_renderTargetBufferDataArray.at(id)->endWriteBackBuffer(commandList);
 	}
 
-	void RenderTargetBuffer::createRenderTargetView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void RenderTargetBuffer::createRtv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_renderTargetBufferDataArray.at(id)->createRenderTargetView(device, heapHandle);
+		m_renderTargetBufferDataArray.at(id)->createRtv(device, heapHandle);
 	}
 
-	void RenderTargetBuffer::createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void RenderTargetBuffer::createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_renderTargetBufferDataArray.at(id)->createShaderResourceView(device, heapHandle);
+		m_renderTargetBufferDataArray.at(id)->createSrv(device, heapHandle);
 	}
 
-	const tktkMath::Vector2& RenderTargetBuffer::getRenderTargetSize(unsigned int id) const
+	const tktkMath::Vector2& RenderTargetBuffer::getRenderTargetSizePx(unsigned int id) const
 	{
-		return m_renderTargetBufferDataArray.at(id)->getRenderTargetSize();
+		return m_renderTargetBufferDataArray.at(id)->getRenderTargetSizePx();
 	}
 }

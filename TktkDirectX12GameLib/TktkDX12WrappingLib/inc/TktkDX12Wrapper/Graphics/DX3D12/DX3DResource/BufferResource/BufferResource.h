@@ -11,6 +11,7 @@
 
 namespace tktk
 {
+	// ６種類のバッファリソースを管理するクラス
 	class BufferResource
 	{
 	public:
@@ -25,66 +26,110 @@ namespace tktk
 
 	public: /* 頂点バッファの処理 */
 
+		// 頂点バッファを作る
 		void createVertexBuffer(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
 
+		// コマンドリストに指定の頂点バッファを登録する
 		void setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 	public: /* インデックスバッファの処理 */
 
+		// インデックスバッファを作る
 		void createIndexBuffer(unsigned int id, ID3D12Device* device, const std::vector<unsigned short>& indexDataArray);
 
+		// コマンドリストに指定のインデックスバッファを登録する
 		void setIndexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 	public: /* 定数バッファの処理 */
 
-		void createConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
+		// 定数バッファを作る
+		void createCBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
-		void createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		// 指定の定数バッファを使用して、引数のディスクリプタハンドルに定数バッファビューを作る
+		void createCbv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
-		void updateConstantBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
+		// 指定の定数バッファを更新する
+		// ※アップロードバッファを新規に作成し、そのバッファから自身にコピーする命令をコマンドリストに登録する
+		void updateCBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
 	public: /* テクスチャバッファの処理 */
 
+		// コマンドリストを使わずにテクスチャバッファを作る
 		void cpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
+		
+		// コマンドリストを使ってテクスチャバッファを作る
 		void gpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
+		// 引数のファイルから画像情報をロードし、コマンドリストを使わずにテクスチャバッファを作る
 		void cpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, const std::string& texDataPath);
+		
+		// 引数のファイルから画像情報をロードし、コマンドリストを使ってテクスチャバッファを作る
 		void gpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::string& texDataPath);
 
-		void createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		// 指定のテクスチャバッファを使用して、引数のディスクリプタハンドルにシェーダーリソースビューを作る
+		void createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
-		const tktkMath::Vector3& getTextureSize(unsigned int id) const;
+		// 指定のテクスチャバッファ画像の大きさを取得する（ピクセル）
+		const tktkMath::Vector3& getTextureSizePx(unsigned int id) const;
 
 	public: /* 深度ステンシルバッファの処理 */
 
-		void createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam);
+		// 深度ステンシルバッファを作る
+		void createDsBuffer(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam);
 
-		void createDepthStencilView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
-		void createDsvShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		// 指定の深度ステンシルバッファを使用して、引数のディスクリプタハンドルに深度ステンシルビューを作る
+		void createDsv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
-		void useDepthStencilBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
-		void unUseDepthStencilBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		// 指定の深度ステンシルバッファを使用して、引数のディスクリプタハンドルにシェーダーリソースビューを作る
+		void createDsSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
-		void allUseDepthStencilBuffer(ID3D12GraphicsCommandList* commandList);
-		void allUnUseDepthStencilBuffer(ID3D12GraphicsCommandList* commandList);
+		// 指定の深度ステンシルバッファのリソースバリアを深度書き込み状態に変更する
+		// ※シェーダーリソースとして使用しない設定の場合読んでも何も起きない
+		void beginWriteDsBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
-		const tktkMath::Vector2& getDepthStencilSize(unsigned int id) const;
+		// 指定の深度ステンシルバッファのリソースバリアをシェーダー使用状態に変更する
+		// ※シェーダーリソースとして使用しない設定の場合読んでも何も起きない
+		void endWriteDsBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		// 全ての深度ステンシルバッファのリソースバリアを深度書き込み状態に変更する
+		// ※シェーダーリソースとして使用しない設定の場合読んでも何も起きない
+		void allBeginWriteDsBuffer(ID3D12GraphicsCommandList* commandList);
+
+		// 全ての深度ステンシルバッファのリソースバリアをシェーダー使用状態に変更する
+		// ※シェーダーリソースとして使用しない設定の場合読んでも何も起きない
+		void allEndWriteDsBuffer(ID3D12GraphicsCommandList* commandList);
+
+		// 指定の深度ステンシルバッファ画像の大きさを取得する（ピクセル）
+		const tktkMath::Vector2& getDepthStencilSizePx(unsigned int id) const;
 
 	public: /* レンダーターゲットバッファの処理 */
 
-		void createRenderTargetBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
-		void createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
+		// ゼロからレンダーターゲットバッファを作る
+		void createRtBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
+		
+		// スワップチェインからレンダーターゲットバッファを作る
+		void createRtBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 
-		void createRenderTargetView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
-		void createRtvShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		// 指定のレンダーターゲットバッファを使用して、引数のディスクリプタハンドルにレンダーターゲットビューを作る
+		void createRtv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
-		void useAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
-		void unUseAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		// 指定のレンダーターゲットバッファを使用して、引数のディスクリプタハンドルにシェーダーリソースビューを作る
+		void createRtSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
-		void useBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
-		void unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		// 指定のレンダーターゲットバッファのリソースバリアをレンダーターゲット状態に変更する
+		void beginWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
-		const tktkMath::Vector2& getRenderTargetSize(unsigned int id) const;
+		// 指定のレンダーターゲットバッファのリソースバリアをシェーダー使用状態に変更する
+		void endWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		// 指定のレンダーターゲットバッファのリソースバリアをレンダーターゲット状態に変更する
+		void beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		// 指定のレンダーターゲットバッファのリソースバリアをプリセット状態に変更する
+		void endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+
+		// 指定のレンダーターゲットバッファ画像の大きさを取得す（ピクセル）
+		const tktkMath::Vector2& getRenderTargetSizePx(unsigned int id) const;
 
 	private:
 

@@ -9,6 +9,7 @@
 
 namespace tktk
 {
+	// ビューポートを管理するクラス
 	class ViewportData
 	{
 	public:
@@ -18,6 +19,7 @@ namespace tktk
 
 	public:
 
+		// 自身をコマンドリストに登録する
 		void set(ID3D12GraphicsCommandList* commandList) const;
 	
 	private:

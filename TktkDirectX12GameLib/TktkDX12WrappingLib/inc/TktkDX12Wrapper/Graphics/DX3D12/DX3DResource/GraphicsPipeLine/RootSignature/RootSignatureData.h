@@ -6,6 +6,7 @@
 
 namespace tktk
 {
+	// ルートシグネチャを管理するクラス
 	class RootSignatureData
 	{
 	public:
@@ -15,8 +16,10 @@ namespace tktk
 
 	public:
 
+		// パイプラインステートを作るためにあるゲッター
 		ID3D12RootSignature* getPtr() const;
 
+		// 自身をコマンドリストに登録する
 		void set(ID3D12GraphicsCommandList* commandList) const;
 
 	private:

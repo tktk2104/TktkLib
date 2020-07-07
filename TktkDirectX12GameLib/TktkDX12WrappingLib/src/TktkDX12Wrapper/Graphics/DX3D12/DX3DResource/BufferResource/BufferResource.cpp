@@ -38,17 +38,17 @@ namespace tktk
 		m_indexBuffer.set(id, commandList);
 	}
 
-	void BufferResource::createConstantBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	void BufferResource::createCBuffer(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_constantBuffer.create(id, device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
-	void BufferResource::createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createCbv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_constantBuffer.createConstantBufferView(id, device, heapHandle);
+		m_constantBuffer.createCbv(id, device, heapHandle);
 	}
 
-	void BufferResource::updateConstantBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	void BufferResource::updateCBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_constantBuffer.updateBuffer(id, device, commandList, constantBufferTypeSize, constantBufferDataTopPos);
 	}
@@ -73,98 +73,98 @@ namespace tktk
 		m_textureBuffer.gpuPriorityLoad(id, device, commandList, texDataPath);
 	}
 
-	void BufferResource::createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_textureBuffer.createShaderResourceView(id, device, heapHandle);
+		m_textureBuffer.createSrv(id, device, heapHandle);
 	}
 
-	const tktkMath::Vector3& BufferResource::getTextureSize(unsigned int id) const
+	const tktkMath::Vector3& BufferResource::getTextureSizePx(unsigned int id) const
 	{
-		return m_textureBuffer.getTextureSize(id);
+		return m_textureBuffer.getTextureSizePx(id);
 	}
 
-	void BufferResource::createDepthStencilBuffer(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam)
+	void BufferResource::createDsBuffer(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam)
 	{
 		m_depthStencilBuffer.create(id, device, initParam);
 	}
 
-	void BufferResource::createDepthStencilView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createDsv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_depthStencilBuffer.createDepthStencilView(id, device, heapHandle);
+		m_depthStencilBuffer.createDsv(id, device, heapHandle);
 	}
 
-	void BufferResource::createDsvShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createDsSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_depthStencilBuffer.createShaderResourceView(id, device, heapHandle);
+		m_depthStencilBuffer.createSrv(id, device, heapHandle);
 	}
 
-	void BufferResource::useDepthStencilBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::beginWriteDsBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_depthStencilBuffer.use(id, commandList);
+		m_depthStencilBuffer.beginWrite(id, commandList);
 	}
 
-	void BufferResource::unUseDepthStencilBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::endWriteDsBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_depthStencilBuffer.unUse(id, commandList);
+		m_depthStencilBuffer.endWrite(id, commandList);
 	}
 
-	void BufferResource::allUseDepthStencilBuffer(ID3D12GraphicsCommandList* commandList)
+	void BufferResource::allBeginWriteDsBuffer(ID3D12GraphicsCommandList* commandList)
 	{
-		m_depthStencilBuffer.allUse(commandList);
+		m_depthStencilBuffer.allBeginWrite(commandList);
 	}
 
-	void BufferResource::allUnUseDepthStencilBuffer(ID3D12GraphicsCommandList* commandList)
+	void BufferResource::allEndWriteDsBuffer(ID3D12GraphicsCommandList* commandList)
 	{
-		m_depthStencilBuffer.allUnUse(commandList);
+		m_depthStencilBuffer.allEndWrite(commandList);
 	}
 
-	const tktkMath::Vector2& BufferResource::getDepthStencilSize(unsigned int id) const
+	const tktkMath::Vector2& BufferResource::getDepthStencilSizePx(unsigned int id) const
 	{
-		return m_depthStencilBuffer.getDepthStencilSize(id);
+		return m_depthStencilBuffer.getDepthStencilSizePx(id);
 	}
 
-	void BufferResource::createRenderTargetBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
+	void BufferResource::createRtBuffer(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
 	{
 		m_renderTargetBuffer.create(id, device, renderTargetSize, clearColor);
 	}
 
-	void BufferResource::createRenderTargetBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
+	void BufferResource::createRtBuffer(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
 	{
 		m_renderTargetBuffer.create(id, swapChain, backBufferIndex);
 	}
 
-	void BufferResource::createRenderTargetView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createRtv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_renderTargetBuffer.createRenderTargetView(id, device, heapHandle);
+		m_renderTargetBuffer.createRtv(id, device, heapHandle);
 	}
 
-	void BufferResource::createRtvShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createRtSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_renderTargetBuffer.createShaderResourceView(id, device, heapHandle);
+		m_renderTargetBuffer.createSrv(id, device, heapHandle);
 	}
 
-	void BufferResource::useAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::beginWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_renderTargetBuffer.useAsRenderTargetBuffer(id, commandList);
+		m_renderTargetBuffer.beginWriteBasicRtBuffer(id, commandList);
 	}
 
-	void BufferResource::unUseAsRenderTargetBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::endWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_renderTargetBuffer.unUseAsRenderTargetBuffer(id, commandList);
+		m_renderTargetBuffer.endWriteBasicRtBuffer(id, commandList);
 	}
 
-	void BufferResource::useBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_renderTargetBuffer.useAsBackBuffer(id, commandList);
+		m_renderTargetBuffer.beginWriteBackBuffer(id, commandList);
 	}
 
-	void BufferResource::unUseBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
 	{
-		m_renderTargetBuffer.unUseAsBackBuffer(id, commandList);
+		m_renderTargetBuffer.endWriteBackBuffer(id, commandList);
 	}
 
-	const tktkMath::Vector2& BufferResource::getRenderTargetSize(unsigned int id) const
+	const tktkMath::Vector2& BufferResource::getRenderTargetSizePx(unsigned int id) const
 	{
-		return m_renderTargetBuffer.getRenderTargetSize(id);
+		return m_renderTargetBuffer.getRenderTargetSizePx(id);
 	}
 }

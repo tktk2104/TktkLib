@@ -22,8 +22,8 @@ namespace tktk
 		return m_basicDescriptorHeapDataArray.at(id)->getPtr();
 	}
 
-	void BasicDescriptorHeap::setDescriptor(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
+	void BasicDescriptorHeap::setRootDescriptorTable(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
-		m_basicDescriptorHeapDataArray.at(id)->setDescriptor(device, commandList);
+		m_basicDescriptorHeapDataArray.at(id)->setRootDescriptorTable(device, commandList);
 	}
 }

@@ -79,8 +79,8 @@ namespace tktk
 		m_dX3DResource.createScissorRect(getSystemId(SystemScissorRectType::Basic), { { tktkMath::vec2Zero, windowSize } });
 
 		// スワップチェーンのバックバッファーをディスクリプタヒープで使うための準備
-		m_dX3DResource.createRenderTargetBuffer(getSystemId(SystemRenderTargetBufferType::BackBuffer_1), m_swapChain, 0U);
-		m_dX3DResource.createRenderTargetBuffer(getSystemId(SystemRenderTargetBufferType::BackBuffer_2), m_swapChain, 1U);
+		m_dX3DResource.createRtBuffer(getSystemId(SystemRenderTargetBufferType::BackBuffer_1), m_swapChain, 0U);
+		m_dX3DResource.createRtBuffer(getSystemId(SystemRenderTargetBufferType::BackBuffer_2), m_swapChain, 1U);
 
 		// バックバッファー用のディスクリプタヒープを作る
 		{
@@ -101,7 +101,7 @@ namespace tktk
 			initParam.depthStencilSize = windowSize;
 			initParam.useAsShaderResource = false;
 
-			m_dX3DResource.createDepthStencilBuffer(getSystemId(SystemDepthStencilBufferType::Basic), m_device, initParam);
+			m_dX3DResource.createDsBuffer(getSystemId(SystemDepthStencilBufferType::Basic), m_device, initParam);
 		}
 
 		// デフォルトの深度ディスクリプタヒープを作る
@@ -174,16 +174,16 @@ namespace tktk
 		auto curBackBufferType = (m_curBackBufferIndex == 0) ? SystemRenderTargetBufferType::BackBuffer_1 : SystemRenderTargetBufferType::BackBuffer_2;
 		
 		// バックバッファをレンダーターゲット状態にする
-		m_dX3DResource.useAsBackBuffer(getSystemId(curBackBufferType), m_commandList);
+		m_dX3DResource.beginWriteBackBuffer(getSystemId(curBackBufferType), m_commandList);
 
 		// 現在のバックバッファーをを描画先に設定する
-		m_dX3DResource.setBackBuffer(m_device, m_commandList, m_curBackBufferIndex);
+		m_dX3DResource.setBackBufferView(m_device, m_commandList, m_curBackBufferIndex);
 
 		// 現在のバックバッファーを指定した単色で塗りつぶす
-		m_dX3DResource.clearRenderTargetView(getSystemId(SystemRtvDescriptorHeapType::BackBuffer), m_device, m_commandList, m_curBackBufferIndex, m_backGroundColor);
+		m_dX3DResource.clearRtv(getSystemId(SystemRtvDescriptorHeapType::BackBuffer), m_device, m_commandList, m_curBackBufferIndex, m_backGroundColor);
 		
 		// 全てのデプスステンシルビューをクリアする
-		m_dX3DResource.clearDepthStencilViewAll(m_device, m_commandList);
+		m_dX3DResource.clearDsvAll(m_device, m_commandList);
 
 		// ビューポートを設定する
 		m_dX3DResource.setViewport(getSystemId(SystemViewportType::Basic), m_commandList);
@@ -198,7 +198,7 @@ namespace tktk
 		auto curBackBufferType = (m_curBackBufferIndex == 0) ? SystemRenderTargetBufferType::BackBuffer_1 : SystemRenderTargetBufferType::BackBuffer_2;
 		
 		// バックバッファをプリセット状態にする
-		m_dX3DResource.unUseAsBackBuffer(getSystemId(curBackBufferType), m_commandList);
+		m_dX3DResource.endWriteBackBuffer(getSystemId(curBackBufferType), m_commandList);
 
 		// コマンドリストを実行する
 		executeCommandList();
@@ -232,17 +232,17 @@ namespace tktk
 
 	void DX3DBaseObjects::createConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
-		m_dX3DResource.createConstantBuffer(id, m_device, constantBufferTypeSize, constantBufferDataTopPos);
+		m_dX3DResource.createCBuffer(id, m_device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
 	void DX3DBaseObjects::createRenderTargetBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
 	{
-		m_dX3DResource.createRenderTargetBuffer(id, m_device, renderTargetSize, clearColor);
+		m_dX3DResource.createRtBuffer(id, m_device, renderTargetSize, clearColor);
 	}
 
 	void DX3DBaseObjects::createDepthStencilBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam)
 	{
-		m_dX3DResource.createDepthStencilBuffer(id, m_device, initParam);
+		m_dX3DResource.createDsBuffer(id, m_device, initParam);
 	}
 
 	void DX3DBaseObjects::createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam)
@@ -282,27 +282,27 @@ namespace tktk
 
 	void DX3DBaseObjects::updateConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
-		m_dX3DResource.updateConstantBuffer(id, m_device, m_commandList, constantBufferTypeSize, constantBufferDataTopPos);
+		m_dX3DResource.updateCBuffer(id, m_device, m_commandList, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
 	void DX3DBaseObjects::clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color)
 	{
-		m_dX3DResource.clearRenderTargetView(id, m_device, m_commandList, rtvLocationIndex, color);
+		m_dX3DResource.clearRtv(id, m_device, m_commandList, rtvLocationIndex, color);
 	}
 
 	const tktkMath::Vector3& DX3DBaseObjects::getTextureSize(unsigned int id) const
 	{
-		return m_dX3DResource.getTextureBufferSize(id);
+		return m_dX3DResource.getTextureBufferSizePx(id);
 	}
 
 	const tktkMath::Vector2& DX3DBaseObjects::getDepthStencilSize(unsigned int id) const
 	{
-		return m_dX3DResource.getDepthStencilBufferSize(id);
+		return m_dX3DResource.getDsBufferSizePx(id);
 	}
 
 	const tktkMath::Vector2& DX3DBaseObjects::getRenderTargetSize(unsigned int id) const
 	{
-		return m_dX3DResource.getRenderTargetBufferSize(id);
+		return m_dX3DResource.getRtBufferSizePx(id);
 	}
 
 	void DX3DBaseObjects::setBackGroundColor(const tktkMath::Color& backGroundColor)
@@ -312,37 +312,37 @@ namespace tktk
 
 	void DX3DBaseObjects::setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_dX3DResource.setRenderTarget(rtvDescriptorHeapId, m_device, m_commandList, startRtvLocationIndex, rtvCount);
+		m_dX3DResource.setRtv(rtvDescriptorHeapId, m_device, m_commandList, startRtvLocationIndex, rtvCount);
 	}
 
 	void DX3DBaseObjects::setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_dX3DResource.setRenderTargetAndDepthStencil(dsvDescriptorHeapId, dsvDescriptorHeapId, m_device, m_commandList, startRtvLocationIndex, rtvCount);
+		m_dX3DResource.setRtvAndDsv(dsvDescriptorHeapId, dsvDescriptorHeapId, m_device, m_commandList, startRtvLocationIndex, rtvCount);
 	}
 
 	void DX3DBaseObjects::setOnlyDepthStencil(unsigned int id)
 	{
-		m_dX3DResource.setOnlyDepthStencil(id, m_device, m_commandList);
+		m_dX3DResource.setOnlyDsv(id, m_device, m_commandList);
 	}
 
 	void DX3DBaseObjects::setBackBuffer()
 	{
-		m_dX3DResource.setBackBuffer(m_device, m_commandList, m_curBackBufferIndex);
+		m_dX3DResource.setBackBufferView(m_device, m_commandList, m_curBackBufferIndex);
 	}
 
 	void DX3DBaseObjects::setBackBufferAndDepthStencil(unsigned int dsvDescriptorHeapId)
 	{
-		m_dX3DResource.setBackBufferAndDepthStencil(dsvDescriptorHeapId, m_device, m_commandList, m_curBackBufferIndex);
+		m_dX3DResource.setBackBufferViewAndDsv(dsvDescriptorHeapId, m_device, m_commandList, m_curBackBufferIndex);
 	}
 
 	void DX3DBaseObjects::unSetRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_dX3DResource.unSetRenderTarget(rtvDescriptorHeapId, m_commandList, startRtvLocationIndex, rtvCount);
+		m_dX3DResource.unSetRtv(rtvDescriptorHeapId, m_commandList, startRtvLocationIndex, rtvCount);
 	}
 
 	void DX3DBaseObjects::unSetDepthStencil(unsigned int dsvDescriptorHeapId)
 	{
-		m_dX3DResource.unSetDepthStencil(dsvDescriptorHeapId, m_commandList);
+		m_dX3DResource.unSetDsv(dsvDescriptorHeapId, m_commandList);
 	}
 
 	void DX3DBaseObjects::setViewport(unsigned int id)

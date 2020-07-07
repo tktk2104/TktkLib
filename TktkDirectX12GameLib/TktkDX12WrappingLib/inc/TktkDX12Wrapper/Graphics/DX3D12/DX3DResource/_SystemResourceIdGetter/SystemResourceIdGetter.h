@@ -6,6 +6,7 @@
 
 namespace tktk
 {
+	// 
 	class SystemResourceIdGetter
 	{
 	public:

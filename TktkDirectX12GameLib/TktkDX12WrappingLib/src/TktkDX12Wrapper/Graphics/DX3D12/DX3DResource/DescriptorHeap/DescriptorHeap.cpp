@@ -43,46 +43,46 @@ namespace tktk
 			{
 			case DescriptorHeapType::basic:
 	
-				m_basicDescriptorHeap.setDescriptor(heapParam.m_id, device, commandList);
+				m_basicDescriptorHeap.setRootDescriptorTable(heapParam.m_id, device, commandList);
 				break;
 	
 			case DescriptorHeapType::rtv:
 	
-				m_rtvDescriptorHeap.setDescriptor(heapParam.m_id, device, commandList);
+				m_rtvDescriptorHeap.setRootDescriptorTable(heapParam.m_id, device, commandList);
 				break;
 
 			case DescriptorHeapType::dsv:
 
-				m_dsvDescriptorHeap.setDescriptor(heapParam.m_id, device, commandList);
+				m_dsvDescriptorHeap.setRootDescriptorTable(heapParam.m_id, device, commandList);
 				break;
 			}
 		}
 	}
 
-	void DescriptorHeap::setRenderTarget(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
+	void DescriptorHeap::setRtv(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
 	{
-		m_rtvDescriptorHeap.setRenderTarget(rtvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount, nullptr);
+		m_rtvDescriptorHeap.setRtv(rtvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount, nullptr);
 	}
 
-	void DescriptorHeap::setRenderTargetAndDepthStencil(unsigned int renderTargetId, unsigned int depthStencilViewId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount)
+	void DescriptorHeap::setRtvAndDsv(unsigned int renderTargetId, unsigned int depthStencilViewId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount)
 	{
 		auto cpuHeapHandleArray = m_dsvDescriptorHeap.getCpuHeapHandleArray(depthStencilViewId, device);
-		m_rtvDescriptorHeap.setRenderTarget(renderTargetId, device, commandList, startRtvLocation, rtvCount, cpuHeapHandleArray.data());
+		m_rtvDescriptorHeap.setRtv(renderTargetId, device, commandList, startRtvLocation, rtvCount, cpuHeapHandleArray.data());
 	}
 
-	void DescriptorHeap::setOnlyDepthStencil(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DescriptorHeap::setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
 	{
-		m_dsvDescriptorHeap.setOnlyDepthStencil(id, device, commandList);
+		m_dsvDescriptorHeap.setOnlyDsv(id, device, commandList);
 	}
 
-	void DescriptorHeap::clearRenderTarget(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	void DescriptorHeap::clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
 	{
-		m_rtvDescriptorHeap.clearRenderTarget(id, device, commandList, rtvLocationIndex, color);
+		m_rtvDescriptorHeap.clearRtv(id, device, commandList, rtvLocationIndex, color);
 	}
 
-	void DescriptorHeap::clearDepthStencilViewAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DescriptorHeap::clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
 	{
-		m_dsvDescriptorHeap.clearViewAll(device, commandList);
+		m_dsvDescriptorHeap.clearDsvAll(device, commandList);
 	}
 
 	void DescriptorHeap::createBasicDescriptorHeap(unsigned int id, ID3D12Device* device, const BasicDescriptorHeapInitParam& initParam)
@@ -117,11 +117,11 @@ namespace tktk
 
 	const std::vector<unsigned int>& DescriptorHeap::getRtvDescriptorHeapUseBufferIdArray(unsigned int id) const
 	{
-		return m_rtvDescriptorHeap.getRenderTargetBufferIdArray(id);
+		return m_rtvDescriptorHeap.getRtBufferIdArray(id);
 	}
 
 	const std::vector<unsigned int>& DescriptorHeap::getDsvDescriptorHeapUseBufferIdArray(unsigned int id) const
 	{
-		return m_dsvDescriptorHeap.getDepthStencilBufferIdArray(id);
+		return m_dsvDescriptorHeap.getDsBufferIdArray(id);
 	}
 }

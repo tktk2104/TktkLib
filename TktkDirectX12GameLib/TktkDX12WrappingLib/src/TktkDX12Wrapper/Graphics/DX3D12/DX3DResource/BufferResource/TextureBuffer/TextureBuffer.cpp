@@ -110,13 +110,13 @@ namespace tktk
 		gpuPriorityCreate(id, device, commandList, formatParam, dataParam);
 	}
 
-	void TextureBuffer::createShaderResourceView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void TextureBuffer::createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_textureBufferDataArray.at(id)->createShaderResourceView(device, heapHandle);
+		m_textureBufferDataArray.at(id)->createSrv(device, heapHandle);
 	}
 
-	const tktkMath::Vector3& TextureBuffer::getTextureSize(unsigned int id) const
+	const tktkMath::Vector3& TextureBuffer::getTextureSizePx(unsigned int id) const
 	{
-		return m_textureBufferDataArray.at(id)->getTextureSize();
+		return m_textureBufferDataArray.at(id)->getTextureSizePx();
 	}
 }

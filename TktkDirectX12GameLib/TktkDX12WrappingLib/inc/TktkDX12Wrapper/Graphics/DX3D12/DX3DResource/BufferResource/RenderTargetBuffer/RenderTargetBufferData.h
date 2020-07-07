@@ -10,24 +10,40 @@
 
 namespace tktk
 {
+	// レンダーターゲットバッファを管理するクラス
 	class RenderTargetBufferData
 	{
 	public:
 
+		// ゼロからバッファを作るコンストラクタ
 		RenderTargetBufferData(ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
 
+		// スワップチェインからバックバッファを取得して作るコンストラクタ
 		RenderTargetBufferData(IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 		~RenderTargetBufferData();
 
 	public:
 
-		D3D12_RESOURCE_BARRIER createBarrierDesc(D3D12_RESOURCE_STATES beforState, D3D12_RESOURCE_STATES afterState) const;
+		// 自身のリソースバリアをレンダーターゲット状態に変更する
+		void beginWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList);
 
-		void createRenderTargetView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		// 自身のリソースバリアをシェーダー使用状態に変更する
+		void endWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList);
 
-		void createShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		// 自身のリソースバリアをレンダーターゲット状態に変更する
+		void beginWriteBackBuffer(ID3D12GraphicsCommandList* commandList);
 
-		const tktkMath::Vector2& getRenderTargetSize() const;
+		// 自身のリソースバリアをプリセット状態に変更する
+		void endWriteBackBuffer(ID3D12GraphicsCommandList* commandList);
+
+		// 引数のディスクリプタハンドルにレンダーターゲットビューを作る
+		void createRtv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+
+		// 引数のディスクリプタハンドルにシェーダーリソースビューを作る
+		void createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+
+		// レンダーターゲットバッファ画像の大きさを取得する（ピクセル）
+		const tktkMath::Vector2& getRenderTargetSizePx() const;
 
 	private:
 

@@ -7,6 +7,7 @@
 
 namespace tktk
 {
+	// シェーダーリソースビュー、定数バッファビューなど用のディスクリプタヒープクラス
 	class BasicDescriptorHeapData
 	{
 	public:
@@ -16,13 +17,14 @@ namespace tktk
 
 	public:
 
-		// 個々のディスクリプタのアドレスのハンドルを取得する
+		// 各ビューのCPUアドレスの配列を取得する
 		std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> getCpuHeapHandleArray(ID3D12Device* device) const;
 
+		// ディスクリプタヒープをまとめてコマンドリストに登録するためにあるゲッター
 		ID3D12DescriptorHeap* getPtr() const;
 
-		// コマンドリストに自身を設定する
-		void setDescriptor(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
+		// 各ビューのGPUアドレスをコマンドリストに登録する
+		void setRootDescriptorTable(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 
 	public:
 

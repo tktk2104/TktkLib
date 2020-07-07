@@ -6,6 +6,7 @@
 
 namespace tktk
 {
+	// 「ViewportData」を管理するクラス
 	class Viewport
 	{
 	public:
@@ -14,8 +15,10 @@ namespace tktk
 
 	public:
 
+		// 「ViewportData」のインスタンスを作る
 		void create(unsigned int id, const std::vector<ViewportInitParam>& initParamArray);
 
+		// 指定のビューポートをコマンドリストに登録する
 		void set(unsigned int id, ID3D12GraphicsCommandList* commandList);
 
 	private:

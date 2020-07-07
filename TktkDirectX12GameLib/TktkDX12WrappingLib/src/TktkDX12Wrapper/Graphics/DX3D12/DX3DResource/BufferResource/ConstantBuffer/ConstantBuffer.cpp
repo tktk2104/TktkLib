@@ -12,9 +12,9 @@ namespace tktk
 		m_constantBufferDataArray.emplaceAt(id, device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
-	void ConstantBuffer::createConstantBufferView(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void ConstantBuffer::createCbv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
-		m_constantBufferDataArray.at(id)->createConstantBufferView(device, heapHandle);
+		m_constantBufferDataArray.at(id)->createCbv(device, heapHandle);
 	}
 
 	void ConstantBuffer::updateBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
@@ -28,7 +28,7 @@ namespace tktk
 		{
 			auto ptr = m_constantBufferDataArray.at(i);
 
-			if (ptr != nullptr) ptr->deleteUploadBuffer();
+			if (ptr != nullptr) ptr->deleteUploadBufferAll();
 		}
 	}
 }

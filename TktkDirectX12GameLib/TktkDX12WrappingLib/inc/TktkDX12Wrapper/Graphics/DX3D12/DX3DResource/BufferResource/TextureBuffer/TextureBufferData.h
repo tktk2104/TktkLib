@@ -10,19 +10,25 @@
 
 namespace tktk
 {
+	// テクスチャバッファを管理するクラス
 	class TextureBufferData
 	{
 	public:
 
+		// コマンドリストを使わずに作るコンストラクタ
 		TextureBufferData(ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
+
+		// コマンドリストを使って作るコンストラクタ
 		TextureBufferData(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 		~TextureBufferData();
 
 	public:
 
-		void createShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		// 引数のディスクリプタハンドルにシェーダーリソースビューを作る
+		void createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
 
-		const tktkMath::Vector3& getTextureSize() const;
+		// テクスチャバッファ画像の大きさを取得する（ピクセル）
+		const tktkMath::Vector3& getTextureSizePx() const;
 
 	private:
 

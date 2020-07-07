@@ -17,9 +17,9 @@ namespace tktk
 		return m_rtvDescriptorHeapDataArray.at(id)->getCpuHeapHandleArray(device);
 	}
 
-	const std::vector<unsigned int>& RtvDescriptorHeap::getRenderTargetBufferIdArray(unsigned int id) const
+	const std::vector<unsigned int>& RtvDescriptorHeap::getRtBufferIdArray(unsigned int id) const
 	{
-		return m_rtvDescriptorHeapDataArray.at(id)->getRenderTargetBufferIdArray();
+		return m_rtvDescriptorHeapDataArray.at(id)->getRtBufferIdArray();
 	}
 
 	ID3D12DescriptorHeap* RtvDescriptorHeap::getPtr(unsigned int id) const
@@ -27,18 +27,18 @@ namespace tktk
 		return m_rtvDescriptorHeapDataArray.at(id)->getPtr();
 	}
 
-	void RtvDescriptorHeap::setDescriptor(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
+	void RtvDescriptorHeap::setRootDescriptorTable(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
-		m_rtvDescriptorHeapDataArray.at(id)->setDescriptor(device, commandList);
+		m_rtvDescriptorHeapDataArray.at(id)->setRootDescriptorTable(device, commandList);
 	}
 
-	void RtvDescriptorHeap::setRenderTarget(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount, const D3D12_CPU_DESCRIPTOR_HANDLE* useDsvHandle) const
+	void RtvDescriptorHeap::setRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount, const D3D12_CPU_DESCRIPTOR_HANDLE* useDsvHandle) const
 	{
-		m_rtvDescriptorHeapDataArray.at(id)->setRenderTarget(device, commandList, startRtvLocationIndex, rtvCount, useDsvHandle);
+		m_rtvDescriptorHeapDataArray.at(id)->setRtv(device, commandList, startRtvLocationIndex, rtvCount, useDsvHandle);
 	}
 
-	void RtvDescriptorHeap::clearRenderTarget(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	void RtvDescriptorHeap::clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
 	{
-		m_rtvDescriptorHeapDataArray.at(id)->clearRenderTarget(device, commandList, rtvLocationIndex, color);
+		m_rtvDescriptorHeapDataArray.at(id)->clearRtv(device, commandList, rtvLocationIndex, color);
 	}
 }

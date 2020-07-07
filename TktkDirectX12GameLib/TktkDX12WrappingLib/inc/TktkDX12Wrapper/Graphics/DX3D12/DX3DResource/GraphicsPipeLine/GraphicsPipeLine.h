@@ -6,6 +6,7 @@
 
 namespace tktk
 {
+	// グラフィックパイプラインを管理するクラス
 	class GraphicsPipeLine
 	{
 	public:
@@ -14,14 +15,17 @@ namespace tktk
 
 	public:
 
+		// ルートシグネチャを作る
 		void createRootSignature(unsigned int id, ID3D12Device* device, const RootSignatureInitParam& initParam);
 
 	public:
 
+		// パイプラインステートを作る
 		void createPipeLineState(unsigned int id, ID3D12Device* device, const PipeLineStateInitParam& initParam, const ShaderFilePaths& shaderFilePath);
 
 	public:
 
+		// グラフィックパイプラインをコマンドリストに登録する
 		void set(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 	private:

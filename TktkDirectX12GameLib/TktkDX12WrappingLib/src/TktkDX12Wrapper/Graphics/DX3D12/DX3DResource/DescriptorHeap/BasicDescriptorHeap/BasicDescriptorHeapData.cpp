@@ -50,21 +50,6 @@ namespace tktk
 			cpuHandle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 		}
 		return handleArray;
-
-		//// ディスクリプタヒープ上に存在するディスクリプタの数分のメモリを確保する
-		//std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> handleArray;
-		//handleArray.reserve(m_eachDescriptorUseBufferNum.size());
-		//
-		//// 自身の先頭のアドレスを取得
-		//auto cpuHandle = m_descriptorHeap->GetCPUDescriptorHandleForHeapStart();
-		//
-		//// 個々のディスクリプタが参照しているバッファの数に応じてアドレスの位置を進めつつ、その値を配列に代入する
-		//for (unsigned int useBufferNum : m_eachDescriptorUseBufferNum)
-		//{
-		//	handleArray.push_back(cpuHandle);
-		//	cpuHandle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * useBufferNum;
-		//}
-		//return handleArray;
 	}
 
 	ID3D12DescriptorHeap* BasicDescriptorHeapData::getPtr() const
@@ -72,7 +57,7 @@ namespace tktk
 		return m_descriptorHeap;
 	}
 
-	void BasicDescriptorHeapData::setDescriptor(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
+	void BasicDescriptorHeapData::setRootDescriptorTable(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		auto gpuHandle = m_descriptorHeap->GetGPUDescriptorHandleForHeapStart();
 		
@@ -81,20 +66,5 @@ namespace tktk
 			commandList->SetGraphicsRootDescriptorTable(i, gpuHandle);
 			gpuHandle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * static_cast<unsigned long long>(m_descriptorTableSizeArray.at(i));
 		}
-
-		/*for (unsigned int i = 0; i < m_descriptorHeap->GetDesc().NumDescriptors; i++)
-		{
-			commandList->SetGraphicsRootDescriptorTable(i, gpuHandle);
-			gpuHandle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-		}*/
-
-		//// ディスクリプタヒープ上に存在するディスクリプタの数分のメモリを確保する
-		//auto gpuHandle = m_descriptorHeap->GetGPUDescriptorHandleForHeapStart();
-		//
-		//for (unsigned int i = 0; i < m_eachDescriptorUseBufferNum.size(); i++)
-		//{
-		//	commandList->SetGraphicsRootDescriptorTable(i, gpuHandle);
-		//	gpuHandle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * static_cast<unsigned long long>(m_eachDescriptorUseBufferNum.at(i));
-		//}
 	}
 }

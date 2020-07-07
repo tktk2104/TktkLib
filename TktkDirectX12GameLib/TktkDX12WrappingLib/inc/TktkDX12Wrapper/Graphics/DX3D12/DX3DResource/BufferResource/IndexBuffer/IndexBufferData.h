@@ -6,6 +6,7 @@
 
 namespace tktk
 {
+	// インデックスバッファを管理するクラス
 	class IndexBufferData
 	{
 	public:
@@ -15,6 +16,7 @@ namespace tktk
 
 	public:
 
+		// コマンドリストにインデックスバッファを登録する
 		void set(ID3D12GraphicsCommandList* commandList) const;
 
 	private:

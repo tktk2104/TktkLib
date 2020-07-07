@@ -258,7 +258,7 @@ namespace tktk
 		}
 	}
 
-	void TextureBufferData::createShaderResourceView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void TextureBufferData::createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
 		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 		srvDesc.Format = m_srvInitParam.format;
@@ -327,7 +327,7 @@ namespace tktk
 		device->CreateShaderResourceView(m_textureBuffer, &srvDesc, heapHandle);
 	}
 
-	const tktkMath::Vector3& TextureBufferData::getTextureSize() const
+	const tktkMath::Vector3& TextureBufferData::getTextureSizePx() const
 	{
 		return m_textureSize;
 	}

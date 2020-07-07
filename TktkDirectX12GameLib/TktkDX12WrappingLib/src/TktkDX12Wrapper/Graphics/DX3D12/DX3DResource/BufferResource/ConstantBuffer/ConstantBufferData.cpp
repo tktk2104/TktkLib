@@ -52,7 +52,7 @@ namespace tktk
 		}
 	}
 
-	void ConstantBufferData::createConstantBufferView(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void ConstantBufferData::createCbv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
 	{
 		D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc{};
 		cbvDesc.BufferLocation = m_constantBuffer->GetGPUVirtualAddress();
@@ -125,7 +125,7 @@ namespace tktk
 		m_uploadBufferList.push_front(uploadBuff);
 	}
 
-	void ConstantBufferData::deleteUploadBuffer()
+	void ConstantBufferData::deleteUploadBufferAll()
 	{
 		for (auto node : m_uploadBufferList)
 		{

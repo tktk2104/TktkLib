@@ -6,6 +6,7 @@
 
 namespace tktk
 {
+	// パイプラインステートを管理するクラス
 	class PipeLineStateData
 	{
 	public:
@@ -21,8 +22,10 @@ namespace tktk
 
 	public:
 
+		// 使用しているルートシグネチャのIDを取得する
 		unsigned int getUseRootSignatureIndex() const;
 
+		// 自身をコマンドリストに登録する
 		void set(ID3D12GraphicsCommandList* commandList) const;
 
 	private:
