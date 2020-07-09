@@ -10,13 +10,13 @@
 
 namespace tktk
 {
+	// ゲームのウィンドウを管理するクラス
 	class Window
 	{
 	public:
 
-		explicit Window(
-			const WindowInitParam& initParam
-		);
+		explicit Window(const WindowInitParam& initParam);
+		~Window() = default;
 
 		// コピー禁止
 		Window(const Window& other) = delete;

@@ -230,17 +230,17 @@ namespace tktk
 		m_dX3DResource.createIndexBuffer(id, m_device, indices);
 	}
 
-	void DX3DBaseObjects::createConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	void DX3DBaseObjects::createCBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_dX3DResource.createCBuffer(id, m_device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
-	void DX3DBaseObjects::createRenderTargetBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
+	void DX3DBaseObjects::createRtBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
 	{
 		m_dX3DResource.createRtBuffer(id, m_device, renderTargetSize, clearColor);
 	}
 
-	void DX3DBaseObjects::createDepthStencilBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam)
+	void DX3DBaseObjects::createDsBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam)
 	{
 		m_dX3DResource.createDsBuffer(id, m_device, initParam);
 	}
@@ -280,67 +280,67 @@ namespace tktk
 		m_dX3DResource.gpuPriorityLoadTextureBuffer(id, m_device, m_commandList, texDataPath);
 	}
 
-	void DX3DBaseObjects::updateConstantBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
-	{
-		m_dX3DResource.updateCBuffer(id, m_device, m_commandList, constantBufferTypeSize, constantBufferDataTopPos);
-	}
-
-	void DX3DBaseObjects::clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color)
-	{
-		m_dX3DResource.clearRtv(id, m_device, m_commandList, rtvLocationIndex, color);
-	}
-
-	const tktkMath::Vector3& DX3DBaseObjects::getTextureSize(unsigned int id) const
-	{
-		return m_dX3DResource.getTextureBufferSizePx(id);
-	}
-
-	const tktkMath::Vector2& DX3DBaseObjects::getDepthStencilSize(unsigned int id) const
-	{
-		return m_dX3DResource.getDsBufferSizePx(id);
-	}
-
-	const tktkMath::Vector2& DX3DBaseObjects::getRenderTargetSize(unsigned int id) const
-	{
-		return m_dX3DResource.getRtBufferSizePx(id);
-	}
-
 	void DX3DBaseObjects::setBackGroundColor(const tktkMath::Color& backGroundColor)
 	{
 		m_backGroundColor = backGroundColor;
 	}
 
-	void DX3DBaseObjects::setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX3DBaseObjects::updateCBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	{
+		m_dX3DResource.updateCBuffer(id, m_device, m_commandList, constantBufferTypeSize, constantBufferDataTopPos);
+	}
+
+	void DX3DBaseObjects::clearRtv(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	{
+		m_dX3DResource.clearRtv(id, m_device, m_commandList, rtvLocationIndex, color);
+	}
+
+	const tktkMath::Vector3& DX3DBaseObjects::getTextureBufferSizePx(unsigned int id) const
+	{
+		return m_dX3DResource.getTextureBufferSizePx(id);
+	}
+
+	const tktkMath::Vector2& DX3DBaseObjects::getDsBufferSizePx(unsigned int id) const
+	{
+		return m_dX3DResource.getDsBufferSizePx(id);
+	}
+
+	const tktkMath::Vector2& DX3DBaseObjects::getRtBufferSizePx(unsigned int id) const
+	{
+		return m_dX3DResource.getRtBufferSizePx(id);
+	}
+
+	void DX3DBaseObjects::setRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
 		m_dX3DResource.setRtv(rtvDescriptorHeapId, m_device, m_commandList, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX3DBaseObjects::setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX3DBaseObjects::setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
 		m_dX3DResource.setRtvAndDsv(dsvDescriptorHeapId, dsvDescriptorHeapId, m_device, m_commandList, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX3DBaseObjects::setOnlyDepthStencil(unsigned int id)
+	void DX3DBaseObjects::setOnlyDsv(unsigned int id)
 	{
 		m_dX3DResource.setOnlyDsv(id, m_device, m_commandList);
 	}
 
-	void DX3DBaseObjects::setBackBuffer()
+	void DX3DBaseObjects::setBackBufferView()
 	{
 		m_dX3DResource.setBackBufferView(m_device, m_commandList, m_curBackBufferIndex);
 	}
 
-	void DX3DBaseObjects::setBackBufferAndDepthStencil(unsigned int dsvDescriptorHeapId)
+	void DX3DBaseObjects::setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId)
 	{
 		m_dX3DResource.setBackBufferViewAndDsv(dsvDescriptorHeapId, m_device, m_commandList, m_curBackBufferIndex);
 	}
 
-	void DX3DBaseObjects::unSetRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX3DBaseObjects::unSetRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
 		m_dX3DResource.unSetRtv(rtvDescriptorHeapId, m_commandList, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX3DBaseObjects::unSetDepthStencil(unsigned int dsvDescriptorHeapId)
+	void DX3DBaseObjects::unSetDsv(unsigned int dsvDescriptorHeapId)
 	{
 		m_dX3DResource.unSetDsv(dsvDescriptorHeapId, m_commandList);
 	}
@@ -405,5 +405,70 @@ namespace tktk
 
 		// コピー元バッファを削除する
 		m_dX3DResource.deleteUploadBufferAll();
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemViewportType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemScissorRectType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemVertexBufferType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemIndexBufferType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemConstantBufferType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemTextureBufferType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemRenderTargetBufferType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemDepthStencilBufferType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemBasicDescriptorHeapType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemRtvDescriptorHeapType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemDsvDescriptorHeapType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemRootSignatureType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
+	}
+
+	unsigned int DX3DBaseObjects::getSystemId(SystemPipeLineStateType type) const
+	{
+		return m_dX3DResource.getSystemId(type);
 	}
 }

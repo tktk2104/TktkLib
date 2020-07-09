@@ -9,6 +9,7 @@
 
 namespace tktk
 {
+	// ダブルバッファリングで使用するスワップチェインを管理するクラス
 	class SwapChain
 	{
 	public:
@@ -18,9 +19,10 @@ namespace tktk
 
 	public:
 
+		// 初期化する
 		void initialize(HWND hwnd, IDXGIFactory6* factory, ID3D12CommandQueue* commandQueue, const tktkMath::Vector2& windowSize);
 
-		// TODO : もっとカプセル化する
+		// バックバッファを取得する処理で必要なゲッター
 		IDXGISwapChain1* getPtr() const;
 
 	private:
