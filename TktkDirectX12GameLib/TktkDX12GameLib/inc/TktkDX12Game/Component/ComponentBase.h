@@ -32,32 +32,45 @@ namespace tktk
 
 	public:
 
+		// 描画優先度を取得する（値が小さいほど先に呼ばれる）
 		float getDrawPriority() const;
 
+		// 衝突判定グループを取得する
 		int getCollisionGroup() const;
 
-		bool activeChangeCheck();
-
+		// アクティブフラグを設定する
 		void setActive(bool activeFlag);
 
+		// 自身を殺す
 		void destroy();
 
+		// アクティブフラグを取得する
 		bool isActive() const;
 
+		// 死亡フラグを取得する
 		bool isDead() const;
+
+		// アクティブフラグの変更判定
+		bool activeChangeCheck();
 
 	public:
 
+		// 自身の所持オブジェクトを取得する
 		const GameObjectPtr& getGameObject() const;
 
+		// 自身の所持オブジェクトが持っているテンプレート引数の型のコンポーネントを取得する
+		// ※取得できなかった場合はnullptrを返す
+		// ※複数該当コンポーネントがあった場合、最初に見つけた１つを取得する
 		template <class ComponentType>
 		ComponentPtr<ComponentType> getComponent() const;
 
+		// 自身の所持オブジェクトが持っているテンプレート引数の型のコンポーネントを全て取得する
 		template <class ComponentType>
 		std::forward_list<ComponentPtr<ComponentType>> getComponents() const;
 
 	public:
 
+		// 自身を所持するオブジェクトを設定する
 		void setUser(const GameObjectPtr& user);
 
 	private:
@@ -73,6 +86,9 @@ namespace tktk
 //┃ここから下は関数の実装
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+	// 自身の所持オブジェクトが持っているテンプレート引数の型のコンポーネントを取得する
+	// ※取得できなかった場合はnullptrを返す
+	// ※複数該当コンポーネントがあった場合、最初に見つけた１つを取得する
 	template<class ComponentType>
 	inline ComponentPtr<ComponentType> ComponentBase::getComponent() const
 	{
@@ -80,6 +96,7 @@ namespace tktk
 		return m_user->getComponent<ComponentType>();
 	}
 
+	// 自身の所持オブジェクトが持っているテンプレート引数の型のコンポーネントを全て取得する
 	template<class ComponentType>
 	inline std::forward_list<ComponentPtr<ComponentType>> ComponentBase::getComponents() const
 	{

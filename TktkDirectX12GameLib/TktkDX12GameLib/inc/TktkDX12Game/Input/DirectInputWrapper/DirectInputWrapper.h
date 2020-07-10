@@ -15,6 +15,7 @@ namespace tktk
 	class Keyboard;
 	class GamePad;
 
+	// ダイレクトインプットでの入力判定処理
 	class DirectInputWrapper
 	{
 	public:

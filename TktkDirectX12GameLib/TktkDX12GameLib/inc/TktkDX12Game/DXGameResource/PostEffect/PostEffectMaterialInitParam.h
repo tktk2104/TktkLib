@@ -3,9 +3,13 @@
 
 namespace tktk
 {
+	// ポストエフェクトのマテリアルを作る時に必要な情報
 	struct PostEffectMaterialInitParam
 	{
+		// 使用するパイプラインステートID
 		unsigned int usePipeLineStateId;
+
+		// 使用するディスクリプタヒープID
 		unsigned int useDescriptorHeapId;
 	};
 }

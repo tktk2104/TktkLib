@@ -15,7 +15,7 @@ namespace tktk
 	void BasicMeshData::writeShadowMap()
 	{
 		// シャドウマップ描画用の深度バッファー“のみ”を設定する
-		DX12GameManager::setOnlyDepthStencil(DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::ShadowMap));
+		DX12GameManager::setOnlyDsv(DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::ShadowMap));
 
 		// ビューポートを設定する
 		DX12GameManager::setViewport(DX12GameManager::getSystemId(SystemViewportType::Basic));
@@ -42,7 +42,7 @@ namespace tktk
 		DX12GameManager::drawIndexedInstanced(m_indexNum, 1U, 0U, 0U, 0U);
 
 		// 深度ステンシルバッファーをシェーダーで使える状態にする
-		DX12GameManager::unSetDepthStencil(DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::ShadowMap));
+		DX12GameManager::unSetDsv(DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::ShadowMap));
 
 		// コマンドリストを実行する
 		DX12GameManager::executeCommandList();
@@ -71,11 +71,11 @@ namespace tktk
 		// レンダーターゲットと深度ステンシルを設定する（バックバッファーに直で描画する場合は特殊処理）
 		if (baseArgs.rtvDescriptorHeapId == DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
 		{
-			DX12GameManager::setBackBufferAndDepthStencil(baseArgs.dsvDescriptorHeapId);
+			DX12GameManager::setBackBufferViewAndDsv(baseArgs.dsvDescriptorHeapId);
 		}
 		else
 		{
-			DX12GameManager::setRenderTargetAndDepthStencil(baseArgs.rtvDescriptorHeapId, baseArgs.dsvDescriptorHeapId, 0U, 1U);
+			DX12GameManager::setRtvAndDsv(baseArgs.rtvDescriptorHeapId, baseArgs.dsvDescriptorHeapId, 0U, 1U);
 		}
 
 		// マテリアルの数だけ描画する
@@ -91,11 +91,11 @@ namespace tktk
 		// バックバッファ以外に描画していたら使用したレンダーターゲットバッファをシェーダーで使用する状態にする
 		if (baseArgs.rtvDescriptorHeapId != DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
 		{
-			DX12GameManager::unSetRenderTarget(baseArgs.rtvDescriptorHeapId, 0U, 1U);
+			DX12GameManager::unSetRtv(baseArgs.rtvDescriptorHeapId, 0U, 1U);
 		}
 
 		// 深度ステンシルバッファーをシェーダーで使える状態にする
-		DX12GameManager::unSetDepthStencil(baseArgs.dsvDescriptorHeapId);
+		DX12GameManager::unSetDsv(baseArgs.dsvDescriptorHeapId);
 
 		// コマンドリストを実行する
 		DX12GameManager::executeCommandList();

@@ -7,6 +7,8 @@
 
 namespace tktk
 {
+	// 親子関係を管理するコンポーネント
+	// ※GameObjectを作ると勝手にAddComponentされる
 	class ParentChildManager
 		: public ComponentBase
 	{
@@ -16,6 +18,7 @@ namespace tktk
 
 	public:
 
+		// 子要素のリストを更新する
 		void updateContainer();
 
 	public:

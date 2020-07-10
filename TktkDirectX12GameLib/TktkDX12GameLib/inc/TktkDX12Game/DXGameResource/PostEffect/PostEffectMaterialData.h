@@ -6,6 +6,7 @@
 
 namespace tktk
 {
+	// ポストエフェクトマテリアルを管理するクラス
 	class PostEffectMaterialData
 	{
 	public:
@@ -15,6 +16,7 @@ namespace tktk
 
 	public:
 
+		// ポストエフェクトを描画する
 		void drawPostEffect(const PostEffectMaterialDrawFuncArgs& drawFuncArgs) const;
 
 	private:

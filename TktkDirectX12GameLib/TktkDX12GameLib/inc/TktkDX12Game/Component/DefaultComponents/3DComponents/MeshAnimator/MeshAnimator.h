@@ -5,6 +5,8 @@
 
 namespace tktk
 {
+	// メッシュをアニメーションさせるコンポーネント
+	// 【必須コンポーネント：BasicMeshDrawer】
 	class MeshAnimator
 		: public ComponentBase
 	{
@@ -16,10 +18,12 @@ namespace tktk
 
 		void update();
 
+		// 引数のスケルトンを自身のモーションで変形させる
 		void transformSkeleton(unsigned int skeletonId);
 
 	public:
 
+		// モーションを新たに設定する
 		void setMotionId(unsigned int motionId);
 
 	private:

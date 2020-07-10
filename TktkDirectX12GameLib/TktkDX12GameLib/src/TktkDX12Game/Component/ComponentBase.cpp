@@ -22,16 +22,6 @@ namespace tktk
 		return m_collisionGroup;
 	}
 
-	bool ComponentBase::activeChangeCheck()
-	{
-		if (m_isActive != m_nextFrameActive)
-		{
-			m_isActive = m_nextFrameActive;
-			return true;
-		}
-		return false;
-	}
-
 	void ComponentBase::setActive(bool activeFlag)
 	{
 		m_nextFrameActive = activeFlag;
@@ -54,6 +44,16 @@ namespace tktk
 	bool ComponentBase::isDead() const
 	{
 		return m_isDead;
+	}
+
+	bool ComponentBase::activeChangeCheck()
+	{
+		if (m_isActive != m_nextFrameActive)
+		{
+			m_isActive = m_nextFrameActive;
+			return true;
+		}
+		return false;
 	}
 
 	const GameObjectPtr& ComponentBase::getGameObject() const

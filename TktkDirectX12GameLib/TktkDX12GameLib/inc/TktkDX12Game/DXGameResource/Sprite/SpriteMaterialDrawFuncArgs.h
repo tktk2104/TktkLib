@@ -5,11 +5,19 @@
 
 namespace tktk
 {
+	// スプライトのマテリアルを描画する時に必要な引数
 	struct SpriteMaterialDrawFuncArgs
 	{
+		// 使用するビューポートID
 		unsigned int		viewportId;
+
+		// 使用するシザー矩形ID
 		unsigned int		scissorRectId;
+
+		// 使用するレンダーターゲット用のディスクリプタヒープID
 		unsigned int		rtvDescriptorHeapId;
+
+		// ワールド行列
 		tktkMath::Matrix3	worldMatrix;
 	};
 }

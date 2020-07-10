@@ -11,6 +11,7 @@
 
 namespace tktk
 {
+	// モーションデータを管理するクラス
 	class MotionData
 	{
 	public:
@@ -25,6 +26,7 @@ namespace tktk
 
 	private:
 
+		// キーフレーム情報
 		struct KeyFrame
 		{
 			unsigned int			frameNo;

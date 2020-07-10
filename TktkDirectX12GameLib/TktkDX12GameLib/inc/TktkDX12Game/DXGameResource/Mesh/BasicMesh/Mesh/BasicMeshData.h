@@ -8,6 +8,7 @@
 
 namespace tktk
 {
+	// 通常メッシュ情報を管理するクラス
 	class BasicMeshData
 	{
 	public:
@@ -16,8 +17,10 @@ namespace tktk
 
 	public:
 
+		// シャドウマップを書き込む
 		void writeShadowMap();
 
+		// 通常メッシュを描画する
 		void drawMesh(const MeshDrawFuncBaseArgs& baseArgs);
 
 	private:

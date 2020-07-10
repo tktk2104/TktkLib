@@ -11,12 +11,17 @@ namespace tktk
 	{
 	public:
 
+		// テンプレート引数の型のコンポーネントの更新優先度を設定する
 		template <class ComponentType>
 		void addPriority(float priority);
 
+		// テンプレート引数の型のコンポーネントの更新優先度を取得する
+		// 登録されていない型の場合、「m_basePriority」が返る
 		template <class ComponentType>
 		float getPriority() const;
 
+		// 引数のクラスIDの型のコンポーネントの更新優先度を取得する
+		// 登録されていない型の場合、デフォルト値の「0.0f」が返る
 		float getPriority(unsigned int typeId) const;
 
 	private:
@@ -29,6 +34,7 @@ namespace tktk
 //┃ここから下は関数の実装
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+	// テンプレート引数の型のコンポーネントの更新優先度を設定する
 	template<class ComponentType>
 	inline void ComponentUpdatePriorityList::addPriority(float priority)
 	{
@@ -37,6 +43,9 @@ namespace tktk
 			m_updatePriorityMap.emplace(ClassTypeChecker::getClassId<ComponentType>(), priority);
 		}
 	}
+
+	// テンプレート引数の型のコンポーネントの更新優先度を取得する
+	// 登録されていない型の場合、デフォルト値の「0.0f」が返る
 	template<class ComponentType>
 	inline float ComponentUpdatePriorityList::getPriority() const
 	{

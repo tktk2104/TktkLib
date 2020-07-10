@@ -6,10 +6,12 @@
 
 namespace tktk
 {
+	// pmdファイルを読み込んで各種ゲームのリソースクラスを作るクラス
 	class BasicMeshPmdLoader
 	{
 	public:
 
+		// pmdファイルを読み込んで各種ゲームのリソースクラスを作る
 		static BasicMeshLoadPmdReturnValue loadPmd(const BasicMeshLoadPmdArgs& args);
 	};
 }

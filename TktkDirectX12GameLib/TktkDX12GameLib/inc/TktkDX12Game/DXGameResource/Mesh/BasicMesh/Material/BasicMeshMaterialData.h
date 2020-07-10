@@ -6,6 +6,7 @@
 
 namespace tktk
 {
+	// 通常メッシュのマテリアル情報を管理するクラス
 	class BasicMeshMaterialData
 	{
 	public:
@@ -15,6 +16,7 @@ namespace tktk
 
 	public:
 
+		// 自身のマテリアル情報をグラフィックパイプラインに設定する
 		void setMaterialData();
 
 	private:

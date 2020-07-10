@@ -1,14 +1,15 @@
 #ifndef BASIC_MESH_MATERIAL_H_
 #define BASIC_MESH_MATERIAL_H_
 
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
 #undef min
 #undef max
 #include "BasicMeshMaterialData.h"
-#include <TktkContainer/HeapArray/HeapArray.h>
 
 namespace tktk
 {
+	// 「BasicMeshMaterialData」を管理するクラス
 	class BasicMeshMaterial
 	{
 	public:
@@ -18,14 +19,18 @@ namespace tktk
 
 	public:
 
+		// 「BasicMeshMaterialData」のインスタンスを作る
 		void create(unsigned int id, const BasicMeshMaterialInitParam& initParam);
 
+		// 指定の通常メッシュのマテリアル情報をグラフィックパイプラインに設定する
 		void setMaterialData(unsigned int id);
 
 	private:
 
+		// 通常メッシュマテリアル描画用のルートシグネチャを作る
 		void createRootSignature();
 
+		// 通常メッシュマテリアル描画用のパイプラインステートを作る
 		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths);
 
 	private:

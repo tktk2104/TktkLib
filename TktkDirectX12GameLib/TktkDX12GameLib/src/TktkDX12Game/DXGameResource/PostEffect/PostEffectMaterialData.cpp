@@ -21,11 +21,11 @@ namespace tktk
 		// レンダーターゲットを設定する（バックバッファーに直で描画する場合は特殊処理）
 		if (drawFuncArgs.rtvDescriptorHeapId == DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
 		{
-			DX12GameManager::setBackBuffer();
+			DX12GameManager::setBackBufferView();
 		}
 		else
 		{
-			DX12GameManager::setRenderTarget(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
+			DX12GameManager::setRtv(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
 		}
 
 		// 描画で使用するパイプラインステートを設定する
@@ -49,7 +49,7 @@ namespace tktk
 		// バックバッファ以外に描画していたら使用したレンダーターゲットバッファをシェーダーで使用する状態にする
 		if (drawFuncArgs.rtvDescriptorHeapId != DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
 		{
-			DX12GameManager::unSetRenderTarget(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
+			DX12GameManager::unSetRtv(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
 		}
 
 		// コマンドリストを実行する

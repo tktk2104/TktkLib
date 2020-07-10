@@ -27,7 +27,10 @@ namespace tktk
 	{
 	public: /* このマネージャー自体の処理 */
 
+		// 初期化
 		static void initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath = "");
+		
+		// 実行
 		static void run();
 
 	public: /* ウィンドウの処理 */
@@ -37,20 +40,27 @@ namespace tktk
 
 	public: /* シーンの処理 */
 
+		// シーンを作成して追加する
 		template<class SceneType, class... Args>
 		static void addScene(unsigned int id, Args... constructorArgs);
 
+		// シーンを有効にする
 		static void enableScene(unsigned int id);
 
+		// シーンを無効にする
 		static void disableScene(unsigned int id);
 
 	public: /* ゲームオブジェクトの処理 */
 
+		// ゲームオブジェクトを作成し、そのポインタを返す
 		static GameObjectPtr createGameObject();
 		
+		// 引数のタグを持ったゲームオブジェクトを取得する
+		// ※複数該当オブジェクトがあった場合、最初に見つけた１つを取得する
 		static GameObjectPtr findGameObjectWithTag(int tag);
 		
-		static std::forward_list<GameObjectPtr> findGameObjectWithTags(int tag);
+		// 引数のタグを持ったゲームオブジェクトを全て取得する
+		static std::forward_list<GameObjectPtr> findGameObjectsWithTag(int tag);
 
 	public: /* コンポーネントの処理 */
 
@@ -59,6 +69,7 @@ namespace tktk
 		template <class ComponentType>
 		static void addUpdatePriority(float priority);
 
+		// 衝突判定の組み合わせを追加する
 		static void addCollisionGroup(int firstGroup, int secondGroup);
 
 		// テンプレート引数の型のコンポーネントを引数の値を使って作る
@@ -70,36 +81,52 @@ namespace tktk
 		// コマンドリストを手動で実行する
 		static void executeCommandList();
 
+		// 背景色を設定する
 		static void setBackGroundColor(const tktkMath::Color& backGroundColor);
 
-		static void setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+		// 指定のレンダーターゲット用のディスクリプタヒープをコマンドリストに設定する
+		static void setRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
-		static void unSetRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+		// 指定の（レンダーターゲットと深度ステンシルビュー）用のディスクリプタヒープ２つをコマンドリストに設定する
+		static void setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
-		static void unSetDepthStencil(unsigned int dsvDescriptorHeapId);
+		// 指定の深度ステンシルビュー用のディスクリプタヒープをコマンドリストに設定する（※レンダーターゲットは設定できない）
+		static void setOnlyDsv(unsigned int dsvDescriptorHeapId);
 
-		static void setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+		// バックバッファーを設定する
+		static void setBackBufferView();
 
-		static void setOnlyDepthStencil(unsigned int dsvDescriptorHeapId);
+		// バックバッファーと深度ステンシルビューを設定する
+		static void setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId);
 
-		static void setBackBuffer();
+		// 指定のレンダーターゲット用のディスクリプタヒープが使用しているレンダーターゲットバッファの書き込み後処理を行う
+		static void unSetRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
 
-		static void setBackBufferAndDepthStencil(unsigned int dsvDescriptorHeapId);
+		// 指定の深度書き込み用のディスクリプタヒープが使用している深度バッファの書き込み後処理を行う
+		static void unSetDsv(unsigned int dsvDescriptorHeapId);
 
+		// 指定のビューポートをコマンドリストに設定する
 		static void setViewport(unsigned int id);
 
+		// 指定のシザー矩形をコマンドリストに設定する
 		static void setScissorRect(unsigned int id);
 
+		// 指定のパイプラインステートをコマンドリストに設定する
 		static void setPipeLineState(unsigned int id);
 
+		// 指定の頂点バッファをコマンドリストに設定する
 		static void setVertexBuffer(unsigned int id);
 
+		// 指定のインデックスバッファをコマンドリストに設定する
 		static void setIndexBuffer(unsigned int id);
 
+		// 指定のディスクリプタヒープの配列をコマンドリストに設定する
 		static void setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray);
 
+		// プリミティブトポロジを設定する
 		static void setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology);
 
+		// インデックスを使用してインスタンス描画を行う
 		static void drawIndexedInstanced(
 			unsigned int indexCountPerInstance,
 			unsigned int instanceCount,
@@ -125,13 +152,13 @@ namespace tktk
 
 		// 定数バッファを作る
 		template <class ConstantBufferDataType>
-		static void createConstantBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData);
+		static void createCBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData);
 
 		// レンダーターゲットバッファを作る
-		static void createRenderTargetBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
+		static void createRtBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor);
 
 		// 深度ステンシルバッファを作る
-		static void createDepthStencilBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam);
+		static void createDsBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam);
 
 		// ディスクリプタヒープを作る
 		static void createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam);
@@ -142,65 +169,82 @@ namespace tktk
 		// 深度ステンシルディスクリプタヒープを作る
 		static void createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam);
 
-		// CPU側優先処理でテクスチャを作る
+		// コマンドリストを使わずにテクスチャを作る
 		static void cpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
-		// GPU側優先処理でテクスチャを作る（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
+		// コマンドリストを使ってテクスチャを作る（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		static void gpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
-		// CPU側優先処理でテクスチャをロードする
+		// コマンドリストを使わずにテクスチャをロードする
 		static void cpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath);
 
-		// GPU側優先処理でテクスチャをロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
+		// コマンドリストを使ってテクスチャをロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		static void gpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath);
 		
 	public: /* 直接DX12のリソースを設定、取得する */
 
+		// 指定の定数バッファを更新する
 		template <class ConstantBufferDataType>
-		static void updateConstantBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData);
+		static void updateCBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData);
 
-		static void clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color);
+		// 指定のレンダーターゲットビューを指定の色でクリアする
+		static void clearRtv(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color);
 
-		static const tktkMath::Vector3& getTextureSize(unsigned int id);
-		static const tktkMath::Vector2& getDepthStencilSize(unsigned int id);
-		static const tktkMath::Vector2& getRenderTargetSize(unsigned int id);
+		// 指定のテクスチャのサイズを取得する（ピクセル（テクセル））
+		static const tktkMath::Vector3& getTextureBufferSizePx(unsigned int id);
+		static const tktkMath::Vector2& getDsBufferSizePx(unsigned int id);
+		static const tktkMath::Vector2& getRtBufferSizePx(unsigned int id);
 
 	public: /* スプライト関係の処理 */
 
+		// スプライトマテリアルを作る
 		static void createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam);
 
+		// 指定したスプライトを描画する
 		static void drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs);
 
 	public: /* メッシュ関係の処理 */
 
+		// 通常メッシュを作る
 		static void createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam);
 
+		// 通常メッシュマテリアルを作る
 		static void createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam);
 
+		// 指定の通常メッシュでシャドウマップを書き込む
 		static void writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData);
 
+		// 指定の通常メッシュのマテリアル情報をグラフィックパイプラインに設定する
 		static void setMaterialData(unsigned int id);
 
+		// 指定の通常メッシュを描画する
 		static void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 
+		// pmdファイルをロードしてゲームの各種リソースクラスを作る
 		static BasicMeshLoadPmdReturnValue loadPmd(const BasicMeshLoadPmdArgs& args);
 
 	public: /* スケルトン関連の処理 */
 
+		// スケルトンを作成する
 		static void createSkeleton(unsigned int id, const SkeletonInitParam& initParam);
 
+		// 指定のスケルトンを使って骨情報を管理する定数バッファを更新する
 		static void updateBoneMatrixCbuffer(unsigned int id);
 
 	public: /* モーション関係の処理 */
 
+		// vmdファイルを読み込んで「MotionData」のインスタンスを作る
 		static void loadMotion(unsigned int id, const std::string& motionFileName);
 
+		// 指定のフレームのモーション情報を使用してスケルトンを更新する
 		static void updateMotion(unsigned int skeletonId, unsigned int motionId, unsigned int curFrame);
 
 	public: /* ポストエフェクト関係の処理 */
 
+		// ポストエフェクトのマテリアルを作る
 		static void createPostEffectMaterial(unsigned int id, const PostEffectMaterialInitParam& initParam);
 
+		// 指定のポストエフェクトを描画する
 		static void drawPostEffect(unsigned int id, const PostEffectMaterialDrawFuncArgs& drawFuncArgs);
 
 	public: /* サウンド関係の処理 */
@@ -294,7 +338,7 @@ namespace tktk
 	template<class SceneType, class ...Args>
 	inline void DX12GameManager::addScene(unsigned int id, Args ...constructorArgs)
 	{
-		m_sceneManager->addScene<SceneType>(id, constructorArgs...);
+		m_sceneManager->createScene<SceneType>(id, constructorArgs...);
 	}
 
 	template<class ComponentType>
@@ -316,13 +360,13 @@ namespace tktk
 	}
 
 	template<class ConstantBufferDataType>
-	inline void DX12GameManager::createConstantBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData)
+	inline void DX12GameManager::createCBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData)
 	{
 		createConstantBufferImpl(id, sizeof(ConstantBufferDataType), &rawConstantBufferData);
 	}
 
 	template<class ConstantBufferDataType>
-	inline void DX12GameManager::updateConstantBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData)
+	inline void DX12GameManager::updateCBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData)
 	{
 		updateConstantBufferImpl(id, sizeof(ConstantBufferDataType), &rawConstantBufferData);
 	}

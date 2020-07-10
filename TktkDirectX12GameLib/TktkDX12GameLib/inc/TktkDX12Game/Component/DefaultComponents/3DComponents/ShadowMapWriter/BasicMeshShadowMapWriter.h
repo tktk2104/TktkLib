@@ -7,6 +7,8 @@
 
 namespace tktk
 {
+	// 通常メッシュのシャドウマップ書き込みコンポーネント
+	// 【必須コンポーネント：Transform3D】
 	class BasicMeshShadowMapWriter
 		: public ComponentBase
 	{

@@ -8,6 +8,7 @@
 
 namespace tktk
 {
+	// コンポーネントの「start」関数を実行するリスト
 	class ComponentSatrtList
 	{
 	public:
@@ -36,6 +37,7 @@ namespace tktk
 //┃ここから下は関数の実装
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+	// 引数のコンポーネントの型が「start()」関数を持っていたら自身のコンテナに追加する
 	template<class ComponentType, std::enable_if_t<has_start_checker<ComponentType*, void>::value>*>
 	inline void ComponentSatrtList::addComponent(const std::weak_ptr<ComponentType>& componentPtr)
 	{

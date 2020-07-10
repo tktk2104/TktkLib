@@ -5,6 +5,7 @@
 
 namespace tktk
 {
+	// ポストエフェクトで使用するデフォルトのシェーダーファイルパス
 	struct PostEffectShaderFilePaths
 	{
 		std::string postEffectVSFilePath;

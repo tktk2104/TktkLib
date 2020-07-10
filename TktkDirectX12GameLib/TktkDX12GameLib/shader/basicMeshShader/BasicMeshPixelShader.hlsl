@@ -45,7 +45,7 @@ Texture2D<float>	g_LightDepthTexture	: register(t1);
 
 float4 main(PS_INPUT Input) : SV_TARGET
 {
-	float3 N = float3(0.0, 0.0, 1.0);// (Input.Normal).xyz;//normalize(g_NormalMapTexture.Sample(g_NormalMapSampler, Input.TexCoord).xyz * 2.0 - 1.0);
+	float3 N = float3(0.0, 0.0, 1.0); //normalize(g_NormalMapTexture.Sample(g_NormalMapSampler, Input.TexCoord).xyz * 2.0 - 1.0);
 	float3 V = normalize(Input.View);
 	float3 L = normalize(Input.Light);
 	float3 H = normalize(L + V);

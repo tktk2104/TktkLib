@@ -8,14 +8,16 @@ namespace tktk
     SkeletonData::SkeletonData(const SkeletonInitParam& initParam)
     {
 		m_boneMatrixArray.reserve(initParam.boneDataArray.size());
-		m_boneNameArray.reserve(initParam.boneDataArray.size());
+
+		std::vector<std::string> boneNameArray;
+		boneNameArray.reserve(initParam.boneDataArray.size());
 
 		for (unsigned int i = 0; i < initParam.boneDataArray.size(); i++)
 		{
 			const auto& bonedata = initParam.boneDataArray.at(i);
 
 			m_boneMatrixArray.push_back(tktkMath::mat4Identity);
-			m_boneNameArray.push_back(bonedata.boneName);
+			boneNameArray.push_back(bonedata.boneName);
 
 			m_boneNodeMap[bonedata.boneName].boneIndex = i;
 			m_boneNodeMap[bonedata.boneName].startPos = bonedata.pos;
@@ -25,7 +27,7 @@ namespace tktk
 		{
 			if (node.parentNo >= initParam.boneDataArray.size()) continue;
 
-			auto parentName = m_boneNameArray.at(node.parentNo);
+			auto parentName = boneNameArray.at(node.parentNo);
 
 			m_boneNodeMap.at(parentName).children.emplace_back(&m_boneNodeMap.at(node.boneName));
 		}
@@ -58,7 +60,7 @@ namespace tktk
 			if (i >= m_boneMatrixArray.size()) break;
 			boneMatBuf.boneMatrix[i] = m_boneMatrixArray.at(i);
 		}
-		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BoneMatCbuffer), boneMatBuf);
+		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BoneMatCbuffer), boneMatBuf);
 	}
 
 	void SkeletonData::transform(const SkeletonData::BoneNode* boneNode, const tktkMath::Matrix4& transformMat)

@@ -8,6 +8,7 @@
 
 namespace tktk
 {
+	// コンポーネントの衝突判定を行うリスト
 	class ComponentCollisionList
 	{
 	public:
@@ -16,6 +17,7 @@ namespace tktk
 
 	public:
 
+		// 衝突判定関数を実行する
 		void runCollisionFunc();
 
 		// 死亡フラグが立っているコンポーネントを削除する
@@ -23,6 +25,7 @@ namespace tktk
 
 	public:
 
+		// 衝突判定の組み合わせを追加する
 		void addCollisionGroup(int firstGroup, int secondGroup);
 
 		// 引数のコンポーネントの型が「isCollide()」関数を持っていたら自身のコンテナに追加する

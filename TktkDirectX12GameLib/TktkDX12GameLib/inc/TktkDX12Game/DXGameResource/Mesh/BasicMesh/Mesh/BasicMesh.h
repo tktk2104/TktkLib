@@ -7,6 +7,7 @@
 
 namespace tktk
 {
+	// 「BasicMeshData」を管理するクラス
 	class BasicMesh
 	{
 	public:
@@ -15,20 +16,27 @@ namespace tktk
 	
 	public:
 
+		// 「BasicMeshData」のインスタンスを作る
 		void craete(unsigned int id, const BasicMeshInitParam& initParam);
 
+		// 指定の通常メッシュでシャドウマップを書き込む
 		void writeShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData);
 
+		// 指定の通常メッシュを描画する
 		void drawMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 
 	private:
 
+		// シャドウマップ書き込み用のルートシグネチャを作る
 		void createWriteShadowMapRootSignature();
 
+		// シャドウマップ書き込み用のパイプラインステートを作る
 		void createWriteShadowMapGraphicsPipeLineState(const std::string& writeShadowMapVsFilePath);
 
+		// メッシュの座標変換用の定数バッファを更新する
 		void updateMeshTransformCbuffer(const MeshTransformCbuffer& transformBufferData);
 
+		// 通常メッシュのライティング用の定数バッファを更新する
 		void updateBasicMeshLightCbuffer(const BasicMeshLightCbuffer& lightBufferData);
 
 	private:

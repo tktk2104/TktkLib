@@ -8,6 +8,7 @@ namespace tktk
 {
 	class ComponentBase;
 
+	// コンポーネントの描画関数を呼ぶためのクラス
 	class ComponentDrawRunner
 	{
 	public:
@@ -17,8 +18,10 @@ namespace tktk
 
 	public:
 
+		// 描画処理を行う
 		void runDraw();
 
+		// コンポーネントが死亡しているかを取得する
 		bool isDead() const;
 
 	private:
@@ -59,6 +62,7 @@ namespace tktk
 		&ComponentDrawRunner::VTableInitializer<ComponentType>::runDraw,
 	};
 
+	// 「draw()」関数を持っていたら呼ぶ処理を行う為の関数
 	template<class ComponentType>
 	inline void ComponentDrawRunner::VTableInitializer<ComponentType>::runDraw(const std::weak_ptr<ComponentBase>& runPtr)
 	{

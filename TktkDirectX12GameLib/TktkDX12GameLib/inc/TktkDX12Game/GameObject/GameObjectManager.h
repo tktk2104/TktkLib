@@ -9,6 +9,7 @@ namespace tktk
 {
 	class GameObject;
 
+	// ゲームオブジェクト管理クラス
 	class GameObjectManager
 	{
 	public:
@@ -21,10 +22,14 @@ namespace tktk
 
 	public:
 
+		// ゲームオブジェクトを作成し、そのポインタを返す
 		GameObjectPtr createGameObject();
 
+		// 引数のタグを持ったゲームオブジェクトを取得する
+		// ※複数該当オブジェクトがあった場合、最初に見つけた１つを取得する
 		GameObjectPtr findGameObjectWithTag(int tag) const;
 
+		// 引数のタグを持ったゲームオブジェクトを全て取得する
 		std::forward_list<GameObjectPtr> findGameObjectsWithTag(int tag) const;
 
 	private:

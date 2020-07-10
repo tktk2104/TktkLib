@@ -32,7 +32,7 @@ namespace tktk
 		DX12GameManager::drawSprite(m_spriteMaterialId, drawFuncArgs);
 	}
 
-	void SpriteDrawer::setSpriteMaterialIdImpl(int id)
+	void SpriteDrawer::setSpriteMaterialIdImpl(unsigned int id)
 	{
 		m_spriteMaterialId = id;
 	}

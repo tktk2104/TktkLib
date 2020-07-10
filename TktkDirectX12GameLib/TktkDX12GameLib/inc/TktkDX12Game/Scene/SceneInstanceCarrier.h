@@ -8,23 +8,24 @@
 
 namespace tktk
 {
+	// シーンのインスタンスを保持するクラス
 	class SceneInstanceCarrier
 	{
 	public:
 
-		SceneInstanceCarrier() = default;
+		template<class SceneType>
+		SceneInstanceCarrier(SceneType* ptr);
+		~SceneInstanceCarrier();
 
 	public:
 
-		template<class SceneType, class... Args>
-		void initialize(Args... constructorArgs);
-
-		void finalize();
-
+		// シーンを有効にする
 		void enableScene();
 
+		// シーンを無効にする
 		void disableScene();
 
+		// シーンの更新処理
 		void update();
 
 	private:
@@ -44,13 +45,6 @@ namespace tktk
 			static void start(const SafetyUniqueVoidPtr& self);
 			static void update(const SafetyUniqueVoidPtr& self);
 			static void end(const SafetyUniqueVoidPtr& self);
-
-			template <class U>
-			static void checkAndRunStart(U runClass);
-			template <class U>
-			static void checkAndRunUpdate(U runClass);
-			template <class U>
-			static void checkAndRunEnd(U runClass);
 		};
 
 	private:
@@ -72,12 +66,12 @@ namespace tktk
 		&SceneInstanceCarrier::VTableInitializer<T>::end
 	};
 
-	template<class SceneType, class ...Args>
-	inline void SceneInstanceCarrier::initialize(Args ...constructorArgs)
+	template<class SceneType>
+	inline SceneInstanceCarrier::SceneInstanceCarrier(SceneType* ptr)
 	{
 		m_isActive			= false;
 		m_nextFrameIsActive = false;
-		m_scenePtr			= { new SceneType(constructorArgs...) };
+		m_scenePtr			= SafetyUniqueVoidPtr(ptr);
 		m_vtablePtr			= &VTableInitializer<SceneType>::m_vtable;
 	}
 
@@ -85,42 +79,18 @@ namespace tktk
 	inline void SceneInstanceCarrier::VTableInitializer<T>::start(const SafetyUniqueVoidPtr& self)
 	{
 		start_runner<void>::checkAndRun(self.castPtr<T>());
-		//checkAndRunStart(self.castPtr<T>());
 	}
 
 	template<class T>
 	inline void SceneInstanceCarrier::VTableInitializer<T>::update(const SafetyUniqueVoidPtr& self)
 	{
 		update_runner<void>::checkAndRun(self.castPtr<T>());
-		//checkAndRunUpdate(self.castPtr<T>());
 	}
 
 	template<class T>
 	inline void SceneInstanceCarrier::VTableInitializer<T>::end(const SafetyUniqueVoidPtr& self)
 	{
 		end_runner<void>::checkAndRun(self.castPtr<T>());
-		//checkAndRunEnd(self.castPtr<T>());
-	}
-
-	template<class T>
-	template<class U>
-	inline void SceneInstanceCarrier::VTableInitializer<T>::checkAndRunStart(U runClass)
-	{
-		start_runner<void>::checkAndRun(runClass);
-	}
-
-	template<class T>
-	template<class U>
-	inline void SceneInstanceCarrier::VTableInitializer<T>::checkAndRunUpdate(U runClass)
-	{
-		update_runner<void>::checkAndRun(runClass);
-	}
-
-	template<class T>
-	template<class U>
-	inline void SceneInstanceCarrier::VTableInitializer<T>::checkAndRunEnd(U runClass)
-	{
-		end_runner<void>::checkAndRun(runClass);
 	}
 	
 }

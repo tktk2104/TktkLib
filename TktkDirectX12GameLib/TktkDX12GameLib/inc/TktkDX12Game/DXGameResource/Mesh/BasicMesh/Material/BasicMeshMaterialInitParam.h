@@ -5,16 +5,31 @@
 
 namespace tktk
 {
+	// 通常メッシュのマテリアルを作るとき必要な情報
 	struct BasicMeshMaterialInitParam
 	{
+		// 作るディスクリプタヒープのID
 		unsigned int						createDescriptorHeapId;
+
+		// 使うアルベドマップのテクスチャID
 		unsigned int						useAlbedoMapTextureId;
+
+		// 使うノーマルマップのテクスチャID
 		unsigned int						useNormalMapTextureId;
 
-		tktkMath::Color						materialAmbient		{ tktkMath::colorBlack };
-		tktkMath::Color						materialDiffuse		{ tktkMath::colorWhite };
-		tktkMath::Color						materialSpecular	{ tktkMath::colorWhite };
-		tktkMath::Color						materialEmissive	{ tktkMath::colorWhite };
+		// マテリアルの環境光
+		tktkMath::Color						materialAmbient		{ 0.25f, 1.0f };
+
+		// マテリアルの拡散反射光
+		tktkMath::Color						materialDiffuse		{ 0.25f, 1.0f };
+
+		// マテリアルの鏡面反射光
+		tktkMath::Color						materialSpecular	{ 0.25f, 1.0f };
+
+		// マテリアルの自己発光
+		tktkMath::Color						materialEmissive	{ 0.25f, 1.0f };
+
+		// マテリアルの輝度
 		float								materialShiniess	{ 1.0f };
 	};
 }

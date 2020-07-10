@@ -9,6 +9,7 @@ namespace tktk
 {
 	class ComponentBase;
 
+	// コンポーネントの型情報を隠蔽したポインタクラス
 	class ComponentBasePtr
 	{
 	public:
@@ -20,16 +21,22 @@ namespace tktk
 
 	public:
 
+		// ポインタを取得
 		std::shared_ptr<ComponentBase> operator ->() const;
 
+		// 引数のポインタと自身が同じポインタを指しているか判定する
 		bool isSame(const ComponentBasePtr& other) const;
 
+		// テンプレート引数の型に自身のポインタがキャストできるか判定する
 		template <class ComponentType>
 		bool canCast() const;
 
+		// テンプレート引数の型にキャストした「ComponentPtr」を取得する
+		// キャストできなかったら空の「ComponentPtr」を返す
 		template <class ComponentType>
 		ComponentPtr<ComponentType> castPtr() const;
 
+		// 死亡フラグを取得する
 		bool isDead() const;
 
 	private:
@@ -48,12 +55,15 @@ namespace tktk
 	{
 	}
 
+	// テンプレート引数の型に自身のポインタがキャストできるか判定する
 	template<class ComponentType>
 	inline bool ComponentBasePtr::canCast() const
 	{
 		return (ClassTypeChecker::getClassId<ComponentType>() == m_componentTypeId);
 	}
 
+	// テンプレート引数の型にキャストした「ComponentPtr」を取得する
+	// キャストできなかったら空の「ComponentPtr」を返す
 	template<class ComponentType>
 	inline ComponentPtr<ComponentType> ComponentBasePtr::castPtr() const
 	{

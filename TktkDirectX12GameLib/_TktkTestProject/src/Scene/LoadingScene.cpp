@@ -26,14 +26,14 @@ void LoadingScene::start()
 	// メッシュをロードする
 	{
 		tktk::BasicMeshLoadPmdArgs loadArgs{};
-		loadArgs.m_filePath = "res/Model/初音ミク.pmd";
+		loadArgs.filePath = "res/Model/初音ミク.pmd";
 		loadArgs.createDescriptorHeapIdStartNum = 2U;
 		loadArgs.createVertexBufferId = 0U;
 		loadArgs.createIndexBufferId = 0U;
 		loadArgs.createBasicMeshId = 0U;
 		loadArgs.createSkeletonId = 0U;
 		loadArgs.createBasicMeshMaterialIdStartNum = 0U;
-		loadArgs.loadTextureIdStartNum = 1U;
+		loadArgs.createTextureIdStartNum = 1U;
 
 		auto result = tktk::DX12GameManager::loadPmd(loadArgs);
 
@@ -51,7 +51,7 @@ void LoadingScene::start()
 
 	// レンダーターゲットバッファを作る
 	{
-		tktk::DX12GameManager::createRenderTargetBuffer(0U, tktk::DX12GameManager::getWindowSize(), tktkMath::colorRed);
+		tktk::DX12GameManager::createRtBuffer(0U, tktk::DX12GameManager::getWindowSize(), tktkMath::colorRed);
 	}
 
 	// レンダーターゲットビューを作る

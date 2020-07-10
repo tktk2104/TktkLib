@@ -7,8 +7,6 @@
 #include "../../../ComponentBase.h"
 #include "../../2DComponents/Transform2D/TraceParentType.h"
 
-//#include <TktkAppend2DComponent/TraceParentType.h>
-
 namespace tktk
 {
 	// ３次元の自身の座標、回転、スケールを管理するコンポーネント

@@ -6,9 +6,13 @@
 
 namespace tktk
 {
+	// ボーン毎の座標変換情報
 	struct MotionBoneParam
 	{
+		// ボーンの名前
 		std::string			boneName;
+
+		// 座標変換行列
 		tktkMath::Matrix4	transform;
 	};
 }

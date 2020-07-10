@@ -51,16 +51,16 @@ namespace tktk
 		// 深度ステンシルバッファを作る
 		void createDsBuffer(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam);
 
-		// cpu優先でテクスチャバッファを作る
+		// コマンドリストを使わずにテクスチャバッファを作る
 		void cpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
-		// gpu優先でテクスチャバッファを作る
+		// コマンドリストを使ってテクスチャバッファを作る（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		void gpuPriorityCreateTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
-		// cpu優先でテクスチャをロードしてバッファを作る
+		// コマンドリストを使わずにテクスチャをロードしてバッファを作る
 		void cpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, const std::string& texDataPath);
 
-		// gpu優先でテクスチャをロードしてバッファを作る
+		// コマンドリストを使ってテクスチャをロードしてバッファを作る（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		void gpuPriorityLoadTextureBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::string& texDataPath);
 
 		// 定数、テクスチャのディスクリプタヒープを作る

@@ -5,6 +5,7 @@
 
 namespace tktk
 {
+	// ゲームオブジェクトのタグを管理するコンテナ
 	class GameObjectTagList
 	{
 	public:
@@ -14,10 +15,13 @@ namespace tktk
 
 	public:
 
+		// 引数のタグを追加する
 		void addTag(int tag);
 
+		// 引数のタグを削除する
 		void removeTag(int tag);
 
+		// 引数のタグを所持しているかを判定する
 		bool contain(int tag) const;
 
 	private:

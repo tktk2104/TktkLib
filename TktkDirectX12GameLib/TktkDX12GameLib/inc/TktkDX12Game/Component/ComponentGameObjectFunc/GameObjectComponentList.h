@@ -8,6 +8,7 @@ namespace tktk
 {
 	class ComponentBase;
 
+	// ゲームオブジェクトが持っているコンポーネントのリスト
 	class GameObjectComponentList
 	{
 	public:
@@ -16,12 +17,17 @@ namespace tktk
 
 	public:
 
+		// 新たなコンポーネントを追加する
 		template <class ComponentType>
 		ComponentPtr<ComponentType> add(const std::weak_ptr<ComponentType>& weakPtr);
 
+		// テンプレート引数の型のコンポーネントを取得する
+		// ※取得できなかったらnullptrを返す
+		// ※複数該当するコンポーネントがあったら最初に見つけた１つを返す
 		template <class ComponentType>
 		ComponentPtr<ComponentType> find() const;
 
+		// テンプレート引数の型のコンポーネントを全て取得する
 		template <class ComponentType>
 		std::forward_list<ComponentPtr<ComponentType>> findAll() const;
 
@@ -50,6 +56,7 @@ namespace tktk
 //┃ここから下は関数の実装
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+	// 新たなコンポーネントを追加する
 	template<class ComponentType>
 	inline ComponentPtr<ComponentType> GameObjectComponentList::add(const std::weak_ptr<ComponentType>& weakPtr)
 	{
@@ -57,6 +64,9 @@ namespace tktk
 		return ComponentPtr<ComponentType>(weakPtr);
 	}
 
+	// テンプレート引数の型のコンポーネントを取得する
+	// ※取得できなかったらnullptrを返す
+	// ※複数該当するコンポーネントがあったら最初に見つけた１つを返す
 	template<class ComponentType>
 	inline ComponentPtr<ComponentType> GameObjectComponentList::find() const
 	{
@@ -72,6 +82,7 @@ namespace tktk
 		return ComponentPtr<ComponentType>();
 	}
 
+	// テンプレート引数の型のコンポーネントを全て取得する
 	template<class ComponentType>
 	inline std::forward_list<ComponentPtr<ComponentType>> GameObjectComponentList::findAll() const
 	{

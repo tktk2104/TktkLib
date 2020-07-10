@@ -59,7 +59,7 @@ namespace tktk
 			initParam.depthStencilSize = windowInitParam.windowSize;//{ 1024.0f, 1024.0f };
 			initParam.useAsShaderResource = true;
 
-			createDepthStencilBuffer(getSystemId(SystemDepthStencilBufferType::ShadowMap), initParam);
+			createDsBuffer(getSystemId(SystemDepthStencilBufferType::ShadowMap), initParam);
 		}
 
 		// シャドウマップの深度ディスクリプタヒープを作る
@@ -181,7 +181,7 @@ namespace tktk
 		return m_gameObjectManager->findGameObjectWithTag(tag);
 	}
 	
-	std::forward_list<GameObjectPtr> DX12GameManager::findGameObjectWithTags(int tag)
+	std::forward_list<GameObjectPtr> DX12GameManager::findGameObjectsWithTag(int tag)
 	{
 		return m_gameObjectManager->findGameObjectsWithTag(tag);
 	}
@@ -201,39 +201,39 @@ namespace tktk
 		m_dx3dBaseObjects->setBackGroundColor(backGroundColor);
 	}
 
-	void DX12GameManager::setRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX12GameManager::setRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_dx3dBaseObjects->setRenderTarget(rtvDescriptorHeapId, startRtvLocationIndex, rtvCount);
+		m_dx3dBaseObjects->setRtv(rtvDescriptorHeapId, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX12GameManager::unSetRenderTarget(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX12GameManager::setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_dx3dBaseObjects->unSetRenderTarget(rtvDescriptorHeapId, startRtvLocationIndex, rtvCount);
+		m_dx3dBaseObjects->setRtvAndDsv(rtvDescriptorHeapId, dsvDescriptorHeapId, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX12GameManager::unSetDepthStencil(unsigned int dsvDescriptorHeapId)
+	void DX12GameManager::setOnlyDsv(unsigned int dsvDescriptorHeapId)
 	{
-		m_dx3dBaseObjects->unSetDepthStencil(dsvDescriptorHeapId);
+		m_dx3dBaseObjects->setOnlyDsv(dsvDescriptorHeapId);
 	}
 
-	void DX12GameManager::setRenderTargetAndDepthStencil(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX12GameManager::setBackBufferView()
 	{
-		m_dx3dBaseObjects->setRenderTargetAndDepthStencil(rtvDescriptorHeapId, dsvDescriptorHeapId, startRtvLocationIndex, rtvCount);
+		m_dx3dBaseObjects->setBackBufferView();
 	}
 
-	void DX12GameManager::setOnlyDepthStencil(unsigned int dsvDescriptorHeapId)
+	void DX12GameManager::setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId)
 	{
-		m_dx3dBaseObjects->setOnlyDepthStencil(dsvDescriptorHeapId);
+		m_dx3dBaseObjects->setBackBufferViewAndDsv(dsvDescriptorHeapId);
 	}
 
-	void DX12GameManager::setBackBuffer()
+	void DX12GameManager::unSetRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
 	{
-		m_dx3dBaseObjects->setBackBuffer();
+		m_dx3dBaseObjects->unSetRtv(rtvDescriptorHeapId, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX12GameManager::setBackBufferAndDepthStencil(unsigned int dsvDescriptorHeapId)
+	void DX12GameManager::unSetDsv(unsigned int dsvDescriptorHeapId)
 	{
-		m_dx3dBaseObjects->setBackBufferAndDepthStencil(dsvDescriptorHeapId);
+		m_dx3dBaseObjects->unSetDsv(dsvDescriptorHeapId);
 	}
 
 	void DX12GameManager::setViewport(unsigned int id)
@@ -291,14 +291,14 @@ namespace tktk
 		m_dx3dBaseObjects->createIndexBuffer(id, indices);
 	}
 
-	void DX12GameManager::createRenderTargetBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
+	void DX12GameManager::createRtBuffer(unsigned int id, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
 	{
-		m_dx3dBaseObjects->createRenderTargetBuffer(id, renderTargetSize, clearColor);
+		m_dx3dBaseObjects->createRtBuffer(id, renderTargetSize, clearColor);
 	}
 
-	void DX12GameManager::createDepthStencilBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam)
+	void DX12GameManager::createDsBuffer(unsigned int id, const DepthStencilBufferInitParam& initParam)
 	{
-		m_dx3dBaseObjects->createDepthStencilBuffer(id, initParam);
+		m_dx3dBaseObjects->createDsBuffer(id, initParam);
 	}
 
 	void DX12GameManager::createBasicDescriptorHeap(unsigned int id, const BasicDescriptorHeapInitParam& initParam)
@@ -336,24 +336,24 @@ namespace tktk
 		m_dx3dBaseObjects->gpuPriorityLoadTextureBuffer(id, texDataPath);
 	}
 
-	void DX12GameManager::clearRenderTarget(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	void DX12GameManager::clearRtv(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color)
 	{
-		m_dx3dBaseObjects->clearRenderTarget(id, rtvLocationIndex, color);
+		m_dx3dBaseObjects->clearRtv(id, rtvLocationIndex, color);
 	}
 
-	const tktkMath::Vector3& DX12GameManager::getTextureSize(unsigned int id)
+	const tktkMath::Vector3& DX12GameManager::getTextureBufferSizePx(unsigned int id)
 	{
-		return m_dx3dBaseObjects->getTextureSize(id);
+		return m_dx3dBaseObjects->getTextureBufferSizePx(id);
 	}
 
-	const tktkMath::Vector2& DX12GameManager::getDepthStencilSize(unsigned int id)
+	const tktkMath::Vector2& DX12GameManager::getDsBufferSizePx(unsigned int id)
 	{
-		return m_dx3dBaseObjects->getDepthStencilSize(id);
+		return m_dx3dBaseObjects->getDsBufferSizePx(id);
 	}
 
-	const tktkMath::Vector2& DX12GameManager::getRenderTargetSize(unsigned int id)
+	const tktkMath::Vector2& DX12GameManager::getRtBufferSizePx(unsigned int id)
 	{
-		return m_dx3dBaseObjects->getRenderTargetSize(id);
+		return m_dx3dBaseObjects->getRtBufferSizePx(id);
 	}
 
 	void DX12GameManager::createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam)
@@ -563,11 +563,11 @@ namespace tktk
 
 	void DX12GameManager::createConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
-		m_dx3dBaseObjects->createConstantBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
+		m_dx3dBaseObjects->createCBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
 	void DX12GameManager::updateConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
-		m_dx3dBaseObjects->updateConstantBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
+		m_dx3dBaseObjects->updateCBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 }

@@ -7,6 +7,7 @@
 
 namespace tktk
 {
+	// マウス入力取得クラス
 	class Mouse
 	{
 	public:
@@ -14,7 +15,6 @@ namespace tktk
 		Mouse();
 		~Mouse() = default;
 
-		// コピー禁止
 		Mouse(const Mouse& other) = delete;
 		Mouse& operator = (const Mouse& other) = delete;
 

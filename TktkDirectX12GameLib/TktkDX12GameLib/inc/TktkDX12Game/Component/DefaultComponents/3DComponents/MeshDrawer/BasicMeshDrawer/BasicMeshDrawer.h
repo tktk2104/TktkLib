@@ -8,6 +8,8 @@
 
 namespace tktk
 {
+	// 通常メッシュ描画コンポーネント
+	// 【必須コンポーネント：Transform3D】
 	class BasicMeshDrawer
 		: public ComponentBase
 	{

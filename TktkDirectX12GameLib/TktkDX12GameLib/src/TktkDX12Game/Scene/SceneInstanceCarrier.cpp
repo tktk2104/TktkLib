@@ -2,7 +2,7 @@
 
 namespace tktk
 {
-	void SceneInstanceCarrier::finalize()
+	SceneInstanceCarrier::~SceneInstanceCarrier()
 	{
 		if ((m_scenePtr.voidPtr() != nullptr) && m_isActive)
 		{

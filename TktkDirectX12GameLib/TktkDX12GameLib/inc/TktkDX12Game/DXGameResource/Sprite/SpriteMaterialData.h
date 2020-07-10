@@ -7,6 +7,7 @@
 
 namespace tktk
 {
+	// スプライトのマテリアルを管理するクラス
 	class SpriteMaterialData
 	{
 	public:
@@ -16,6 +17,7 @@ namespace tktk
 
 	public:
 
+		// スプライトを描画する
 		void drawSprite(const SpriteMaterialDrawFuncArgs& drawFuncArgs);
 
 	private:

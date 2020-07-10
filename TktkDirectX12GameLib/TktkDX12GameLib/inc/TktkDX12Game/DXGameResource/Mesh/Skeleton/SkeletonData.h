@@ -11,6 +11,7 @@
 
 namespace tktk
 {
+	// スケルトンの情報を管理するクラス
 	class SkeletonData
 	{
 	public:
@@ -20,12 +21,15 @@ namespace tktk
 
 	public:
 
+		// 引数のボーン毎の座標変換行列を使ってスケルトンを変形する
 		void transform(const std::vector<MotionBoneParam>& transformMatrices);
 
+		// 骨情報を管理する定数バッファを更新する
 		void updateBoneMatrixCbuffer();
 
 	private:
 
+		// 骨の情報
 		struct BoneNode
 		{
 			int						boneIndex	{};
@@ -41,7 +45,6 @@ namespace tktk
 	private:
 
 		std::vector<tktkMath::Matrix4>				m_boneMatrixArray;
-		std::vector<std::string>					m_boneNameArray; // <-ローカル変数で良いのでは？
 		std::unordered_map<std::string, BoneNode>	m_boneNodeMap;
 	};
 }

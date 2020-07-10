@@ -1,12 +1,13 @@
 #ifndef POST_EFFECT_MATERIAL_H_
 #define POST_EFFECT_MATERIAL_H_
 
+#include <TktkContainer/HeapArray/HeapArray.h>
 #include "PostEffectShaderFilePaths.h"
 #include "PostEffectMaterialData.h"
-#include <TktkContainer/HeapArray/HeapArray.h>
 
 namespace tktk
 {
+	// 「PostEffectMaterialData」を管理するクラス
 	class PostEffectMaterial
 	{
 	public:
@@ -16,8 +17,10 @@ namespace tktk
 
 	public:
 
+		// 「PostEffectMaterialData」のインスタンスを作る
 		void create(unsigned int id, const PostEffectMaterialInitParam& initParam);
 
+		// 指定したポストエフェクトを描画する
 		void drawPostEffect(unsigned int id, const PostEffectMaterialDrawFuncArgs& drawFuncArgs) const;
 
 	private:

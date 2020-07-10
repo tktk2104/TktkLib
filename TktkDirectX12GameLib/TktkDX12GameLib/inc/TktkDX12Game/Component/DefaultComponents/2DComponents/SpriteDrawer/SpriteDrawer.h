@@ -29,7 +29,7 @@ namespace tktk
 		template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
 		void setSpriteMaterialId(IdType id)
 		{
-			setSpriteMaterialIdImpl(static_cast<int>(id));
+			setSpriteMaterialIdImpl(static_cast<unsigned int>(id));
 		}
 		template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
 		void setSpriteMaterialId(IdType id) { static_assert(false, "SpriteMaterialId Fraud Type"); }
@@ -37,7 +37,7 @@ namespace tktk
 	private:
 
 		// Šeíidw’èŒn‚ÌŠÖ”‚ÌÀ‘•
-		void setSpriteMaterialIdImpl(int id);
+		void setSpriteMaterialIdImpl(unsigned int id);
 
 	private:
 

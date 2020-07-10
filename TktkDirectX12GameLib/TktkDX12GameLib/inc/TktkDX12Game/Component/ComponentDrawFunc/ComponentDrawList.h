@@ -8,6 +8,7 @@
 
 namespace tktk
 {
+	// コンポーネントの描画処理を行うリスト
 	class ComponentDrawList
 	{
 	public:

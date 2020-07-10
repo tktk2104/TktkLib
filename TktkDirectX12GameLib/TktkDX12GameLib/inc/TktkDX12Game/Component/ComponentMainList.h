@@ -123,36 +123,12 @@ namespace tktk
 		&ComponentMainList::VTableInitializer<ComponentType>::runOnDestroy,
 	};
 
+	// 「update()」関数を持っていたら呼ぶ処理を行う為の関数達
 	template<class ComponentType>
 	inline void ComponentMainList::VTableInitializer<ComponentType>::runUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
 	{
 		checkAndRunUpdate<ComponentType>(mainList);
 	}
-
-	template<class ComponentType>
-	inline void ComponentMainList::VTableInitializer<ComponentType>::runAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
-	{
-		checkAndRunAfterCollide<ComponentType>(mainList);
-	}
-
-	template<class ComponentType>
-	inline void ComponentMainList::VTableInitializer<ComponentType>::runOnEnable(const std::shared_ptr<ComponentBase>& runPtr)
-	{
-		onEnable_runner<void>::checkAndRun(std::dynamic_pointer_cast<ComponentType>(runPtr));
-	}
-
-	template<class ComponentType>
-	inline void ComponentMainList::VTableInitializer<ComponentType>::runOnDisable(const std::shared_ptr<ComponentBase>& runPtr)
-	{
-		onDisable_runner<void>::checkAndRun(std::dynamic_pointer_cast<ComponentType>(runPtr));
-	}
-
-	template<class ComponentType>
-	inline void ComponentMainList::VTableInitializer<ComponentType>::runOnDestroy(const std::shared_ptr<ComponentBase>& runPtr)
-	{
-		onDestroy_runner<void>::checkAndRun(std::dynamic_pointer_cast<ComponentType>(runPtr));
-	}
-
 	template<class ComponentType>
 	template<class U, std::enable_if_t<has_update_checker<U*, void>::value>*>
 	inline void ComponentMainList::VTableInitializer<ComponentType>::checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
@@ -167,6 +143,12 @@ namespace tktk
 	template<class U, std::enable_if_t<!has_update_checker<U*, void>::value>*>
 	inline void ComponentMainList::VTableInitializer<ComponentType>::checkAndRunUpdate(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList) {}
 
+	// 「afterCollide()」関数を持っていたら呼ぶ処理を行う為の関数達
+	template<class ComponentType>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::runAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
+	{
+		checkAndRunAfterCollide<ComponentType>(mainList);
+	}
 	template<class ComponentType>
 	template<class U, std::enable_if_t<has_afterCollide_checker<U*, void>::value>*>
 	inline void ComponentMainList::VTableInitializer<ComponentType>::checkAndRunAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList)
@@ -180,5 +162,26 @@ namespace tktk
 	template<class ComponentType>
 	template<class U, std::enable_if_t<!has_afterCollide_checker<U*, void>::value>*>
 	inline void ComponentMainList::VTableInitializer<ComponentType>::checkAndRunAfterCollide(const std::forward_list<std::shared_ptr<ComponentBase>>& mainList) {}
+
+	// 「onEnable()」関数を持っていたら呼ぶ処理を行う為の関数
+	template<class ComponentType>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::runOnEnable(const std::shared_ptr<ComponentBase>& runPtr)
+	{
+		onEnable_runner<void>::checkAndRun(std::dynamic_pointer_cast<ComponentType>(runPtr));
+	}
+
+	// 「onDisable()」関数を持っていたら呼ぶ処理を行う為の関数
+	template<class ComponentType>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::runOnDisable(const std::shared_ptr<ComponentBase>& runPtr)
+	{
+		onDisable_runner<void>::checkAndRun(std::dynamic_pointer_cast<ComponentType>(runPtr));
+	}
+
+	// 「onDestroy()」関数を持っていたら呼ぶ処理を行う為の関数
+	template<class ComponentType>
+	inline void ComponentMainList::VTableInitializer<ComponentType>::runOnDestroy(const std::shared_ptr<ComponentBase>& runPtr)
+	{
+		onDestroy_runner<void>::checkAndRun(std::dynamic_pointer_cast<ComponentType>(runPtr));
+	}
 }
 #endif // !COMPONENT_MAIN_LIST_H_

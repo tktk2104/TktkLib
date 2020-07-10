@@ -11,6 +11,7 @@
 
 namespace tktk
 {
+	// ゲームオブジェクトが使用するコンポーネントの関数を実行するクラス
 	class ComponentGameObjectFuncRunner
 	{
 	public:
@@ -20,18 +21,25 @@ namespace tktk
 
 	public:
 
+		// 型情報を隠蔽したコンポーネントポインタを取得する
 		const ComponentBasePtr& getComponentBasePtr() const;
 
+		// コンポーネントの親要素が変わった時関数を呼ぶ
 		void runAfterChangeParent(const GameObjectPtr& beforParent);
 
+		// コンポーネントの衝突開始関数を呼ぶ
 		void runOnCollisionEnter(const GameObjectPtr& other);
 
+		// コンポーネントの衝突中関数を呼ぶ
 		void runOnCollisionStay(const GameObjectPtr& other);
 
+		// コンポーネントの衝突終了関数を呼ぶ
 		void runOnCollisionExit(const GameObjectPtr& other);
 
+		// コンポーネントの死亡フラグを
 		bool isDead() const;
 
+		// コンポーネントを殺す
 		void destroy();
 
 	private:
@@ -47,9 +55,16 @@ namespace tktk
 		template <class ComponentType>
 		struct VTableInitializer
 		{
+			// 親要素が変わった時関数を持っていたら呼ぶ
 			static void runAfterChangeParent(const ComponentBasePtr& self, const GameObjectPtr& beforParent);
+
+			// 衝突開始関数を持っていたら呼ぶ
 			static void runOnCollisionEnter	(const ComponentBasePtr& self, const GameObjectPtr& other);
+
+			// 衝突中関数を持っていたら呼ぶ
 			static void runOnCollisionStay	(const ComponentBasePtr& self, const GameObjectPtr& other);
+
+			// 衝突終了関数を持っていたら呼ぶ
 			static void runOnCollisionExit	(const ComponentBasePtr& self, const GameObjectPtr& other);
 
 			static VTable m_vtable;
@@ -63,7 +78,6 @@ namespace tktk
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 
 	template<class ComponentType>
 	inline ComponentGameObjectFuncRunner::ComponentGameObjectFuncRunner(const std::weak_ptr<ComponentType>& componentPtr)
@@ -81,24 +95,28 @@ namespace tktk
 		&ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runOnCollisionExit,
 	};
 
+	// 親要素が変わった時関数を持っていたら呼ぶ
 	template<class ComponentType>
 	inline void ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runAfterChangeParent(const ComponentBasePtr& self, const GameObjectPtr& beforParent)
 	{
 		afterChangeParent_runner<void, const GameObjectPtr&>::checkAndRun(self.castPtr<ComponentType>(), beforParent);
 	}
 
+	// 衝突開始関数を持っていたら呼ぶ
 	template<class ComponentType>
 	inline void ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runOnCollisionEnter(const ComponentBasePtr& self, const GameObjectPtr& other)
 	{
 		onCollisionEnter_runner<void, const GameObjectPtr&>::checkAndRun(self.castPtr<ComponentType>(), other);
 	}
 
+	// 衝突中関数を持っていたら呼ぶ
 	template<class ComponentType>
 	inline void ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runOnCollisionStay(const ComponentBasePtr& self, const GameObjectPtr& other)
 	{
 		onCollisionStay_runner<void, const GameObjectPtr&>::checkAndRun(self.castPtr<ComponentType>(), other);
 	}
 
+	// 衝突終了関数を持っていたら呼ぶ
 	template<class ComponentType>
 	inline void ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runOnCollisionExit(const ComponentBasePtr& self, const GameObjectPtr& other)
 	{

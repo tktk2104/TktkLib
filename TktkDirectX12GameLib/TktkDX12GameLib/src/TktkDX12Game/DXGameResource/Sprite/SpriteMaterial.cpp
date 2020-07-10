@@ -22,7 +22,7 @@ namespace tktk
 		DX12GameManager::createIndexBuffer(DX12GameManager::getSystemId(SystemIndexBufferType::Sprite), { 0U, 1U, 2U, 3U });
 
 		// スプライト用の定数バッファを作る
-		DX12GameManager::createConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::Sprite), SpriteConstantBufferData());
+		DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::Sprite), SpriteConstantBufferData());
 	}
 
 	void SpriteMaterial::create(unsigned int id, const SpriteMaterialInitParam& initParam)
@@ -50,7 +50,7 @@ namespace tktk
 			}
 		}
 		{/* 定数バッファ用のルートパラメータ */
-			initParam.rootParamArray.at(1).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//D3D12_SHADER_VISIBILITY_VERTEX;
+			initParam.rootParamArray.at(1).shaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 			initParam.rootParamArray.at(1).descriptorTable.resize(1U);
 			{
 				initParam.rootParamArray.at(1).descriptorTable.at(0).numDescriptors = 1U;

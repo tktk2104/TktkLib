@@ -6,6 +6,7 @@
 
 namespace tktk
 {
+	// 「MotionData」を管理するクラス
 	class Motion
 	{
 	public:
@@ -14,6 +15,7 @@ namespace tktk
 
 	public:
 
+		// vmdファイルを読み込んで「MotionData」のインスタンスを作る
 		void load(unsigned int id, const std::string& motionFileName);
 
 		// 指定のフレームのボーン毎の行列を取得する（キーが無い時は前後のキーから計算する）

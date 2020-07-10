@@ -6,11 +6,19 @@
 
 namespace tktk
 {
+	// 通常メッシュを作るときに必要な情報
 	struct BasicMeshInitParam
 	{
+		// 使う頂点バッファのID
 		unsigned int useVertexBufferId;
+
+		// 使うインデックスバッファのID
 		unsigned int useIndexBufferId;
+
+		// メッシュが持つインデックスの総数
 		unsigned int indexNum;
+
+		// サブセット（使用するマテリアル情報）
 		std::vector<Subset> materialSlots;
 	};
 }

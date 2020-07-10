@@ -5,6 +5,7 @@
 
 namespace tktk
 {
+	// コンポーネントの型情報を保持したポインタクラス
 	template <class ComponentType>
 	class ComponentPtr
 	{
@@ -16,8 +17,10 @@ namespace tktk
 
 	public:
 
+		// ポインタが期限切れか判定する
 		bool expired() const;
 
+		// ポインタの使用
 		std::shared_ptr<ComponentType> operator ->() const;
 
 	private:
@@ -29,22 +32,24 @@ namespace tktk
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 	template<class ComponentType>
+	inline ComponentPtr<ComponentType>::ComponentPtr(const std::weak_ptr<ComponentType>& weakPtr)
+		: m_componentPtr(weakPtr)
+	{
+	}
+
+	// ポインタが期限切れか判定する
+	template<class ComponentType>
 	inline bool ComponentPtr<ComponentType>::expired() const
 	{
 		return m_componentPtr.expired();
 	}
 
+	// ポインタの使用
 	template<class ComponentType>
 	inline std::shared_ptr<ComponentType> ComponentPtr<ComponentType>::operator->() const
 	{
 		if (m_componentPtr.expired()) return nullptr;
 		return m_componentPtr.lock();
-	}
-
-	template<class ComponentType>
-	inline ComponentPtr<ComponentType>::ComponentPtr(const std::weak_ptr<ComponentType>& weakPtr)
-		: m_componentPtr(weakPtr)
-	{
 	}
 }
 #endif // !COMPONENT_PTR_H_

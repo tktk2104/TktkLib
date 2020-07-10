@@ -43,18 +43,18 @@ namespace tktk
 		{
 		case BufferType::texture:
 
-			textureBufferSize = DX12GameManager::getTextureSize(initParam.useBufferId);
+			textureBufferSize = DX12GameManager::getTextureBufferSizePx(initParam.useBufferId);
 			m_textureSize = { textureBufferSize.x, textureBufferSize.y };
 			break;
 
 		case BufferType::renderTarget:
 
-			m_textureSize = DX12GameManager::getRenderTargetSize(initParam.useBufferId);
+			m_textureSize = DX12GameManager::getRtBufferSizePx(initParam.useBufferId);
 			break;
 
 		case BufferType::depthStencil:
 
-			m_textureSize = DX12GameManager::getDepthStencilSize(initParam.useBufferId);
+			m_textureSize = DX12GameManager::getDsBufferSizePx(initParam.useBufferId);
 			break;
 		}
 
@@ -75,11 +75,11 @@ namespace tktk
 		// レンダーターゲットを設定する（バックバッファーに直で描画する場合は特殊処理）
 		if (drawFuncArgs.rtvDescriptorHeapId == DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
 		{
-			DX12GameManager::setBackBuffer();
+			DX12GameManager::setBackBufferView();
 		}
 		else
 		{
-			DX12GameManager::setRenderTarget(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
+			DX12GameManager::setRtv(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
 		}
 
 		// スプライト用のパイプラインステートを設定する
@@ -103,7 +103,7 @@ namespace tktk
 		// バックバッファ以外に描画していたら使用したレンダーターゲットバッファをシェーダーで使用する状態にする
 		if (drawFuncArgs.rtvDescriptorHeapId != DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer))
 		{
-			DX12GameManager::unSetRenderTarget(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
+			DX12GameManager::unSetRtv(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
 		}
 
 		// コマンドリストを実行する
@@ -126,6 +126,6 @@ namespace tktk
 		constantBufferData.spriteCenterRate = m_spriteCenterRate;
 		constantBufferData.screenSize = DX12GameManager::getWindowSize();
 
-		DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::Sprite), constantBufferData);
+		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::Sprite), constantBufferData);
 	}
 }

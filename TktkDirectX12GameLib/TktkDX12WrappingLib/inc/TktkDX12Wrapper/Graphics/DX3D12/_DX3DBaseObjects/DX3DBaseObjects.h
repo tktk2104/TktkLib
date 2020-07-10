@@ -62,16 +62,16 @@ namespace tktk
 		// 深度ステンシルビューのディスクリプタヒープを作る
 		void createDsvDescriptorHeap(unsigned int id, const DsvDescriptorHeapInitParam& initParam);
 
-		// cpu優先でテクスチャを作る
+		// コマンドリストを使わずにテクスチャを作る
 		void cpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
-		// gpu優先でテクスチャを作る
+		// コマンドリストを使ってテクスチャを作る（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		void gpuPriorityCreateTextureBuffer(unsigned int id, const TexBufFormatParam& formatParam, const TexBuffData& dataParam);
 
-		// cpu優先でテクスチャをロードする
+		// コマンドリストを使わずにテクスチャをロードする
 		void cpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath);
 
-		// gpu優先でテクスチャをロードする
+		// コマンドリストを使ってテクスチャをロードする（※GPU命令なので「executeCommandList()」を呼ばないとロードが完了しません）
 		void gpuPriorityLoadTextureBuffer(unsigned int id, const std::string& texDataPath);
 
 	public: /* リソース更新処理 */

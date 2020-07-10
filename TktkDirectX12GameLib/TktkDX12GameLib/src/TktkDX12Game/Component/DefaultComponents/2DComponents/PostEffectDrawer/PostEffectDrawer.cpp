@@ -13,16 +13,18 @@ namespace tktk
 
 	void PostEffectDrawer::draw() const
 	{
+		// ポストエフェクトの描画に必要な値を構造体にまとめる
 		PostEffectMaterialDrawFuncArgs drawFuncArgs{};
 		drawFuncArgs.viewportId		= DX12GameManager::getSystemId(SystemViewportType::Basic);
 		drawFuncArgs.scissorRectId	= DX12GameManager::getSystemId(SystemScissorRectType::Basic);
 		drawFuncArgs.rtvDescriptorHeapId = m_useRtvDescriptorHeapId;
 
+		// ポストエフェクトの描画を行う
 		DX12GameManager::drawPostEffect(m_postEffectMaterialId, drawFuncArgs);
 
 		// TODO : レンダーターゲットのクリア処理は仮
-		DX12GameManager::setRenderTarget(0U, 0U, 1U);
-		DX12GameManager::clearRenderTarget(0U, 0U, tktkMath::colorRed);
-		DX12GameManager::unSetRenderTarget(0U, 0U, 1U);
+		DX12GameManager::setRtv(0U, 0U, 1U);
+		DX12GameManager::clearRtv(0U, 0U, tktkMath::colorRed);
+		DX12GameManager::unSetRtv(0U, 0U, 1U);
 	}
 }

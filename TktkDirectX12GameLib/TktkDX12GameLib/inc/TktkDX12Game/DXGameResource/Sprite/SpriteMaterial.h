@@ -9,6 +9,7 @@
 
 namespace tktk
 {
+	// 「SpriteMaterialData」を管理するクラス
 	class SpriteMaterial
 	{
 	public:
@@ -18,14 +19,18 @@ namespace tktk
 
 	public:
 
+		// 「SpriteMaterialData」のインスタンスを作る
 		void create(unsigned int id, const SpriteMaterialInitParam& initParam);
 
+		// 指定したスプライトを描画する
 		void drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs);
 
 	private:
 
+		// スプライト描画用のルートシグネチャを作る
 		void createRootSignature();
 
+		// スプライト描画用のパイプラインステートを作る
 		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths);
 
 	private:

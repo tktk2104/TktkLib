@@ -67,7 +67,7 @@ namespace tktk
 			materialBufferData.materialEmissive = m_materialEmissive;
 			materialBufferData.materialShiniess = m_materialShiniess;
 
-			DX12GameManager::updateConstantBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial), materialBufferData);
+			DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial), materialBufferData);
 		}
 
 		// 通常メッシュ用のディスクリプタヒープを設定する
