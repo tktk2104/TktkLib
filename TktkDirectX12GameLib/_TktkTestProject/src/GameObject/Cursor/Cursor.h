@@ -2,8 +2,8 @@
 #define CURSOR_H_
 
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
-#include <TktkDX12Game/Component/DefaultComponents/2DComponents/Transform2D/Transform2DMaker.h>
-#include <TktkDX12Game/Component/DefaultComponents/2DComponents/SpriteDrawer/SpriteDrawerMaker.h>
+#include <TktkDX12BaseComponents/2D/Transform2D/Transform2DMaker.h>
+#include <TktkDX12BaseComponents/2D/SpriteDrawer/SpriteDrawerMaker.h>
 #include "CursorScript.h"
 
 struct Cursor

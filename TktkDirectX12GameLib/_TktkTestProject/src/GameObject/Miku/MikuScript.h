@@ -2,7 +2,7 @@
 #define MIKU_SCRIPT_H_
 
 #include <TktkDX12Game/Component/ComponentBase.h>
-#include <TktkDX12Game/Component/DefaultComponents/3DComponents/Transform3D/Transform3D.h>
+#include <TktkDX12BaseComponents/3D/Transform3D/Transform3D.h>
 
 class MikuScript
 	: public tktk::ComponentBase

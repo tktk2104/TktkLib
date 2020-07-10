@@ -2,7 +2,7 @@
 #define POST_EFFECT_OBJECT_H_
 
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
-#include <TktkDX12Game/Component/DefaultComponents/2DComponents/PostEffectDrawer/PostEffectDrawerMaker.h>
+#include <TktkDX12BaseComponents/2D/PostEffectDrawer/PostEffectDrawerMaker.h>
 
 struct PostEffectObject
 {

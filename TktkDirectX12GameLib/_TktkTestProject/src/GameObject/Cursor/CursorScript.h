@@ -2,7 +2,7 @@
 #define CURSOR_SCRIPT_H_
 
 #include <TktkDX12Game/Component/ComponentBase.h>
-#include <TktkDX12Game/Component/DefaultComponents/2DComponents/Transform2D/Transform2D.h>
+#include <TktkDX12BaseComponents/2D/Transform2D/Transform2D.h>
 
 class CursorScript
 	: public tktk::ComponentBase

@@ -2,10 +2,10 @@
 #define MIKU_H_
 
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
-#include <TktkDX12Game/Component/DefaultComponents/3DComponents/Transform3D/Transform3DMaker.h>
-#include <TktkDX12Game/Component/DefaultComponents/3DComponents/MeshDrawer/BasicMeshDrawer/BasicMeshDrawerMaker.h>
-#include <TktkDX12Game/Component/DefaultComponents/3DComponents/ShadowMapWriter/BasicMeshShadowMapWriterMaker.h>
-#include <TktkDX12Game/Component/DefaultComponents/3DComponents/MeshAnimator/MeshAnimatorMaker.h>
+#include <TktkDX12BaseComponents/3D/Transform3D/Transform3DMaker.h>
+#include <TktkDX12BaseComponents/3D/MeshDrawer/BasicMeshDrawerMaker.h>
+#include <TktkDX12BaseComponents/3D/ShadowMapWriter/BasicMeshShadowMapWriterMaker.h>
+#include <TktkDX12BaseComponents/3D/MeshAnimator/MeshAnimatorMaker.h>
 
 #include "MikuScript.h"
 
