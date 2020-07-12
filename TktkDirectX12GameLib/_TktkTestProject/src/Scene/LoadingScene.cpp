@@ -100,6 +100,11 @@ void LoadingScene::start()
 		tktk::DX12GameManager::loadSound(1U, "res/Sound/kendo.wav");
 	}
 
+	// ƒJƒƒ‰‚ğì‚é
+	{
+		tktk::DX12GameManager::createCamera(0U);
+	}
+
 	tktk::DX12GameManager::addUpdatePriority<CursorScript>(-10.0f);
 
 	// “Ç‚İ‚İƒV[ƒ“‚ğ–³Œø‚É‚·‚é

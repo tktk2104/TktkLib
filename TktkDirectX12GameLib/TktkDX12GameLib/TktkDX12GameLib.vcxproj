@@ -152,6 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\Camera\BasicCameraController.h" />
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\Camera\BasicCameraControllerMaker.h" />
     <ClInclude Include="inc\TktkDX12GameLibDefinition.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\ComponentBasePtr.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\ComponentBase.h" />
@@ -173,7 +175,7 @@
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\Transform2D\TraceParentType.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\Transform2D\Transform2D.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\Transform2D\Transform2DMaker.h" />
-    <ClInclude Include="inc\TktkDX12BaseComponents\3D\Camera\Camera.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Camera\Camera.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\Light\PointLight.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\MeshAnimator\MeshAnimator.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\MeshAnimator\MeshAnimatorMaker.h" />
@@ -186,9 +188,11 @@
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ChildList.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ParentChildManager.h" />
     <ClInclude Include="inc\TktkDX12Game\Component\ComponentGameObjectFunc\GameObjectComponentList.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Camera\CameraData.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameBaseShaderFilePaths.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameDrawFuncArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameResource.h" />
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameResourceInitParam.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\DXGameResourceNum.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshLightCbuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshMaterialCbuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshLoadPmdReturnValue.h" />
@@ -247,9 +251,12 @@
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManager.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\_SystemDXGameResourceIdGetter\SystemDXGameResourceType\SystemPostEffectMaterialType.h" />
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManagerFuncInOutValueType.h" />
+    <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManagerInitParam.h" />
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManagerUseInitParams.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\Camera\BasicCameraController.cpp" />
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\Camera\BasicCameraControllerMaker.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\ComponentBasePtr.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\ComponentBase.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\ComponentCollisionFunc\ComponentCollisionFuncRunner.cpp" />
@@ -268,7 +275,7 @@
     <ClCompile Include="src\TktkDX12BaseComponents\2D\SpriteDrawer\SpriteDrawerMaker.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\2D\Transform2D\Transform2D.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\2D\Transform2D\Transform2DMaker.cpp" />
-    <ClCompile Include="src\TktkDX12BaseComponents\3D\Camera\Camera.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Camera\Camera.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\3D\Light\PointLight.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\3D\MeshAnimator\MeshAnimator.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\3D\MeshAnimator\MeshAnimatorMaker.cpp" />
@@ -281,6 +288,7 @@
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ChildList.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ParentChildManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\Component\ComponentGameObjectFunc\GameObjectComponentList.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Camera\CameraData.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\DXGameResource.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshPmdLoader.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMesh.cpp" />

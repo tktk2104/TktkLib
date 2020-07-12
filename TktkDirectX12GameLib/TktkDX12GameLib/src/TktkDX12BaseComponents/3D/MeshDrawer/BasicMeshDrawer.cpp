@@ -2,10 +2,11 @@
 
 namespace tktk
 {
-	BasicMeshDrawer::BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int useRtvDescriptorHeapId)
+	BasicMeshDrawer::BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int cameraId, unsigned int useRtvDescriptorHeapId)
 		: ComponentBase(drawPriority)
 		, m_meshId(meshId)
 		, m_skeletonId(skeletonId)
+		, m_cameraId(cameraId)
 		, m_useRtvDescriptorHeapId(useRtvDescriptorHeapId)
 	{
 	}
@@ -53,18 +54,22 @@ namespace tktk
 		
 		// ÉJÉÅÉâèÓïÒ
 		{
-			baseArgs.transformBufferData.viewMatrix = tktkMath::Matrix4::createLookAtLH(
+			baseArgs.transformBufferData.viewMatrix = DX12GameManager::getViewMatrix(m_cameraId);
+				
+				/*tktkMath::Matrix4::createLookAtLH(
 				tktkMath::Vector3(0.0f, 15.0f, -20.0f),
 				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
 				tktkMath::vec3Up
-			);
+			);*/
 			
-			baseArgs.transformBufferData.projectionMatrix = tktkMath::Matrix4::createPerspectiveFieldOfViewLH(
+			baseArgs.transformBufferData.projectionMatrix = DX12GameManager::getProjectionMatrix(m_cameraId);
+				
+				/*tktkMath::Matrix4::createPerspectiveFieldOfViewLH(
 				90.0f,
 				tktk::DX12GameManager::getWindowSize().x / tktk::DX12GameManager::getWindowSize().y,
 				1.0f,
 				100.0f
-			);
+			);*/
 		}
 
 		// ÉâÉCÉgèÓïÒ

@@ -21,42 +21,34 @@ namespace tktk
 	std::unique_ptr<DirectInputWrapper>		DX12GameManager::m_directInputWrapper;
 	std::unique_ptr<Mouse>					DX12GameManager::m_mouse;
 
-	void DX12GameManager::initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath)
+	void DX12GameManager::initialize(const DX12GameManagerInitParam& gameManagerInitParam)
 	{
-		m_sceneManager			= std::make_unique<SceneManager>(sceneNum);
+		m_sceneManager			= std::make_unique<SceneManager>(gameManagerInitParam.dxGameResourceNum.sceneNum);
 		m_gameObjectManager		= std::make_unique<GameObjectManager>();
 		m_componentManager		= std::make_unique<ComponentManager>();
-		m_window				= std::make_unique<Window>(windowInitParam);
-		m_dx3dBaseObjects		= std::make_unique<DX3DBaseObjects>(dx3dInitParam, m_window->getHWND(), windowInitParam.windowSize, tktkMath::colorBlue);
-
+		m_window				= std::make_unique<Window>(gameManagerInitParam.windowParam);
+		m_dx3dBaseObjects		= std::make_unique<DX3DBaseObjects>(gameManagerInitParam.dx3dParam, m_window->getHWND(), gameManagerInitParam.windowParam.windowSize, tktkMath::colorBlue);
+		
 		{
-			DXGameResourceInitParam initParam;
-			initParam.spriteShaderFilePaths.vsFilePath		= tktkLibResFolderPath + "TktkLibRes/shader/SpriteVertexShader.cso";
-			initParam.spriteShaderFilePaths.psFilePath		= tktkLibResFolderPath + "TktkLibRes/shader/SpritePixelShader.cso";
-			initParam.basicMeshShaderFilePaths.vsFilePath	= tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshVertexShader.cso";
-			initParam.basicMeshShaderFilePaths.psFilePath	= tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshPixelShader.cso";
-			initParam.writeShadowMapVsFilePath				= tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshShadowVertexShader.cso";
+			DXGameBaseShaderFilePaths dxGameBaseShaderFilePaths{};
+			dxGameBaseShaderFilePaths.spriteShaderFilePaths.vsFilePath					= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/SpriteVertexShader.cso";
+			dxGameBaseShaderFilePaths.spriteShaderFilePaths.psFilePath					= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/SpritePixelShader.cso";
+			dxGameBaseShaderFilePaths.basicMeshShaderFilePaths.vsFilePath				= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshVertexShader.cso";
+			dxGameBaseShaderFilePaths.basicMeshShaderFilePaths.psFilePath				= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshPixelShader.cso";
+			dxGameBaseShaderFilePaths.writeShadowMapVsFilePath							= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshShadowVertexShader.cso";
+			dxGameBaseShaderFilePaths.postEffectShaderFilePaths.postEffectVSFilePath	= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/PostEffectVertexShader.cso";
+			dxGameBaseShaderFilePaths.postEffectShaderFilePaths.monochromePSFilePath	= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/MonochromePixelShader.cso";
 
-			initParam.postEffectShaderFilePaths.postEffectVSFilePath = tktkLibResFolderPath + "TktkLibRes/shader/PostEffectVertexShader.cso";
-			initParam.postEffectShaderFilePaths.monochromePSFilePath = tktkLibResFolderPath + "TktkLibRes/shader/MonochromePixelShader.cso";
-
-			initParam.spriteNum				= dx3dInitParam.spriteNum;
-			initParam.basicMeshNum			= dx3dInitParam.basicMeshNum;
-			initParam.basicMeshMaterialNum	= dx3dInitParam.basicMeshMaterialNum;
-			initParam.skeletonNum			= dx3dInitParam.skeletonNum;
-			initParam.motionNum				= dx3dInitParam.motionNum;
-			initParam.postEffectMaterialNum = dx3dInitParam.postEffectMaterialNum;
-
-			m_dxGameResource = std::make_unique<DXGameResource>(initParam);
+			m_dxGameResource = std::make_unique<DXGameResource>(gameManagerInitParam.dxGameResourceNum, dxGameBaseShaderFilePaths);
 		}
-		m_soundPlayer			= std::make_unique<SoundPlayer>(dx3dInitParam.soundDataNum);
+		m_soundPlayer			= std::make_unique<SoundPlayer>(gameManagerInitParam.dxGameResourceNum.soundNum);
 		m_mouse					= std::make_unique<Mouse>();
-		m_directInputWrapper	= std::make_unique<DirectInputWrapper>(windowInitParam.hInstance, m_window->getHWND());
+		m_directInputWrapper	= std::make_unique<DirectInputWrapper>(gameManagerInitParam.windowParam.hInstance, m_window->getHWND());
 		
 		// シャドウマップの深度バッファーを作る
 		{
 			DepthStencilBufferInitParam initParam{};
-			initParam.depthStencilSize = windowInitParam.windowSize;//{ 1024.0f, 1024.0f };
+			initParam.depthStencilSize = gameManagerInitParam.windowParam.windowSize;
 			initParam.useAsShaderResource = true;
 
 			createDsBuffer(getSystemId(SystemDepthStencilBufferType::ShadowMap), initParam);
@@ -424,6 +416,31 @@ namespace tktk
 	void DX12GameManager::drawPostEffect(unsigned int id, const PostEffectMaterialDrawFuncArgs& drawFuncArgs)
 	{
 		m_dxGameResource->drawPostEffect(id, drawFuncArgs);
+	}
+
+	void DX12GameManager::createCamera(unsigned int id)
+	{
+		m_dxGameResource->createCamera(id);
+	}
+
+	const tktkMath::Matrix4& DX12GameManager::getViewMatrix(unsigned int cameraId)
+	{
+		return m_dxGameResource->getViewMatrix(cameraId);
+	}
+
+	void DX12GameManager::setViewMatrix(unsigned int cameraId, const tktkMath::Matrix4& view)
+	{
+		m_dxGameResource->setViewMatrix(cameraId, view);
+	}
+
+	const tktkMath::Matrix4& DX12GameManager::getProjectionMatrix(unsigned int cameraId)
+	{
+		return m_dxGameResource->getProjectionMatrix(cameraId);
+	}
+
+	void DX12GameManager::setProjectionMatrix(unsigned int cameraId, const tktkMath::Matrix4& projection)
+	{
+		m_dxGameResource->setProjectionMatrix(cameraId, projection);
 	}
 
 	void DX12GameManager::loadSound(unsigned int id, const std::string& fileName)

@@ -53,5 +53,8 @@
     <ClInclude Include="src\GameObject\Miku\MikuScript.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\Camera\CameraObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

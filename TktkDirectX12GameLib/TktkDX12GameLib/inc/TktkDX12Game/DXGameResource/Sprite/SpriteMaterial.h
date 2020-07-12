@@ -3,8 +3,6 @@
 
 #include <TktkContainer/HeapArray/HeapArray.h>
 #include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
-#undef min
-#undef max
 #include "SpriteMaterialData.h"
 
 namespace tktk

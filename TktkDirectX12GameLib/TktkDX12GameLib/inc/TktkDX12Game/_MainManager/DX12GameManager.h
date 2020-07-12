@@ -13,6 +13,8 @@
 #include "DX12GameManagerUseInitParams.h"
 #include "DX12GameManagerFuncInOutValueType.h"
 
+#include "DX12GameManagerInitParam.h"
+
 namespace tktk
 {
 	class GameObjectManager;
@@ -28,8 +30,8 @@ namespace tktk
 	public: /* このマネージャー自体の処理 */
 
 		// 初期化
-		static void initialize(unsigned int sceneNum, const DX3DBaseObjectsInitParam& dx3dInitParam, const WindowInitParam& windowInitParam, const std::string& tktkLibResFolderPath = "");
-		
+		static void initialize(const DX12GameManagerInitParam& initParam);
+
 		// 実行
 		static void run();
 
@@ -246,6 +248,23 @@ namespace tktk
 
 		// 指定のポストエフェクトを描画する
 		static void drawPostEffect(unsigned int id, const PostEffectMaterialDrawFuncArgs& drawFuncArgs);
+
+	public: /* カメラ関係の処理 */
+
+		// カメラを作る
+		static void createCamera(unsigned int id);
+
+		// 指定のカメラのビュー行列を取得する
+		static const tktkMath::Matrix4& getViewMatrix(unsigned int cameraId);
+
+		// 指定のカメラのビュー行列を設定する
+		static void setViewMatrix(unsigned int cameraId, const tktkMath::Matrix4& view);
+
+		// 指定のカメラのプロジェクション行列を取得する
+		static const tktkMath::Matrix4& getProjectionMatrix(unsigned int cameraId);
+
+		// 指定のカメラのプロジェクション行列を設定する
+		static void setProjectionMatrix(unsigned int cameraId, const tktkMath::Matrix4& projection);
 
 	public: /* サウンド関係の処理 */
 

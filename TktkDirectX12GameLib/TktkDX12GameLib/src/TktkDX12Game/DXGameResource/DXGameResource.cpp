@@ -6,13 +6,14 @@
 
 namespace tktk
 {
-	DXGameResource::DXGameResource(const DXGameResourceInitParam& initParam)
-		: m_spriteMaterial(initParam.spriteShaderFilePaths, initParam.spriteNum)
-		, m_skeleton(initParam.skeletonNum) // ※メッシュクラスの初期化にボーン行列定数バッファが必要なので先にコンストラクトする必要がある
-		, m_basicMesh(initParam.writeShadowMapVsFilePath, initParam.basicMeshNum)
-		, m_basicMeshMaterial(initParam.basicMeshShaderFilePaths, initParam.basicMeshMaterialNum)
-		, m_motion(initParam.motionNum)
-		, m_postEffectMaterial(initParam.postEffectShaderFilePaths, initParam.postEffectMaterialNum)
+	DXGameResource::DXGameResource(const DXGameResourceNum& resourceNum, const DXGameBaseShaderFilePaths& filePaths)
+		: m_spriteMaterial(filePaths.spriteShaderFilePaths, resourceNum.spriteNum)
+		, m_skeleton(resourceNum.skeletonNum) // ※メッシュクラスの初期化にボーン行列定数バッファが必要なので先にコンストラクトする必要がある
+		, m_basicMesh(filePaths.writeShadowMapVsFilePath, resourceNum.basicMeshNum)
+		, m_basicMeshMaterial(filePaths.basicMeshShaderFilePaths, resourceNum.basicMeshMaterialNum)
+		, m_motion(resourceNum.motionNum)
+		, m_postEffectMaterial(filePaths.postEffectShaderFilePaths, resourceNum.postEffectMaterialNum)
+		, m_camera(resourceNum.cameraNum)
 	{
 	}
 
@@ -84,5 +85,30 @@ namespace tktk
 	void DXGameResource::drawPostEffect(unsigned int id, const PostEffectMaterialDrawFuncArgs& drawFuncArgs) const
 	{
 		m_postEffectMaterial.drawPostEffect(id, drawFuncArgs);
+	}
+
+	void DXGameResource::createCamera(unsigned int id)
+	{
+		m_camera.create(id);
+	}
+
+	const tktkMath::Matrix4& DXGameResource::getViewMatrix(unsigned int cameraId) const
+	{
+		return m_camera.getViewMatrix(cameraId);
+	}
+
+	void DXGameResource::setViewMatrix(unsigned int cameraId, const tktkMath::Matrix4& view)
+	{
+		m_camera.setViewMatrix(cameraId, view);
+	}
+
+	const tktkMath::Matrix4& DXGameResource::getProjectionMatrix(unsigned int cameraId) const
+	{
+		return m_camera.getProjectionMatrix(cameraId);
+	}
+
+	void DXGameResource::setProjectionMatrix(unsigned int cameraId, const tktkMath::Matrix4& projection)
+	{
+		m_camera.setProjectionMatrix(cameraId, projection);
 	}
 }

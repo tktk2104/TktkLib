@@ -15,6 +15,7 @@ namespace tktk
 		unsigned int skeletonNum;
 		unsigned int motionNum;
 		unsigned int postEffectMaterialNum;
+		unsigned int cameraNum;
 
 		unsigned int soundDataNum;
 	};

@@ -26,6 +26,7 @@ namespace tktk
 			m_drawPriority,
 			m_meshId,
 			m_skeletonId,
+			m_cameraId,
 			m_useRtvDescriptorHeapId
 			);
 	}
@@ -55,6 +56,13 @@ namespace tktk
 	{
 		// 値を設定して自身の参照を返す
 		m_skeletonId = value;
+		return *this;
+	}
+
+	BasicMeshDrawerMaker& BasicMeshDrawerMaker::cameraIdImpl(unsigned int value)
+	{
+		// 値を設定して自身の参照を返す
+		m_cameraId = value;
 		return *this;
 	}
 }

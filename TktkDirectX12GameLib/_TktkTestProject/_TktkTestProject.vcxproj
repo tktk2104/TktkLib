@@ -155,6 +155,7 @@
     <ClCompile Include="src\Scene\MainScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameObject\Camera\CameraObject.h" />
     <ClInclude Include="src\GameObject\Cursor\Cursor.h" />
     <ClInclude Include="src\GameObject\Cursor\CursorScript.h" />
     <ClInclude Include="src\GameObject\Miku\Miku.h" />

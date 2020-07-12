@@ -1,7 +1,9 @@
 #ifndef DX_GAME_RESOURCE_H_
 #define DX_GAME_RESOURCE_H_
 
-#include "DXGameResourceInitParam.h"
+#include "DXGameResourceNum.h"
+#include "DXGameBaseShaderFilePaths.h"
+
 #include "PostEffect/PostEffectMaterial.h"
 #include "Sprite/SpriteMaterial.h"
 #include "Mesh/BasicMesh/Mesh/BasicMesh.h"
@@ -10,6 +12,7 @@
 #include "Mesh/BasicMesh/Loader/BasicMeshLoadPmdReturnValue.h"
 #include "Mesh/Skeleton/Skeleton.h"
 #include "Mesh/Motion/Motion.h"
+#include "Camera/Camera.h"
 
 namespace tktk
 {
@@ -18,7 +21,7 @@ namespace tktk
 	{
 	public:
 
-		DXGameResource(const DXGameResourceInitParam& initParam);
+		DXGameResource(const DXGameResourceNum& resourceNum, const DXGameBaseShaderFilePaths& filePaths);
 		~DXGameResource() = default;
 
 	public: /* スプライト関係の処理 */
@@ -74,6 +77,23 @@ namespace tktk
 		// 指定のポストエフェクトを描画する
 		void drawPostEffect(unsigned int id, const PostEffectMaterialDrawFuncArgs& drawFuncArgs) const;
 
+	public: /* カメラ関係の処理 */
+
+		// カメラを作る
+		void createCamera(unsigned int id);
+
+		// 指定のカメラのビュー行列を取得する
+		const tktkMath::Matrix4& getViewMatrix(unsigned int cameraId) const;
+
+		// 指定のカメラのビュー行列を設定する
+		void setViewMatrix(unsigned int cameraId, const tktkMath::Matrix4& view);
+
+		// 指定のカメラのプロジェクション行列を取得する
+		const tktkMath::Matrix4& getProjectionMatrix(unsigned int cameraId) const;
+
+		// 指定のカメラのプロジェクション行列を設定する
+		void setProjectionMatrix(unsigned int cameraId, const tktkMath::Matrix4& projection);
+
 	private:
 
 		SpriteMaterial		m_spriteMaterial;
@@ -82,6 +102,7 @@ namespace tktk
 		BasicMeshMaterial	m_basicMeshMaterial;
 		Motion				m_motion;
 		PostEffectMaterial	m_postEffectMaterial;
+		Camera				m_camera;
 	};
 }
 #endif // !DX_GAME_RESOURCE_H_

@@ -20,38 +20,75 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 {
 	// 「DX12GameManager」の初期設定をする
 	{
-		tktk::DescriptorHeapInitParam descriptorHeapInitParam{};
-		descriptorHeapInitParam.basicDescriptorHeapNum	= 19U;
-		descriptorHeapInitParam.rtvDescriptorHeapNum	= 1U;
-		descriptorHeapInitParam.dsvDescriptorHeapNum	= 0U;
+		tktk::DX12GameManagerInitParam initParam{};
 
-		tktk::BufferResourceInitParam bufferResourceInitParam{};
-		bufferResourceInitParam.vertexBufferNum			= 1U;
-		bufferResourceInitParam.indexBufferNum			= 1U;
-		bufferResourceInitParam.constantBufferNum		= 0U;
-		bufferResourceInitParam.textureBufferNum		= 17U;
-		bufferResourceInitParam.depthStencilBufferNum	= 0U;
-		bufferResourceInitParam.renderTargetBufferNum	= 1U;
+		{
+			auto& dx3dParam = initParam.dx3dParam;
 
-		tktk::DX3DResourceInitParam resourceInitParam{};
-		resourceInitParam.viewPortNum				= 0U;
-		resourceInitParam.scissorRectNum			= 0U;
-		resourceInitParam.pipeLineStateNum			= 0U;
-		resourceInitParam.rootSignatureNum			= 0U;
-		resourceInitParam.descriptorHeapInitParam	= descriptorHeapInitParam;
-		resourceInitParam.bufferResourceInitParam	= bufferResourceInitParam;
+			dx3dParam.spriteNum				= 1U;
+			dx3dParam.basicMeshNum			= 1U;
+			dx3dParam.basicMeshMaterialNum	= 17U;
+			dx3dParam.skeletonNum			= 1U;
+			dx3dParam.motionNum				= 2U;
+			dx3dParam.postEffectMaterialNum = 1U;
+			dx3dParam.soundDataNum			= 2U;
+			dx3dParam.cameraNum				= 1U;
 
-		tktk::DX3DBaseObjectsInitParam initParam{};
-		initParam.resourceInitParam = resourceInitParam;
-		initParam.spriteNum					= 1U;
-		initParam.basicMeshNum				= 1U;
-		initParam.basicMeshMaterialNum		= 17U;
-		initParam.skeletonNum				= 1U;
-		initParam.motionNum					= 2U;
-		initParam.postEffectMaterialNum		= 1U;
-		initParam.soundDataNum				= 2U;
+			{
+				auto& resourceInitParam = dx3dParam.resourceInitParam;
 
-		tktk::DX12GameManager::initialize(2U, initParam, { hInstance, nCmdShow, "TestProject", { 1920.0f, 1080.0f } });
+				resourceInitParam.viewPortNum		= 0U;
+				resourceInitParam.scissorRectNum	= 0U;
+				resourceInitParam.pipeLineStateNum	= 0U;
+				resourceInitParam.rootSignatureNum	= 0U;
+
+				{
+					auto& descriptorHeapInitParam = resourceInitParam.descriptorHeapInitParam;
+
+					descriptorHeapInitParam.basicDescriptorHeapNum	= 19U;
+					descriptorHeapInitParam.rtvDescriptorHeapNum	= 1U;
+					descriptorHeapInitParam.dsvDescriptorHeapNum	= 0U;
+				}
+
+				{
+					auto& bufferResourceInitParam = resourceInitParam.bufferResourceInitParam;
+
+					bufferResourceInitParam.vertexBufferNum			= 1U;
+					bufferResourceInitParam.indexBufferNum			= 1U;
+					bufferResourceInitParam.constantBufferNum		= 0U;
+					bufferResourceInitParam.textureBufferNum		= 17U;
+					bufferResourceInitParam.depthStencilBufferNum	= 0U;
+					bufferResourceInitParam.renderTargetBufferNum	= 1U;
+				}
+			}
+		}
+
+		{
+			auto& windowParam = initParam.windowParam;
+
+			windowParam.hInstance	= hInstance;
+			windowParam.nCmdShow	= nCmdShow;
+			windowParam.windowName	= "TestProject";
+			windowParam.windowSize	= { 1920.0f, 1080.0f };
+		}
+		
+		{
+			auto& dxGameResourceNum = initParam.dxGameResourceNum;
+
+			dxGameResourceNum.sceneNum				= 2U;
+			dxGameResourceNum.soundNum				= 2U;
+			dxGameResourceNum.spriteNum				= 1U;
+			dxGameResourceNum.basicMeshNum			= 1U;
+			dxGameResourceNum.basicMeshMaterialNum	= 17U;
+			dxGameResourceNum.skeletonNum			= 1U;
+			dxGameResourceNum.motionNum				= 2U;
+			dxGameResourceNum.postEffectMaterialNum = 1U;
+			dxGameResourceNum.cameraNum				= 1U;
+			dxGameResourceNum.lightNum				= 0U;
+		}
+
+		// DX12GameManagerのセットアップ
+		tktk::DX12GameManager::initialize(initParam);
 	}
 
 	// シーンを追加する
