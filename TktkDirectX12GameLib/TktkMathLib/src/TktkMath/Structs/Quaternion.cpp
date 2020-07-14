@@ -167,8 +167,8 @@ namespace tktkMath
 			result.w = std::sqrt(1.0f + radicand) * 0.5f;
 			float recip = 1.0f / (4.0f * result.w);
 			result.x = (upward.z - forward.y) * recip;
-			result.z = (forward.x - right.z) * recip;
-			result.y = (right.y - upward.x) * recip;
+			result.y = (forward.x - right.z) * recip;
+			result.z = (right.y - upward.x) * recip;
 		}
 		else if (right.x >= upward.y && right.x >= forward.z)
 		{
@@ -176,7 +176,7 @@ namespace tktkMath
 			float recip = 1.0f / (4.0f * result.x);
 			result.w = (upward.z - forward.y) * recip;
 			result.z = (forward.x + right.z) * recip;
-			result.y = (right.y + upward.z) * recip;
+			result.y = (right.y + upward.x) * recip;
 		}
 		else if (upward.y > forward.z)
 		{
