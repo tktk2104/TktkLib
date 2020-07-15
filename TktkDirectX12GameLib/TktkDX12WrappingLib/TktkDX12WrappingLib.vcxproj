@@ -215,7 +215,6 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\Viewport\ViewportData.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\Viewport\ViewportInitParam.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjects.h" />
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjectsInitParam.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\Window\Window.h" />
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\Window\WindowInitParam.h" />
     <ClInclude Include="inc\TktkDX12WrappingLibDefinition.h" />

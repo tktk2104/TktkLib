@@ -1,13 +1,11 @@
-#ifndef CAMERA_OBJECT_H_
-#define CAMERA_OBJECT_H_
+#ifndef POINT_LIGHT_OBJECT_H_
+#define POINT_LIGHT_OBJECT_H_
 
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
 #include <TktkDX12BaseComponents/3D/Transform3D/Transform3DMaker.h>
-#include <TktkDX12BaseComponents/3D/Camera/BasicCameraControllerMaker.h>
-
 #include <TktkDX12BaseComponents/3D/Camera/OrthographicCameraControllerMaker.h>
 
-struct CameraObject
+struct PointLightObject
 {
 	static tktk::GameObjectPtr create(const tktkMath::Vector3& position)
 	{
@@ -15,14 +13,16 @@ struct CameraObject
 
 		tktk::Transform3DMaker::makeStart(gameObject)
 			.initPosition(position)
+			.initRotation(tktkMath::Quaternion::createLookRotation(-position))
 			.create();
 
-		tktk::BasicCameraControllerMaker::makeStart(gameObject)
-			.initCameraId(0U)
-			.initCameraFov(90.0f)
+		tktk::OrthographicCameraControllerMaker::makeStart(gameObject)
+			.initCameraWidth(40.0f)
+			.initCameraHeight(40.0f)
+			.initCameraId(1U)
 			.create();
 
 		return gameObject;
 	}
 };
-#endif // !CAMERA_OBJECT_H_
+#endif // !POINT_LIGHT_OBJECT_H_

@@ -7,7 +7,6 @@ cbuffer LightBuffer : register(b0)
 	float4		lightSpeqular;
 	float3		lightPosition;
 	float		lightDataPad;
-	float4x4	lightMatrix;
 }
 
 // ƒ}ƒeƒŠƒAƒ‹‚Ìî•ñ

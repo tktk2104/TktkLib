@@ -27,6 +27,7 @@ namespace tktk
 			m_meshId,
 			m_skeletonId,
 			m_cameraId,
+			m_shadowMapCameraId,
 			m_useRtvDescriptorHeapId
 			);
 	}
@@ -63,6 +64,13 @@ namespace tktk
 	{
 		// 値を設定して自身の参照を返す
 		m_cameraId = value;
+		return *this;
+	}
+
+	BasicMeshDrawerMaker& BasicMeshDrawerMaker::shadowMapCameraIdImpl(unsigned int value)
+	{
+		// 値を設定して自身の参照を返す
+		m_shadowMapCameraId = value;
 		return *this;
 	}
 }

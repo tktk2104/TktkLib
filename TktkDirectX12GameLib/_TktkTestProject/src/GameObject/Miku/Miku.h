@@ -24,12 +24,15 @@ struct Miku
 			.meshId(0U)
 			.skeletonId(0U)
 			.useRtvDescriptorHeapId(0U)
+			.cameraId(0U)
+			.shadowMapCameraId(1U)
 			.create();
 
 		tktk::BasicMeshShadowMapWriterMaker::makeStart(gameObject)
 			.drawPriority(-10.0f)
 			.meshId(0U)
 			.skeletonId(0U)
+			.cameraId(1U)
 			.create();
 
 		tktk::MeshAnimatorMaker::makeStart(gameObject)

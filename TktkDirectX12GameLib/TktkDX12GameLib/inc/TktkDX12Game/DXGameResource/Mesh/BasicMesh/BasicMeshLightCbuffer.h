@@ -24,9 +24,6 @@ namespace tktk
 
 		// パディング
 		float				lightDataPad	{ 0.0f };
-
-		// ライト行列
-		tktkMath::Matrix4	lightMatrix		{ tktkMath::mat4Identity };
 	};
 }
 #endif // !BASIC_MESH_LIGHT_CBUFFER_H_

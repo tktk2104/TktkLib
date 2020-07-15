@@ -8,7 +8,6 @@
 #undef max
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector2.h>
-#include "DX3DBaseObjectsInitParam.h"
 #include "../Fence/Fence.h"
 #include "../DX3DResource/DX3DResource.h"
 
@@ -19,7 +18,7 @@ namespace tktk
 	{
 	public:
 
-		DX3DBaseObjects(const DX3DBaseObjectsInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize, const tktkMath::Color& backGroundColor);
+		DX3DBaseObjects(const DX3DResourceInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize, const tktkMath::Color& backGroundColor);
 		~DX3DBaseObjects();
 
 	public: /* 描画開始、終了処理 */

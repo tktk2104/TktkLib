@@ -23,43 +23,30 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 		tktk::DX12GameManagerInitParam initParam{};
 
 		{
-			auto& dx3dParam = initParam.dx3dParam;
+			auto& resourceInitParam = initParam.dx3dResParam;
 
-			dx3dParam.spriteNum				= 1U;
-			dx3dParam.basicMeshNum			= 1U;
-			dx3dParam.basicMeshMaterialNum	= 17U;
-			dx3dParam.skeletonNum			= 1U;
-			dx3dParam.motionNum				= 2U;
-			dx3dParam.postEffectMaterialNum = 1U;
-			dx3dParam.soundDataNum			= 2U;
-			dx3dParam.cameraNum				= 1U;
+			resourceInitParam.viewPortNum = 0U;
+			resourceInitParam.scissorRectNum = 0U;
+			resourceInitParam.pipeLineStateNum = 0U;
+			resourceInitParam.rootSignatureNum = 0U;
 
 			{
-				auto& resourceInitParam = dx3dParam.resourceInitParam;
+				auto& descriptorHeapInitParam = resourceInitParam.descriptorHeapInitParam;
 
-				resourceInitParam.viewPortNum		= 0U;
-				resourceInitParam.scissorRectNum	= 0U;
-				resourceInitParam.pipeLineStateNum	= 0U;
-				resourceInitParam.rootSignatureNum	= 0U;
+				descriptorHeapInitParam.basicDescriptorHeapNum = 19U;
+				descriptorHeapInitParam.rtvDescriptorHeapNum = 1U;
+				descriptorHeapInitParam.dsvDescriptorHeapNum = 0U;
+			}
 
-				{
-					auto& descriptorHeapInitParam = resourceInitParam.descriptorHeapInitParam;
+			{
+				auto& bufferResourceInitParam = resourceInitParam.bufferResourceInitParam;
 
-					descriptorHeapInitParam.basicDescriptorHeapNum	= 19U;
-					descriptorHeapInitParam.rtvDescriptorHeapNum	= 1U;
-					descriptorHeapInitParam.dsvDescriptorHeapNum	= 0U;
-				}
-
-				{
-					auto& bufferResourceInitParam = resourceInitParam.bufferResourceInitParam;
-
-					bufferResourceInitParam.vertexBufferNum			= 1U;
-					bufferResourceInitParam.indexBufferNum			= 1U;
-					bufferResourceInitParam.constantBufferNum		= 0U;
-					bufferResourceInitParam.textureBufferNum		= 17U;
-					bufferResourceInitParam.depthStencilBufferNum	= 0U;
-					bufferResourceInitParam.renderTargetBufferNum	= 1U;
-				}
+				bufferResourceInitParam.vertexBufferNum = 1U;
+				bufferResourceInitParam.indexBufferNum = 1U;
+				bufferResourceInitParam.constantBufferNum = 0U;
+				bufferResourceInitParam.textureBufferNum = 17U;
+				bufferResourceInitParam.depthStencilBufferNum = 0U;
+				bufferResourceInitParam.renderTargetBufferNum = 1U;
 			}
 		}
 
@@ -83,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			dxGameResourceNum.skeletonNum			= 1U;
 			dxGameResourceNum.motionNum				= 2U;
 			dxGameResourceNum.postEffectMaterialNum = 1U;
-			dxGameResourceNum.cameraNum				= 1U;
+			dxGameResourceNum.cameraNum				= 2U;
 			dxGameResourceNum.lightNum				= 0U;
 		}
 

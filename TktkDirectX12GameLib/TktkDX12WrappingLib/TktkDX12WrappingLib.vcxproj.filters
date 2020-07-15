@@ -30,9 +30,6 @@
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\Fence\Fence.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\_DX3DBaseObjects\DX3DBaseObjectsInitParam.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkDX12Wrapper\Graphics\DX3D12\DX3DResource\DescriptorHeap\BasicDescriptorHeap\BasicDescriptorHeap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

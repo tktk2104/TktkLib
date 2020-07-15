@@ -11,6 +11,7 @@ namespace tktk
 		// TODO : Meshクラスを作ってこのクラスを持たせて、下の処理をMeshクラスに移動する
 		// メッシュ共通で使用する座標変換定数バッファを作る
 		tktk::DX12GameManager::createCBuffer(tktk::DX12GameManager::getSystemId(tktk::SystemConstantBufferType::MeshTransform), MeshTransformCbuffer());
+		tktk::DX12GameManager::createCBuffer(tktk::DX12GameManager::getSystemId(tktk::SystemConstantBufferType::MeshShadowMap), MeshShadowMapCBuffer());
 
 		createWriteShadowMapRootSignature();
 		createWriteShadowMapGraphicsPipeLineState(writeShadowMapVsFilePath);
@@ -54,6 +55,9 @@ namespace tktk
 	{
 		// メッシュの座標変換に使用する情報を定数バッファに書き込む
 		updateMeshTransformCbuffer(baseArgs.transformBufferData);
+
+		// メッシュのシャドウマップ使用するための情報を定数バッファに書き込む
+		updateMeshShadowMapCBuffer(baseArgs.shadowMapBufferData);
 
 		// メッシュのライティングに使用するライト情報を定数バッファに書き込む
 		updateBasicMeshLightCbuffer(baseArgs.lightBufferData);
@@ -125,6 +129,11 @@ namespace tktk
 	void BasicMesh::updateMeshTransformCbuffer(const MeshTransformCbuffer& transformBufferData)
 	{
 		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::MeshTransform), transformBufferData);
+	}
+
+	void BasicMesh::updateMeshShadowMapCBuffer(const MeshShadowMapCBuffer& shadowMapBufferData)
+	{
+		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::MeshShadowMap), shadowMapBufferData);
 	}
 
 	void BasicMesh::updateBasicMeshLightCbuffer(const BasicMeshLightCbuffer& lightBufferData)

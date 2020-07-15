@@ -36,6 +36,9 @@ namespace tktk
 		// メッシュの座標変換用の定数バッファを更新する
 		void updateMeshTransformCbuffer(const MeshTransformCbuffer& transformBufferData);
 
+		// メッシュのシャドウマップ使用用の定数バッファを更新する
+		void updateMeshShadowMapCBuffer(const MeshShadowMapCBuffer&	shadowMapBufferData);
+
 		// 通常メッシュのライティング用の定数バッファを更新する
 		void updateBasicMeshLightCbuffer(const BasicMeshLightCbuffer& lightBufferData);
 

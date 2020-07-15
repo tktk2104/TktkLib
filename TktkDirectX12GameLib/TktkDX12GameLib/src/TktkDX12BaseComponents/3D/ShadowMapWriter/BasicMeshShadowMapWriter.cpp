@@ -2,10 +2,11 @@
 
 namespace tktk
 {
-	BasicMeshShadowMapWriter::BasicMeshShadowMapWriter(float drawPriority, unsigned int meshId, unsigned int skeletonId)
+	BasicMeshShadowMapWriter::BasicMeshShadowMapWriter(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int cameraId)
 		: ComponentBase(drawPriority)
 		, m_meshId(meshId)
 		, m_skeletonId(skeletonId)
+		, m_cameraId(cameraId)
 	{
 	}
 
@@ -29,18 +30,15 @@ namespace tktk
 		{
 			// Transform3Dからワールド行列を取得
 			transformBufferData.worldMatrix = m_transform->calculateWorldMatrix();
-		}
-		
-		// カメラ情報
-		{
-			transformBufferData.viewMatrix = tktkMath::Matrix4::createLookAtLH(
-				tktkMath::Vector3(60.0f, 10.0f, -60.0f),
-				tktkMath::Vector3(0.0f, 0.0f, 0.0f),
-				tktkMath::vec3Up
-			);
-			transformBufferData.projectionMatrix = tktkMath::Matrix4::createOrthographicLH(40, 40, 1.0f, 100.0f);
+
+			// 使用するカメラのビュー行列
+			transformBufferData.viewMatrix = DX12GameManager::getViewMatrix(m_cameraId);
+
+			// 使用するカメラのプロジェクション行列
+			transformBufferData.projectionMatrix = DX12GameManager::getProjectionMatrix(m_cameraId);
 		}
 
+		// シャドウマップを描画する
 		DX12GameManager::writeBasicMeshShadowMap(m_meshId, transformBufferData);
 	}
 }

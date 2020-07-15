@@ -2,11 +2,12 @@
 
 namespace tktk
 {
-	BasicMeshDrawer::BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int cameraId, unsigned int useRtvDescriptorHeapId)
+	BasicMeshDrawer::BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int cameraId, unsigned int shadowMapCameraId, unsigned int useRtvDescriptorHeapId)
 		: ComponentBase(drawPriority)
 		, m_meshId(meshId)
 		, m_skeletonId(skeletonId)
 		, m_cameraId(cameraId)
+		, m_shadowMapCameraId(shadowMapCameraId)
 		, m_useRtvDescriptorHeapId(useRtvDescriptorHeapId)
 	{
 	}
@@ -39,6 +40,12 @@ namespace tktk
 			// Transform3Dからワールド行列を取得
 			baseArgs.transformBufferData.worldMatrix = m_transform->calculateWorldMatrix();
 
+			// 使用するカメラのビュー行列
+			baseArgs.transformBufferData.viewMatrix = DX12GameManager::getViewMatrix(m_cameraId);
+
+			// 使用するカメラのプロジェクション行列
+			baseArgs.transformBufferData.projectionMatrix = DX12GameManager::getProjectionMatrix(m_cameraId);
+
 			// 使用するビューポート番号
 			baseArgs.viewportId = DX12GameManager::getSystemId(SystemViewportType::Basic);
 
@@ -50,39 +57,14 @@ namespace tktk
 
 			// 使用する深度ステンシルディスクリプタヒープ番号
 			baseArgs.dsvDescriptorHeapId = DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::Basic);
-		}
-		
-		// カメラ情報
-		{
-			baseArgs.transformBufferData.viewMatrix = DX12GameManager::getViewMatrix(m_cameraId);
-				
-				/*tktkMath::Matrix4::createLookAtLH(
-				tktkMath::Vector3(0.0f, 15.0f, -20.0f),
-				tktkMath::Vector3(0.0f, 8.0f, 0.0f),
-				tktkMath::vec3Up
-			);*/
-			
-			baseArgs.transformBufferData.projectionMatrix = DX12GameManager::getProjectionMatrix(m_cameraId);
-				
-				/*tktkMath::Matrix4::createPerspectiveFieldOfViewLH(
-				90.0f,
-				tktk::DX12GameManager::getWindowSize().x / tktk::DX12GameManager::getWindowSize().y,
-				1.0f,
-				100.0f
-			);*/
+
+			// シャドウマップを使用する為に必要なシャドウマップカメラ行列
+			baseArgs.shadowMapBufferData.shadowMapViewProjMat = DX12GameManager::getViewMatrix(m_shadowMapCameraId) * DX12GameManager::getProjectionMatrix(m_shadowMapCameraId);
 		}
 
 		// ライト情報
 		{
 			baseArgs.lightBufferData.lightPosition = tktkMath::Vector3(60.0f, 10.0f, -60.0f);
-
-			baseArgs.lightBufferData.lightMatrix
-				= tktkMath::Matrix4::createLookAtLH(
-					baseArgs.lightBufferData.lightPosition,
-					tktkMath::Vector3(0.0f, 0.0f, 0.0f),
-					tktkMath::vec3Up
-				)
-				* tktkMath::Matrix4::createOrthographicLH(40, 40, 1.0f, 100.0f);
 		}
 
 		// メッシュを描画する

@@ -102,7 +102,11 @@ void LoadingScene::start()
 
 	// カメラを作る
 	{
+		// 通常カメラ
 		tktk::DX12GameManager::createCamera(0U);
+
+		// シャドウマップカメラ
+		tktk::DX12GameManager::createCamera(1U);
 	}
 
 	tktk::DX12GameManager::addUpdatePriority<CursorScript>(-10.0f);

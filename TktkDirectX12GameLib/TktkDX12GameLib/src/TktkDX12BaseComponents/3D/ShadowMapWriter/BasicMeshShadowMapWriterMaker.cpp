@@ -22,7 +22,8 @@ namespace tktk
 		return m_user->createComponent<BasicMeshShadowMapWriter>(
 			m_drawPriority,
 			m_meshId,
-			m_skeletonId
+			m_skeletonId,
+			m_cameraId
 			);
 	}
 
@@ -44,6 +45,13 @@ namespace tktk
 	{
 		// 値を設定して自身の参照を返す
 		m_skeletonId = value;
+		return *this;
+	}
+
+	BasicMeshShadowMapWriterMaker& BasicMeshShadowMapWriterMaker::cameraIdImpl(unsigned int value)
+	{
+		// 値を設定して自身の参照を返す
+		m_cameraId = value;
 		return *this;
 	}
 }

@@ -21,7 +21,6 @@ cbuffer LightBuffer : register(b2)
 	float4		lightSpeqular;
 	float3		lightPosition;
 	float		lightDataPad;
-	float4x4	lightMatrix;
 }
 
 // マテリアルの情報
@@ -33,6 +32,12 @@ cbuffer MaterialBuffer : register(b3)
 	float4		materialEmissive;
 	float		materialShiniess;
 	float3		materialDataPad;
+}
+
+// シャドウマップを使った描画に必要な情報
+cbuffer ShadowMapBuffer : register(b4)
+{
+	float4x4	shadowMapViewProjMat;
 }
 
 // 入力頂点情報
@@ -109,7 +114,7 @@ VS_OUTPUT main(VS_INPUT Input)
 	//
 	Output.Light = mul((ViewLight - ViewPosition.xyz), matTBN);
 
-	Output.LightBasePos = mul(lightMatrix, WorldPosition);
+	Output.LightBasePos = mul(shadowMapViewProjMat, WorldPosition);
 
 	return Output;
 }

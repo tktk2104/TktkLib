@@ -9,9 +9,10 @@ namespace tktk
 	{
 		Sprite				= 0U,
 		MeshTransform		= 1U,
-		BoneMatCbuffer		= 2U,
-		BasicMeshLight		= 3U,
-		BasicMeshMaterial	= 4U
+		MeshShadowMap		= 2U,
+		BoneMatCbuffer		= 3U,
+		BasicMeshLight		= 4U,
+		BasicMeshMaterial	= 5U
 	};
 }
 #endif // !SYSTEM_CONSTANT_BUFFER_TYPE_H_

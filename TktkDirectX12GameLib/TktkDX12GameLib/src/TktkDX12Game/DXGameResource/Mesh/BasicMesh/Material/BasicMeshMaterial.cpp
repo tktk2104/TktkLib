@@ -57,7 +57,7 @@ namespace tktk
 		{/* 頂点シェーダー用の定数バッファ用のルートパラメータ */
 			initParam.rootParamArray.at(1U).shaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
 			initParam.rootParamArray.at(1U).descriptorTable = {
-				{ 4U, D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 0U }
+				{ 5U, D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 0U }
 			};
 		}
 

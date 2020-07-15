@@ -4,6 +4,7 @@
 #include "../GameObject/Cursor/Cursor.h"
 #include "../GameObject/Miku/Miku.h"
 #include "../GameObject/Camera/CameraObject.h"
+#include "../GameObject/Light/PointLightObject.h"
 #include "../GameObject/PostEffectObject/PostEffectObject.h"
 
 void MainScene::start()
@@ -14,6 +15,8 @@ void MainScene::start()
 	Cursor::create();
 
 	CameraObject::create({ 0.0f, 16.0f, -20.0f });
+
+	PointLightObject::create({ 60.0f, 10.0f, -60.0f });
 
 	Miku::create(tktkMath::vec3Zero);
 

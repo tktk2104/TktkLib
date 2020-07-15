@@ -15,7 +15,7 @@ namespace tktk
 	{
 	public:
 
-		BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int cameraId, unsigned int useRtvDescriptorHeapId);
+		BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int cameraId, unsigned int shadowMapCameraId, unsigned int useRtvDescriptorHeapId);
 
 	public:
 
@@ -28,6 +28,7 @@ namespace tktk
 		unsigned int				m_meshId;
 		unsigned int				m_skeletonId;
 		unsigned int				m_cameraId;
+		unsigned int				m_shadowMapCameraId;
 		ComponentPtr<Transform3D>	m_transform{ };
 		ComponentPtr<MeshAnimator>	m_animator{ };
 	};

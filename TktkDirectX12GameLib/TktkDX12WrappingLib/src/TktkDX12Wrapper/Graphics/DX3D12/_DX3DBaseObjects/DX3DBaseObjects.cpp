@@ -5,8 +5,8 @@
 
 namespace tktk
 {
-	DX3DBaseObjects::DX3DBaseObjects(const DX3DBaseObjectsInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize, const tktkMath::Color& backGroundColor)
-		: m_dX3DResource(initParam.resourceInitParam)
+	DX3DBaseObjects::DX3DBaseObjects(const DX3DResourceInitParam& initParam, HWND hwnd, const tktkMath::Vector2& windowSize, const tktkMath::Color& backGroundColor)
+		: m_dX3DResource(initParam)
 		, m_backGroundColor(backGroundColor)
 	{
 #ifdef _DEBUG

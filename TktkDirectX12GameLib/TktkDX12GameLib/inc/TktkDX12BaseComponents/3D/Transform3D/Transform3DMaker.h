@@ -36,6 +36,12 @@ namespace tktk
 		// 初期回転を設定する
 		Transform3DMaker& initRotation(const tktkMath::Quaternion& value);
 
+		// 初期回転を設定する（オイラー角）
+		Transform3DMaker& initRotation(const tktkMath::Vector3& value);
+
+		// 行列から初期パラメータを設定する（座標変換情報のみ）
+		Transform3DMaker& setInitTransformFromMatrix(const tktkMath::Matrix4& value);
+
 		// 親のTransform3Dとの関係性の種類を設定する
 		Transform3DMaker& traceType(TraceParentType value);
 

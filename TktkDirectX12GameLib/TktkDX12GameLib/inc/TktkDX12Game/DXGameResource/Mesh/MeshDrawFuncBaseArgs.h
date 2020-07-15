@@ -6,6 +6,7 @@
 #include <TktkMath/Structs/Vector3.h>
 #include <TktkMath/Structs/Matrix4.h>
 #include "MeshTransformCbuffer.h"
+#include "MeshShadowMapCBuffer.h"
 #include "BasicMesh/BasicMeshLightCbuffer.h"
 
 namespace tktk
@@ -27,6 +28,9 @@ namespace tktk
 
 		// メッシュの座標変換情報
 		MeshTransformCbuffer	transformBufferData{};
+
+		// シャドウマップを使った描画に必要な情報
+		MeshShadowMapCBuffer	shadowMapBufferData{};
 
 		// 通常メッシュのライティング情報
 		BasicMeshLightCbuffer	lightBufferData{};

@@ -158,6 +158,7 @@
     <ClInclude Include="src\GameObject\Camera\CameraObject.h" />
     <ClInclude Include="src\GameObject\Cursor\Cursor.h" />
     <ClInclude Include="src\GameObject\Cursor\CursorScript.h" />
+    <ClInclude Include="src\GameObject\Light\PointLightObject.h" />
     <ClInclude Include="src\GameObject\Miku\Miku.h" />
     <ClInclude Include="src\GameObject\Miku\MikuScript.h" />
     <ClInclude Include="src\GameObject\PostEffectObject\PostEffectObject.h" />
