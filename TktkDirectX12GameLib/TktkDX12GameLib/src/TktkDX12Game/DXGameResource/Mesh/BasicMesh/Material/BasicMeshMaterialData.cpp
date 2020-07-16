@@ -37,7 +37,7 @@ namespace tktk
 			cbufferViewDescriptorParam.descriptorParamArray = {
 				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::MeshTransform)		},
 				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BoneMatCbuffer)		},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshLight)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::Light)		},
 				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial)	},
 				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::MeshShadowMap)		}
 			};
@@ -49,7 +49,7 @@ namespace tktk
 
 			// 
 			cbufferViewDescriptorParam.descriptorParamArray = {
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshLight)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::Light)		},
 				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial)	}
 			};
 		}

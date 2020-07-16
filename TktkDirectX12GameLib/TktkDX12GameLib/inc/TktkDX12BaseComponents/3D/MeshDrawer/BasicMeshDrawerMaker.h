@@ -50,6 +50,10 @@ namespace tktk
 		template<class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
 		BasicMeshDrawerMaker& shadowMapCameraId(IdType value);
 
+		// 使用するライトIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+		template<class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
+		BasicMeshDrawerMaker& lightId(IdType value);
+
 	private: /* 各種id指定系の関数の実装 */
 
 		BasicMeshDrawerMaker& useRtvDescriptorHeapIdImpl(unsigned int value);
@@ -57,6 +61,7 @@ namespace tktk
 		BasicMeshDrawerMaker& skeletonIdImpl(unsigned int value);
 		BasicMeshDrawerMaker& cameraIdImpl(unsigned int value);
 		BasicMeshDrawerMaker& shadowMapCameraIdImpl(unsigned int value);
+		BasicMeshDrawerMaker& lightIdImpl(unsigned int value);
 
 	private: /* 自身のインスタンスは静的な存在として扱う */
 
@@ -71,6 +76,7 @@ namespace tktk
 		unsigned int	m_skeletonId			{ 0U };
 		unsigned int	m_cameraId				{ 0U };
 		unsigned int	m_shadowMapCameraId		{ 0U };
+		unsigned int	m_lightId				{ 0U };
 
 	public: /* 不正な型の引数が渡されそうになった時にコンパイルエラーにする為の仕組み */
 
@@ -88,6 +94,9 @@ namespace tktk
 
 		template<class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
 		BasicMeshDrawerMaker& shadowMapCameraId(IdType value) { static_assert(false, "ShadowMapCameraId Fraud Type"); }
+
+		template<class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
+		BasicMeshDrawerMaker& lightId(IdType value) { static_assert(false, "LightId Fraud Type"); }
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -126,6 +135,13 @@ namespace tktk
 	inline BasicMeshDrawerMaker& BasicMeshDrawerMaker::shadowMapCameraId(IdType value)
 	{
 		return shadowMapCameraIdImpl(static_cast<unsigned int>(value));
+	}
+
+	// 使用するライトIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
+	template<class IdType, std::enable_if_t<is_idType_v<IdType>>*>
+	inline BasicMeshDrawerMaker& BasicMeshDrawerMaker::lightId(IdType value)
+	{
+		return lightIdImpl(static_cast<unsigned int>(value));
 	}
 }
 #endif // !BASIC_MESH_DRAWER_MAKER_H_

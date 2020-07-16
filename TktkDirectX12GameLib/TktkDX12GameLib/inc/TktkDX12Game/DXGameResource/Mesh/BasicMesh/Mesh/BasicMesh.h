@@ -39,9 +39,6 @@ namespace tktk
 		// メッシュのシャドウマップ使用用の定数バッファを更新する
 		void updateMeshShadowMapCBuffer(const MeshShadowMapCBuffer&	shadowMapBufferData);
 
-		// 通常メッシュのライティング用の定数バッファを更新する
-		void updateBasicMeshLightCbuffer(const BasicMeshLightCbuffer& lightBufferData);
-
 	private:
 
 		HeapArray<BasicMeshData> m_basicMeshArray;

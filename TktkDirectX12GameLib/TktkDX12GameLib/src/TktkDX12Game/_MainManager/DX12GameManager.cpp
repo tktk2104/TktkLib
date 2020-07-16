@@ -443,6 +443,36 @@ namespace tktk
 		m_dxGameResource->setProjectionMatrix(cameraId, projection);
 	}
 
+	void DX12GameManager::createLight(unsigned int id, const tktkMath::Color& ambient, const tktkMath::Color& diffuse, const tktkMath::Color& speqular, const tktkMath::Vector3& position)
+	{
+		m_dxGameResource->createLight(id, ambient, diffuse, speqular, position);
+	}
+
+	void DX12GameManager::updateLightCBuffer(unsigned int id)
+	{
+		m_dxGameResource->updateLightCBuffer(id);
+	}
+
+	void DX12GameManager::setLightAmbient(unsigned int id, const tktkMath::Color& ambient)
+	{
+		m_dxGameResource->setLightAmbient(id, ambient);
+	}
+
+	void DX12GameManager::setLightDiffuse(unsigned int id, const tktkMath::Color& diffuse)
+	{
+		m_dxGameResource->setLightDiffuse(id, diffuse);
+	}
+
+	void DX12GameManager::setLightSpeqular(unsigned int id, const tktkMath::Color& speqular)
+	{
+		m_dxGameResource->setLightSpeqular(id, speqular);
+	}
+
+	void DX12GameManager::setLightPosition(unsigned int id, const tktkMath::Vector3& position)
+	{
+		m_dxGameResource->setLightPosition(id, position);
+	}
+
 	void DX12GameManager::loadSound(unsigned int id, const std::string& fileName)
 	{
 		m_soundPlayer->load(id, fileName);

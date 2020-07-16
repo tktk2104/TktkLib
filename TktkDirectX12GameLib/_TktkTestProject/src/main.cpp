@@ -71,7 +71,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			dxGameResourceNum.motionNum				= 2U;
 			dxGameResourceNum.postEffectMaterialNum = 1U;
 			dxGameResourceNum.cameraNum				= 2U;
-			dxGameResourceNum.lightNum				= 0U;
+			dxGameResourceNum.lightNum				= 1U;
 		}
 
 		// DX12GameManagerのセットアップ

@@ -4,6 +4,7 @@
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
 #include <TktkDX12BaseComponents/3D/Transform3D/Transform3DMaker.h>
 #include <TktkDX12BaseComponents/3D/Camera/OrthographicCameraControllerMaker.h>
+#include <TktkDX12BaseComponents/3D/Light/PointLightControllerMaker.h>
 
 struct PointLightObject
 {
@@ -20,6 +21,10 @@ struct PointLightObject
 			.initCameraWidth(40.0f)
 			.initCameraHeight(40.0f)
 			.initCameraId(1U)
+			.create();
+
+		tktk::PointLightControllerMaker::makeStart(gameObject)
+			.initLightId(0U)
 			.create();
 
 		return gameObject;

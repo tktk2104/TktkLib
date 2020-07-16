@@ -1,14 +1,13 @@
-#ifndef BASIC_MESH_LIGHT_CBUFFER_H_
-#define BASIC_MESH_LIGHT_CBUFFER_H_
+#ifndef LIGHT_CBUFFER_H_
+#define LIGHT_CBUFFER_H_
 
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector3.h>
-#include <TktkMath/Structs/Matrix4.h>
 
 namespace tktk
 {
-	// 通常メッシュのライティングの定数バッファ
-	struct BasicMeshLightCbuffer
+	// ライト情報の定数バッファ
+	struct LightCBuffer
 	{
 		// ライトの環境光
 		tktkMath::Color		lightAmbient	{ 0.25f, 1.0f };
@@ -26,4 +25,4 @@ namespace tktk
 		float				lightDataPad	{ 0.0f };
 	};
 }
-#endif // !BASIC_MESH_LIGHT_CBUFFER_H_
+#endif // !LIGHT_CBUFFER_H_

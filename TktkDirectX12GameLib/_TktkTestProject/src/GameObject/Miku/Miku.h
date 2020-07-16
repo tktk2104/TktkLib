@@ -26,6 +26,7 @@ struct Miku
 			.useRtvDescriptorHeapId(0U)
 			.cameraId(0U)
 			.shadowMapCameraId(1U)
+			.lightId(0U)
 			.create();
 
 		tktk::BasicMeshShadowMapWriterMaker::makeStart(gameObject)

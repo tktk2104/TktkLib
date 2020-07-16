@@ -109,6 +109,18 @@ void LoadingScene::start()
 		tktk::DX12GameManager::createCamera(1U);
 	}
 
+	// ライトを作る
+	{
+		// 通常カメラ
+		tktk::DX12GameManager::createLight(
+			0U,
+			{ 0.3f, 1.0f },
+			{ 0.3f, 1.0f },
+			{ 0.3f, 1.0f },
+			{ 0.0f }
+		);
+	}
+
 	tktk::DX12GameManager::addUpdatePriority<CursorScript>(-10.0f);
 
 	// 読み込みシーンを無効にする

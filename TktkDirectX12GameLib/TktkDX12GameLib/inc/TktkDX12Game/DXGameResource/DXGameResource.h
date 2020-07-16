@@ -13,6 +13,7 @@
 #include "Mesh/Skeleton/Skeleton.h"
 #include "Mesh/Motion/Motion.h"
 #include "Camera/Camera.h"
+#include "Light/Light.h"
 
 namespace tktk
 {
@@ -94,6 +95,32 @@ namespace tktk
 		// 指定のカメラのプロジェクション行列を設定する
 		void setProjectionMatrix(unsigned int cameraId, const tktkMath::Matrix4& projection);
 
+	public: /* ライト関係の処理 */
+
+		// ライトを作る
+		void createLight(
+			unsigned int id,
+			const tktkMath::Color& ambient,
+			const tktkMath::Color& diffuse,
+			const tktkMath::Color& speqular,
+			const tktkMath::Vector3& position
+		);
+
+		// ライト情報の定数バッファを更新する
+		void updateLightCBuffer(unsigned int id) const;
+
+		// 指定のライトの環境光を設定する
+		void setLightAmbient(unsigned int id, const tktkMath::Color& ambient);
+
+		// 指定のライトの拡散反射光を設定する
+		void setLightDiffuse(unsigned int id, const tktkMath::Color& diffuse);
+
+		// 指定のライトの鏡面反射光を設定する
+		void setLightSpeqular(unsigned int id, const tktkMath::Color& speqular);
+
+		// 指定のライトの座標を設定する
+		void setLightPosition(unsigned int id, const tktkMath::Vector3& position);
+
 	private:
 
 		SpriteMaterial		m_spriteMaterial;
@@ -103,6 +130,7 @@ namespace tktk
 		Motion				m_motion;
 		PostEffectMaterial	m_postEffectMaterial;
 		Camera				m_camera;
+		Light				m_light;
 	};
 }
 #endif // !DX_GAME_RESOURCE_H_

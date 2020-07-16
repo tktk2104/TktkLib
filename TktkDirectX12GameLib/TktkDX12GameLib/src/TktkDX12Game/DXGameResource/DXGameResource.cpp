@@ -14,6 +14,7 @@ namespace tktk
 		, m_motion(resourceNum.motionNum)
 		, m_postEffectMaterial(filePaths.postEffectShaderFilePaths, resourceNum.postEffectMaterialNum)
 		, m_camera(resourceNum.cameraNum)
+		, m_light(resourceNum.lightNum)
 	{
 	}
 
@@ -110,5 +111,35 @@ namespace tktk
 	void DXGameResource::setProjectionMatrix(unsigned int cameraId, const tktkMath::Matrix4& projection)
 	{
 		m_camera.setProjectionMatrix(cameraId, projection);
+	}
+
+	void DXGameResource::createLight(unsigned int id, const tktkMath::Color& ambient, const tktkMath::Color& diffuse, const tktkMath::Color& speqular, const tktkMath::Vector3& position)
+	{
+		m_light.create(id, ambient, diffuse, speqular, position);
+	}
+
+	void DXGameResource::updateLightCBuffer(unsigned int id) const
+	{
+		m_light.updateLightCBuffer(id);
+	}
+
+	void DXGameResource::setLightAmbient(unsigned int id, const tktkMath::Color& ambient)
+	{
+		return m_light.setAmbient(id, ambient);
+	}
+
+	void DXGameResource::setLightDiffuse(unsigned int id, const tktkMath::Color& diffuse)
+	{
+		return m_light.setDiffuse(id, diffuse);
+	}
+
+	void DXGameResource::setLightSpeqular(unsigned int id, const tktkMath::Color& speqular)
+	{
+		return m_light.setSpeqular(id, speqular);
+	}
+
+	void DXGameResource::setLightPosition(unsigned int id, const tktkMath::Vector3& position)
+	{
+		return m_light.setPosition(id, position);
 	}
 }

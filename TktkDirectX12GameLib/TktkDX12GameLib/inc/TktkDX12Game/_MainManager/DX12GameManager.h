@@ -266,6 +266,32 @@ namespace tktk
 		// 指定のカメラのプロジェクション行列を設定する
 		static void setProjectionMatrix(unsigned int cameraId, const tktkMath::Matrix4& projection);
 
+	public: /* ライト関係の処理 */
+
+		// ライトを作る
+		static void createLight(
+			unsigned int id,
+			const tktkMath::Color& ambient,
+			const tktkMath::Color& diffuse,
+			const tktkMath::Color& speqular,
+			const tktkMath::Vector3& position
+		);
+
+		// ライト情報の定数バッファを更新する
+		static void updateLightCBuffer(unsigned int id);
+
+		// 指定のライトの環境光を設定する
+		static void setLightAmbient(unsigned int id, const tktkMath::Color& ambient);
+
+		// 指定のライトの拡散反射光を設定する
+		static void setLightDiffuse(unsigned int id, const tktkMath::Color& diffuse);
+
+		// 指定のライトの鏡面反射光を設定する
+		static void setLightSpeqular(unsigned int id, const tktkMath::Color& speqular);
+
+		// 指定のライトの座標を設定する
+		static void setLightPosition(unsigned int id, const tktkMath::Vector3& position);
+
 	public: /* サウンド関係の処理 */
 
 		// 新しいサウンドを読み込む

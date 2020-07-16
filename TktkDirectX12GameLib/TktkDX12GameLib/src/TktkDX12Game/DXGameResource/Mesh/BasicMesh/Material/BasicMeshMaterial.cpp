@@ -4,7 +4,6 @@
 #include <stdexcept>
 #endif // _DEBUG
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
-#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshLightCbuffer.h"
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshMaterialCbuffer.h"
 
 namespace tktk
@@ -14,9 +13,6 @@ namespace tktk
 	{
 		createRootSignature();
 		createGraphicsPipeLineState(shaderFilePaths);
-
-		// 通常メッシュライト情報の定数バッファを作る
-		DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshLight),		BasicMeshLightCbuffer());
 
 		// 通常メッシュマテリアル情報の定数バッファを作る
 		DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial),	BasicMeshMaterialCbuffer());

@@ -1,7 +1,6 @@
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Mesh/BasicMesh.h"
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
-#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMeshLightCbuffer.h"
 
 namespace tktk
 {
@@ -60,7 +59,7 @@ namespace tktk
 		updateMeshShadowMapCBuffer(baseArgs.shadowMapBufferData);
 
 		// メッシュのライティングに使用するライト情報を定数バッファに書き込む
-		updateBasicMeshLightCbuffer(baseArgs.lightBufferData);
+		DX12GameManager::updateLightCBuffer(baseArgs.lightId);
 
 		// メッシュの描画を行う
 		m_basicMeshArray.at(id)->drawMesh(baseArgs);
@@ -134,10 +133,5 @@ namespace tktk
 	void BasicMesh::updateMeshShadowMapCBuffer(const MeshShadowMapCBuffer& shadowMapBufferData)
 	{
 		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::MeshShadowMap), shadowMapBufferData);
-	}
-
-	void BasicMesh::updateBasicMeshLightCbuffer(const BasicMeshLightCbuffer& lightBufferData)
-	{
-		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshLight), lightBufferData);
 	}
 }

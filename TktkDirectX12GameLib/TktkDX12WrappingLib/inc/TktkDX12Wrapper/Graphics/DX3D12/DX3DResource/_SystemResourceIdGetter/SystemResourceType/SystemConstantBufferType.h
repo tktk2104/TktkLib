@@ -11,7 +11,7 @@ namespace tktk
 		MeshTransform		= 1U,
 		MeshShadowMap		= 2U,
 		BoneMatCbuffer		= 3U,
-		BasicMeshLight		= 4U,
+		Light				= 4U,
 		BasicMeshMaterial	= 5U
 	};
 }

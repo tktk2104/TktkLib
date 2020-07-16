@@ -2,12 +2,13 @@
 
 namespace tktk
 {
-	BasicMeshDrawer::BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int cameraId, unsigned int shadowMapCameraId, unsigned int useRtvDescriptorHeapId)
+	BasicMeshDrawer::BasicMeshDrawer(float drawPriority, unsigned int meshId, unsigned int skeletonId, unsigned int cameraId, unsigned int shadowMapCameraId, unsigned int lightId, unsigned int useRtvDescriptorHeapId)
 		: ComponentBase(drawPriority)
 		, m_meshId(meshId)
 		, m_skeletonId(skeletonId)
 		, m_cameraId(cameraId)
 		, m_shadowMapCameraId(shadowMapCameraId)
+		, m_lightId(lightId)
 		, m_useRtvDescriptorHeapId(useRtvDescriptorHeapId)
 	{
 	}
@@ -58,13 +59,11 @@ namespace tktk
 			// 使用する深度ステンシルディスクリプタヒープ番号
 			baseArgs.dsvDescriptorHeapId = DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::Basic);
 
+			// 使用するライト番号
+			baseArgs.lightId = m_lightId;
+
 			// シャドウマップを使用する為に必要なシャドウマップカメラ行列
 			baseArgs.shadowMapBufferData.shadowMapViewProjMat = DX12GameManager::getViewMatrix(m_shadowMapCameraId) * DX12GameManager::getProjectionMatrix(m_shadowMapCameraId);
-		}
-
-		// ライト情報
-		{
-			baseArgs.lightBufferData.lightPosition = tktkMath::Vector3(60.0f, 10.0f, -60.0f);
 		}
 
 		// メッシュを描画する
