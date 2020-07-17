@@ -2,12 +2,12 @@
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Loader/BasicMeshPmdLoader.h"
-#include "TktkDX12Game/DXGameResource/Mesh/MeshTransformCbuffer.h"
 
 namespace tktk
 {
 	DXGameResource::DXGameResource(const DXGameResourceNum& resourceNum, const DXGameBaseShaderFilePaths& filePaths)
-		: m_spriteMaterial(filePaths.spriteShaderFilePaths, resourceNum.spriteNum)
+		: m_sound(resourceNum.soundNum)
+		, m_spriteMaterial(filePaths.spriteShaderFilePaths, resourceNum.spriteNum)
 		, m_skeleton(resourceNum.skeletonNum) // ※メッシュクラスの初期化にボーン行列定数バッファが必要なので先にコンストラクトする必要がある
 		, m_basicMesh(filePaths.writeShadowMapVsFilePath, resourceNum.basicMeshNum)
 		, m_basicMeshMaterial(filePaths.basicMeshShaderFilePaths, resourceNum.basicMeshMaterialNum)
@@ -141,5 +141,40 @@ namespace tktk
 	void DXGameResource::setLightPosition(unsigned int id, const tktkMath::Vector3& position)
 	{
 		return m_light.setPosition(id, position);
+	}
+
+	void DXGameResource::updateSound()
+	{
+		m_sound.update();
+	}
+
+	void DXGameResource::clearSound()
+	{
+		m_sound.clear();
+	}
+
+	void DXGameResource::loadSound(unsigned int id, const std::string& fileName)
+	{
+		m_sound.load(id, fileName);
+	}
+
+	void DXGameResource::playSound(unsigned int id, bool loopPlay)
+	{
+		m_sound.play(id, loopPlay);
+	}
+
+	void DXGameResource::stopSound(unsigned int id)
+	{
+		m_sound.stop(id);
+	}
+
+	void DXGameResource::pauseSound(unsigned int id)
+	{
+		m_sound.pause(id);
+	}
+
+	void DXGameResource::setMasterVolume(float volume)
+	{
+		m_sound.setMasterVolume(volume);
 	}
 }

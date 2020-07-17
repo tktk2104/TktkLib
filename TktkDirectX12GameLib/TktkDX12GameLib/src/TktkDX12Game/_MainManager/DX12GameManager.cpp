@@ -5,7 +5,6 @@
 #include "TktkDX12Game/GameObject/GameObjectManager.h"
 #include "TktkDX12Game/GameObject/GameObject.h"
 #include "TktkDX12Game/DXGameResource/DXGameResource.h"
-#include "TktkDX12Game/Sound/SoundPlayer.h"
 #include "TktkDX12Game/Input/Mouse/Mouse.h"
 #include "TktkDX12Game/Input/DirectInputWrapper/DirectInputWrapper.h"
 
@@ -17,7 +16,6 @@ namespace tktk
 	std::unique_ptr<Window>					DX12GameManager::m_window;
 	std::unique_ptr<DX3DBaseObjects>		DX12GameManager::m_dx3dBaseObjects;
 	std::unique_ptr<DXGameResource>			DX12GameManager::m_dxGameResource;
-	std::unique_ptr<SoundPlayer>			DX12GameManager::m_soundPlayer;
 	std::unique_ptr<DirectInputWrapper>		DX12GameManager::m_directInputWrapper;
 	std::unique_ptr<Mouse>					DX12GameManager::m_mouse;
 
@@ -41,7 +39,6 @@ namespace tktk
 
 			m_dxGameResource = std::make_unique<DXGameResource>(gameManagerInitParam.dxGameResourceNum, dxGameBaseShaderFilePaths);
 		}
-		m_soundPlayer			= std::make_unique<SoundPlayer>(gameManagerInitParam.dxGameResourceNum.soundNum);
 		m_mouse					= std::make_unique<Mouse>();
 		m_directInputWrapper	= std::make_unique<DirectInputWrapper>(gameManagerInitParam.windowParam.hInstance, m_window->getHWND());
 		
@@ -137,7 +134,7 @@ namespace tktk
 				m_sceneManager->update();
 				m_gameObjectManager->update();
 				m_componentManager->update();
-				m_soundPlayer->update();
+				m_dxGameResource->updateSound();
 
 				m_dx3dBaseObjects->beginDraw();
 				m_componentManager->draw();
@@ -145,7 +142,7 @@ namespace tktk
 			}
 		}
 
-		m_soundPlayer->finalize();
+		m_dxGameResource->clearSound();
 	}
 
 	const tktkMath::Vector2& DX12GameManager::getWindowSize()
@@ -475,27 +472,27 @@ namespace tktk
 
 	void DX12GameManager::loadSound(unsigned int id, const std::string& fileName)
 	{
-		m_soundPlayer->load(id, fileName);
+		m_dxGameResource->loadSound(id, fileName);
 	}
 
 	void DX12GameManager::playSound(unsigned int id, bool loopPlay)
 	{
-		m_soundPlayer->play(id, loopPlay);
+		m_dxGameResource->playSound(id, loopPlay);
 	}
 
 	void DX12GameManager::stopSound(unsigned int id)
 	{
-		m_soundPlayer->stop(id);
+		m_dxGameResource->stopSound(id);
 	}
 
 	void DX12GameManager::pauseSound(unsigned int id)
 	{
-		m_soundPlayer->pause(id);
+		m_dxGameResource->pauseSound(id);
 	}
 
 	void DX12GameManager::setMasterVolume(float volume)
 	{
-		m_soundPlayer->setMasterVolume(volume);
+		m_dxGameResource->setMasterVolume(volume);
 	}
 
 	bool DX12GameManager::isPush(MouseButtonType buttonType)

@@ -21,7 +21,6 @@ namespace tktk
 	class Window;
 	class DX3DBaseObjects;
 	class DXGameResource;
-	class SoundPlayer;
 	class Mouse;
 	class DirectInputWrapper;
 
@@ -372,7 +371,6 @@ namespace tktk
 		static std::unique_ptr<Window>				m_window;
 		static std::unique_ptr<DX3DBaseObjects>		m_dx3dBaseObjects;
 		static std::unique_ptr<DXGameResource>		m_dxGameResource;
-		static std::unique_ptr<SoundPlayer>			m_soundPlayer;
 		static std::unique_ptr<Mouse>				m_mouse;
 		static std::unique_ptr<DirectInputWrapper>	m_directInputWrapper;
 	};

@@ -1,12 +1,12 @@
-#include "TktkDX12Game/Sound/SoundPlayer.h"
+#include "TktkDX12Game/DXGameResource/Sound/Sound.h"
 
 #include <stdexcept>
 #include <TktkMath/MathHelper.h>
 
 namespace tktk
 {
-	SoundPlayer::SoundPlayer(unsigned int soundDataNum)
-		: m_sound(soundDataNum)
+	Sound::Sound(unsigned int soundDataNum)
+		: m_assets(soundDataNum)
 	{
 		CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
@@ -31,7 +31,7 @@ namespace tktk
 		}
 	}
 
-	SoundPlayer::~SoundPlayer()
+	Sound::~Sound()
 	{
 		if (m_soundEvent != NULL)
 			CloseHandle(m_soundEvent);
@@ -45,42 +45,55 @@ namespace tktk
 		CoUninitialize();
 	}
 
-	void SoundPlayer::finalize()
-	{
-		m_sound.clear();
-	}
-
-	void SoundPlayer::update()
+	void Sound::update()
 	{
 		DWORD dw = WaitForSingleObject(m_soundEvent, 0LU);
 
-		if (dw == WAIT_OBJECT_0)
+		if (dw != WAIT_OBJECT_0) return;
+
+		for (unsigned int i = 0; i < m_assets.arrayMaxSize(); i++)
 		{
-			m_sound.updatePlayingSound();
+			auto ptr = m_assets.at(i);
+
+			if (ptr != nullptr && ptr->isPlaySound()) ptr->update();
 		}
 	}
 
-	void SoundPlayer::load(unsigned int id, const std::string & fileName)
+	void Sound::load(unsigned int id, const std::string& fileName)
 	{
-		m_sound.load(id, fileName, m_xAudioPtr, m_soundEvent);
+		m_assets.emplaceAt(id, fileName, m_xAudioPtr, m_soundEvent);
 	}
 
-	void SoundPlayer::play(unsigned int id, bool loopPlay)
+	void Sound::clear()
 	{
-		m_sound.play(id, loopPlay);
+		m_assets.clear();
 	}
 
-	void SoundPlayer::stop(unsigned int id)
+	void Sound::play(unsigned int id, bool loopPlay)
 	{
-		m_sound.stop(id);
+		if (!m_assets.at(id)->isPlaySound())
+		{
+			m_assets.at(id)->playSound(loopPlay);
+		}
 	}
 
-	void SoundPlayer::pause(unsigned int id)
+	void Sound::stop(unsigned int id)
 	{
-		m_sound.pause(id);
+		if (m_assets.at(id)->isPlaySound())
+		{
+			m_assets.at(id)->stopSound();
+		}
 	}
 
-	void SoundPlayer::setMasterVolume(float volume)
+	void Sound::pause(unsigned int id)
+	{
+		if (m_assets.at(id)->isPlaySound())
+		{
+			m_assets.at(id)->pauseSound();
+		}
+	}
+
+	void Sound::setMasterVolume(float volume)
 	{
 		volume = tktkMath::MathHelper::clamp(volume, 0.0f, 1.0f);
 

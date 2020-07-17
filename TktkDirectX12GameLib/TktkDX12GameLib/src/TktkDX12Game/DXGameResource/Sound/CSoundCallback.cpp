@@ -1,4 +1,4 @@
-#include "TktkDX12Game/Sound/CSoundCallback.h"
+#include "TktkDX12Game/DXGameResource/Sound/CSoundCallback.h"
 
 namespace tktk
 {

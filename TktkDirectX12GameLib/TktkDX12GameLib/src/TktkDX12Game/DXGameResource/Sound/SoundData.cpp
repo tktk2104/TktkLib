@@ -1,7 +1,7 @@
-#include "TktkDX12Game/Sound/SoundData.h"
+#include "TktkDX12Game/DXGameResource/Sound/SoundData.h"
 
 #include <stdexcept>
-#include "TktkDX12Game/Sound/SoundPlayState.h"
+#include "TktkDX12Game/DXGameResource/Sound/SoundPlayState.h"
 
 #define BUFFERQUEUE_MAX         4
 #define BUFFERQUEUE_ALLOC       (BUFFERQUEUE_MAX + 1)

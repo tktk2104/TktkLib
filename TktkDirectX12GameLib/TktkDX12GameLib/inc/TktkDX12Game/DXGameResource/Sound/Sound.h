@@ -1,33 +1,35 @@
-#ifndef SOUND_PLAYER_H_
-#define SOUND_PLAYER_H_
+#ifndef SOUND_H_
+#define SOUND_H_
 
-#include <string>
 #include <xaudio2.h>
-#include "Sound.h"
+#include <TktkContainer/HeapArray/HeapArray.h>
+#include "SoundData.h"
 
 namespace tktk
 {
-	class SoundPlayer
+	// 「SoundData」を管理するクラス
+	class Sound
 	{
 	public:
 
-		SoundPlayer(unsigned int soundDataNum);
-		~SoundPlayer();
+		Sound(unsigned int soundDataNum);
+		~Sound();
 
-		SoundPlayer(const SoundPlayer& other) = delete;
-		SoundPlayer& operator = (const SoundPlayer& other) = delete;
+		Sound(const Sound& other) = delete;
+		Sound& operator = (const Sound& other) = delete;
 
 	public:
-
-		void finalize();
 
 		void update();
 
 	public:
 
-		// 新しいサウンドを読み込む
+		// 新たなサウンドをロードする
 		// ※この関数で読み込めるサウンドの形式は「.wav」のみ
 		void load(unsigned int id, const std::string& fileName);
+
+		// 全てのサウンドを削除する
+		void clear();
 
 		// 指定したサウンドを再生する
 		void play(unsigned int id, bool loopPlay);
@@ -41,9 +43,9 @@ namespace tktk
 		// 大元の音量を変更する（0.0f～1.0f）
 		void setMasterVolume(float volume);
 
-	public:
+	private:
 
-		Sound m_sound;
+		HeapArray<SoundData> m_assets;
 
 		// サウンドのイベント処理に使用する変数
 		HANDLE m_soundEvent{ NULL };
@@ -55,4 +57,4 @@ namespace tktk
 		IXAudio2MasteringVoice* m_masterVoicePtr{ NULL };
 	};
 }
-#endif // !SOUND_PLAYER_H_
+#endif // !SOUND_H_
