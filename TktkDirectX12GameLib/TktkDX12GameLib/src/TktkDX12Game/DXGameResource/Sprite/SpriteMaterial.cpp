@@ -22,7 +22,7 @@ namespace tktk
 		DX12GameManager::createIndexBuffer(DX12GameManager::getSystemId(SystemIndexBufferType::Sprite), { 0U, 1U, 2U, 3U });
 
 		// スプライト用の定数バッファを作る
-		DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::Sprite), SpriteConstantBufferData());
+		DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemCBufferType::Sprite), SpriteConstantBufferData());
 	}
 
 	void SpriteMaterial::create(unsigned int id, const SpriteMaterialInitParam& initParam)

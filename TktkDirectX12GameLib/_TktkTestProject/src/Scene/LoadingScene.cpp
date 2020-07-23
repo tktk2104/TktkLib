@@ -18,7 +18,7 @@ void LoadingScene::start()
 		/*initParam.srvBufferType = tktk::BufferType::texture;
 		initParam.useBufferId = 0U;*/
 		initParam.srvBufferType = tktk::BufferType::depthStencil;
-		initParam.useBufferId = tktk::DX12GameManager::getSystemId(tktk::SystemDepthStencilBufferType::ShadowMap);
+		initParam.useBufferId = tktk::DX12GameManager::getSystemId(tktk::SystemDsBufferType::ShadowMap);
 
 		tktk::DX12GameManager::createSpriteMaterial(0U, initParam);
 	}

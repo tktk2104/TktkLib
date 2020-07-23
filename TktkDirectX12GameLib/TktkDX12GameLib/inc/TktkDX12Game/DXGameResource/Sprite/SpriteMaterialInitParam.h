@@ -3,7 +3,7 @@
 
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector2.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/BufferResource/BufferType.h>
+#include <TktkDX12Wrapper/Resource/Buffer/BufferType.h>
 
 namespace tktk
 {

@@ -2,8 +2,8 @@
 #define DX_12_GAME_MANAGER_INIT_PARAM_H_
 
 #include <string>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/DX3DResourceInitParam.h>
-#include <TktkDX12Wrapper/Graphics/Window/WindowInitParam.h>
+#include <TktkDX12Wrapper/Resource/DX3DResourceInitParam.h>
+#include <TktkDX12Wrapper/Window/WindowInitParam.h>
 #include "TktkDX12Game/DXGameResource/DXGameResourceNum.h"
 
 namespace tktk

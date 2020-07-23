@@ -1,7 +1,7 @@
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
 
-#include <TktkDX12Wrapper/Graphics/Window/Window.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/_DX3DBaseObjects/DX3DBaseObjects.h>
+#include <TktkDX12Wrapper/Window/Window.h>
+#include <TktkDX12Wrapper/_BaseObjects/DX3DBaseObjects.h>
 #include "TktkDX12Game/GameObject/GameObjectManager.h"
 #include "TktkDX12Game/GameObject/GameObject.h"
 #include "TktkDX12Game/DXGameResource/DXGameResource.h"
@@ -10,7 +10,6 @@
 
 namespace tktk
 {
-	std::unique_ptr<SceneManager>			DX12GameManager::m_sceneManager;
 	std::unique_ptr<GameObjectManager>		DX12GameManager::m_gameObjectManager;
 	std::unique_ptr<ComponentManager>		DX12GameManager::m_componentManager;
 	std::unique_ptr<Window>					DX12GameManager::m_window;
@@ -21,7 +20,6 @@ namespace tktk
 
 	void DX12GameManager::initialize(const DX12GameManagerInitParam& gameManagerInitParam)
 	{
-		m_sceneManager			= std::make_unique<SceneManager>(gameManagerInitParam.dxGameResourceNum.sceneNum);
 		m_gameObjectManager		= std::make_unique<GameObjectManager>();
 		m_componentManager		= std::make_unique<ComponentManager>();
 		m_window				= std::make_unique<Window>(gameManagerInitParam.windowParam);
@@ -48,14 +46,14 @@ namespace tktk
 			initParam.depthStencilSize = gameManagerInitParam.windowParam.windowSize;
 			initParam.useAsShaderResource = true;
 
-			createDsBuffer(getSystemId(SystemDepthStencilBufferType::ShadowMap), initParam);
+			createDsBuffer(getSystemId(SystemDsBufferType::ShadowMap), initParam);
 		}
 
 		// シャドウマップの深度ディスクリプタヒープを作る
 		{
 			DsvDescriptorHeapInitParam initParam{};
 			initParam.shaderVisible = false;
-			initParam.descriptorParamArray.push_back({ DsvDescriptorType::normal, getSystemId(SystemDepthStencilBufferType::ShadowMap) });
+			initParam.descriptorParamArray.push_back({ DsvDescriptorType::normal, getSystemId(SystemDsBufferType::ShadowMap) });
 
 			createDsvDescriptorHeap(getSystemId(SystemDsvDescriptorHeapType::ShadowMap), initParam);
 		}
@@ -131,17 +129,16 @@ namespace tktk
 			{
 				m_directInputWrapper->update();
 				m_mouse->update();
-				m_sceneManager->update();
+				m_dxGameResource->updateScene();
+				m_dxGameResource->updateSound();
 				m_gameObjectManager->update();
 				m_componentManager->update();
-				m_dxGameResource->updateSound();
 
 				m_dx3dBaseObjects->beginDraw();
 				m_componentManager->draw();
 				m_dx3dBaseObjects->endDraw();
 			}
 		}
-
 		m_dxGameResource->clearSound();
 	}
 
@@ -152,12 +149,12 @@ namespace tktk
 
 	void DX12GameManager::enableScene(unsigned int id)
 	{
-		m_sceneManager->enableScene(id);
+		m_dxGameResource->enableScene(id);
 	}
 
 	void DX12GameManager::disableScene(unsigned int id)
 	{
-		m_sceneManager->disableScene(id);
+		m_dxGameResource->disableScene(id);
 	}
 
 	GameObjectPtr DX12GameManager::createGameObject()
@@ -560,7 +557,7 @@ namespace tktk
 		return m_dx3dBaseObjects->getSystemId(type);
 	}
 
-	unsigned int DX12GameManager::getSystemId(SystemConstantBufferType type)
+	unsigned int DX12GameManager::getSystemId(SystemCBufferType type)
 	{
 		return m_dx3dBaseObjects->getSystemId(type);
 	}
@@ -570,7 +567,7 @@ namespace tktk
 		return m_dx3dBaseObjects->getSystemId(type);
 	}
 
-	unsigned int DX12GameManager::getSystemId(SystemDepthStencilBufferType type)
+	unsigned int DX12GameManager::getSystemId(SystemDsBufferType type)
 	{
 		return m_dx3dBaseObjects->getSystemId(type);
 	}
@@ -598,6 +595,11 @@ namespace tktk
 	unsigned int DX12GameManager::getSystemId(SystemPipeLineStateType type)
 	{
 		return m_dx3dBaseObjects->getSystemId(type);
+	}
+
+	void DX12GameManager::createSceneImpl(unsigned int id, const std::shared_ptr<SceneBase>& scenePtr, SceneVTable* vtablePtr)
+	{
+		m_dxGameResource->createScene(id, scenePtr, vtablePtr);
 	}
 
 	void DX12GameManager::createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)

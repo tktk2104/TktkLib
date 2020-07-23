@@ -1,7 +1,7 @@
 #ifndef DX_GAME_BASE_SHADER_FILE_PATHS_H_
 #define DX_GAME_BASE_SHADER_FILE_PATHS_H_
 
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
+#include <TktkDX12Wrapper/Resource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
 #include "PostEffect/PostEffectShaderFilePaths.h"
 
 namespace tktk

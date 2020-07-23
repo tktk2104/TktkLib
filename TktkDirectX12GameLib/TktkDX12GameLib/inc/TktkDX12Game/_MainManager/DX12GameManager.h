@@ -7,22 +7,25 @@
 #include <memory>
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector3.h>
-#include "../Scene/SceneManager.h"
+
+#include "../Component/ComponentManager.h"	// テンプレート引数に型情報を渡す必要がある為隠蔽できない
 #include "../GameObject/GameObjectPtr.h"
-#include "../Component/ComponentManager.h"
+#include "../DXGameResource/Scene/SceneVTable.h"
+
 #include "DX12GameManagerUseInitParams.h"
 #include "DX12GameManagerFuncInOutValueType.h"
-
 #include "DX12GameManagerInitParam.h"
+#include <TktkDX12Wrapper/Resource/_SystemResourceIdGetter/SystemResourceType.h>
 
 namespace tktk
 {
-	class GameObjectManager;
+	// 前方宣言
 	class Window;
 	class DX3DBaseObjects;
+	class GameObjectManager;
 	class DXGameResource;
-	class Mouse;
 	class DirectInputWrapper;
+	class Mouse;
 
 	class DX12GameManager
 	{
@@ -348,9 +351,9 @@ namespace tktk
 		static unsigned int getSystemId(SystemScissorRectType type);
 		static unsigned int getSystemId(SystemVertexBufferType type);
 		static unsigned int getSystemId(SystemIndexBufferType type);
-		static unsigned int getSystemId(SystemConstantBufferType type);
+		static unsigned int getSystemId(SystemCBufferType type);
 		static unsigned int getSystemId(SystemTextureBufferType type);
-		static unsigned int getSystemId(SystemDepthStencilBufferType type);
+		static unsigned int getSystemId(SystemDsBufferType type);
 		static unsigned int getSystemId(SystemBasicDescriptorHeapType type);
 		static unsigned int getSystemId(SystemRtvDescriptorHeapType type);
 		static unsigned int getSystemId(SystemDsvDescriptorHeapType type);
@@ -359,20 +362,20 @@ namespace tktk
 
 	private: /* 裏実装 */
 
+		static void createSceneImpl(unsigned int id, const std::shared_ptr<SceneBase>& scenePtr, SceneVTable* vtablePtr);
 		static void createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
 		static void createConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 		static void updateConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
 	private:
-
-		static std::unique_ptr<SceneManager>		m_sceneManager;
-		static std::unique_ptr<GameObjectManager>	m_gameObjectManager;
-		static std::unique_ptr<ComponentManager>	m_componentManager;
 		static std::unique_ptr<Window>				m_window;
 		static std::unique_ptr<DX3DBaseObjects>		m_dx3dBaseObjects;
+		static std::unique_ptr<GameObjectManager>	m_gameObjectManager;
+		static std::unique_ptr<ComponentManager>	m_componentManager;
 		static std::unique_ptr<DXGameResource>		m_dxGameResource;
-		static std::unique_ptr<Mouse>				m_mouse;
 		static std::unique_ptr<DirectInputWrapper>	m_directInputWrapper;
+
+		static std::unique_ptr<Mouse>				m_mouse;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -381,7 +384,7 @@ namespace tktk
 	template<class SceneType, class ...Args>
 	inline void DX12GameManager::addScene(unsigned int id, Args ...constructorArgs)
 	{
-		m_sceneManager->createScene<SceneType>(id, constructorArgs...);
+		createSceneImpl(id, std::make_shared<SceneType>(constructorArgs...), &SceneVTableInitializer<SceneType>::m_vtable);
 	}
 
 	template<class ComponentType>

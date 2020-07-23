@@ -2,7 +2,7 @@
 #define SPRITE_MATERIAL_H_
 
 #include <TktkContainer/HeapArray/HeapArray.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
+#include <TktkDX12Wrapper/Resource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
 #include "SpriteMaterialData.h"
 
 namespace tktk

@@ -33,7 +33,7 @@ namespace tktk
 
 			// スプライト定数バッファの１種類
 			cbufferViewDescriptorParam.descriptorParamArray = {
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::Sprite) }
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::Sprite) }
 			};
 		}
 
@@ -126,6 +126,6 @@ namespace tktk
 		constantBufferData.spriteCenterRate = m_spriteCenterRate;
 		constantBufferData.screenSize = DX12GameManager::getWindowSize();
 
-		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::Sprite), constantBufferData);
+		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::Sprite), constantBufferData);
 	}
 }

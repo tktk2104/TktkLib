@@ -9,8 +9,8 @@ namespace tktk
 	{
 		// TODO : Meshクラスを作ってこのクラスを持たせて、下の処理をMeshクラスに移動する
 		// メッシュ共通で使用する座標変換定数バッファを作る
-		tktk::DX12GameManager::createCBuffer(tktk::DX12GameManager::getSystemId(tktk::SystemConstantBufferType::MeshTransform), MeshTransformCbuffer());
-		tktk::DX12GameManager::createCBuffer(tktk::DX12GameManager::getSystemId(tktk::SystemConstantBufferType::MeshShadowMap), MeshShadowMapCBuffer());
+		tktk::DX12GameManager::createCBuffer(tktk::DX12GameManager::getSystemId(tktk::SystemCBufferType::MeshTransform), MeshTransformCbuffer());
+		tktk::DX12GameManager::createCBuffer(tktk::DX12GameManager::getSystemId(tktk::SystemCBufferType::MeshShadowMap), MeshShadowMapCBuffer());
 
 		createWriteShadowMapRootSignature();
 		createWriteShadowMapGraphicsPipeLineState(writeShadowMapVsFilePath);
@@ -27,8 +27,8 @@ namespace tktk
 
 				// 
 				cbufferViewDescriptorParam.descriptorParamArray = {
-					{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::MeshTransform)	},
-					{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BoneMatCbuffer)	}
+					{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::MeshTransform)	},
+					{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BoneMatCbuffer)	}
 				};
 			}
 
@@ -127,11 +127,11 @@ namespace tktk
 
 	void BasicMesh::updateMeshTransformCbuffer(const MeshTransformCbuffer& transformBufferData)
 	{
-		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::MeshTransform), transformBufferData);
+		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::MeshTransform), transformBufferData);
 	}
 
 	void BasicMesh::updateMeshShadowMapCBuffer(const MeshShadowMapCBuffer& shadowMapBufferData)
 	{
-		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::MeshShadowMap), shadowMapBufferData);
+		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::MeshShadowMap), shadowMapBufferData);
 	}
 }

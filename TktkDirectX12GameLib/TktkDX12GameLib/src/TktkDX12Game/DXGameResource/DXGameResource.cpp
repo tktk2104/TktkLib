@@ -2,11 +2,13 @@
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Loader/BasicMeshPmdLoader.h"
+#include "..\..\..\inc\TktkDX12Game\DXGameResource\DXGameResource.h"
 
 namespace tktk
 {
 	DXGameResource::DXGameResource(const DXGameResourceNum& resourceNum, const DXGameBaseShaderFilePaths& filePaths)
-		: m_sound(resourceNum.soundNum)
+		: m_sceneManager(resourceNum.sceneNum)
+		, m_sound(resourceNum.soundNum)
 		, m_spriteMaterial(filePaths.spriteShaderFilePaths, resourceNum.spriteNum)
 		, m_skeleton(resourceNum.skeletonNum) // ※メッシュクラスの初期化にボーン行列定数バッファが必要なので先にコンストラクトする必要がある
 		, m_basicMesh(filePaths.writeShadowMapVsFilePath, resourceNum.basicMeshNum)
@@ -16,6 +18,61 @@ namespace tktk
 		, m_camera(resourceNum.cameraNum)
 		, m_light(resourceNum.lightNum)
 	{
+	}
+
+	void DXGameResource::createScene(unsigned int id, const std::shared_ptr<SceneBase>& scenePtr, SceneVTable* vtablePtr)
+	{
+		m_sceneManager.create(id, scenePtr, vtablePtr);
+	}
+
+	void DXGameResource::enableScene(unsigned int id)
+	{
+		m_sceneManager.enable(id);
+	}
+
+	void DXGameResource::disableScene(unsigned int id)
+	{
+		m_sceneManager.disable(id);
+	}
+
+	void DXGameResource::updateScene()
+	{
+		m_sceneManager.update();
+	}
+
+	void DXGameResource::updateSound()
+	{
+		m_sound.update();
+	}
+
+	void DXGameResource::clearSound()
+	{
+		m_sound.clear();
+	}
+
+	void DXGameResource::loadSound(unsigned int id, const std::string& fileName)
+	{
+		m_sound.load(id, fileName);
+	}
+
+	void DXGameResource::playSound(unsigned int id, bool loopPlay)
+	{
+		m_sound.play(id, loopPlay);
+	}
+
+	void DXGameResource::stopSound(unsigned int id)
+	{
+		m_sound.stop(id);
+	}
+
+	void DXGameResource::pauseSound(unsigned int id)
+	{
+		m_sound.pause(id);
+	}
+
+	void DXGameResource::setMasterVolume(float volume)
+	{
+		m_sound.setMasterVolume(volume);
 	}
 
 	void DXGameResource::createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam)
@@ -141,40 +198,5 @@ namespace tktk
 	void DXGameResource::setLightPosition(unsigned int id, const tktkMath::Vector3& position)
 	{
 		return m_light.setPosition(id, position);
-	}
-
-	void DXGameResource::updateSound()
-	{
-		m_sound.update();
-	}
-
-	void DXGameResource::clearSound()
-	{
-		m_sound.clear();
-	}
-
-	void DXGameResource::loadSound(unsigned int id, const std::string& fileName)
-	{
-		m_sound.load(id, fileName);
-	}
-
-	void DXGameResource::playSound(unsigned int id, bool loopPlay)
-	{
-		m_sound.play(id, loopPlay);
-	}
-
-	void DXGameResource::stopSound(unsigned int id)
-	{
-		m_sound.stop(id);
-	}
-
-	void DXGameResource::pauseSound(unsigned int id)
-	{
-		m_sound.pause(id);
-	}
-
-	void DXGameResource::setMasterVolume(float volume)
-	{
-		m_sound.setMasterVolume(volume);
 	}
 }

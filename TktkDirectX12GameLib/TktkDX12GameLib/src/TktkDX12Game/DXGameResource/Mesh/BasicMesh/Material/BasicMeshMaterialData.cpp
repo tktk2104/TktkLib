@@ -25,7 +25,7 @@ namespace tktk
 			// アルベドマップとシャドウマップの２種類
 			srvDescriptorParam.descriptorParamArray = {
 				{ BufferType::texture,		initParam.useAlbedoMapTextureId											},
-				{ BufferType::depthStencil, DX12GameManager::getSystemId(SystemDepthStencilBufferType::ShadowMap)	}
+				{ BufferType::depthStencil, DX12GameManager::getSystemId(SystemDsBufferType::ShadowMap)	}
 			};
 		}
 
@@ -35,11 +35,11 @@ namespace tktk
 
 			// 
 			cbufferViewDescriptorParam.descriptorParamArray = {
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::MeshTransform)		},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BoneMatCbuffer)		},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::Light)		},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial)	},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::MeshShadowMap)		}
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::MeshTransform)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BoneMatCbuffer)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::Light)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BasicMeshMaterial)	},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::MeshShadowMap)		}
 			};
 		}
 
@@ -49,8 +49,8 @@ namespace tktk
 
 			// 
 			cbufferViewDescriptorParam.descriptorParamArray = {
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::Light)		},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial)	}
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::Light)		},
+				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BasicMeshMaterial)	}
 			};
 		}
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
@@ -68,7 +68,7 @@ namespace tktk
 			materialBufferData.materialEmissive = m_materialEmissive;
 			materialBufferData.materialShiniess = m_materialShiniess;
 
-			DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial), materialBufferData);
+			DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::BasicMeshMaterial), materialBufferData);
 		}
 
 		// 通常メッシュ用のディスクリプタヒープを設定する

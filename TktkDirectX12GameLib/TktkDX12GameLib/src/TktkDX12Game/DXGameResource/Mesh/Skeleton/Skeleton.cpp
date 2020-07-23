@@ -8,7 +8,7 @@ namespace tktk
     Skeleton::Skeleton(unsigned int skeletonNum)
         : m_skeletonArray(skeletonNum)
     {
-        DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BoneMatCbuffer), BoneMatrixCbufferData());
+        DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemCBufferType::BoneMatCbuffer), BoneMatrixCbufferData());
     }
 
     void Skeleton::create(unsigned int id, const SkeletonInitParam& initParam)

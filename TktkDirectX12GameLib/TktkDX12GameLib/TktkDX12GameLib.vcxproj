@@ -226,6 +226,8 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterialDrawFuncArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterialInitParam.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\PostEffect\PostEffectShaderFilePaths.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Scene\SceneBase.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Scene\SceneVTable.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteConstantBufferData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialDrawFuncArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObject.h" />
@@ -245,8 +247,8 @@
     <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyReplicaVoidPtr.h" />
     <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyUniqueVoidPtr.h" />
     <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyVoidPtrVTable.h" />
-    <ClInclude Include="inc\TktkDX12Game\Scene\SceneInstanceCarrier.h" />
-    <ClInclude Include="inc\TktkDX12Game\Scene\SceneManager.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Scene\SceneInstanceCarrier.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Scene\SceneManager.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterial.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialInitParam.h" />
@@ -325,8 +327,8 @@
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyOriginalVoidPtr.cpp" />
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyReplicaVoidPtr.cpp" />
     <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyUniqueVoidPtr.cpp" />
-    <ClCompile Include="src\TktkDX12Game\Scene\SceneInstanceCarrier.cpp" />
-    <ClCompile Include="src\TktkDX12Game\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Scene\SceneInstanceCarrier.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Scene\SceneManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Sprite\SpriteMaterial.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialData.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Sound\CSoundCallback.cpp" />

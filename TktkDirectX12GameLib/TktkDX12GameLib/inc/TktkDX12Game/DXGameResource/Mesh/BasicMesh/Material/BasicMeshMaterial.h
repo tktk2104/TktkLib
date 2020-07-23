@@ -2,9 +2,7 @@
 #define BASIC_MESH_MATERIAL_H_
 
 #include <TktkContainer/HeapArray/HeapArray.h>
-#include <TktkDX12Wrapper/Graphics/DX3D12/DX3DResource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
-#undef min
-#undef max
+#include <TktkDX12Wrapper/Resource/GraphicsPipeLine/PipeLineState/PipeLineStateInitParam.h>
 #include "BasicMeshMaterialData.h"
 
 namespace tktk

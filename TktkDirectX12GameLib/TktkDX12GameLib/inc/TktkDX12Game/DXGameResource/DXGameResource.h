@@ -4,6 +4,7 @@
 #include "DXGameResourceNum.h"
 #include "DXGameBaseShaderFilePaths.h"
 
+#include "Scene/SceneManager.h"
 #include "Sound/Sound.h"
 #include "PostEffect/PostEffectMaterial.h"
 #include "Sprite/SpriteMaterial.h"
@@ -25,6 +26,44 @@ namespace tktk
 
 		DXGameResource(const DXGameResourceNum& resourceNum, const DXGameBaseShaderFilePaths& filePaths);
 		~DXGameResource() = default;
+
+	public: /* シーン関係の処理 */
+
+		// シーンを作成して追加する
+		void createScene(unsigned int id, const std::shared_ptr<SceneBase>& scenePtr, SceneVTable* vtablePtr);
+
+		// シーンを有効にする
+		void enableScene(unsigned int id);
+
+		// シーンを無効にする
+		void disableScene(unsigned int id);
+
+		// 有効になっているシーンを更新する
+		void updateScene();
+
+	public: /* サウンド関係の処理 */
+
+		// サウンドを更新する
+		void updateSound();
+
+		// 読み込んだサウンドをすべて削除する
+		void clearSound();
+
+		// 新しいサウンドを読み込む
+		// ※この関数で読み込めるサウンドの形式は「.wav」のみ
+		void loadSound(unsigned int id, const std::string& fileName);
+
+		// 指定したサウンドを再生する
+		void playSound(unsigned int id, bool loopPlay);
+
+		// 指定したサウンドを停止する
+		void stopSound(unsigned int id);
+
+		// 指定したサウンドを一時停止する
+		void pauseSound(unsigned int id);
+
+		// 大元の音量を変更する（0.0f～1.0f）
+		void setMasterVolume(float volume);
 
 	public: /* スプライト関係の処理 */
 
@@ -122,32 +161,9 @@ namespace tktk
 		// 指定のライトの座標を設定する
 		void setLightPosition(unsigned int id, const tktkMath::Vector3& position);
 
-	public: /* サウンド関係の処理 */
-
-		// サウンドを更新する
-		void updateSound();
-
-		// 読み込んだサウンドをすべて削除する
-		void clearSound();
-
-		// 新しいサウンドを読み込む
-		// ※この関数で読み込めるサウンドの形式は「.wav」のみ
-		void loadSound(unsigned int id, const std::string & fileName);
-
-		// 指定したサウンドを再生する
-		void playSound(unsigned int id, bool loopPlay);
-
-		// 指定したサウンドを停止する
-		void stopSound(unsigned int id);
-
-		// 指定したサウンドを一時停止する
-		void pauseSound(unsigned int id);
-
-		// 大元の音量を変更する（0.0f～1.0f）
-		void setMasterVolume(float volume);
-
 	private:
 
+		SceneManager		m_sceneManager;
 		Sound				m_sound;
 		SpriteMaterial		m_spriteMaterial;
 		Skeleton			m_skeleton;

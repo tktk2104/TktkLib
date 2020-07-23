@@ -8,7 +8,7 @@ namespace tktk
 		: m_lightArray(lightNum)
 	{
 		// ライト用の定数バッファを作る
-		tktk::DX12GameManager::createCBuffer(tktk::DX12GameManager::getSystemId(tktk::SystemConstantBufferType::Light), LightCBuffer());
+		tktk::DX12GameManager::createCBuffer(tktk::DX12GameManager::getSystemId(tktk::SystemCBufferType::Light), LightCBuffer());
 	}
 
 	void Light::create(

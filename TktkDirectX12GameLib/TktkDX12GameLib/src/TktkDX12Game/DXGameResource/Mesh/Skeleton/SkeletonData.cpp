@@ -60,7 +60,7 @@ namespace tktk
 			if (i >= m_boneMatrixArray.size()) break;
 			boneMatBuf.boneMatrix[i] = m_boneMatrixArray.at(i);
 		}
-		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BoneMatCbuffer), boneMatBuf);
+		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::BoneMatCbuffer), boneMatBuf);
 	}
 
 	void SkeletonData::transform(const SkeletonData::BoneNode* boneNode, const tktkMath::Matrix4& transformMat)

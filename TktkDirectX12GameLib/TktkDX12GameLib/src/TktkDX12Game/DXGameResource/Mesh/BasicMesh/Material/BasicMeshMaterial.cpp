@@ -15,7 +15,7 @@ namespace tktk
 		createGraphicsPipeLineState(shaderFilePaths);
 
 		// 通常メッシュマテリアル情報の定数バッファを作る
-		DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemConstantBufferType::BasicMeshMaterial),	BasicMeshMaterialCbuffer());
+		DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemCBufferType::BasicMeshMaterial),	BasicMeshMaterialCbuffer());
 	}
 
 	void BasicMeshMaterial::create(unsigned int id, const BasicMeshMaterialInitParam& initParam)
