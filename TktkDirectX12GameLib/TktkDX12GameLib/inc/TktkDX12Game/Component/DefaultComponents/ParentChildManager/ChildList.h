@@ -3,6 +3,7 @@
 
 #include <forward_list>
 #include "../../../GameObject/GameObjectPtr.h"
+#include "../../../EventMessage/MessageAttachment.h"
 
 namespace tktk
 {
@@ -31,8 +32,8 @@ namespace tktk
 		// 全ての子要素を殺す
 		void destroyAll();
 
-		//// 全ての子要素にメッセージを送信する
-		//void sendMessage(int eventMessageType, const GameObjectPtr& param);
+		// 全ての子要素にメッセージを送信する
+		void sendMessage(unsigned int messageId, const MessageAttachment& value);
 
 	private:
 

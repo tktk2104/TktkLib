@@ -9,10 +9,15 @@ namespace tktk
 		return m_selfPtr;
 	}
 
+	void ComponentGameObjectFuncRunner::runHandleMessage(const MessageAttachment& value, unsigned int messageId)
+	{
+		if (m_selfPtr.isDead()) return;
+		m_vtablePtr->runHandleMessage(m_selfPtr, messageId, value);
+	}
+
 	void ComponentGameObjectFuncRunner::runAfterChangeParent(const GameObjectPtr& beforParent)
 	{
 		if (m_selfPtr.isDead()) return;
-
 		m_vtablePtr->runAfterChangeParent(m_selfPtr, beforParent);
 	}
 

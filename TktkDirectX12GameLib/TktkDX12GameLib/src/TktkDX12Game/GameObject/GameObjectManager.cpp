@@ -12,6 +12,14 @@ namespace tktk
 		}
 	}
 
+	void GameObjectManager::runHandleMessageAll(unsigned int messageId, const MessageAttachment& value)
+	{
+		for (const auto& node : m_gameObjectList)
+		{
+			node->runHandleMessageAll(messageId, value);
+		}
+	}
+
 	GameObjectPtr GameObjectManager::createGameObject()
 	{
 		auto gameObject = std::make_shared<GameObject>();

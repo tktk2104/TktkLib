@@ -13,6 +13,8 @@ public:
 
 	void update();
 
+	void handleMessage(unsigned int messageId, const tktk::MessageAttachment& value);
+
 private:
 
 	tktk::ComponentPtr<tktk::Transform2D> m_transform;

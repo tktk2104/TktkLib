@@ -4,7 +4,7 @@
 #include <stdexcept>
 #endif // _DEBUG
 #include "TktkDX12Game/Component/DefaultComponents/ParentChildManager/ParentChildManager.h"
-
+#include "..\..\..\inc\TktkDX12Game\GameObject\GameObject.h"
 namespace tktk
 {
 	GameObject::GameObject()
@@ -67,6 +67,11 @@ namespace tktk
 		return m_tagList.contain(tag);
 	}
 
+	void GameObject::runHandleMessageAll(unsigned int messageId, const MessageAttachment& value)
+	{
+		m_componentList.runHandleMessageAll(messageId, value);
+	}
+
 	void GameObject::runAfterChangeParentAll(const GameObjectPtr& beforParent)
 	{
 		m_componentList.runAfterChangeParentAll(beforParent);
@@ -74,14 +79,17 @@ namespace tktk
 
 	void GameObject::runOnCollisionEnterAll(const GameObjectPtr& other)
 	{
+		m_componentList.runOnCollisionEnterAll(other);
 	}
 
 	void GameObject::runOnCollisionStayAll(const GameObjectPtr& other)
 	{
+		m_componentList.runOnCollisionStayAll(other);
 	}
 
 	void GameObject::runOnCollisionExitAll(const GameObjectPtr& other)
 	{
+		m_componentList.runOnCollisionExitAll(other);
 	}
 
 	const GameObjectPtr& GameObject::getParent() const
@@ -154,5 +162,17 @@ namespace tktk
 
 		// 追加する子供の親変更時関数を呼ぶ
 		child->m_componentList.runAfterChangeParentAll(GameObjectPtr(weak_from_this()));
+	}
+
+	void GameObject::sendMessage(unsigned int messageId, const MessageAttachment& value)
+	{
+		// 自身のメッセージ受信処理を呼ぶ
+		runHandleMessageAll(messageId, value);
+
+#ifdef _DEBUG
+		if (m_parentChildManager.expired()) throw std::runtime_error("not found ParentChildManager");
+#endif
+		// 自身の子要素のメッセージ受信処理を呼ぶ
+		m_parentChildManager->sendMessage(messageId, value);
 	}
 }

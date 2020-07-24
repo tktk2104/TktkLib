@@ -1,4 +1,5 @@
 #include "TktkDX12Game/Component/DefaultComponents/ParentChildManager/ParentChildManager.h"
+#include "..\..\..\..\..\inc\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ParentChildManager.h"
 
 namespace tktk
 {
@@ -42,5 +43,10 @@ namespace tktk
 	void ParentChildManager::addChild(const GameObjectPtr& child)
 	{
 		m_childList.addChild(child);
+	}
+
+	void ParentChildManager::sendMessage(unsigned int messageId, const MessageAttachment& value)
+	{
+		m_childList.sendMessage(messageId, value);
 	}
 }

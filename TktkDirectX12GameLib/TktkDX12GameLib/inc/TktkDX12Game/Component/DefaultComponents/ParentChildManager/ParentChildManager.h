@@ -44,8 +44,8 @@ namespace tktk
 		// 子要素を追加する
 		void addChild(const GameObjectPtr& child);
 
-		//// 全ての子要素にメッセージを送信する
-		//void sendMessage(int eventMessageType, const SafetyVoidPtr& param);
+		// 全ての子要素にメッセージを送信する
+		void sendMessage(unsigned int messageId, const MessageAttachment& value);
 
 	public:
 

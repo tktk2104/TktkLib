@@ -13,3 +13,8 @@ void CursorScript::update()
 
 	m_transform->setWorldPosition(pos);
 }
+
+void CursorScript::handleMessage(unsigned int messageId, const tktk::MessageAttachment& value)
+{
+	auto tmp = value.getValuePtr<int>();
+}

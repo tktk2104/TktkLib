@@ -230,6 +230,7 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Scene\SceneVTable.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteConstantBufferData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialDrawFuncArgs.h" />
+    <ClInclude Include="inc\TktkDX12Game\EventMessage\MessageAttachment.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObject.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectManager.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectPtr.h" />
@@ -242,11 +243,7 @@
     <ClInclude Include="inc\TktkDX12Game\Input\DirectInputWrapper\Keyboard\KeybordKeyType.h" />
     <ClInclude Include="inc\TktkDX12Game\Input\Mouse\Mouse.h" />
     <ClInclude Include="inc\TktkDX12Game\Input\Mouse\MouseButtonType.h" />
-    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.h" />
-    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyOriginalVoidPtr.h" />
-    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyReplicaVoidPtr.h" />
-    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyUniqueVoidPtr.h" />
-    <ClInclude Include="inc\TktkDX12Game\SafetyVoidPtr\SafetyVoidPtrVTable.h" />
+    <ClInclude Include="inc\TktkDX12Game\ClassTypeChecker\ClassTypeChecker.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Scene\SceneInstanceCarrier.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Scene\SceneManager.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterial.h" />
@@ -323,10 +320,7 @@
     <ClCompile Include="src\TktkDX12Game\Input\DirectInputWrapper\GamePad\GamePad.cpp" />
     <ClCompile Include="src\TktkDX12Game\Input\DirectInputWrapper\Keyboard\Keyboard.cpp" />
     <ClCompile Include="src\TktkDX12Game\Input\Mouse\Mouse.cpp" />
-    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\ClassTypeChecker.cpp" />
-    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyOriginalVoidPtr.cpp" />
-    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyReplicaVoidPtr.cpp" />
-    <ClCompile Include="src\TktkDX12Game\SafetyVoidPtr\SafetyUniqueVoidPtr.cpp" />
+    <ClCompile Include="src\TktkDX12Game\ClassTypeChecker\ClassTypeChecker.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Scene\SceneInstanceCarrier.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Scene\SceneManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Sprite\SpriteMaterial.cpp" />

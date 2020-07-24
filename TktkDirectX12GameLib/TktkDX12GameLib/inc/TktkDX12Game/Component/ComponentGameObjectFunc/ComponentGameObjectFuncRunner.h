@@ -2,12 +2,14 @@
 #define COMPONENT_GAME_OBJECT_FUNC_RUNNER_H_
 
 #include <memory>
+#include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasHandleMessageChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasAfterChangeParentChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnCollisionEnterChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnCollisionStayChecker.h>
 #include <TktkTemplateMetaLib/HasFuncCheck/CreatedStruct/HasOnCollisionExitChecker.h>
 #include "../../GameObject/GameObjectPtr.h"
 #include "../ComponentBasePtr.h"
+#include "../../EventMessage/MessageAttachment.h"
 
 namespace tktk
 {
@@ -23,6 +25,9 @@ namespace tktk
 
 		// 型情報を隠蔽したコンポーネントポインタを取得する
 		const ComponentBasePtr& getComponentBasePtr() const;
+
+		// メッセージ取得関数を呼ぶ
+		void runHandleMessage(const MessageAttachment& value, unsigned int messageId);
 
 		// コンポーネントの親要素が変わった時関数を呼ぶ
 		void runAfterChangeParent(const GameObjectPtr& beforParent);
@@ -46,6 +51,7 @@ namespace tktk
 
 		struct VTable
 		{
+			void(*runHandleMessage)		(const ComponentBasePtr&, unsigned int, const MessageAttachment&);
 			void(*runAfterChangeParent)	(const ComponentBasePtr&, const GameObjectPtr&);
 			void(*runOnCollisionEnter)	(const ComponentBasePtr&, const GameObjectPtr&);
 			void(*runOnCollisionStay)	(const ComponentBasePtr&, const GameObjectPtr&);
@@ -55,6 +61,9 @@ namespace tktk
 		template <class ComponentType>
 		struct VTableInitializer
 		{
+			// メッセージ取得関数を持っていたら呼ぶ
+			static void runHandleMessage(const ComponentBasePtr& self, unsigned int messageId, const MessageAttachment& value);
+
 			// 親要素が変わった時関数を持っていたら呼ぶ
 			static void runAfterChangeParent(const ComponentBasePtr& self, const GameObjectPtr& beforParent);
 
@@ -89,11 +98,19 @@ namespace tktk
 	template<class ComponentType>
 	typename ComponentGameObjectFuncRunner::VTable ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::m_vtable =
 	{
+		&ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runHandleMessage,
 		&ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runAfterChangeParent,
 		&ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runOnCollisionEnter,
 		&ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runOnCollisionStay,
 		&ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runOnCollisionExit,
 	};
+
+	// メッセージ取得関数を持っていたら呼ぶ
+	template<class ComponentType>
+	inline void ComponentGameObjectFuncRunner::VTableInitializer<ComponentType>::runHandleMessage(const ComponentBasePtr& self, unsigned int messageId, const MessageAttachment& value)
+	{
+		handleMessage_runner<void, unsigned int, const MessageAttachment&>::checkAndRun(self.castPtr<ComponentType>(), messageId, value);
+	}
 
 	// 親要素が変わった時関数を持っていたら呼ぶ
 	template<class ComponentType>

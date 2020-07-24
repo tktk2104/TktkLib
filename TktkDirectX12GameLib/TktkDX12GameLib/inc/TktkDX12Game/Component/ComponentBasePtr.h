@@ -2,7 +2,7 @@
 #define COMPONENT_BASE_PTR_H_
 
 #include <memory>
-#include "../SafetyVoidPtr/ClassTypeChecker.h"
+#include "../ClassTypeChecker/ClassTypeChecker.h"
 #include "ComponentPtr.h"
 
 namespace tktk

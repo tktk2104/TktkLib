@@ -66,6 +66,9 @@ namespace tktk
 
 	public: /* コンポーネント関数呼び出し処理 */
 
+		// 全てのメッセージ取得関数を呼ぶ
+		void runHandleMessageAll(unsigned int messageId, const MessageAttachment& value);
+
 		// 全ての子供の全てのコンポーネントの親要素が変わった時関数を呼ぶ
 		void runAfterChangeParentAll(const GameObjectPtr& beforParent);
 
@@ -95,8 +98,8 @@ namespace tktk
 		// 指定した子要素をリストから削除する
 		void removeChild(const GameObjectPtr& child);
 
-		//// 全ての子要素にメッセージを送信する
-		//void sendMessage(int eventMessageType, const SafetyVoidPtr& param = SafetyVoidPtr());
+		// 全ての子要素にメッセージを送信する
+		void sendMessage(unsigned int messageId, const MessageAttachment& value = {});
 
 	private:
 

@@ -8,14 +8,17 @@
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector3.h>
 
-#include "../Component/ComponentManager.h"	// テンプレート引数に型情報を渡す必要がある為隠蔽できない
-#include "../GameObject/GameObjectPtr.h"
-#include "../DXGameResource/Scene/SceneVTable.h"
+#include "../Component/ComponentManager.h"			// テンプレート引数に型情報を渡す必要がある為隠蔽できない
+#include "../DXGameResource/Scene/SceneVTable.h"	// シーンマネージャークラスを隠蔽する為にテンプレート関連のみ分離
+
+// 関数呼び出しに必要な型のインクルード
+#include <TktkDX12Wrapper/Resource/_SystemResourceIdGetter/SystemResourceType.h>
+#include "../GameObject/GameObjectPtr.h"			
+#include "../EventMessage/MessageAttachment.h"
 
 #include "DX12GameManagerUseInitParams.h"
 #include "DX12GameManagerFuncInOutValueType.h"
 #include "DX12GameManagerInitParam.h"
-#include <TktkDX12Wrapper/Resource/_SystemResourceIdGetter/SystemResourceType.h>
 
 namespace tktk
 {
@@ -55,6 +58,9 @@ namespace tktk
 		static void disableScene(unsigned int id);
 
 	public: /* ゲームオブジェクトの処理 */
+
+		// 全てのGameObjectにメッセージを送信する
+		static void SendMessageAll(unsigned int messageId, const MessageAttachment& value = {});
 
 		// ゲームオブジェクトを作成し、そのポインタを返す
 		static GameObjectPtr createGameObject();

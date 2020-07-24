@@ -15,6 +15,14 @@ namespace tktk
 
 	public:
 
+		void playSound();
+
+		void stopSound();
+
+		void pauseSound();
+
+	public:
+
 		void start();
 
 		void onEnable();

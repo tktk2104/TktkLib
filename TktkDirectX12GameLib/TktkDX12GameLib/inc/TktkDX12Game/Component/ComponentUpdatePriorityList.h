@@ -2,7 +2,7 @@
 #define COMPONENT_UPDATE_PRIORITY_LIST_H_
 
 #include <unordered_map>
-#include "../SafetyVoidPtr/ClassTypeChecker.h"
+#include "../ClassTypeChecker/ClassTypeChecker.h"
 
 namespace tktk
 {

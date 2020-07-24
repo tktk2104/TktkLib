@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include "TktkDX12Game/GameObject/GameObject.h"
+#include "..\..\..\..\..\inc\TktkDX12Game\Component\DefaultComponents\ParentChildManager\ChildList.h"
 
 namespace tktk
 {
@@ -30,6 +31,14 @@ namespace tktk
 		for (auto& node : m_childList)
 		{
 			node->destroy();
+		}
+	}
+
+	void ChildList::sendMessage(unsigned int messageId, const MessageAttachment& value)
+	{
+		for (auto& node : m_childList)
+		{
+			node->sendMessage(messageId, value);
 		}
 	}
 }

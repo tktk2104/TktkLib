@@ -1,4 +1,4 @@
-#include "TktkDX12Game/SafetyVoidPtr/ClassTypeChecker.h"
+#include "TktkDX12Game/ClassTypeChecker/ClassTypeChecker.h"
 
 namespace tktk
 {

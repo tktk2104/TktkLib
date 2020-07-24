@@ -4,6 +4,7 @@
 #include <memory>
 #include <forward_list>
 #include "GameObjectPtr.h"
+#include "../EventMessage/MessageAttachment.h"
 
 namespace tktk
 {
@@ -21,6 +22,9 @@ namespace tktk
 		void update();
 
 	public:
+
+		// 全てのGameObjectにメッセージを送信する
+		void runHandleMessageAll(unsigned int messageId, const MessageAttachment& value);
 
 		// ゲームオブジェクトを作成し、そのポインタを返す
 		GameObjectPtr createGameObject();

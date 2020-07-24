@@ -31,6 +31,9 @@ namespace tktk
 		template <class ComponentType>
 		std::forward_list<ComponentPtr<ComponentType>> findAll() const;
 
+		// 全てのメッセージ取得関数を呼ぶ
+		void runHandleMessageAll(unsigned int messageId, const MessageAttachment& value);
+
 		// 全ての「子供の全てのコンポーネントの親要素が変わった時関数」を呼ぶ
 		void runAfterChangeParentAll(const GameObjectPtr& beforParent);
 

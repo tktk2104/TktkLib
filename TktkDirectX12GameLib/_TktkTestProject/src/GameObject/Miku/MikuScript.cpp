@@ -23,6 +23,11 @@ void MikuScript::onDestroy()
 
 void MikuScript::update()
 {
+	if (tktk::DX12GameManager::isTrigger(tktk::KeybordKeyType::key_Space))
+	{
+		tktk::DX12GameManager::SendMessageAll(0U, 10);
+	}
+
 	if (tktk::DX12GameManager::isPush(tktk::KeybordKeyType::key_Space))
 	{
 		m_transform->addLocalEulerAngles({ 0.0f, 10.0f, 0.0f });

@@ -2,6 +2,14 @@
 
 namespace tktk
 {
+	void GameObjectComponentList::runHandleMessageAll(unsigned int messageId, const MessageAttachment& value)
+	{
+		for (auto& node : m_componentList)
+		{
+			node.runHandleMessage(value, messageId);
+		}
+	}
+
 	void GameObjectComponentList::runAfterChangeParentAll(const GameObjectPtr& beforParent)
 	{
 		for (auto& node : m_componentList)
