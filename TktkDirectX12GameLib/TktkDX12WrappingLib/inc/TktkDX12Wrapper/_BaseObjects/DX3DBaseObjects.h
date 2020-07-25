@@ -83,7 +83,7 @@ namespace tktk
 		void updateCBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 
 		// 指定のレンダーターゲットビューを指定の色でクリアする
-		void clearRtv(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color);
+		void clearRtv(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color) const;
 
 	public: /* リソース情報取得処理 */
 
@@ -95,46 +95,46 @@ namespace tktk
 	public: /* リソースをコマンドリストに登録する処理 */
 
 		// 指定のレンダーターゲット用のディスクリプタヒープをコマンドリストに設定する
-		void setRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+		void setRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount) const;
 
 		// 指定の（レンダーターゲットと深度ステンシルビュー）用のディスクリプタヒープ２つをコマンドリストに設定する
-		void setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+		void setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount) const;
 
 		// 指定の深度ステンシルビュー用のディスクリプタヒープをコマンドリストに設定する（※レンダーターゲットは設定できない）
-		void setOnlyDsv(unsigned int id);
+		void setOnlyDsv(unsigned int id) const;
 
 		// バックバッファーを設定する
-		void setBackBufferView();
+		void setBackBufferView() const;
 
 		// バックバッファーと深度ステンシルビューを設定する
-		void setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId);
+		void setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId) const;
 
 		// 指定のレンダーターゲット用のディスクリプタヒープが使用しているレンダーターゲットバッファの書き込み後処理を行う
-		void unSetRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+		void unSetRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount) const;
 
 		// 指定の深度書き込み用のディスクリプタヒープが使用している深度バッファの書き込み後処理を行う
-		void unSetDsv(unsigned int dsvDescriptorHeapId);
+		void unSetDsv(unsigned int dsvDescriptorHeapId) const;
 
 		// 指定のビューポートをコマンドリストに設定する
-		void setViewport(unsigned int id);
+		void setViewport(unsigned int id) const;
 
 		// 指定のシザー矩形をコマンドリストに設定する
-		void setScissorRect(unsigned int id);
+		void setScissorRect(unsigned int id) const;
 
 		// 指定のパイプラインステートをコマンドリストに設定する
-		void setPipeLineState(unsigned int id);
+		void setPipeLineState(unsigned int id) const;
 
 		// 指定の頂点バッファをコマンドリストに設定する
-		void setVertexBuffer(unsigned int id);
+		void setVertexBuffer(unsigned int id) const;
 
 		// 指定のインデックスバッファをコマンドリストに設定する
-		void setIndexBuffer(unsigned int id);
+		void setIndexBuffer(unsigned int id) const;
 
 		// 指定のディスクリプタヒープの配列をコマンドリストに設定する
-		void setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray);
+		void setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray) const;
 
 		// プリミティブトポロジを設定する
-		void setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology);
+		void setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology) const;
 
 	public: /* ドローコール、その他処理 */
 
@@ -145,7 +145,7 @@ namespace tktk
 			unsigned int startIndexLocation,
 			unsigned int baseVertexLocation,
 			unsigned int startInstanceLocation
-		);
+		) const;
 
 		// コマンドリストを実行する
 		void executeCommandList();

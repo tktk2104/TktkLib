@@ -12,7 +12,7 @@ namespace tktk
 		m_indexBufferDataArray.emplaceAt(id, device, indexDataArray);
 	}
 
-	void IndexBuffer::set(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void IndexBuffer::set(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_indexBufferDataArray.at(id)->set(commandList);
 	}

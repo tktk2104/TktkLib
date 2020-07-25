@@ -37,7 +37,7 @@ namespace tktk
 		m_rtvDescriptorHeapDataArray.at(id)->setRtv(device, commandList, startRtvLocationIndex, rtvCount, useDsvHandle);
 	}
 
-	void RtvDescriptorHeap::clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	void RtvDescriptorHeap::clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color) const
 	{
 		m_rtvDescriptorHeapDataArray.at(id)->clearRtv(device, commandList, rtvLocationIndex, color);
 	}

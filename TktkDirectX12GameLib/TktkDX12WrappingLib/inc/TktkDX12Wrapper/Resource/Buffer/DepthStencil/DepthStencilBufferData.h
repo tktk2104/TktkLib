@@ -21,18 +21,18 @@ namespace tktk
 
 		// 自身のリソースバリアを深度書き込み状態に変更する
 		// ※シェーダーリソースとして使用しない設定の場合読んでも何も起きない
-		void beginWrite(ID3D12GraphicsCommandList* commandList);
+		void beginWrite(ID3D12GraphicsCommandList* commandList) const;
 
 		// 自身のリソースバリアをシェーダー使用状態に変更する
 		// ※シェーダーリソースとして使用しない設定の場合読んでも何も起きない
-		void endWrite(ID3D12GraphicsCommandList* commandList);
+		void endWrite(ID3D12GraphicsCommandList* commandList) const;
 
 		// 引数のディスクリプタハンドルに深度ステンシルビューを作る
-		void createDsv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createDsv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const;
 
 		// 引数のディスクリプタハンドルにシェーダーリソースビューを作る
 		// ※シェーダーリソースとして使用しない設定の場合、エラーを吐きます
-		void createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const;
 
 		// 深度ステンシルバッファ画像の大きさを取得する（ピクセル）
 		const tktkMath::Vector2& getDepthStencilSizePx() const;

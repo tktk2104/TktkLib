@@ -17,7 +17,7 @@ namespace tktk
 	public:
 
 		// コマンドリストに頂点バッファを登録する
-		void set(ID3D12GraphicsCommandList* commandList);
+		void set(ID3D12GraphicsCommandList* commandList) const;
 
 	private:
 

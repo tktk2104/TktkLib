@@ -12,7 +12,7 @@ namespace tktk
 		m_vertexBufferDataArray.emplaceAt(id, device, vertexTypeSize, vertexDataCount, vertexDataTopPos);
 	}
 
-	void VertexBuffer::set(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void VertexBuffer::set(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_vertexBufferDataArray.at(id)->set(commandList);
 	}

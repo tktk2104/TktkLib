@@ -12,7 +12,7 @@ namespace tktk
 		m_scissorRectDataArray.emplaceAt(id, initParamArray);
 	}
 
-	void ScissorRect::set(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void ScissorRect::set(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_scissorRectDataArray.at(id)->set(commandList);
 	}

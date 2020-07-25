@@ -58,7 +58,7 @@ namespace tktk
 		}
 	}
 
-	void RenderTargetBufferData::beginWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBufferData::beginWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList) const
 	{
 		D3D12_RESOURCE_BARRIER barrierDesc{};
 		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -71,7 +71,7 @@ namespace tktk
 		commandList->ResourceBarrier(1, &barrierDesc);
 	}
 
-	void RenderTargetBufferData::endWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBufferData::endWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList) const
 	{
 		D3D12_RESOURCE_BARRIER barrierDesc{};
 		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -84,7 +84,7 @@ namespace tktk
 		commandList->ResourceBarrier(1, &barrierDesc);
 	}
 
-	void RenderTargetBufferData::beginWriteBackBuffer(ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBufferData::beginWriteBackBuffer(ID3D12GraphicsCommandList* commandList) const
 	{
 		D3D12_RESOURCE_BARRIER barrierDesc{};
 		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -97,7 +97,7 @@ namespace tktk
 		commandList->ResourceBarrier(1, &barrierDesc);
 	}
 
-	void RenderTargetBufferData::endWriteBackBuffer(ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBufferData::endWriteBackBuffer(ID3D12GraphicsCommandList* commandList) const
 	{
 		D3D12_RESOURCE_BARRIER barrierDesc{};
 		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -110,7 +110,7 @@ namespace tktk
 		commandList->ResourceBarrier(1, &barrierDesc);
 	}
 
-	void RenderTargetBufferData::createRtv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void RenderTargetBufferData::createRtv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 		rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
@@ -119,7 +119,7 @@ namespace tktk
 		device->CreateRenderTargetView(m_renderTargetBuffer, &rtvDesc, heapHandle);
 	}
 
-	void RenderTargetBufferData::createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void RenderTargetBufferData::createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;

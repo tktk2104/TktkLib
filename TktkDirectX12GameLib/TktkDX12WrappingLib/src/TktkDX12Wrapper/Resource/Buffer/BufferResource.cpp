@@ -22,7 +22,7 @@ namespace tktk
 		m_vertexBuffer.create(id, device, vertexTypeSize, vertexDataCount, vertexDataTopPos);
 	}
 
-	void BufferResource::setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_vertexBuffer.set(id, commandList);
 	}
@@ -32,7 +32,7 @@ namespace tktk
 		m_indexBuffer.create(id, device, indexDataArray);
 	}
 
-	void BufferResource::setIndexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::setIndexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_indexBuffer.set(id, commandList);
 	}
@@ -42,7 +42,7 @@ namespace tktk
 		m_constantBuffer.create(id, device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
-	void BufferResource::createCbv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createCbv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_constantBuffer.createCbv(id, device, heapHandle);
 	}
@@ -72,7 +72,7 @@ namespace tktk
 		m_textureBuffer.gpuPriorityLoad(id, device, commandList, texDataPath);
 	}
 
-	void BufferResource::createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_textureBuffer.createSrv(id, device, heapHandle);
 	}
@@ -87,32 +87,32 @@ namespace tktk
 		m_depthStencilBuffer.create(id, device, initParam);
 	}
 
-	void BufferResource::createDsv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createDsv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_depthStencilBuffer.createDsv(id, device, heapHandle);
 	}
 
-	void BufferResource::createDsSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createDsSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_depthStencilBuffer.createSrv(id, device, heapHandle);
 	}
 
-	void BufferResource::beginWriteDsBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::beginWriteDsBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_depthStencilBuffer.beginWrite(id, commandList);
 	}
 
-	void BufferResource::endWriteDsBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::endWriteDsBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_depthStencilBuffer.endWrite(id, commandList);
 	}
 
-	void BufferResource::allBeginWriteDsBuffer(ID3D12GraphicsCommandList* commandList)
+	void BufferResource::allBeginWriteDsBuffer(ID3D12GraphicsCommandList* commandList) const
 	{
 		m_depthStencilBuffer.allBeginWrite(commandList);
 	}
 
-	void BufferResource::allEndWriteDsBuffer(ID3D12GraphicsCommandList* commandList)
+	void BufferResource::allEndWriteDsBuffer(ID3D12GraphicsCommandList* commandList) const
 	{
 		m_depthStencilBuffer.allEndWrite(commandList);
 	}
@@ -132,32 +132,32 @@ namespace tktk
 		m_renderTargetBuffer.create(id, swapChain, backBufferIndex);
 	}
 
-	void BufferResource::createRtv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createRtv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_renderTargetBuffer.createRtv(id, device, heapHandle);
 	}
 
-	void BufferResource::createRtSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void BufferResource::createRtSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_renderTargetBuffer.createSrv(id, device, heapHandle);
 	}
 
-	void BufferResource::beginWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::beginWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_renderTargetBuffer.beginWriteBasicRtBuffer(id, commandList);
 	}
 
-	void BufferResource::endWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::endWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_renderTargetBuffer.endWriteBasicRtBuffer(id, commandList);
 	}
 
-	void BufferResource::beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_renderTargetBuffer.beginWriteBackBuffer(id, commandList);
 	}
 
-	void BufferResource::endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void BufferResource::endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_renderTargetBuffer.endWriteBackBuffer(id, commandList);
 	}

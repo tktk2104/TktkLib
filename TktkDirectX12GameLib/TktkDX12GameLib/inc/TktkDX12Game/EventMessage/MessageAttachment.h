@@ -15,7 +15,7 @@ namespace tktk
 
 		// 意図的に「explicit」を外している
 		template<class T>
-		MessageAttachment(T value);
+		MessageAttachment(T&& value);
 
 		// コンストラクタで渡した値のポインタを取得する
 		// ※テンプレート引数が正しくない型だった場合、期限切れのポインタが返される
@@ -49,9 +49,9 @@ namespace tktk
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 	template<class T>
-	inline MessageAttachment::MessageAttachment(T value)
+	inline MessageAttachment::MessageAttachment(T&& value)
 	{
-		m_ptrCarrier = std::make_shared<PtrCarrier<T>>(value);
+		m_ptrCarrier = std::make_shared<PtrCarrier<T>>(std::forward<T>(value));
 	}
 
 	// コンストラクタで渡した値のポインタを取得する

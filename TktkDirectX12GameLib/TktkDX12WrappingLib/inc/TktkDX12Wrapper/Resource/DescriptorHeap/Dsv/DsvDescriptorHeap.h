@@ -32,10 +32,10 @@ namespace tktk
 		void setRootDescriptorTable(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 
 		// レンダーターゲットビューを登録せずに指定したディスクリプタヒープの深度ステンシルビューをコマンドリストに登録する
-		void setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
+		void setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 
 		// 深度ステンシルビューを全てクリアする
-		void clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
+		void clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 
 	private:
 

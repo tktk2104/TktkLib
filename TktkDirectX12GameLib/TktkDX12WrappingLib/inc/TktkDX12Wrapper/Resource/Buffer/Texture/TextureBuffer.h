@@ -30,7 +30,7 @@ namespace tktk
 		void gpuPriorityLoad(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::string& texDataPath);
 	
 		// 指定のテクスチャバッファを使用して、引数のディスクリプタハンドルにシェーダーリソースビューを作る
-		void createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const;
 		
 		// 指定のテクスチャバッファ画像の大きさを取得する（ピクセル）
 		const tktkMath::Vector3& getTextureSizePx(unsigned int id) const;

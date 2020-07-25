@@ -61,12 +61,12 @@ namespace tktk
 		}
 	}
 
-	void DsvDescriptorHeapData::setOnlyDsv(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DsvDescriptorHeapData::setOnlyDsv(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		commandList->OMSetRenderTargets(0, nullptr, true, getCpuHeapHandleArray(device).data());
 	}
 
-	void DsvDescriptorHeapData::clearDsv(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DsvDescriptorHeapData::clearDsv(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		for (const auto& node : getCpuHeapHandleArray(device))
 		{

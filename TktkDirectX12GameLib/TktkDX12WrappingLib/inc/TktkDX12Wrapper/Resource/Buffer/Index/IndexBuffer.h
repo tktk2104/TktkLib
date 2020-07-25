@@ -20,7 +20,7 @@ namespace tktk
 		void create(unsigned int id, ID3D12Device* device, const std::vector<unsigned short>& indexDataArray);
 
 		// コマンドリストに指定のインデックスバッファを登録する
-		void set(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void set(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 	private:
 

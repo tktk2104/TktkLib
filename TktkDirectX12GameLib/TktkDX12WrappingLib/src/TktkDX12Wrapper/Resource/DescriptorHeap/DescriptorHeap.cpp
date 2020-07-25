@@ -9,7 +9,7 @@ namespace tktk
 	{
 	}
 
-	void DescriptorHeap::set(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray)
+	void DescriptorHeap::set(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray) const
 	{
 		std::vector<ID3D12DescriptorHeap*> descriptorHeapArray{};
 		descriptorHeapArray.reserve(heapParamArray.size());
@@ -64,23 +64,23 @@ namespace tktk
 		m_rtvDescriptorHeap.setRtv(rtvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount, nullptr);
 	}
 
-	void DescriptorHeap::setRtvAndDsv(unsigned int renderTargetId, unsigned int depthStencilViewId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount)
+	void DescriptorHeap::setRtvAndDsv(unsigned int renderTargetId, unsigned int depthStencilViewId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount) const
 	{
 		auto cpuHeapHandleArray = m_dsvDescriptorHeap.getCpuHeapHandleArray(depthStencilViewId, device);
 		m_rtvDescriptorHeap.setRtv(renderTargetId, device, commandList, startRtvLocation, rtvCount, cpuHeapHandleArray.data());
 	}
 
-	void DescriptorHeap::setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DescriptorHeap::setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_dsvDescriptorHeap.setOnlyDsv(id, device, commandList);
 	}
 
-	void DescriptorHeap::clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	void DescriptorHeap::clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color) const
 	{
 		m_rtvDescriptorHeap.clearRtv(id, device, commandList, rtvLocationIndex, color);
 	}
 
-	void DescriptorHeap::clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DescriptorHeap::clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_dsvDescriptorHeap.clearDsvAll(device, commandList);
 	}

@@ -167,12 +167,12 @@ namespace tktk
 		m_bufferResource.deleteUploadBufferAll();
 	}
 
-	void DX3DResource::clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	void DX3DResource::clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color) const
 	{
 		m_descriptorHeap.clearRtv(id, device, commandList, rtvLocationIndex, color);
 	}
 
-	void DX3DResource::clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_bufferResource.allBeginWriteDsBuffer(commandList);
 
@@ -206,7 +206,7 @@ namespace tktk
 		return m_descriptorHeap.getDsvDescriptorHeapUseBufferIdArray(id);
 	}
 
-	void DX3DResource::setRtv(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX3DResource::setRtv(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
 	{
 		// 使用するレンダーターゲットバッファーを取得して、書き込み状態に設定する
 		auto rtvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getRtvDescriptorHeapUseBufferIdArray(rtvDescriptorHeapId);
@@ -219,7 +219,7 @@ namespace tktk
 		m_descriptorHeap.setRtv(rtvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX3DResource::setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX3DResource::setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
 	{
 		// 使用するレンダーターゲットバッファーを取得して、書き込み状態に設定する
 		auto rtvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getRtvDescriptorHeapUseBufferIdArray(rtvDescriptorHeapId);
@@ -239,7 +239,7 @@ namespace tktk
 		m_descriptorHeap.setRtvAndDsv(rtvDescriptorHeapId, dsvDescriptorHeapId, device, commandList, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX3DResource::setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		// 使用する深度ステンシルバッファーを取得して、書き込み状態に設定する
 		auto dsvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getDsvDescriptorHeapUseBufferIdArray(id);
@@ -252,13 +252,13 @@ namespace tktk
 		m_descriptorHeap.setOnlyDsv(id, device, commandList);
 	}
 
-	void DX3DResource::setBackBufferView(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex)
+	void DX3DResource::setBackBufferView(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex) const
 	{
 		// バックバッファはフレームの初めに書き込み状態に設定されているのでそのまま ディスクリプタヒープを設定できる
 		m_descriptorHeap.setRtv(getSystemId(SystemRtvDescriptorHeapType::BackBuffer), device, commandList, backBufferIndex, 1U);
 	}
 
-	void DX3DResource::setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex)
+	void DX3DResource::setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex) const
 	{
 		// 使用する深度ステンシルバッファーを取得して、書き込み状態に設定する
 		auto dsvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getDsvDescriptorHeapUseBufferIdArray(dsvDescriptorHeapId);
@@ -271,7 +271,7 @@ namespace tktk
 		m_descriptorHeap.setRtvAndDsv(getSystemId(SystemRtvDescriptorHeapType::BackBuffer), dsvDescriptorHeapId, device, commandList, backBufferIndex, 1U);
 	}
 
-	void DX3DResource::unSetRtv(unsigned int rtvDescriptorHeapId, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX3DResource::unSetRtv(unsigned int rtvDescriptorHeapId, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
 	{
 		// 使用していたレンダーターゲットバッファーを取得して、ピクセルシェーダーで使用する状態に変更する
 		auto rtvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getRtvDescriptorHeapUseBufferIdArray(rtvDescriptorHeapId);
@@ -281,7 +281,7 @@ namespace tktk
 		}
 	}
 
-	void DX3DResource::unSetDsv(unsigned int dsvDescriptorHeapId, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::unSetDsv(unsigned int dsvDescriptorHeapId, ID3D12GraphicsCommandList* commandList) const
 	{
 		// 使用していた深度ステンシルバッファーを取得して、ピクセルシェーダーで使用する状態に変更する
 		auto dsvDescriptorHeapUseBufferIdArray = m_descriptorHeap.getDsvDescriptorHeapUseBufferIdArray(dsvDescriptorHeapId);
@@ -291,42 +291,42 @@ namespace tktk
 		}
 	}
 
-	void DX3DResource::beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_bufferResource.beginWriteBackBuffer(id, commandList);
 	}
 
-	void DX3DResource::endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_bufferResource.endWriteBackBuffer(id, commandList);
 	}
 
-	void DX3DResource::setViewport(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::setViewport(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_viewport.set(id, commandList);
 	}
 
-	void DX3DResource::setScissorRect(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::setScissorRect(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_scissorRect.set(id, commandList);
 	}
 
-	void DX3DResource::setPipeLineState(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::setPipeLineState(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_graphicsPipeLine.set(id, commandList);
 	}
 
-	void DX3DResource::setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_bufferResource.setVertexBuffer(id, commandList);
 	}
 
-	void DX3DResource::setIndexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void DX3DResource::setIndexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_bufferResource.setIndexBuffer(id, commandList);
 	}
 
-	void DX3DResource::setDescriptorHeap(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray)
+	void DX3DResource::setDescriptorHeap(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray) const
 	{
 		m_descriptorHeap.set(device, commandList, heapParamArray);
 	}
@@ -396,7 +396,7 @@ namespace tktk
 		return m_sysResIdGetter.getSystemId(type);
 	}
 
-	void DX3DResource::createBasicDescriptorCbv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam)
+	void DX3DResource::createBasicDescriptorCbv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam) const
 	{
 #ifdef _DEBUG
 		if (useBufferParam.type != BufferType::constant) throw std::runtime_error("useBuffer Type Error -not cbuffer-");
@@ -405,7 +405,7 @@ namespace tktk
 		m_bufferResource.createCbv(useBufferParam.id, device, cpuHandle);
 	}
 
-	void DX3DResource::createBasicDescriptorSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam)
+	void DX3DResource::createBasicDescriptorSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam) const
 	{
 		switch (useBufferParam.type)
 		{

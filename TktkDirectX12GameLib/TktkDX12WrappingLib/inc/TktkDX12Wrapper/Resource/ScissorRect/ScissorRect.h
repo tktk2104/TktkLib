@@ -20,7 +20,7 @@ namespace tktk
 		void create(unsigned int id, const std::vector<ScissorRectInitParam>& initParamArray);
 
 		// 指定のシザー矩形をコマンドリストに登録する
-		void set(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void set(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 	private:
 

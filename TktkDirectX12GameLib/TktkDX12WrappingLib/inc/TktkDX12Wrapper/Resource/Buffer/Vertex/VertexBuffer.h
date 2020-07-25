@@ -20,7 +20,7 @@ namespace tktk
 		void create(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
 
 		// コマンドリストに指定の頂点バッファを登録する
-		void set(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void set(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 	private:
 

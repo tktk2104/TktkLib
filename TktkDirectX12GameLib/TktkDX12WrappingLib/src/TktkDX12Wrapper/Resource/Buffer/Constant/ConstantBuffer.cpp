@@ -12,7 +12,7 @@ namespace tktk
 		m_constantBufferDataArray.emplaceAt(id, device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
-	void ConstantBuffer::createCbv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void ConstantBuffer::createCbv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_constantBufferDataArray.at(id)->createCbv(device, heapHandle);
 	}

@@ -40,7 +40,7 @@ namespace tktk
 		);
 	}
 
-	void DepthStencilBufferData::beginWrite(ID3D12GraphicsCommandList* commandList)
+	void DepthStencilBufferData::beginWrite(ID3D12GraphicsCommandList* commandList) const
 	{
 		if (!m_useAsShaderResource) return;
 
@@ -54,7 +54,7 @@ namespace tktk
 		commandList->ResourceBarrier(1, &barrierDesc);
 	}
 
-	void DepthStencilBufferData::endWrite(ID3D12GraphicsCommandList* commandList)
+	void DepthStencilBufferData::endWrite(ID3D12GraphicsCommandList* commandList) const
 	{
 		if (!m_useAsShaderResource) return;
 
@@ -68,7 +68,7 @@ namespace tktk
 		commandList->ResourceBarrier(1, &barrierDesc);
 	}
 
-	void DepthStencilBufferData::createDsv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void DepthStencilBufferData::createDsv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
 		dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
@@ -83,7 +83,7 @@ namespace tktk
 		);
 	}
 
-	void DepthStencilBufferData::createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void DepthStencilBufferData::createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;

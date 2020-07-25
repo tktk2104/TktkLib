@@ -20,7 +20,7 @@ namespace tktk
 	public: /* コマンドリストに登録する処理 */
 
 		// 指定のディスクリプタヒープを複数個まとめてコマンドリストに登録する
-		void set(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray);
+		void set(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray) const;
 
 	public: /* レンダーターゲット、深度ステンシルをコマンドリストに登録する処理 */
 
@@ -28,18 +28,18 @@ namespace tktk
 		void setRtv(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const;
 		
 		// レンダーターゲットビューと深度ステンシルビューをコマンドリストに登録する
-		void setRtvAndDsv(unsigned int renderTargetId, unsigned int depthStencilViewId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount);
+		void setRtvAndDsv(unsigned int renderTargetId, unsigned int depthStencilViewId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocation, unsigned int rtvCount) const;
 		
 		// レンダーターゲットビューを登録せずに指定したディスクリプタヒープの深度ステンシルビューをコマンドリストに登録する
-		void setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
+		void setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 		
 	public: /* ディスクリプタヒープが持つ各ビューのクリア処理 */
 		
 		// 指定したレンダーターゲット用のディスクリプタヒープが持つ指定のレンダーターゲットビューをクリアする
-		void clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color);
+		void clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color) const;
 		
 		// 深度ステンシルビューを全てクリアする
-		void clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
+		void clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 
 	public: /* 作成処理 */
 

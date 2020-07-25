@@ -25,7 +25,7 @@ namespace tktk
 	public:
 
 		// 引数のディスクリプタハンドルにシェーダーリソースビューを作る
-		void createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const;
 
 		// テクスチャバッファ画像の大きさを取得する（ピクセル）
 		const tktkMath::Vector3& getTextureSizePx() const;

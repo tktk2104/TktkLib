@@ -110,7 +110,7 @@ namespace tktk
 		gpuPriorityCreate(id, device, commandList, formatParam, dataParam);
 	}
 
-	void TextureBuffer::createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void TextureBuffer::createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_textureBufferDataArray.at(id)->createSrv(device, heapHandle);
 	}

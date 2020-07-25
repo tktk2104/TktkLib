@@ -17,7 +17,7 @@ namespace tktk
 	public:
 
 		// 引数のディスクリプタハンドルに定数バッファビューを作る
-		void createCbv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createCbv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const;
 
 		// 定数バッファを更新する
 		// ※アップロードバッファを新規に作成し、そのバッファから自身にコピーする命令をコマンドリストに登録する

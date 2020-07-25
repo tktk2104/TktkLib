@@ -17,32 +17,32 @@ namespace tktk
 		m_renderTargetBufferDataArray.emplaceAt(id, swapChain, backBufferIndex);
 	}
 
-	void RenderTargetBuffer::beginWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBuffer::beginWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_renderTargetBufferDataArray.at(id)->beginWriteBasicRtBuffer(commandList);
 	}
 
-	void RenderTargetBuffer::endWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBuffer::endWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_renderTargetBufferDataArray.at(id)->endWriteBasicRtBuffer(commandList);
 	}
 
-	void RenderTargetBuffer::beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBuffer::beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_renderTargetBufferDataArray.at(id)->beginWriteBackBuffer(commandList);
 	}
 
-	void RenderTargetBuffer::endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void RenderTargetBuffer::endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_renderTargetBufferDataArray.at(id)->endWriteBackBuffer(commandList);
 	}
 
-	void RenderTargetBuffer::createRtv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void RenderTargetBuffer::createRtv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_renderTargetBufferDataArray.at(id)->createRtv(device, heapHandle);
 	}
 
-	void RenderTargetBuffer::createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle)
+	void RenderTargetBuffer::createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const
 	{
 		m_renderTargetBufferDataArray.at(id)->createSrv(device, heapHandle);
 	}

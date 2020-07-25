@@ -34,7 +34,7 @@ namespace tktk
 		m_curBackBufferIndex = static_cast<IDXGISwapChain3*>(m_swapChain)->GetCurrentBackBufferIndex();
 	}
 
-	void SwapChain::flipScreen()
+	void SwapChain::flipScreen() const
 	{
 		m_swapChain->Present(1, 0);
 	}

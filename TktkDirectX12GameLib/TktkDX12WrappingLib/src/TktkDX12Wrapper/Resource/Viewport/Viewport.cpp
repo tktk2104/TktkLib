@@ -12,7 +12,7 @@ namespace tktk
 		m_viewportDataArray.emplaceAt(id, initParamArray);
 	}
 
-	void Viewport::set(unsigned int id, ID3D12GraphicsCommandList* commandList)
+	void Viewport::set(unsigned int id, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_viewportDataArray.at(id)->set(commandList);
 	}

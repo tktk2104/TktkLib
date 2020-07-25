@@ -49,7 +49,7 @@ namespace tktk
 		}
 	}
 
-	void VertexBufferData::set(ID3D12GraphicsCommandList* commandList)
+	void VertexBufferData::set(ID3D12GraphicsCommandList* commandList) const
 	{
 		commandList->IASetVertexBuffers(0, 1, &m_vertexBufferView);
 	}

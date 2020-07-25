@@ -81,10 +81,10 @@ namespace tktk
 		void deleteUploadBufferAll();
 
 		// 指定のレンダーターゲットビューを指定の色でクリアする
-		void clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color);
+		void clearRtv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int rtvLocationIndex, const tktkMath::Color& color) const;
 
 		// 全てのデプスステンシルビューをクリアする
-		void clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
+		void clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 
 	public: /* リソース情報取得系処理 */
 
@@ -102,52 +102,52 @@ namespace tktk
 	public: /* 描画準備 */
 
 		// レンダーターゲットビューをコマンドリストに設定する
-		void setRtv(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+		void setRtv(unsigned int rtvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const;
 
 		// レンダーターゲットビューと深度ステンシルビューをコマンドリストに設定する
-		void setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+		void setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const;
 
 		// 深度ステンシルビューをコマンドリストに設定する
 		// ※レンダーターゲットビューは設定できない
-		void setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
+		void setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const;
 
 		// バックバッファービューを設定する
-		void setBackBufferView(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex);
+		void setBackBufferView(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex) const;
 
 		// バックバッファービューと深度ステンシルビューを設定する
-		void setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex);
+		void setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int backBufferIndex) const;
 
 		// 指定のレンダーターゲット用のディスクリプタヒープが使用しているレンダーターゲットバッファの書き込み後処理を行う
-		void unSetRtv(unsigned int rtvDescriptorHeapId, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount);
+		void unSetRtv(unsigned int rtvDescriptorHeapId, ID3D12GraphicsCommandList* commandList, unsigned int startRtvLocationIndex, unsigned int rtvCount) const;
 
 		// 指定の深度書き込み用のディスクリプタヒープが使用している深度バッファの書き込み後処理を行う
-		void unSetDsv(unsigned int dsvDescriptorHeapId, ID3D12GraphicsCommandList* commandList);
+		void unSetDsv(unsigned int dsvDescriptorHeapId, ID3D12GraphicsCommandList* commandList) const;
 
 		// バックバッファをレンダーターゲット状態にする
 		// TODO : 「unsigned int id」を「unsigned int backBufferIndex」に変更する
-		void beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// バックバッファをプリセット状態にする
 		// TODO : 「unsigned int id」を「unsigned int backBufferIndex」に変更する
-		void endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定のビューポートをコマンドリストに設定する
-		void setViewport(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void setViewport(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定のシザー矩形をコマンドリストに設定する
-		void setScissorRect(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void setScissorRect(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定のパイプラインステートをコマンドリストに設定する
-		void setPipeLineState(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void setPipeLineState(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定の頂点バッファをコマンドリストに設定する
-		void setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定のインデックスバッファをコマンドリストに設定する
-		void setIndexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void setIndexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定のディスクリプタヒープの配列をコマンドリストに設定する
-		void setDescriptorHeap(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray);
+		void setDescriptorHeap(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<DescriptorHeapParam>& heapParamArray) const;
 
 	public: /* デフォルトのリソースを使うためのIDを取得する */
 
@@ -193,10 +193,10 @@ namespace tktk
 	private:
 
 		// 引数のバッファ情報が定数バッファであれば定数バッファビューを作り、そうでなければエラーを吐く
-		void createBasicDescriptorCbv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam);
+		void createBasicDescriptorCbv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam) const;
 
 		// 引数のバッファ情報がシェーダーリソースになれるバッファであればシェーダーリソースビューを作り、そうでなければエラーを吐く
-		void createBasicDescriptorSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam);
+		void createBasicDescriptorSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle, const BasicDescriptorParam& useBufferParam) const;
 
 	private:
 

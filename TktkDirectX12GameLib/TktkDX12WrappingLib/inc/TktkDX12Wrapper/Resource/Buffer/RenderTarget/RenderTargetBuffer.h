@@ -23,22 +23,22 @@ namespace tktk
 		void create(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex);
 
 		// 指定のレンダーターゲットバッファのリソースバリアをレンダーターゲット状態に変更する
-		void beginWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void beginWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定のレンダーターゲットバッファのリソースバリアをシェーダー使用状態に変更する
-		void endWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void endWriteBasicRtBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定のレンダーターゲットバッファのリソースバリアをレンダーターゲット状態に変更する
-		void beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void beginWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定のレンダーターゲットバッファのリソースバリアをプリセット状態に変更する
-		void endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList);
+		void endWriteBackBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
 		// 指定のレンダーターゲットバッファを使用して、引数のディスクリプタハンドルにレンダーターゲットビューを作る
-		void createRtv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createRtv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const;
 
 		// 指定のレンダーターゲットバッファを使用して、引数のディスクリプタハンドルにシェーダーリソースビューを作る
-		void createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createSrv(unsigned int id, ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const;
 
 		// 指定のレンダーターゲットバッファ画像の大きさを取得す（ピクセル）
 		const tktkMath::Vector2& getRenderTargetSizePx(unsigned int id) const;

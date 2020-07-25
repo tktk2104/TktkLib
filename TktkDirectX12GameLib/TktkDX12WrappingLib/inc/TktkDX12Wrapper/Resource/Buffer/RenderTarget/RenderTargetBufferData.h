@@ -25,22 +25,22 @@ namespace tktk
 	public:
 
 		// 自身のリソースバリアをレンダーターゲット状態に変更する
-		void beginWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList);
+		void beginWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList) const;
 
 		// 自身のリソースバリアをシェーダー使用状態に変更する
-		void endWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList);
+		void endWriteBasicRtBuffer(ID3D12GraphicsCommandList* commandList) const;
 
 		// 自身のリソースバリアをレンダーターゲット状態に変更する
-		void beginWriteBackBuffer(ID3D12GraphicsCommandList* commandList);
+		void beginWriteBackBuffer(ID3D12GraphicsCommandList* commandList) const;
 
 		// 自身のリソースバリアをプリセット状態に変更する
-		void endWriteBackBuffer(ID3D12GraphicsCommandList* commandList);
+		void endWriteBackBuffer(ID3D12GraphicsCommandList* commandList) const;
 
 		// 引数のディスクリプタハンドルにレンダーターゲットビューを作る
-		void createRtv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createRtv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const;
 
 		// 引数のディスクリプタハンドルにシェーダーリソースビューを作る
-		void createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle);
+		void createSrv(ID3D12Device* device, D3D12_CPU_DESCRIPTOR_HANDLE heapHandle) const;
 
 		// レンダーターゲットバッファ画像の大きさを取得する（ピクセル）
 		const tktkMath::Vector2& getRenderTargetSizePx() const;

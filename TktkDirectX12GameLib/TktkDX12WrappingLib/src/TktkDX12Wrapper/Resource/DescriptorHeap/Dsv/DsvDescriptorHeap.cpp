@@ -32,12 +32,12 @@ namespace tktk
 		m_dsvDescriptorHeapDataArray.at(id)->setRootDescriptorTable(device, commandList);
 	}
 
-	void DsvDescriptorHeap::setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DsvDescriptorHeap::setOnlyDsv(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		m_dsvDescriptorHeapDataArray.at(id)->setOnlyDsv(device, commandList);
 	}
 
-	void DsvDescriptorHeap::clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList)
+	void DsvDescriptorHeap::clearDsvAll(ID3D12Device* device, ID3D12GraphicsCommandList* commandList) const
 	{
 		for (unsigned int i = 0; i < m_dsvDescriptorHeapDataArray.arrayMaxSize(); i++)
 		{

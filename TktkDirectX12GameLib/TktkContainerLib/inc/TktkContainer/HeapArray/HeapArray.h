@@ -39,7 +39,10 @@ namespace tktk
 	public:
 
 		// 指定したインデックスのポインタを取得する（インデックスが指し示すメモリが未使用ならnullPtrを返す）
-		NodeType* at(unsigned int index) const;
+		NodeType* at(unsigned int index);
+
+		// 指定したインデックスのポインタを取得する（const版）（インデックスが指し示すメモリが未使用ならnullPtrを返す）
+		const NodeType* at(unsigned int index) const;
 
 	private:
 
@@ -204,8 +207,19 @@ namespace tktk
 		}
 	}
 
+	// 指定したインデックスのポインタを取得する（インデックスが指し示すメモリが未使用ならnullPtrを返す）
 	template<class NodeType, class Allocator>
-	inline NodeType* HeapArray<NodeType, Allocator>::at(unsigned int index) const
+	inline NodeType* HeapArray<NodeType, Allocator>::at(unsigned int index) 
+	{
+		// 引数のインデックスが未使用メモリを指していたらnullptrを返す
+		if ((m_arrayNodeUseCheckBitFlag[index / 32U] & (1U << (index % 32U))) == 0U) return nullptr;
+
+		return (m_arrayTopPos + index);
+	}
+
+	// 指定したインデックスのポインタを取得する（const版）（インデックスが指し示すメモリが未使用ならnullPtrを返す）
+	template<class NodeType, class Allocator>
+	inline const NodeType* HeapArray<NodeType, Allocator>::at(unsigned int index) const
 	{
 		// 引数のインデックスが未使用メモリを指していたらnullptrを返す
 		if ((m_arrayNodeUseCheckBitFlag[index / 32U] & (1U << (index % 32U))) == 0U) return nullptr;

@@ -277,7 +277,7 @@ namespace tktk
 		m_dX3DResource.updateCBuffer(id, m_device, m_commandList, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
-	void DX3DBaseObjects::clearRtv(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color)
+	void DX3DBaseObjects::clearRtv(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color) const
 	{
 		m_dX3DResource.clearRtv(id, m_device, m_commandList, rtvLocationIndex, color);
 	}
@@ -297,77 +297,77 @@ namespace tktk
 		return m_dX3DResource.getRtBufferSizePx(id);
 	}
 
-	void DX3DBaseObjects::setRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX3DBaseObjects::setRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
 	{
 		m_dX3DResource.setRtv(rtvDescriptorHeapId, m_device, m_commandList, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX3DBaseObjects::setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX3DBaseObjects::setRtvAndDsv(unsigned int rtvDescriptorHeapId, unsigned int dsvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
 	{
 		m_dX3DResource.setRtvAndDsv(dsvDescriptorHeapId, dsvDescriptorHeapId, m_device, m_commandList, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX3DBaseObjects::setOnlyDsv(unsigned int id)
+	void DX3DBaseObjects::setOnlyDsv(unsigned int id) const
 	{
 		m_dX3DResource.setOnlyDsv(id, m_device, m_commandList);
 	}
 
-	void DX3DBaseObjects::setBackBufferView()
+	void DX3DBaseObjects::setBackBufferView() const
 	{
 		m_dX3DResource.setBackBufferView(m_device, m_commandList, m_swapChain.getCurBackBufferIndex());
 	}
 
-	void DX3DBaseObjects::setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId)
+	void DX3DBaseObjects::setBackBufferViewAndDsv(unsigned int dsvDescriptorHeapId) const
 	{
 		m_dX3DResource.setBackBufferViewAndDsv(dsvDescriptorHeapId, m_device, m_commandList, m_swapChain.getCurBackBufferIndex());
 	}
 
-	void DX3DBaseObjects::unSetRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount)
+	void DX3DBaseObjects::unSetRtv(unsigned int rtvDescriptorHeapId, unsigned int startRtvLocationIndex, unsigned int rtvCount) const
 	{
 		m_dX3DResource.unSetRtv(rtvDescriptorHeapId, m_commandList, startRtvLocationIndex, rtvCount);
 	}
 
-	void DX3DBaseObjects::unSetDsv(unsigned int dsvDescriptorHeapId)
+	void DX3DBaseObjects::unSetDsv(unsigned int dsvDescriptorHeapId) const
 	{
 		m_dX3DResource.unSetDsv(dsvDescriptorHeapId, m_commandList);
 	}
 
-	void DX3DBaseObjects::setViewport(unsigned int id)
+	void DX3DBaseObjects::setViewport(unsigned int id) const
 	{
 		m_dX3DResource.setViewport(id, m_commandList);
 	}
 
-	void DX3DBaseObjects::setScissorRect(unsigned int id)
+	void DX3DBaseObjects::setScissorRect(unsigned int id) const
 	{
 		m_dX3DResource.setScissorRect(id, m_commandList);
 	}
 
-	void DX3DBaseObjects::setPipeLineState(unsigned int id)
+	void DX3DBaseObjects::setPipeLineState(unsigned int id) const
 	{
 		m_dX3DResource.setPipeLineState(id, m_commandList);
 	}
 
-	void DX3DBaseObjects::setVertexBuffer(unsigned int id)
+	void DX3DBaseObjects::setVertexBuffer(unsigned int id) const
 	{
 		m_dX3DResource.setVertexBuffer(id, m_commandList);
 	}
 
-	void DX3DBaseObjects::setIndexBuffer(unsigned int id)
+	void DX3DBaseObjects::setIndexBuffer(unsigned int id) const
 	{
 		m_dX3DResource.setIndexBuffer(id, m_commandList);
 	}
 
-	void DX3DBaseObjects::setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray)
+	void DX3DBaseObjects::setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray) const
 	{
 		m_dX3DResource.setDescriptorHeap(m_device, m_commandList, heapParamArray);
 	}
 
-	void DX3DBaseObjects::setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology)
+	void DX3DBaseObjects::setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology) const
 	{
 		m_commandList->IASetPrimitiveTopology(topology);
 	}
 
-	void DX3DBaseObjects::drawIndexedInstanced(unsigned int indexCountPerInstance, unsigned int instanceCount, unsigned int startIndexLocation, unsigned int baseVertexLocation, unsigned int startInstanceLocation)
+	void DX3DBaseObjects::drawIndexedInstanced(unsigned int indexCountPerInstance, unsigned int instanceCount, unsigned int startIndexLocation, unsigned int baseVertexLocation, unsigned int startInstanceLocation) const
 	{
 		m_commandList->DrawIndexedInstanced(indexCountPerInstance, instanceCount, startIndexLocation, baseVertexLocation, startInstanceLocation);
 	}

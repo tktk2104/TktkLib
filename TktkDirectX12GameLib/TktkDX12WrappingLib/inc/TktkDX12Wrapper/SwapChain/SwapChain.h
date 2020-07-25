@@ -26,7 +26,7 @@ namespace tktk
 		void updateBackBufferIndex();
 
 		// 画面をフリップする
-		void flipScreen();
+		void flipScreen() const;
 
 		// バックバッファを取得する処理で必要なゲッター
 		IDXGISwapChain1* getPtr() const;
