@@ -25,10 +25,10 @@ namespace tktk
 	public:
 
 		// 指定のキーが押されているかを判定
-		bool isPush(KeybordKeyType keyType);
+		bool isPush(KeybordKeyType keyType) const;
 
 		// 指定のキーが押され始めたかを判定
-		bool isTrigger(KeybordKeyType keyType);
+		bool isTrigger(KeybordKeyType keyType) const;
 
 	private:
 

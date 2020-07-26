@@ -2,6 +2,7 @@
 #define COMPONENT_MANAGER_H_
 
 #include <memory>
+#include <utility>
 #include <map>
 #include <unordered_map>
 #include "ComponentUpdatePriorityList.h"
@@ -41,7 +42,7 @@ namespace tktk
 
 		// テンプレート引数の型のコンポーネントを引数の値を使って作る
 		template <class ComponentType, class... Args>
-		std::weak_ptr<ComponentType> createComponent(Args... args);
+		std::weak_ptr<ComponentType> createComponent(Args&&... args);
 
 	private:
 
@@ -72,7 +73,7 @@ namespace tktk
 
 	// テンプレート引数の型のコンポーネントを引数の値を使って作る
 	template<class ComponentType, class ...Args>
-	inline std::weak_ptr<ComponentType> ComponentManager::createComponent(Args ...args)
+	inline std::weak_ptr<ComponentType> ComponentManager::createComponent(Args&&... args)
 	{
 		auto findNode = m_addComponentMap.find(ClassTypeChecker::getClassId<ComponentType>());
 		
@@ -81,7 +82,7 @@ namespace tktk
 			createList<ComponentType>();
 			findNode = m_addComponentMap.find(ClassTypeChecker::getClassId<ComponentType>());
 		}
-		auto createdComponent = (*findNode).second.lock()->createComponent<ComponentType>(args...);
+		auto createdComponent = (*findNode).second.lock()->createComponent<ComponentType>(std::forward<Args>(args)...);
 		
 		m_startList.addComponent(createdComponent);
 		m_collisionList.addComponent(createdComponent);

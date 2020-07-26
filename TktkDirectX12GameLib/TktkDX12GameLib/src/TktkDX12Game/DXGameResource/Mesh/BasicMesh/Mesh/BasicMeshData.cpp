@@ -12,7 +12,7 @@ namespace tktk
 	{
 	}
 
-	void BasicMeshData::writeShadowMap()
+	void BasicMeshData::writeShadowMap() const
 	{
 		// シャドウマップ描画用の深度バッファー“のみ”を設定する
 		DX12GameManager::setOnlyDsv(DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::ShadowMap));
@@ -48,7 +48,7 @@ namespace tktk
 		DX12GameManager::executeCommandList();
 	}
 
-	void BasicMeshData::drawMesh(const MeshDrawFuncBaseArgs& baseArgs)
+	void BasicMeshData::drawMesh(const MeshDrawFuncBaseArgs& baseArgs) const
 	{
 		// ビューポートを設定する
 		DX12GameManager::setViewport(baseArgs.viewportId);

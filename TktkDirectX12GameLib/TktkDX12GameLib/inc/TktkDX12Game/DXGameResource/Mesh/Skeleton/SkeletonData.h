@@ -25,7 +25,7 @@ namespace tktk
 		void transform(const std::vector<MotionBoneParam>& transformMatrices);
 
 		// 骨情報を管理する定数バッファを更新する
-		void updateBoneMatrixCbuffer();
+		void updateBoneMatrixCbuffer() const;
 
 	private:
 

@@ -41,7 +41,7 @@ namespace tktk
 		m_basicMeshArray.emplaceAt(id, initParam);
 	}
 
-	void BasicMesh::writeShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData)
+	void BasicMesh::writeShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData) const
 	{
 		// メッシュの座標変換に使用する情報を定数バッファに書き込む
 		updateMeshTransformCbuffer(transformBufferData);
@@ -50,7 +50,7 @@ namespace tktk
 		m_basicMeshArray.at(id)->writeShadowMap();
 	}
 
-	void BasicMesh::drawMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
+	void BasicMesh::drawMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs) const
 	{
 		// メッシュの座標変換に使用する情報を定数バッファに書き込む
 		updateMeshTransformCbuffer(baseArgs.transformBufferData);
@@ -65,7 +65,7 @@ namespace tktk
 		m_basicMeshArray.at(id)->drawMesh(baseArgs);
 	}
 
-	void BasicMesh::createWriteShadowMapRootSignature()
+	void BasicMesh::createWriteShadowMapRootSignature() const
 	{
 		RootSignatureInitParam initParam{};
 		initParam.flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -93,7 +93,7 @@ namespace tktk
 		DX12GameManager::createRootSignature(DX12GameManager::getSystemId(SystemRootSignatureType::ShadowMap), initParam);
 	}
 
-	void BasicMesh::createWriteShadowMapGraphicsPipeLineState(const std::string& writeShadowMapVsFilePath)
+	void BasicMesh::createWriteShadowMapGraphicsPipeLineState(const std::string& writeShadowMapVsFilePath) const
 	{
 		PipeLineStateInitParam initParam{};
 		initParam.rasterizerDesc.MultisampleEnable = false;
@@ -125,12 +125,12 @@ namespace tktk
 		DX12GameManager::createPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::ShadowMap), initParam, shaderFilePaths);
 	}
 
-	void BasicMesh::updateMeshTransformCbuffer(const MeshTransformCbuffer& transformBufferData)
+	void BasicMesh::updateMeshTransformCbuffer(const MeshTransformCbuffer& transformBufferData) const
 	{
 		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::MeshTransform), transformBufferData);
 	}
 
-	void BasicMesh::updateMeshShadowMapCBuffer(const MeshShadowMapCBuffer& shadowMapBufferData)
+	void BasicMesh::updateMeshShadowMapCBuffer(const MeshShadowMapCBuffer& shadowMapBufferData) const
 	{
 		DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::MeshShadowMap), shadowMapBufferData);
 	}

@@ -21,7 +21,7 @@ namespace tktk
         m_skeletonArray.at(id)->transform(transformMatrices);
     }
 
-    void Skeleton::updateBoneMatrixCbuffer(unsigned int id)
+    void Skeleton::updateBoneMatrixCbuffer(unsigned int id) const
     {
         m_skeletonArray.at(id)->updateBoneMatrixCbuffer();
     }

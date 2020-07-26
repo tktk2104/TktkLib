@@ -22,7 +22,7 @@ namespace tktk
 		void transform(unsigned int id, const std::vector<MotionBoneParam>& transformMatrices);
 
 		// 指定のスケルトンを使って骨情報を管理する定数バッファを更新する
-		void updateBoneMatrixCbuffer(unsigned int id);
+		void updateBoneMatrixCbuffer(unsigned int id) const;
 
 	private:
 

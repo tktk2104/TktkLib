@@ -18,12 +18,12 @@ namespace tktk
 	public:
 
 		// スプライトを描画する
-		void drawSprite(const SpriteMaterialDrawFuncArgs& drawFuncArgs);
+		void drawSprite(const SpriteMaterialDrawFuncArgs& drawFuncArgs) const;
 
 	private:
 
 		// スプライト用の定数バッファを更新する
-		void updateSpriteConstantBuffer(const tktkMath::Matrix3& worldMatrix);
+		void updateSpriteConstantBuffer(const tktkMath::Matrix3& worldMatrix) const;
 
 	private:
 

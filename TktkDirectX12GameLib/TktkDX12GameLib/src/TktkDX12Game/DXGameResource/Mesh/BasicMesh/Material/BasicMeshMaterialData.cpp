@@ -56,7 +56,7 @@ namespace tktk
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
 	}
 
-	void BasicMeshMaterialData::setMaterialData()
+	void BasicMeshMaterialData::setMaterialData() const
 	{
 		// マテリアルの情報を定数バッファに書き込む
 		{

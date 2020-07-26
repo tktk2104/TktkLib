@@ -17,7 +17,7 @@ namespace tktk
 	public:
 
 		// 自身のマテリアル情報をグラフィックパイプラインに設定する
-		void setMaterialData();
+		void setMaterialData() const;
 
 	private:
 

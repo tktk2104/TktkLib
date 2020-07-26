@@ -61,7 +61,7 @@ namespace tktk
 		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
 	}
 
-	void SpriteMaterialData::drawSprite(const SpriteMaterialDrawFuncArgs& drawFuncArgs)
+	void SpriteMaterialData::drawSprite(const SpriteMaterialDrawFuncArgs& drawFuncArgs) const
 	{
 		// スプライト用の定数バッファを更新する
 		updateSpriteConstantBuffer(drawFuncArgs.worldMatrix);
@@ -111,7 +111,7 @@ namespace tktk
 	}
 
 	// スプライト用の定数バッファを更新する
-	void SpriteMaterialData::updateSpriteConstantBuffer(const tktkMath::Matrix3& worldMatrix)
+	void SpriteMaterialData::updateSpriteConstantBuffer(const tktkMath::Matrix3& worldMatrix) const
 	{
 		SpriteConstantBufferData constantBufferData;
 		for (unsigned int i = 0; i < 12; i++)

@@ -2,6 +2,7 @@
 #define GAME_OBJECT_H_
 
 #include <memory>
+#include <utility>
 #include "GameObjectTagList.h"
 #include "../Component/ComponentGameObjectFunc/GameObjectComponentList.h"
 #include "../_MainManager/DX12GameManager.h"
@@ -53,7 +54,7 @@ namespace tktk
 
 		// テンプレート引数の型のコンポーネントを引数の値を使って作る
 		template <class ComponentType, class... Args>
-		ComponentPtr<ComponentType> createComponent(Args... args);
+		ComponentPtr<ComponentType> createComponent(Args&&... args);
 
 		// テンプレート引数の型のコンポーネントを持っていたら取得し、持っていなかったらnullptrを返す
 		// ※複数同じ型のコンポーネントを所持していた場合、最初に見つけた１つを取得する
@@ -116,9 +117,9 @@ namespace tktk
 
 	// テンプレート引数の型のコンポーネントを引数の値を使って作る
 	template<class ComponentType, class ...Args>
-	inline ComponentPtr<ComponentType> GameObject::createComponent(Args ...args)
+	inline ComponentPtr<ComponentType> GameObject::createComponent(Args&& ...args)
 	{
-		auto createdComponent = DX12GameManager::createComponent<ComponentType>(args...);
+		auto createdComponent = DX12GameManager::createComponent<ComponentType>(std::forward<Args>(args)...);
 		createdComponent.lock()->setUser(GameObjectPtr(weak_from_this()));
 		return m_componentList.add<ComponentType>(createdComponent);
 	}

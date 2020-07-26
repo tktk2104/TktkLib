@@ -51,7 +51,7 @@ namespace tktk
 		transform(&m_boneNodeMap.at("ÉZÉìÉ^Å["), tktkMath::mat4Identity);
 	}
 
-	void SkeletonData::updateBoneMatrixCbuffer()
+	void SkeletonData::updateBoneMatrixCbuffer() const
 	{
 		BoneMatrixCbufferData boneMatBuf;
 

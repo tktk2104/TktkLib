@@ -33,12 +33,12 @@ namespace tktk
 		m_gamePad->update();
 	}
 
-	bool DirectInputWrapper::isPush(KeybordKeyType keyType)
+	bool DirectInputWrapper::isPush(KeybordKeyType keyType) const
 	{
 		return m_keyboard->isPush(keyType);
 	}
 
-	bool DirectInputWrapper::isTrigger(KeybordKeyType keyType)
+	bool DirectInputWrapper::isTrigger(KeybordKeyType keyType) const
 	{
 		return m_keyboard->isTrigger(keyType);
 	}

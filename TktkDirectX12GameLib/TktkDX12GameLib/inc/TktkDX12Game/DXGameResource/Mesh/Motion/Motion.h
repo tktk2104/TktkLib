@@ -19,7 +19,7 @@ namespace tktk
 		void load(unsigned int id, const std::string& motionFileName);
 
 		// 指定のフレームのボーン毎の行列を取得する（キーが無い時は前後のキーから計算する）
-		std::vector<MotionBoneParam> calculateBoneTransformMatrices(unsigned int id, unsigned int frame);
+		std::vector<MotionBoneParam> calculateBoneTransformMatrices(unsigned int id, unsigned int frame) const;
 
 	private:
 

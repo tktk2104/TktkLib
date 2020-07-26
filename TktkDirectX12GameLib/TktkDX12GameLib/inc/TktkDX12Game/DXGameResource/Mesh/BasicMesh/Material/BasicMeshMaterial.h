@@ -21,15 +21,15 @@ namespace tktk
 		void create(unsigned int id, const BasicMeshMaterialInitParam& initParam);
 
 		// 指定の通常メッシュのマテリアル情報をグラフィックパイプラインに設定する
-		void setMaterialData(unsigned int id);
+		void setMaterialData(unsigned int id)  const;
 
 	private:
 
 		// 通常メッシュマテリアル描画用のルートシグネチャを作る
-		void createRootSignature();
+		void createRootSignature() const;
 
 		// 通常メッシュマテリアル描画用のパイプラインステートを作る
-		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths);
+		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths) const;
 
 	private:
 

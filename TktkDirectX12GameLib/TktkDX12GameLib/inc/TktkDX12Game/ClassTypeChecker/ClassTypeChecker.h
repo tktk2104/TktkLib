@@ -20,6 +20,7 @@ namespace tktk
 //┃ここから下は関数の実装
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+	// テンプレート引数の型に対応したuint型を取得する
 	template<class T>
 	inline unsigned int ClassTypeChecker::getClassId()
 	{

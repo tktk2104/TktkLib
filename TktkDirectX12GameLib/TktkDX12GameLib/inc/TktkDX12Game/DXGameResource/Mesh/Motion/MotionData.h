@@ -22,7 +22,7 @@ namespace tktk
 	public:
 
 		// 指定のフレームのボーン毎の行列を取得する（キーが無い時は前後のキーから計算する）
-		std::vector<MotionBoneParam> calculateBoneTransformMatrices(unsigned int frame);
+		std::vector<MotionBoneParam> calculateBoneTransformMatrices(unsigned int frame) const;
 
 	private:
 
@@ -38,7 +38,7 @@ namespace tktk
 	private:
 
 		// 現在のフレームに対応したキーフレームを求める
-		KeyFrame calculateKeyFrame(const std::vector<KeyFrame>& keyFrames, unsigned int frame);
+		KeyFrame calculateKeyFrame(const std::vector<KeyFrame>& keyFrames, unsigned int frame) const;
 
 	private:
 

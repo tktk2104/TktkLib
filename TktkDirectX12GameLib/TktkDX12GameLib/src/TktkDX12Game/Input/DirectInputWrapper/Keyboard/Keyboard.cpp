@@ -52,12 +52,12 @@ namespace tktk
 		}
 	}
 
-	bool Keyboard::isPush(KeybordKeyType keyType)
+	bool Keyboard::isPush(KeybordKeyType keyType) const
 	{
 		return (m_curKeys.at(static_cast<unsigned int>(keyType)) & 0x80);
 	}
 
-	bool Keyboard::isTrigger(KeybordKeyType keyType)
+	bool Keyboard::isTrigger(KeybordKeyType keyType) const
 	{
 		return ((m_curKeys.at(static_cast<unsigned int>(keyType)) & 0x80) && !(m_preKeys.at(static_cast<unsigned int>(keyType)) & 0x80));
 	}

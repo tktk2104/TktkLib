@@ -5,6 +5,7 @@
 #include <vector>
 #include <forward_list>
 #include <memory>
+#include <utility>
 #include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector3.h>
 
@@ -49,7 +50,7 @@ namespace tktk
 
 		// シーンを作成して追加する
 		template<class SceneType, class... Args>
-		static void addScene(unsigned int id, Args... constructorArgs);
+		static void addScene(unsigned int id, Args&&... constructorArgs);
 
 		// シーンを有効にする
 		static void enableScene(unsigned int id);
@@ -84,7 +85,7 @@ namespace tktk
 
 		// テンプレート引数の型のコンポーネントを引数の値を使って作る
 		template <class ComponentType, class... Args>
-		static std::weak_ptr<ComponentType> createComponent(Args... args);
+		static std::weak_ptr<ComponentType> createComponent(Args&&... args);
 
 	public: /* 直接DX12の処理を呼ぶ */
 
@@ -388,9 +389,9 @@ namespace tktk
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 	template<class SceneType, class ...Args>
-	inline void DX12GameManager::addScene(unsigned int id, Args ...constructorArgs)
+	inline void DX12GameManager::addScene(unsigned int id, Args&&...constructorArgs)
 	{
-		createSceneImpl(id, std::make_shared<SceneType>(constructorArgs...), &SceneVTableInitializer<SceneType>::m_vtable);
+		createSceneImpl(id, std::make_shared<SceneType>(std::forward<Args>(constructorArgs)...), &SceneVTableInitializer<SceneType>::m_vtable);
 	}
 
 	template<class ComponentType>
@@ -400,9 +401,9 @@ namespace tktk
 	}
 
 	template<class ComponentType, class ...Args>
-	inline std::weak_ptr<ComponentType> DX12GameManager::createComponent(Args ...args)
+	inline std::weak_ptr<ComponentType> DX12GameManager::createComponent(Args&&...args)
 	{
-		return m_componentManager->createComponent<ComponentType>(args...);
+		return m_componentManager->createComponent<ComponentType>(std::forward<Args>(args)...);
 	}
 
 	template<class VertexData>

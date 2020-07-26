@@ -12,7 +12,7 @@ namespace tktk
 		m_motionArray.emplaceAt(id, motionFileName);
 	}
 
-	std::vector<MotionBoneParam> Motion::calculateBoneTransformMatrices(unsigned int id, unsigned int frame)
+	std::vector<MotionBoneParam> Motion::calculateBoneTransformMatrices(unsigned int id, unsigned int frame) const
 	{
 		return m_motionArray.at(id)->calculateBoneTransformMatrices(frame);
 	}

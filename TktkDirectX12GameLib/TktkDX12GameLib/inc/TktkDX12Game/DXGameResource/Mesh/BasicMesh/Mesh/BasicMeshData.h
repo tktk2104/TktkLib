@@ -18,10 +18,10 @@ namespace tktk
 	public:
 
 		// シャドウマップを書き込む
-		void writeShadowMap();
+		void writeShadowMap() const;
 
 		// 通常メッシュを描画する
-		void drawMesh(const MeshDrawFuncBaseArgs& baseArgs);
+		void drawMesh(const MeshDrawFuncBaseArgs& baseArgs) const;
 
 	private:
 

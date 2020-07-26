@@ -23,7 +23,7 @@ namespace tktk
 		m_basicMeshMaterialArray.emplaceAt(id, initParam);
 	}
 
-	void BasicMeshMaterial::setMaterialData(unsigned int id)
+	void BasicMeshMaterial::setMaterialData(unsigned int id) const
 	{
 		auto basicMeshPtr = m_basicMeshMaterialArray.at(id);
 
@@ -37,7 +37,7 @@ namespace tktk
 		basicMeshPtr->setMaterialData();
 	}
 
-	void BasicMeshMaterial::createRootSignature()
+	void BasicMeshMaterial::createRootSignature() const
 	{
 		RootSignatureInitParam initParam{};
 		initParam.flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -92,7 +92,7 @@ namespace tktk
 		DX12GameManager::createRootSignature(DX12GameManager::getSystemId(SystemRootSignatureType::BasicMesh), initParam);
 	}
 
-	void BasicMeshMaterial::createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths)
+	void BasicMeshMaterial::createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths) const
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
 		renderTargetBlendDesc.BlendEnable = false;

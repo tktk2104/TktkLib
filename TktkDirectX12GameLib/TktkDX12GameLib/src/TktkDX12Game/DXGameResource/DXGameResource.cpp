@@ -80,7 +80,7 @@ namespace tktk
 		m_spriteMaterial.create(id, initParam);
 	}
 
-	void DXGameResource::drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs)
+	void DXGameResource::drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs) const
 	{
 		m_spriteMaterial.drawSprite(id, drawFuncArgs);
 	}
@@ -95,17 +95,17 @@ namespace tktk
 		m_basicMeshMaterial.create(id, initParam);
 	}
 
-	void DXGameResource::writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData)
+	void DXGameResource::writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData) const
 	{
 		m_basicMesh.writeShadowMap(id, transformBufferData);
 	}
 
-	void DXGameResource::setMaterialData(unsigned int id)
+	void DXGameResource::setMaterialData(unsigned int id) const
 	{
 		m_basicMeshMaterial.setMaterialData(id);
 	}
 
-	void DXGameResource::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs)
+	void DXGameResource::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs) const
 	{
 		m_basicMesh.drawMesh(id, baseArgs);
 	}
@@ -120,7 +120,7 @@ namespace tktk
 		m_skeleton.create(id, initParam);
 	}
 
-	void DXGameResource::updateBoneMatrixCbuffer(unsigned int id)
+	void DXGameResource::updateBoneMatrixCbuffer(unsigned int id) const
 	{
 		m_skeleton.updateBoneMatrixCbuffer(id);
 	}

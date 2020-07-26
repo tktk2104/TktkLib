@@ -30,13 +30,13 @@ namespace tktk
 		m_spriteMaterialArray.emplaceAt(id, initParam);
 	}
 
-	void SpriteMaterial::drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs)
+	void SpriteMaterial::drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs) const
 	{
 		m_spriteMaterialArray.at(id)->drawSprite(drawFuncArgs);
 	}
 
 	// スプライト用のルートシグネチャ
-	void SpriteMaterial::createRootSignature()
+	void SpriteMaterial::createRootSignature() const
 	{
 		RootSignatureInitParam initParam{};
 		initParam.flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -73,7 +73,7 @@ namespace tktk
 	}
 
 	// スプライト用のグラフィックパイプラインステート
-	void SpriteMaterial::createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths)
+	void SpriteMaterial::createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths) const
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
 		renderTargetBlendDesc.BlendEnable = false;

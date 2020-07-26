@@ -21,15 +21,15 @@ namespace tktk
 		void create(unsigned int id, const SpriteMaterialInitParam& initParam);
 
 		// 指定したスプライトを描画する
-		void drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs);
+		void drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs) const;
 
 	private:
 
 		// スプライト描画用のルートシグネチャを作る
-		void createRootSignature();
+		void createRootSignature() const;
 
 		// スプライト描画用のパイプラインステートを作る
-		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths);
+		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths) const;
 
 	private:
 

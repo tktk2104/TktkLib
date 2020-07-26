@@ -71,7 +71,7 @@ namespace tktk
 		void createSpriteMaterial(unsigned int id, const SpriteMaterialInitParam& initParam);
 
 		// 指定したスプライトを描画する
-		void drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs);
+		void drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs) const;
 
 	public: /* メッシュ関係の処理 */
 
@@ -82,13 +82,13 @@ namespace tktk
 		void createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam);
 
 		// 指定の通常メッシュでシャドウマップを書き込む
-		void writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData);
+		void writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData) const;
 
 		// 指定の通常メッシュのマテリアル情報をグラフィックパイプラインに設定する
-		void setMaterialData(unsigned int id);
+		void setMaterialData(unsigned int id) const;
 
 		// 指定の通常メッシュを描画する
-		void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
+		void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs) const;
 
 		// pmdファイルをロードしてゲームの各種リソースクラスを作る
 		BasicMeshLoadPmdReturnValue loadPmd(const BasicMeshLoadPmdArgs& args);
@@ -99,7 +99,7 @@ namespace tktk
 		void createSkeleton(unsigned int id, const SkeletonInitParam& initParam);
 
 		// 指定のスケルトンを使って骨情報を管理する定数バッファを更新する
-		void updateBoneMatrixCbuffer(unsigned int id);
+		void updateBoneMatrixCbuffer(unsigned int id) const;
 
 	public: /* モーション関係の処理 */
 

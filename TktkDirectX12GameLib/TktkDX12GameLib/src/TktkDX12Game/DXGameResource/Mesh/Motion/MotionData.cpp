@@ -27,7 +27,7 @@ namespace tktk
         }
     }
 
-    std::vector<MotionBoneParam> MotionData::calculateBoneTransformMatrices(unsigned int frame)
+    std::vector<MotionBoneParam> MotionData::calculateBoneTransformMatrices(unsigned int frame) const
     {
         std::vector<MotionBoneParam> result{};
         result.reserve(m_boneKeyFrames.size());
@@ -49,7 +49,7 @@ namespace tktk
         return result;
     }
 
-    MotionData::KeyFrame MotionData::calculateKeyFrame(const std::vector<MotionData::KeyFrame, std::allocator<MotionData::KeyFrame>>& keyFrames, unsigned int frame)
+    MotionData::KeyFrame MotionData::calculateKeyFrame(const std::vector<MotionData::KeyFrame, std::allocator<MotionData::KeyFrame>>& keyFrames, unsigned int frame) const
     {
         // 始まりのインデックス
         unsigned int startKey   = 0;
