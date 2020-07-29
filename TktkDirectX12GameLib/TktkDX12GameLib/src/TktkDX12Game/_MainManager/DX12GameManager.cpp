@@ -7,6 +7,7 @@
 #include "TktkDX12Game/DXGameResource/DXGameResource.h"
 #include "TktkDX12Game/Input/Mouse/Mouse.h"
 #include "TktkDX12Game/Input/DirectInputWrapper/DirectInputWrapper.h"
+#include "TktkDX12Game/Time/ElapsedTimer.h"
 
 namespace tktk
 {
@@ -17,6 +18,7 @@ namespace tktk
 	std::unique_ptr<DXGameResource>			DX12GameManager::m_dxGameResource;
 	std::unique_ptr<DirectInputWrapper>		DX12GameManager::m_directInputWrapper;
 	std::unique_ptr<Mouse>					DX12GameManager::m_mouse;
+	std::unique_ptr<ElapsedTimer>			DX12GameManager::m_elapsedTimer;
 
 	void DX12GameManager::initialize(const DX12GameManagerInitParam& gameManagerInitParam)
 	{
@@ -39,7 +41,8 @@ namespace tktk
 		}
 		m_mouse					= std::make_unique<Mouse>();
 		m_directInputWrapper	= std::make_unique<DirectInputWrapper>(gameManagerInitParam.windowParam.hInstance, m_window->getHWND());
-		
+		m_elapsedTimer			= std::make_unique<ElapsedTimer>();
+
 		// シャドウマップの深度バッファーを作る
 		{
 			DepthStencilBufferInitParam initParam{};
@@ -127,6 +130,7 @@ namespace tktk
 
 			if (canRunDX12Func)
 			{
+				m_elapsedTimer->update();
 				m_directInputWrapper->update();
 				m_mouse->update();
 				m_dxGameResource->updateScene();
@@ -540,6 +544,56 @@ namespace tktk
 	bool DX12GameManager::isTrigger(GamePadBtnType btnType)
 	{
 		return m_directInputWrapper->isTrigger(btnType);
+	}
+
+	void DX12GameManager::reset()
+	{
+		m_elapsedTimer->reset();
+	}
+
+	float DX12GameManager::deltaTime()
+	{
+		return m_elapsedTimer->deltaTime();
+	}
+
+	float DX12GameManager::noScaleDeltaTime()
+	{
+		return m_elapsedTimer->noScaleDeltaTime();
+	}
+
+	float DX12GameManager::getCurTimeSec()
+	{
+		return m_elapsedTimer->getCurTimeSec();
+	}
+
+	void DX12GameManager::setMaximumDeltaTime(float maximumDeltaTime)
+	{
+		m_elapsedTimer->setMaximumDeltaTime(maximumDeltaTime);
+	}
+
+	float DX12GameManager::getTimeScale()
+	{
+		return m_elapsedTimer->getTimeScale();
+	}
+
+	void DX12GameManager::setTimeScale(float timeScaleRate)
+	{
+		m_elapsedTimer->setTimeScale(timeScaleRate);
+	}
+
+	void DX12GameManager::setBaseFps(unsigned int baseFps)
+	{
+		m_elapsedTimer->setBaseFps(baseFps);
+	}
+
+	unsigned int DX12GameManager::getBaseFps()
+	{
+		return m_elapsedTimer->getBaseFps();
+	}
+
+	float DX12GameManager::fps()
+	{
+		return m_elapsedTimer->fps();
 	}
 
 	unsigned int DX12GameManager::getSystemId(SystemViewportType type)

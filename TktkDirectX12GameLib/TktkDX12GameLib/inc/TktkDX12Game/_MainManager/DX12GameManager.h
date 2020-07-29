@@ -29,6 +29,7 @@ namespace tktk
 	class GameObjectManager;
 	class DXGameResource;
 	class DirectInputWrapper;
+	class ElapsedTimer;
 	class Mouse;
 
 	class DX12GameManager
@@ -352,6 +353,38 @@ namespace tktk
 		// 指定のボタンが押され始めたかを判定
 		static bool isTrigger(GamePadBtnType btnType);
 
+	public: /* タイム関係の処理 */
+
+		// 経過時間を初期化する
+		static void reset();
+
+		// 前フレームとの時間の差を求める
+		static float deltaTime();
+
+		// 前フレームとの時間の差を求める（TimeScaleを無視）
+		static float noScaleDeltaTime();
+
+		// プログラムが起動してからの時間（秒）を返す
+		static float getCurTimeSec();
+
+		// 最大のdeltaTimeの値を設定（正の数）
+		static void setMaximumDeltaTime(float maximumDeltaTime);
+
+		// 時間の経過速度割合を取得する
+		static float getTimeScale();
+
+		// 時間の経過速度割合を設定する（0.0～float_max）
+		static void setTimeScale(float timeScaleRate);
+
+		// 基準となるFPSを設定する
+		static void setBaseFps(unsigned int baseFps = 60U);
+
+		// 基準となるFPSを取得する
+		static unsigned int getBaseFps();
+
+		// 瞬間的なFPSを取得する
+		static float fps();
+
 	public: /* デフォルトのリソースを使うためのIDを取得する */
 
 		static unsigned int getSystemId(SystemViewportType type);
@@ -381,6 +414,7 @@ namespace tktk
 		static std::unique_ptr<ComponentManager>	m_componentManager;
 		static std::unique_ptr<DXGameResource>		m_dxGameResource;
 		static std::unique_ptr<DirectInputWrapper>	m_directInputWrapper;
+		static std::unique_ptr<ElapsedTimer>		m_elapsedTimer;
 
 		static std::unique_ptr<Mouse>				m_mouse;
 	};

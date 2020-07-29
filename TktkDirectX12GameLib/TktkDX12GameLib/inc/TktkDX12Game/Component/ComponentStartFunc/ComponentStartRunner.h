@@ -60,7 +60,7 @@ namespace tktk
 	template<class ComponentType>
 	typename ComponentStartRunner::VTable ComponentStartRunner::VTableInitializer<ComponentType>::m_vtable =
 	{
-		&ComponentStartRunner::VTableInitializer<ComponentType>::runStart,
+		&ComponentStartRunner::VTableInitializer<ComponentType>::runStart
 	};
 
 	// ustart()vŠÖ”‚ğ‚Á‚Ä‚¢‚½‚çŒÄ‚Ôˆ—‚ğs‚¤ˆ×‚ÌŠÖ”

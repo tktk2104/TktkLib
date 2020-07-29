@@ -36,6 +36,9 @@ namespace tktk
 		template <class ComponentType>
 		ComponentPtr<ComponentType> castPtr() const;
 
+		// アクティブフラグを変更する
+		void setActive(bool isActive);
+
 		// 死亡フラグを取得する
 		bool isDead() const;
 

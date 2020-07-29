@@ -333,6 +333,69 @@
     <ClInclude Include="inc\TktkDX12Game\ClassTypeChecker\ClassTypeChecker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\CircleCollider\CircleCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\CircleCollider\CircleColliderMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\InertialMovement2D\InertialMovement2D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\InertialMovement2D\InertialMovement2DMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\InertialRotatement2D\InertialRotatement2D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\InertialRotatement2D\InertialRotatement2DMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\Polygon2dCollider\Polygon2dCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\Polygon2dCollider\Polygon2dColliderMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\RectCollider\RectCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\RectCollider\RectColliderMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\RectColliderExtrusion\RectColliderExtrusion.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\RectColliderExtrusion\RectColliderExtrusionMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\BoxCollider\BoxCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\BoxCollider\BoxColliderMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\InertialMovement3D\InertialMovement3D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\InertialMovement3D\InertialMovement3DMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\SphereCollider\SphereCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\SphereCollider\SphereColliderMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\Other\ReceiveMessageToSelfDestroyer\ReceiveMessageToSelfDestroyer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\Other\ReceiveMessageToSelfDestroyer\ReceiveMessageToSelfDestroyerMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\Time\ElapsedTimer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\TktkDX12Game\_MainManager\DX12GameManager.cpp">
@@ -540,6 +603,69 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\TktkDX12Game\ClassTypeChecker\ClassTypeChecker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\CircleCollider\CircleCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\CircleCollider\CircleColliderMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\InertialMovement2D\InertialMovement2D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\InertialMovement2D\InertialMovement2DMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\InertialRotatement2D\InertialRotatement2D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\InertialRotatement2D\InertialRotatement2DMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\Polygon2dCollider\Polygon2dCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\Polygon2dCollider\Polygon2dColliderMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\RectCollider\RectCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\RectCollider\RectColliderMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\RectColliderExtrusion\RectColliderExtrusion.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\RectColliderExtrusion\RectColliderExtrusionMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\BoxCollider\BoxCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\BoxCollider\BoxColliderMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\InertialMovement3D\InertialMovement3D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\InertialMovement3D\InertialMovement3DMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\SphereCollider\SphereCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\SphereCollider\SphereColliderMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\Other\ReceiveMessageToSelfDestroyer\ReceiveMessageToSelfDestroyer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\Other\ReceiveMessageToSelfDestroyer\ReceiveMessageToSelfDestroyerMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\Time\ElapsedTimer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

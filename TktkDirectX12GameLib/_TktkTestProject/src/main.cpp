@@ -15,6 +15,8 @@
 #include "Scene/LoadingScene.h"
 #include "Scene/MainScene.h"
 
+#include <typeindex>
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine, int nCmdShow)
 {
 	// uDX12GameManagerv‚Ì‰Šúİ’è‚ğ‚·‚é

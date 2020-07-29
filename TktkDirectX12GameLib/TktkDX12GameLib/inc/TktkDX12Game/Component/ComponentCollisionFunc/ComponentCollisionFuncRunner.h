@@ -36,9 +36,6 @@ namespace tktk
 		struct VTable
 		{
 			bool(*runIsCollide)			(const ComponentBasePtr&, const ComponentBasePtr&);
-			void(*runOnCollisionEnter)	(const ComponentBasePtr&, const GameObjectPtr&);
-			void(*runOnCollisionStay)	(const ComponentBasePtr&, const GameObjectPtr&);
-			void(*runOnCollisionExit)	(const ComponentBasePtr&, const GameObjectPtr&);
 		};
 
 		template <class ComponentType>
@@ -46,15 +43,6 @@ namespace tktk
 		{
 			// 衝突判定関数を持っていたら呼ぶ処理
 			static bool runIsCollide		(const ComponentBasePtr& self, const ComponentBasePtr& other);
-
-			// 衝突開始関数を持っていたら呼ぶ処理
-			static void runOnCollisionEnter	(const ComponentBasePtr& self, const GameObjectPtr& other);
-
-			// 衝突中関数を持っていたら呼ぶ処理
-			static void runOnCollisionStay	(const ComponentBasePtr& self, const GameObjectPtr& other);
-
-			// 衝突終了関数を持っていたら呼ぶ処理
-			static void runOnCollisionExit	(const ComponentBasePtr& self, const GameObjectPtr& other);
 
 			static VTable m_vtable;
 		};
@@ -96,10 +84,7 @@ namespace tktk
 	template<class ComponentType>
 	typename ComponentCollisionFuncRunner::VTable ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::m_vtable =
 	{
-		&ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::runIsCollide,
-		&ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::runOnCollisionEnter,
-		&ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::runOnCollisionStay,
-		&ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::runOnCollisionExit,
+		&ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::runIsCollide
 	};
 
 	// 衝突判定関数を持っていたら呼ぶ処理
@@ -107,27 +92,6 @@ namespace tktk
 	inline bool ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::runIsCollide(const ComponentBasePtr& self, const ComponentBasePtr& other)
 	{
 		return isCollide_runner<bool, const ComponentBasePtr&>::checkAndRun(self.castPtr<ComponentType>(), false, other);
-	}
-
-	// 衝突開始関数を持っていたら呼ぶ処理
-	template<class ComponentType>
-	inline void ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::runOnCollisionEnter(const ComponentBasePtr& self, const GameObjectPtr& other)
-	{
-		onCollisionEnter_runner<void, const GameObjectPtr&>::checkAndRun(self.castPtr<ComponentType>(), other);
-	}
-
-	// 衝突中関数を持っていたら呼ぶ処理
-	template<class ComponentType>
-	inline void ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::runOnCollisionStay(const ComponentBasePtr& self, const GameObjectPtr& other)
-	{
-		onCollisionStay_runner<void, const GameObjectPtr&>::checkAndRun(self.castPtr<ComponentType>(), other);
-	}
-
-	// 衝突終了関数を持っていたら呼ぶ処理
-	template<class ComponentType>
-	inline void ComponentCollisionFuncRunner::VTableInitializer<ComponentType>::runOnCollisionExit(const ComponentBasePtr& self, const GameObjectPtr& other)
-	{
-		onCollisionExit_runner<void, const GameObjectPtr&>::checkAndRun(self.castPtr<ComponentType>(), other);
 	}
 }
 #endif // !COMPONENT_COLLISION_FUNC_RUNNER_H_

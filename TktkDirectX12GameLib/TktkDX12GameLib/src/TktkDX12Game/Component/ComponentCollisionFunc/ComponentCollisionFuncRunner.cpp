@@ -34,23 +34,13 @@ namespace tktk
 			}
 			if (preFrameHit)
 			{
-				// TODO : このコードで代用できないか？
-				//m_selfPtr->getGameObject()->runOnCollisionStayAll(other.m_selfPtr->getGameObject());
-				//other.m_selfPtr->getGameObject()->runOnCollisionStayAll(m_selfPtr->getGameObject());
-
-				// 衝突中処理
-				      m_vtablePtr->runOnCollisionStay(      m_selfPtr, other.m_selfPtr->getGameObject());
-				other.m_vtablePtr->runOnCollisionStay(other.m_selfPtr,       m_selfPtr->getGameObject());
+				m_selfPtr->getGameObject()->runOnCollisionStayAll(other.m_selfPtr->getGameObject());
+				other.m_selfPtr->getGameObject()->runOnCollisionStayAll(m_selfPtr->getGameObject());
 			}
 			else
 			{
-				// TODO : このコードで代用できないか？
-				//m_selfPtr->getGameObject()->runOnCollisionEnterAll(other.m_selfPtr->getGameObject());
-				//other.m_selfPtr->getGameObject()->runOnCollisionEnterAll(m_selfPtr->getGameObject());
-
-				// 衝突開始処理
-				      m_vtablePtr->runOnCollisionEnter(      m_selfPtr,	other.m_selfPtr->getGameObject());
-				other.m_vtablePtr->runOnCollisionEnter(other.m_selfPtr,	      m_selfPtr->getGameObject());
+				m_selfPtr->getGameObject()->runOnCollisionEnterAll(other.m_selfPtr->getGameObject());
+				other.m_selfPtr->getGameObject()->runOnCollisionEnterAll(m_selfPtr->getGameObject());
 			}
 		}
 		else
@@ -67,13 +57,8 @@ namespace tktk
 			}
 			if (preFrameHit)
 			{
-				// TODO : このコードで代用できないか？
-				//m_selfPtr->getGameObject()->runOnCollisionExitAll(other.m_selfPtr->getGameObject());
-				//other.m_selfPtr->getGameObject()->runOnCollisionExitAll(m_selfPtr->getGameObject());
-
-				// 衝突終了処理
-				      m_vtablePtr->runOnCollisionExit(      m_selfPtr,	other.m_selfPtr->getGameObject());
-				other.m_vtablePtr->runOnCollisionExit(other.m_selfPtr,	      m_selfPtr->getGameObject());
+				m_selfPtr->getGameObject()->runOnCollisionExitAll(other.m_selfPtr->getGameObject());
+				other.m_selfPtr->getGameObject()->runOnCollisionExitAll(m_selfPtr->getGameObject());
 			}
 		}
 	}
