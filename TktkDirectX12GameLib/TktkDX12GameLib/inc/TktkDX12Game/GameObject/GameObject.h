@@ -3,14 +3,17 @@
 
 #include <memory>
 #include <utility>
+#include <unordered_map>
 #include "GameObjectTagList.h"
 #include "../Component/ComponentGameObjectFunc/GameObjectComponentList.h"
 #include "../_MainManager/DX12GameManager.h"
 #include "../Component/ComponentPtr.h"
+#include "../Component/DefaultComponents/StateMachine/StateMachineList.h"
 
 namespace tktk
 {
 	class ParentChildManager;
+	class CurStateTypeList;
 
 	// ゲームオブジェクトクラス
 	class GameObject
@@ -102,14 +105,87 @@ namespace tktk
 		// 全ての子要素にメッセージを送信する
 		void sendMessage(unsigned int messageId, const MessageAttachment& value = {});
 
+	public: /* ステートマシン関係処理 */
+
+		// ステートの種類を引数として渡し、ステートマシンの操作に必要なコンポーネントを準備する
+		void setupStateMachine(const StateMachineListInitParam& initParam);
+
+		/**************************************************
+		【setupStateMachine()の引数の作成例】
+
+		StateMachineListInitParam stateList = 
+		{
+			{
+				MOVE_STATE, 
+				{
+					{
+						WALK_STATE,
+						{
+							{ BEGIN_MOVE_STATE },	// “RUN_STATE”の“BEGIN_MOVE_STATE”と同一のステートで“WALK_STATE”状態の時にisActive = trueになる
+							{ MOVING_STATE },
+							{ END_MOVE_STATE }
+						}
+					},
+					{
+						RUN_STATE,
+						{
+							{ BEGIN_MOVE_STATE },	// “RUN_STATE”の“BEGIN_MOVE_STATE”と同一のステートで“RUN_STATE”状態の時にisActive = trueになる
+							{ MOVING_STATE },
+							{ END_MOVE_STATE }
+						}
+					}
+
+				}
+			},
+			{
+				JUMP_STATE,
+				{
+					{ BEGIN_JUMP_STATE },
+					{ JUMPING_STATE },
+					{ END_JUMP_STATE },
+				}
+			},
+			{ DEAD_STATE }
+		}
+		**************************************************/
+
+		// ステートを追加する
+		void addState(int stateType);
+
+		// ステートを削除する
+		void removeState(int stateType);
+
+		// 全てのステートを削除する
+		void clearState();
+
+		// 引数のステートを持っているか？
+		bool contain(int stateType);
+
+		// int型の配列でステートを指定し、子要素を追加する
+		// ※「{ MOVE_STATE, WALK_STATE, BEGIN_MOVE_STATE }」で「“MOVE_STATE”内の“WALK_STATE”内の“BEGIN_MOVE_STATE”に追加」となる
+		void addChild(const std::vector<int>& targetState, const GameObjectPtr& child);
+
+		// int型の配列でステートを指定し、テンプレート引数の型のコンポーネントを引数の値を使って作る
+		//  ※「{ MOVE_STATE, WALK_STATE, BEGIN_MOVE_STATE }」で「“MOVE_STATE”内の“WALK_STATE”内の“BEGIN_MOVE_STATE”に追加」となる
+		template <class ComponentType, class... Args>
+		ComponentPtr<ComponentType> createComponent(const std::vector<int>& targetState, Args&&... args);
+
 	private:
 
-		bool								m_isActive				{ true };
-		bool								m_nextFrameActive		{ true };
-		bool								m_isDead				{ false };
-		GameObjectTagList					m_tagList				{};
-		GameObjectComponentList				m_componentList			{};
-		ComponentPtr<ParentChildManager>	m_parentChildManager	{};
+		void createComponentImpl(const std::vector<int>& targetState, const ComponentBasePtr& componentPtr);
+
+	private:
+
+		bool												m_isActive				{ true };
+		bool												m_nextFrameActive		{ true };
+		bool												m_isDead				{ false };
+		GameObjectTagList									m_tagList				{};
+		GameObjectComponentList								m_componentList			{};
+		ComponentPtr<ParentChildManager>					m_parentChildManager	{};
+		
+		// ステートマシン関連のクラスは「setupStateMachine()」を呼ぶまで実態が作られないのでポインタにて管理
+		ComponentPtr<CurStateTypeList>						m_stateTypeList			{};
+		std::unique_ptr<StateMachineList>					m_stateMachineList		{};
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -137,6 +213,17 @@ namespace tktk
 	inline std::forward_list<ComponentPtr<ComponentType>> GameObject::getComponents() const
 	{
 		return m_componentList.findAll<ComponentType>();
+	}
+
+	// int型の配列でステートを指定し、テンプレート引数の型のコンポーネントを引数の値を使って作る
+	//  ※「{ MOVE_STATE, WALK_STATE, BEGIN_MOVE_STATE }」で「“MOVE_STATE”内の“WALK_STATE”内の“BEGIN_MOVE_STATE”に追加」となる
+	template<class ComponentType, class ...Args>
+	inline ComponentPtr<ComponentType> GameObject::createComponent(const std::vector<int>& targetState, Args&& ...args)
+	{
+		auto createdComponent = DX12GameManager::createComponent<ComponentType>(std::forward<Args>(args)...);
+		createdComponent.lock()->setUser(GameObjectPtr(weak_from_this()));
+		createComponentImpl(targetState, ComponentBasePtr(createdComponent));
+		return m_componentList.add<ComponentType>(createdComponent);
 	}
 }
 #endif // !GAME_OBJECT_H_

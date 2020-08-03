@@ -4,7 +4,10 @@
 #include <stdexcept>
 #endif // _DEBUG
 #include "TktkDX12Game/Component/DefaultComponents/ParentChildManager/ParentChildManager.h"
+#include "TktkDX12Game/Component/DefaultComponents/StateMachine/StateMachine.h"
+#include "TktkDX12Game/Component/DefaultComponents/StateMachine/CurStateTypeList.h"
 #include "..\..\..\inc\TktkDX12Game\GameObject\GameObject.h"
+
 namespace tktk
 {
 	GameObject::GameObject()
@@ -174,5 +177,44 @@ namespace tktk
 #endif
 		// 自身の子要素のメッセージ受信処理を呼ぶ
 		m_parentChildManager->sendMessage(messageId, value);
+	}
+
+	void GameObject::setupStateMachine(const StateMachineListInitParam& initParam)
+	{
+		// 現在のステートを管理するコンポーネントを作る
+		m_stateTypeList = createComponent<CurStateTypeList>();
+
+		// 引数分のステートのステートマシンを作る
+		m_stateMachineList = std::make_unique<StateMachineList>(initParam, GameObjectPtr(weak_from_this()), &m_componentList);
+	}
+
+	void GameObject::addState(int stateType)
+	{
+		m_stateTypeList->addState(stateType);
+	}
+
+	void GameObject::removeState(int stateType)
+	{
+		m_stateTypeList->removeState(stateType);
+	}
+
+	void GameObject::clearState()
+	{
+		m_stateTypeList->clearState();
+	}
+
+	bool GameObject::contain(int stateType)
+	{
+		return m_stateTypeList->contain(stateType);
+	}
+
+	void GameObject::addChild(const std::vector<int>& targetState, const GameObjectPtr& child)
+	{
+		m_stateMachineList->addChild(targetState, child);
+	}
+
+	void GameObject::createComponentImpl(const std::vector<int>& targetState, const ComponentBasePtr& componentPtr)
+	{
+		m_stateMachineList->addComponent(targetState, componentPtr);
 	}
 }

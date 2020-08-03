@@ -199,6 +199,10 @@
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\Transform2D\TraceParentType.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\Transform2D\Transform2D.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\Transform2D\Transform2DMaker.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\StateMachine\CurStateTypeList.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\StateMachine\StateMachine.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\StateMachine\StateMachineList.h" />
+    <ClInclude Include="inc\TktkDX12Game\Component\DefaultComponents\StateMachine\StateMachineListInitParam.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Camera\Camera.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\Light\PointLightController.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\MeshAnimator\MeshAnimator.h" />
@@ -325,6 +329,10 @@
     <ClCompile Include="src\TktkDX12BaseComponents\2D\SpriteDrawer\SpriteDrawerMaker.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\2D\Transform2D\Transform2D.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\2D\Transform2D\Transform2DMaker.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\StateMachine\CurStateTypeList.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\StateMachine\StateMachine.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\StateMachine\StateMachineList.cpp" />
+    <ClCompile Include="src\TktkDX12Game\Component\DefaultComponents\StateMachine\StateMachineListInitParam.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Camera\Camera.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\3D\Light\PointLightController.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\3D\MeshAnimator\MeshAnimator.cpp" />

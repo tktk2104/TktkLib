@@ -1,7 +1,6 @@
 #include "TktkDX12Game/Component/ComponentBasePtr.h"
 
 #include "TktkDX12Game/Component/ComponentBase.h"
-#include "..\..\..\inc\TktkDX12Game\Component\ComponentBasePtr.h"
 
 namespace tktk
 {
@@ -18,7 +17,7 @@ namespace tktk
 		return (m_componentPtr.lock() == other.m_componentPtr.lock());
 	}
 
-	void ComponentBasePtr::setActive(bool isActive)
+	void ComponentBasePtr::setActive(bool isActive) const
 	{
 		if (m_componentPtr.expired()) return;
 		m_componentPtr.lock()->setActive(isActive);

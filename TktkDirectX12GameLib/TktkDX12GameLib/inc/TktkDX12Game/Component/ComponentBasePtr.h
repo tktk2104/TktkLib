@@ -27,6 +27,10 @@ namespace tktk
 		// 引数のポインタと自身が同じポインタを指しているか判定する
 		bool isSame(const ComponentBasePtr& other) const;
 
+		// 引数のポインタと自身が同じポインタを指しているか判定する
+		template <class ComponentType>
+		bool isSame(const ComponentPtr<ComponentType>& other) const;
+
 		// テンプレート引数の型に自身のポインタがキャストできるか判定する
 		template <class ComponentType>
 		bool canCast() const;
@@ -37,7 +41,7 @@ namespace tktk
 		ComponentPtr<ComponentType> castPtr() const;
 
 		// アクティブフラグを変更する
-		void setActive(bool isActive);
+		void setActive(bool isActive) const;
 
 		// 死亡フラグを取得する
 		bool isDead() const;
@@ -56,6 +60,13 @@ namespace tktk
 		: m_componentTypeId(ClassTypeChecker::getClassId<ComponentType>())
 		, m_componentPtr(componentPtr)
 	{
+	}
+
+	// 引数のポインタと自身が同じポインタを指しているか判定する
+	template<class ComponentType>
+	inline bool ComponentBasePtr::isSame(const ComponentPtr<ComponentType>& other) const
+	{
+		return other.isSame(castPtr<ComponentType>());
 	}
 
 	// テンプレート引数の型に自身のポインタがキャストできるか判定する

@@ -20,6 +20,9 @@ namespace tktk
 		// ポインタが期限切れか判定する
 		bool expired() const;
 
+		// 引数のポインタと自身が同じポインタを指しているか判定する
+		bool isSame(const ComponentPtr<ComponentType>& other) const;
+
 		// ポインタの使用
 		std::shared_ptr<ComponentType> operator ->() const;
 
@@ -42,6 +45,13 @@ namespace tktk
 	inline bool ComponentPtr<ComponentType>::expired() const
 	{
 		return m_componentPtr.expired();
+	}
+
+	// 引数のポインタと自身が同じポインタを指しているか判定する
+	template<class ComponentType>
+	inline bool ComponentPtr<ComponentType>::isSame(const ComponentPtr<ComponentType>& other) const
+	{
+		return !m_componentPtr.expired() && !other.m_componentPtr.expired() && m_componentPtr.lock() == other.m_componentPtr.lock();
 	}
 
 	// ポインタの使用
