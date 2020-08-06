@@ -1,6 +1,7 @@
 #ifndef DX3D_BASE_OBJECTS_H_
 #define DX3D_BASE_OBJECTS_H_
 
+#include <array>
 #include <vector>
 #include <d3d12.h>
 #include <dxgi1_6.h> //IDXGIFactory6
@@ -133,10 +134,21 @@ namespace tktk
 		// 指定のディスクリプタヒープの配列をコマンドリストに設定する
 		void setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray) const;
 
+		// ブレンドファクターを設定する
+		void setBlendFactor(const std::array<float, 4>& blendFactor) const;
+
 		// プリミティブトポロジを設定する
 		void setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology) const;
 
 	public: /* ドローコール、その他処理 */
+
+		// インスタンス描画を行う
+		void drawInstanced(
+			unsigned int vertexCountPerInstance,
+			unsigned int instanceCount,
+			unsigned int baseVertexLocation,
+			unsigned int startInstanceLocation
+		) const;
 
 		// インデックスを使用してインスタンス描画を行う
 		void drawIndexedInstanced(

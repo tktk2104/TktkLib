@@ -12,6 +12,9 @@ namespace tktk
 		// スプライトシェーダーのファイルパス
 		tktk::ShaderFilePaths		spriteShaderFilePaths{};
 
+		// 2Dラインシェーダーのファイルパス
+		tktk::ShaderFilePaths		line2DShaderFilePaths{};
+
 		// 通常メッシュシェーダーのファイルパス
 		tktk::ShaderFilePaths		basicMeshShaderFilePaths{};
 

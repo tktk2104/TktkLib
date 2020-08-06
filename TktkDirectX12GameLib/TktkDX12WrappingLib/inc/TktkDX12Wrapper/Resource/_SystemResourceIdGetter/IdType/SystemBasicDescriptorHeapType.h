@@ -4,12 +4,13 @@
 namespace tktk
 {
 	// システムで使用している通常のディスクリプタヒープの数
-	constexpr unsigned int SystemBasicDescriptorHeapNum = 1U;
+	constexpr unsigned int SystemBasicDescriptorHeapNum = 2U;
 
 	// システムで使用している通常のディスクリプタヒープの種類
 	enum class SystemBasicDescriptorHeapType
 	{
-		BasicMeshShadowMap = 0U
+		Line2D				= 0U,
+		BasicMeshShadowMap
 	};
 }
 #endif // !SYSTEM_BASIC_DESCRIPTOR_HEAP_TYPE_H_

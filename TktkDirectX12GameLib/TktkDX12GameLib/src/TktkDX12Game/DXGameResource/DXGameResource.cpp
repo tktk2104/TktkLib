@@ -2,7 +2,6 @@
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Loader/BasicMeshPmdLoader.h"
-#include "..\..\..\inc\TktkDX12Game\DXGameResource\DXGameResource.h"
 
 namespace tktk
 {
@@ -10,6 +9,7 @@ namespace tktk
 		: m_sceneManager(resourceNum.sceneNum)
 		, m_sound(resourceNum.soundNum)
 		, m_spriteMaterial(filePaths.spriteShaderFilePaths, resourceNum.spriteNum)
+		, m_line2D(filePaths.line2DShaderFilePaths)
 		, m_skeleton(resourceNum.skeletonNum) // ※メッシュクラスの初期化にボーン行列定数バッファが必要なので先にコンストラクトする必要がある
 		, m_basicMesh(filePaths.writeShadowMapVsFilePath, resourceNum.basicMeshNum)
 		, m_basicMeshMaterial(filePaths.basicMeshShaderFilePaths, resourceNum.basicMeshMaterialNum)
@@ -83,6 +83,11 @@ namespace tktk
 	void DXGameResource::drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs) const
 	{
 		m_spriteMaterial.drawSprite(id, drawFuncArgs);
+	}
+
+	void DXGameResource::drawLine(const Line2DDrawFuncArgs& drawFuncArgs) const
+	{
+		m_line2D.drawLine(drawFuncArgs);
 	}
 
 	void DXGameResource::createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam)

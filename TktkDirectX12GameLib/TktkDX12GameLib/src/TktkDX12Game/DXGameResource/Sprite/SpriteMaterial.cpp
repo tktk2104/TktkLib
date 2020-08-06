@@ -76,7 +76,13 @@ namespace tktk
 	void SpriteMaterial::createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths) const
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
-		renderTargetBlendDesc.BlendEnable = false;
+		renderTargetBlendDesc.BlendEnable = true;
+		renderTargetBlendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+		renderTargetBlendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+		renderTargetBlendDesc.BlendOp = D3D12_BLEND_OP_ADD;
+		renderTargetBlendDesc.SrcBlendAlpha = D3D12_BLEND_ONE;
+		renderTargetBlendDesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+		renderTargetBlendDesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
 		renderTargetBlendDesc.LogicOpEnable = false;
 		renderTargetBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 
@@ -85,6 +91,7 @@ namespace tktk
 		initParam.rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
 		initParam.rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 		initParam.rasterizerDesc.DepthClipEnable = true;
+		initParam.sampleMask = 0xffffffff;
 		initParam.blendDesc.AlphaToCoverageEnable = false;
 		initParam.blendDesc.IndependentBlendEnable = false;
 		initParam.blendDesc.RenderTarget[0] = renderTargetBlendDesc;

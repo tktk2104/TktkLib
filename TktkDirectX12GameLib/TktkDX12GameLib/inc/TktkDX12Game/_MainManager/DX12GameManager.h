@@ -135,8 +135,19 @@ namespace tktk
 		// 指定のディスクリプタヒープの配列をコマンドリストに設定する
 		static void setDescriptorHeap(const std::vector<DescriptorHeapParam>& heapParamArray);
 
+		// ブレンドファクターを設定する
+		static void setBlendFactor(const std::array<float, 4>& blendFactor);
+
 		// プリミティブトポロジを設定する
 		static void setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology);
+
+		// インスタンス描画を行う
+		static void drawInstanced(
+			unsigned int vertexCountPerInstance,
+			unsigned int instanceCount,
+			unsigned int baseVertexLocation,
+			unsigned int startInstanceLocation
+		);
 
 		// インデックスを使用してインスタンス描画を行う
 		static void drawIndexedInstanced(
@@ -214,6 +225,11 @@ namespace tktk
 
 		// 指定したスプライトを描画する
 		static void drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs);
+
+	public: /* 2Dライン関係の処理 */
+
+		// 線を描画する
+		static void drawLine(const Line2DDrawFuncArgs& drawFuncArgs);
 
 	public: /* メッシュ関係の処理 */
 

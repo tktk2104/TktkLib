@@ -121,7 +121,7 @@ namespace tktk
 		&ComponentMainList::VTableInitializer<ComponentType>::runAfterCollide,
 		&ComponentMainList::VTableInitializer<ComponentType>::runOnEnable,
 		&ComponentMainList::VTableInitializer<ComponentType>::runOnDisable,
-		&ComponentMainList::VTableInitializer<ComponentType>::runOnDestroy,
+		&ComponentMainList::VTableInitializer<ComponentType>::runOnDestroy
 	};
 
 	// 「update()」関数を持っていたら呼ぶ処理を行う為の関数達

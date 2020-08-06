@@ -13,18 +13,18 @@ namespace tktk
 		m_rootSignatureId = initParam.rootSignatureId;
 
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipeLineStateDesc{};
-		graphicsPipeLineStateDesc.pRootSignature = rootSignaturePtr;
-		graphicsPipeLineStateDesc.VS.pShaderBytecode = (vsByteArray.size() == 0U) ? nullptr : vsByteArray.data();
-		graphicsPipeLineStateDesc.VS.BytecodeLength = vsByteArray.size();
-		graphicsPipeLineStateDesc.PS.pShaderBytecode = (psByteArray.size() == 0U) ? nullptr : psByteArray.data();
-		graphicsPipeLineStateDesc.PS.BytecodeLength = psByteArray.size();
-		graphicsPipeLineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-		graphicsPipeLineStateDesc.RasterizerState = initParam.rasterizerDesc;
-		graphicsPipeLineStateDesc.BlendState = initParam.blendDesc;
-		graphicsPipeLineStateDesc.InputLayout.pInputElementDescs = initParam.inputLayoutArray.data();
-		graphicsPipeLineStateDesc.InputLayout.NumElements = initParam.inputLayoutArray.size();
-		graphicsPipeLineStateDesc.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
-		graphicsPipeLineStateDesc.PrimitiveTopologyType = initParam.primitiveTopology;
+		graphicsPipeLineStateDesc.pRootSignature					= rootSignaturePtr;
+		graphicsPipeLineStateDesc.VS.pShaderBytecode				= (vsByteArray.size() == 0U) ? nullptr : vsByteArray.data();
+		graphicsPipeLineStateDesc.VS.BytecodeLength					= vsByteArray.size();
+		graphicsPipeLineStateDesc.PS.pShaderBytecode				= (psByteArray.size() == 0U) ? nullptr : psByteArray.data();
+		graphicsPipeLineStateDesc.PS.BytecodeLength					= psByteArray.size();
+		graphicsPipeLineStateDesc.SampleMask						= initParam.sampleMask;
+		graphicsPipeLineStateDesc.RasterizerState					= initParam.rasterizerDesc;
+		graphicsPipeLineStateDesc.BlendState						= initParam.blendDesc;
+		graphicsPipeLineStateDesc.InputLayout.pInputElementDescs	= initParam.inputLayoutArray.data();
+		graphicsPipeLineStateDesc.InputLayout.NumElements			= initParam.inputLayoutArray.size();
+		graphicsPipeLineStateDesc.IBStripCutValue					= D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
+		graphicsPipeLineStateDesc.PrimitiveTopologyType				= initParam.primitiveTopology;
 
 		graphicsPipeLineStateDesc.NumRenderTargets = initParam.renderTargetFormatArray.size();
 

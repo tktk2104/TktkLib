@@ -85,6 +85,9 @@ namespace tktk
 		// スプライト用のパイプラインステートを設定する
 		DX12GameManager::setPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::Sprite));
 
+		// ブレンドファクターを設定する
+		DX12GameManager::setBlendFactor({ 1.0f, 1.0f, 1.0f, 1.0f });
+
 		// スプライト用のディスクリプタヒープを設定する
 		DX12GameManager::setDescriptorHeap({ { DescriptorHeapType::basic, m_createDescriptorHeapId} });
 

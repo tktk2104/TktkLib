@@ -362,9 +362,19 @@ namespace tktk
 		m_dX3DResource.setDescriptorHeap(m_device, m_commandList, heapParamArray);
 	}
 
+	void DX3DBaseObjects::setBlendFactor(const std::array<float, 4>& blendFactor) const
+	{
+		m_commandList->OMSetBlendFactor(blendFactor.data());
+	}
+
 	void DX3DBaseObjects::setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology) const
 	{
 		m_commandList->IASetPrimitiveTopology(topology);
+	}
+
+	void DX3DBaseObjects::drawInstanced(unsigned int vertexCountPerInstance, unsigned int instanceCount, unsigned int baseVertexLocation, unsigned int startInstanceLocation) const
+	{
+		m_commandList->DrawInstanced(vertexCountPerInstance, instanceCount, baseVertexLocation, startInstanceLocation);
 	}
 
 	void DX3DBaseObjects::drawIndexedInstanced(unsigned int indexCountPerInstance, unsigned int instanceCount, unsigned int startIndexLocation, unsigned int baseVertexLocation, unsigned int startInstanceLocation) const

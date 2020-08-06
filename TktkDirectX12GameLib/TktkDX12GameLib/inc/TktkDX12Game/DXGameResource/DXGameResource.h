@@ -8,6 +8,7 @@
 #include "Sound/Sound.h"
 #include "PostEffect/PostEffectMaterial.h"
 #include "Sprite/SpriteMaterial.h"
+#include "Line2D/Line2D.h"
 #include "Mesh/BasicMesh/Mesh/BasicMesh.h"
 #include "Mesh/BasicMesh/Material/BasicMeshMaterial.h"
 #include "Mesh/BasicMesh/Loader/BasicMeshLoadPmdArgs.h"
@@ -72,6 +73,11 @@ namespace tktk
 
 		// 指定したスプライトを描画する
 		void drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs) const;
+
+	public: /* 2Dライン関係の処理 */
+
+		// 線を描画する
+		void drawLine(const Line2DDrawFuncArgs& drawFuncArgs) const;
 
 	public: /* メッシュ関係の処理 */
 
@@ -166,6 +172,7 @@ namespace tktk
 		SceneManager		m_sceneManager;
 		Sound				m_sound;
 		SpriteMaterial		m_spriteMaterial;
+		Line2D				m_line2D;
 		Skeleton			m_skeleton;
 		BasicMesh			m_basicMesh;
 		BasicMeshMaterial	m_basicMeshMaterial;

@@ -11,6 +11,7 @@
 #include <TktkDX12Wrapper/Resource/Buffer/Texture/TextureBufferInitParam.h>
 #include <TktkDX12Wrapper/Resource/Buffer/DepthStencil/DepthStencilBufferInitParam.h>
 #include "../DXGameResource/Sprite/SpriteMaterialInitParam.h"
+#include "../DXGameResource/Line2D/Line2DDrawFuncArgs.h"
 #include "../DXGameResource/Mesh/BasicMesh/Mesh/BasicMeshInitParam.h"
 #include "../DXGameResource/Mesh/BasicMesh/Material/BasicMeshMaterialInitParam.h"
 #include "../DXGameResource/Mesh/Skeleton/SkeletonInitParam.h"

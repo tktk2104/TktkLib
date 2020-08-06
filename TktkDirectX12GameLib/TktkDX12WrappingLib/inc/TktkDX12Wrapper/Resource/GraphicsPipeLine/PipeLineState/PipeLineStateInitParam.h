@@ -2,6 +2,7 @@
 #define PIPELINE_STATE_INIT_PARAM_H_
 
 #include <string>
+#include <array>
 #include <vector>
 #include <d3d12.h>
 #undef min
@@ -13,6 +14,7 @@ namespace tktk
 	{
 		D3D12_RASTERIZER_DESC					rasterizerDesc{};
 		D3D12_BLEND_DESC						blendDesc{};
+		unsigned int							sampleMask{ D3D12_DEFAULT_SAMPLE_MASK };
 		std::vector<D3D12_INPUT_ELEMENT_DESC>	inputLayoutArray{};
 		D3D12_PRIMITIVE_TOPOLOGY_TYPE			primitiveTopology{};
 		std::vector<DXGI_FORMAT>				renderTargetFormatArray{};

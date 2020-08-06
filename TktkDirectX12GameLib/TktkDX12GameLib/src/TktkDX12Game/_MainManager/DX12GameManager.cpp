@@ -8,6 +8,7 @@
 #include "TktkDX12Game/Input/Mouse/Mouse.h"
 #include "TktkDX12Game/Input/DirectInputWrapper/DirectInputWrapper.h"
 #include "TktkDX12Game/Time/ElapsedTimer.h"
+#include "..\..\..\inc\TktkDX12Game\_MainManager\DX12GameManager.h"
 
 namespace tktk
 {
@@ -31,6 +32,8 @@ namespace tktk
 			DXGameBaseShaderFilePaths dxGameBaseShaderFilePaths{};
 			dxGameBaseShaderFilePaths.spriteShaderFilePaths.vsFilePath					= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/SpriteVertexShader.cso";
 			dxGameBaseShaderFilePaths.spriteShaderFilePaths.psFilePath					= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/SpritePixelShader.cso";
+			dxGameBaseShaderFilePaths.line2DShaderFilePaths.vsFilePath					= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/Line2DVertexShader.cso";
+			dxGameBaseShaderFilePaths.line2DShaderFilePaths.psFilePath					= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/Line2DPixelShader.cso";
 			dxGameBaseShaderFilePaths.basicMeshShaderFilePaths.vsFilePath				= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshVertexShader.cso";
 			dxGameBaseShaderFilePaths.basicMeshShaderFilePaths.psFilePath				= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshPixelShader.cso";
 			dxGameBaseShaderFilePaths.writeShadowMapVsFilePath							= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshShadowVertexShader.cso";
@@ -261,9 +264,19 @@ namespace tktk
 		m_dx3dBaseObjects->setDescriptorHeap(heapParamArray);
 	}
 
+	void DX12GameManager::setBlendFactor(const std::array<float, 4>& blendFactor)
+	{
+		m_dx3dBaseObjects->setBlendFactor(blendFactor);
+	}
+
 	void DX12GameManager::setPrimitiveTopology(D3D12_PRIMITIVE_TOPOLOGY topology)
 	{
 		m_dx3dBaseObjects->setPrimitiveTopology(topology);
+	}
+
+	void DX12GameManager::drawInstanced(unsigned int vertexCountPerInstance, unsigned int instanceCount, unsigned int baseVertexLocation, unsigned int startInstanceLocation)
+	{
+		m_dx3dBaseObjects->drawInstanced(vertexCountPerInstance, instanceCount, baseVertexLocation, startInstanceLocation);
 	}
 
 	void DX12GameManager::drawIndexedInstanced(unsigned int indexCountPerInstance, unsigned int instanceCount, unsigned int startIndexLocation, unsigned int baseVertexLocation, unsigned int startInstanceLocation)
@@ -359,6 +372,11 @@ namespace tktk
 	void DX12GameManager::drawSprite(unsigned int id, const SpriteMaterialDrawFuncArgs& drawFuncArgs)
 	{
 		m_dxGameResource->drawSprite(id, drawFuncArgs);
+	}
+
+	void DX12GameManager::drawLine(const Line2DDrawFuncArgs& drawFuncArgs)
+	{
+		m_dxGameResource->drawLine(drawFuncArgs);
 	}
 
 	void DX12GameManager::createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam)
