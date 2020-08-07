@@ -17,7 +17,7 @@ struct Cursor
 			.create();
 
 		tktk::SpriteDrawerMaker::makeStart(gameObject)
-			.drawPriority(0.0f)
+			.drawPriority(0.5f)
 			.spriteMaterialId(0U)
 			.useRtvDescriptorHeapId(0U)
 			.create();

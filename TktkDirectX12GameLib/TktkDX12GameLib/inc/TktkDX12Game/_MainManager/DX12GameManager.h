@@ -11,9 +11,13 @@
 
 #include "../Component/ComponentManager.h"			// テンプレート引数に型情報を渡す必要がある為隠蔽できない
 #include "../DXGameResource/Scene/SceneVTable.h"	// シーンマネージャークラスを隠蔽する為にテンプレート関連のみ分離
+#include "../DXGameResource/Mesh/BasicMesh/Maker/SphereMeshMaker.h"	// デフォルトの球体メッシュを作るためのクラス
 
 // 関数呼び出しに必要な型のインクルード
 #include <TktkDX12Wrapper/Resource/_SystemResourceIdGetter/SystemResourceType.h>
+#include "../DXGameResource/_SystemDXGameResourceIdGetter/IdType/SystemBasicMeshType.h"
+#include "../DXGameResource/_SystemDXGameResourceIdGetter/IdType/SystemBasicMeshMaterialType.h"
+#include "../DXGameResource/_SystemDXGameResourceIdGetter/IdType/SystemPostEffectMaterialType.h"
 #include "../GameObject/GameObjectPtr.h"			
 #include "../EventMessage/MessageAttachment.h"
 
@@ -28,6 +32,7 @@ namespace tktk
 	class DX3DBaseObjects;
 	class GameObjectManager;
 	class DXGameResource;
+	class SystemDXGameResourceIdGetter;
 	class DirectInputWrapper;
 	class ElapsedTimer;
 	class Mouse;
@@ -245,6 +250,14 @@ namespace tktk
 		// 指定の通常メッシュのマテリアル情報をグラフィックパイプラインに設定する
 		static void setMaterialData(unsigned int id);
 
+		// 指定の通常メッシュのマテリアルで追加で管理する定数バッファのIDと値を設定する
+		template <class CbufferType>
+		static void addMaterialAppendParam(unsigned int id, unsigned int cbufferId, CbufferType&& value);
+
+		// 指定の通常メッシュのマテリアルで追加で管理する定数バッファのIDと値を更新する
+		template <class CbufferType>
+		static void updateMaterialAppendParam(unsigned int id, unsigned int cbufferId, const CbufferType& value);
+
 		// 指定の通常メッシュを描画する
 		static void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs);
 
@@ -258,6 +271,9 @@ namespace tktk
 
 		// 指定のスケルトンを使って骨情報を管理する定数バッファを更新する
 		static void updateBoneMatrixCbuffer(unsigned int id);
+
+		// 骨情報を管理する定数バッファに単位行列を設定する
+		static void resetBoneMatrixCbuffer();
 
 	public: /* モーション関係の処理 */
 
@@ -415,63 +431,90 @@ namespace tktk
 		static unsigned int getSystemId(SystemDsvDescriptorHeapType type);
 		static unsigned int getSystemId(SystemRootSignatureType type);
 		static unsigned int getSystemId(SystemPipeLineStateType type);
+		static unsigned int getSystemId(SystemBasicMeshType type);
+		static unsigned int getSystemId(SystemBasicMeshMaterialType type);
+		static unsigned int getSystemId(SystemPostEffectMaterialType type);
 
-	private: /* 裏実装 */
+	public: /* 裏実装 */
 
 		static void createSceneImpl(unsigned int id, const std::shared_ptr<SceneBase>& scenePtr, SceneVTable* vtablePtr);
 		static void createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
-		static void createConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
-		static void updateConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
+		static void createCbufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
+		static void updateCbufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
+		static void addMaterialAppendParamImpl(unsigned int id, unsigned int cbufferId, unsigned int dataSize, void* dataTopPos);
+		static void updateMaterialAppendParamImpl(unsigned int id, unsigned int cbufferId, unsigned int dataSize, const void* dataTopPos);
 
 	private:
-		static std::unique_ptr<Window>				m_window;
-		static std::unique_ptr<DX3DBaseObjects>		m_dx3dBaseObjects;
-		static std::unique_ptr<GameObjectManager>	m_gameObjectManager;
-		static std::unique_ptr<ComponentManager>	m_componentManager;
-		static std::unique_ptr<DXGameResource>		m_dxGameResource;
-		static std::unique_ptr<DirectInputWrapper>	m_directInputWrapper;
-		static std::unique_ptr<ElapsedTimer>		m_elapsedTimer;
+		static std::unique_ptr<Window>							m_window;
+		static std::unique_ptr<DX3DBaseObjects>					m_dx3dBaseObjects;
+		static std::unique_ptr<GameObjectManager>				m_gameObjectManager;
+		static std::unique_ptr<ComponentManager>				m_componentManager;
+		static std::unique_ptr<DXGameResource>					m_dxGameResource;
+		static std::unique_ptr<SystemDXGameResourceIdGetter>	m_systemDXGameResourceIdGetter;
+		static std::unique_ptr<DirectInputWrapper>				m_directInputWrapper;
+		static std::unique_ptr<ElapsedTimer>					m_elapsedTimer;
 
-		static std::unique_ptr<Mouse>				m_mouse;
+		static std::unique_ptr<Mouse>							m_mouse;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+	// シーンを作成して追加する
 	template<class SceneType, class ...Args>
 	inline void DX12GameManager::addScene(unsigned int id, Args&&...constructorArgs)
 	{
 		createSceneImpl(id, std::make_shared<SceneType>(std::forward<Args>(constructorArgs)...), &SceneVTableInitializer<SceneType>::m_vtable);
 	}
 
+	// コンポーネントの型ごとの更新優先度を設定する
+		// ※デフォルト（0.0f）で値が小さい程、早く実行される
 	template<class ComponentType>
 	inline void DX12GameManager::addUpdatePriority(float priority)
 	{
 		m_componentManager->addUpdatePriority<ComponentType>(priority);
 	}
 
+	// テンプレート引数の型のコンポーネントを引数の値を使って作る
 	template<class ComponentType, class ...Args>
 	inline std::weak_ptr<ComponentType> DX12GameManager::createComponent(Args&&...args)
 	{
 		return m_componentManager->createComponent<ComponentType>(std::forward<Args>(args)...);
 	}
 
+	// 頂点バッファを作る
 	template<class VertexData>
 	inline void DX12GameManager::createVertexBuffer(unsigned int id, const std::vector<VertexData>& vertexDataArray)
 	{
 		createVertexBufferImpl(id, sizeof(VertexData), vertexDataArray.size(), vertexDataArray.data());
 	}
 
+	// 定数バッファを作る
 	template<class ConstantBufferDataType>
 	inline void DX12GameManager::createCBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData)
 	{
-		createConstantBufferImpl(id, sizeof(ConstantBufferDataType), &rawConstantBufferData);
+		createCbufferImpl(id, sizeof(ConstantBufferDataType), &rawConstantBufferData);
 	}
 
+	// 指定の定数バッファを更新する
 	template<class ConstantBufferDataType>
 	inline void DX12GameManager::updateCBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData)
 	{
-		updateConstantBufferImpl(id, sizeof(ConstantBufferDataType), &rawConstantBufferData);
+		updateCbufferImpl(id, sizeof(ConstantBufferDataType), &rawConstantBufferData);
+	}
+
+	// 指定の通常メッシュのマテリアルで追加で管理する定数バッファのIDと値を設定する
+	template<class CbufferType>
+	inline void DX12GameManager::addMaterialAppendParam(unsigned int id, unsigned int cbufferId, CbufferType&& value)
+	{
+		addMaterialAppendParamImpl(id, cbufferId, sizeof(CbufferType), new CbufferType(std::forward<CbufferType>(value)));
+	}
+
+	// 指定の通常メッシュのマテリアルで追加で管理する定数バッファのIDと値を更新する
+	template<class CbufferType>
+	inline void DX12GameManager::updateMaterialAppendParam(unsigned int id, unsigned int cbufferId, const CbufferType& value)
+	{
+		updateMaterialAppendParamImpl(id, cbufferId, sizeof(CbufferType), &value);
 	}
 }
 #endif // !DX12_GAME_MANAGER_H_

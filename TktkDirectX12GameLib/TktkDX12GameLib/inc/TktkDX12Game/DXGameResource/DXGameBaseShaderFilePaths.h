@@ -18,6 +18,9 @@ namespace tktk
 		// 通常メッシュシェーダーのファイルパス
 		tktk::ShaderFilePaths		basicMeshShaderFilePaths{};
 
+		// 単色塗りつぶしメッシュシェーダーのファイルパス
+		std::string					monoColorShaderPsFilePath;
+
 		// シャドウマップシェーダーのファイルパス
 		std::string					writeShadowMapVsFilePath{};
 

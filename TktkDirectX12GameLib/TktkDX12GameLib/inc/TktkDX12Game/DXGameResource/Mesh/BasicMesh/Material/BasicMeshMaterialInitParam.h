@@ -8,14 +8,11 @@ namespace tktk
 	// 通常メッシュのマテリアルを作るとき必要な情報
 	struct BasicMeshMaterialInitParam
 	{
-		// 作るディスクリプタヒープのID
-		unsigned int						createDescriptorHeapId;
+		// 使うパイプラインステートのID
+		unsigned int						usePipeLineStateId;
 
-		// 使うアルベドマップのテクスチャID
-		unsigned int						useAlbedoMapTextureId;
-
-		// 使うノーマルマップのテクスチャID
-		unsigned int						useNormalMapTextureId;
+		// 使うディスクリプタヒープのID
+		unsigned int						useDescriptorHeapId;
 
 		// マテリアルの環境光
 		tktkMath::Color						materialAmbient		{ 0.25f, 1.0f };

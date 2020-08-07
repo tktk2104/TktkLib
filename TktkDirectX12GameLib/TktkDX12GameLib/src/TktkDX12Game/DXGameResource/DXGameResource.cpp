@@ -12,7 +12,7 @@ namespace tktk
 		, m_line2D(filePaths.line2DShaderFilePaths)
 		, m_skeleton(resourceNum.skeletonNum) // ※メッシュクラスの初期化にボーン行列定数バッファが必要なので先にコンストラクトする必要がある
 		, m_basicMesh(filePaths.writeShadowMapVsFilePath, resourceNum.basicMeshNum)
-		, m_basicMeshMaterial(filePaths.basicMeshShaderFilePaths, resourceNum.basicMeshMaterialNum)
+		, m_basicMeshMaterial(filePaths.basicMeshShaderFilePaths, filePaths.monoColorShaderPsFilePath, resourceNum.basicMeshMaterialNum)
 		, m_motion(resourceNum.motionNum)
 		, m_postEffectMaterial(filePaths.postEffectShaderFilePaths, resourceNum.postEffectMaterialNum)
 		, m_camera(resourceNum.cameraNum)
@@ -110,6 +110,16 @@ namespace tktk
 		m_basicMeshMaterial.setMaterialData(id);
 	}
 
+	void DXGameResource::addMaterialAppendParam(unsigned int id, unsigned int cbufferId, unsigned int dataSize, void* dataTopPos)
+	{
+		m_basicMeshMaterial.addAppendParam(id, cbufferId, dataSize, dataTopPos);
+	}
+
+	void DXGameResource::updateMaterialAppendParam(unsigned int id, unsigned int cbufferId, unsigned int dataSize, const void* dataTopPos)
+	{
+		m_basicMeshMaterial.updateAppendParam(id, cbufferId, dataSize, dataTopPos);
+	}
+
 	void DXGameResource::drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs) const
 	{
 		m_basicMesh.drawMesh(id, baseArgs);
@@ -128,6 +138,11 @@ namespace tktk
 	void DXGameResource::updateBoneMatrixCbuffer(unsigned int id) const
 	{
 		m_skeleton.updateBoneMatrixCbuffer(id);
+	}
+
+	void DXGameResource::resetBoneMatrixCbuffer() const
+	{
+		m_skeleton.resetBoneMatrixCbuffer();
 	}
 
 	void DXGameResource::loadMotion(unsigned int id, const std::string& motionFileName)

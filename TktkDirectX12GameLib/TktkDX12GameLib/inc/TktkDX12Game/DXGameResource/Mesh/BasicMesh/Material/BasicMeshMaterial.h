@@ -12,7 +12,7 @@ namespace tktk
 	{
 	public:
 
-		BasicMeshMaterial(const ShaderFilePaths& shaderFilePaths, unsigned int basicMeshMaterialNum);
+		BasicMeshMaterial(const ShaderFilePaths& basicShaderFilePaths, const std::string& monoColorShaderPsFilePath, unsigned int basicMeshMaterialNum);
 		~BasicMeshMaterial() = default;
 
 	public:
@@ -23,13 +23,19 @@ namespace tktk
 		// 指定の通常メッシュのマテリアル情報をグラフィックパイプラインに設定する
 		void setMaterialData(unsigned int id)  const;
 
+		// 指定の通常メッシュのマテリアルで追加で管理する定数バッファのIDと値を設定する
+		void addAppendParam(unsigned int id, unsigned int cbufferId, unsigned int dataSize, void* dataTopPos);
+
+		// 指定の通常メッシュのマテリアルで追加で管理する定数バッファのIDと値を更新する
+		void updateAppendParam(unsigned int id, unsigned int cbufferId, unsigned int dataSize, const void* dataTopPos);
+
 	private:
 
 		// 通常メッシュマテリアル描画用のルートシグネチャを作る
 		void createRootSignature() const;
 
 		// 通常メッシュマテリアル描画用のパイプラインステートを作る
-		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths) const;
+		void createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths, const std::string& monoColorShaderPsFilePath) const;
 
 	private:
 

@@ -177,6 +177,8 @@
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\InertialMovement3D\InertialMovement3D.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\InertialMovement3D\InertialMovement3DMaker.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\Light\PointLightControllerMaker.h" />
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\MeshDrawer\SphereMeshDrawer.h" />
+    <ClInclude Include="inc\TktkDX12BaseComponents\3D\MeshDrawer\SphereMeshDrawerMaker.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\SphereCollider\SphereCollider.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\3D\SphereCollider\SphereColliderMaker.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\Other\ReceiveMessageToSelfDestroyer\ReceiveMessageToSelfDestroyer.h" />
@@ -233,8 +235,11 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DDrawFuncArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshMaterialCbuffer.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMonoColorMeshCbuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshLoadPmdReturnValue.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshPmdLoader.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Maker\SphereMeshMaker.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterialAppendParam.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMesh.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshLoadPmdArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterial.h" />
@@ -244,6 +249,7 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMeshInitParam.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Subset.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshDrawFuncBaseArgs.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshPrimitiveTopology.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshShadowMapCBuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\MeshTransformCbuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\Motion\Motion.h" />
@@ -262,6 +268,9 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Scene\SceneVTable.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteConstantBufferData.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sprite\SpriteMaterialDrawFuncArgs.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\_SystemDXGameResourceIdGetter\IdType\SystemBasicMeshMaterialType.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\_SystemDXGameResourceIdGetter\IdType\SystemBasicMeshType.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\_SystemDXGameResourceIdGetter\SystemDXGameResourceIdGetter.h" />
     <ClInclude Include="inc\TktkDX12Game\EventMessage\MessageAttachment.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObject.h" />
     <ClInclude Include="inc\TktkDX12Game\GameObject\GameObjectManager.h" />
@@ -287,7 +296,7 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Sound\SoundPlayState.h" />
     <ClInclude Include="inc\TktkDX12Game\Time\ElapsedTimer.h" />
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManager.h" />
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\_SystemDXGameResourceIdGetter\SystemDXGameResourceType\SystemPostEffectMaterialType.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\_SystemDXGameResourceIdGetter\IdType\SystemPostEffectMaterialType.h" />
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManagerFuncInOutValueType.h" />
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManagerInitParam.h" />
     <ClInclude Include="inc\TktkDX12Game\_MainManager\DX12GameManagerUseInitParams.h" />
@@ -318,6 +327,8 @@
     <ClCompile Include="src\TktkDX12BaseComponents\3D\InertialMovement3D\InertialMovement3D.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\3D\InertialMovement3D\InertialMovement3DMaker.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\3D\Light\PointLightControllerMaker.cpp" />
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\MeshDrawer\SphereMeshDrawer.cpp" />
+    <ClCompile Include="src\TktkDX12BaseComponents\3D\MeshDrawer\SphereMeshDrawerMaker.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\3D\SphereCollider\SphereCollider.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\3D\SphereCollider\SphereColliderMaker.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\Other\ReceiveMessageToSelfDestroyer\ReceiveMessageToSelfDestroyer.cpp" />
@@ -365,6 +376,8 @@
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2D.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2DData.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshPmdLoader.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Maker\SphereMeshMaker.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterialAppendParam.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMesh.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterial.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterialData.cpp" />
@@ -375,6 +388,7 @@
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\Skeleton\SkeletonData.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterial.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\PostEffect\PostEffectMaterialData.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\_SystemDXGameResourceIdGetter\SystemDXGameResourceIdGetter.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObject.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectManager.cpp" />
     <ClCompile Include="src\TktkDX12Game\GameObject\GameObjectPtr.cpp" />
@@ -407,6 +421,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\basicMeshShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\basicMeshShader\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="shader\basicMeshShader\BasicMonoColorMeshPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)\shader\basicMeshShader\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)\shader\basicMeshShader\%(Filename).cso</ObjectFileOutput>

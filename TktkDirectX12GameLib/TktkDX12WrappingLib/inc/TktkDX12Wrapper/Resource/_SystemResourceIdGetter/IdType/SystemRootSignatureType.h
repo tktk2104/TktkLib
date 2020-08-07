@@ -4,7 +4,7 @@
 namespace tktk
 {
 	// システムで使用しているルートシグネチャの数
-	constexpr unsigned int SystemRootSignatureNum = 10U;
+	constexpr unsigned int SystemRootSignatureNum = 11U;
 
 	// システムで使用しているルートシグネチャの種類
 	enum class SystemRootSignatureType
@@ -18,7 +18,8 @@ namespace tktk
 		ShadowMap,
 		Sprite,
 		Line2D,
-		BasicMesh
+		BasicMesh,
+		BasicMonoColorMesh
 	};
 }
 #endif // !SYSTEM_ROOT_SIGNATURE_TYPE_H_

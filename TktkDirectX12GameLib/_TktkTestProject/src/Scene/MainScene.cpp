@@ -3,6 +3,7 @@
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
 #include "../GameObject/Cursor/Cursor.h"
 #include "../GameObject/Miku/Miku.h"
+#include "../GameObject/SphereTest/SphereTest.h"
 #include "../GameObject/Camera/CameraObject.h"
 #include "../GameObject/Light/PointLightObject.h"
 #include "../GameObject/PostEffectObject/PostEffectObject.h"
@@ -19,6 +20,8 @@ void MainScene::start()
 	PointLightObject::create({ 60.0f, 10.0f, -60.0f });
 
 	Miku::create(tktkMath::vec3Zero);
+
+	SphereTest::create(tktkMath::vec3Zero);
 
 	PostEffectObject::create();
 }

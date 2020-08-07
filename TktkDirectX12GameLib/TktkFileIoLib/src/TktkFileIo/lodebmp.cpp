@@ -52,13 +52,12 @@ namespace tktk
 		out->height = infoHeader.height;
 		out->data.resize(infoHeader.width * infoHeader.height * 4);
 
-		for (unsigned int i = 0; i < (infoHeader.width * infoHeader.height); i++)
+		for (unsigned int i = 0; i < static_cast<unsigned int>(infoHeader.width * infoHeader.height); i++)
 		{
 			out->data.at(out->data.size() - 1 - (i * 4 + 0)) = 255U;
 			fread(&out->data.at(out->data.size() - 1 - (i * 4 + 3)), sizeof(unsigned char), 1, fp);
 			fread(&out->data.at(out->data.size() - 1 - (i * 4 + 2)), sizeof(unsigned char), 1, fp);
 			fread(&out->data.at(out->data.size() - 1 - (i * 4 + 1)), sizeof(unsigned char), 1, fp);
-			
 		}
 	}
 }

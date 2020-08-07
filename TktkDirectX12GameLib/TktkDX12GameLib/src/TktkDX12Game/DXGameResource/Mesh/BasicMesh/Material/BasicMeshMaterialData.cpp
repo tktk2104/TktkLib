@@ -6,58 +6,21 @@
 namespace tktk
 {
 	BasicMeshMaterialData::BasicMeshMaterialData(const BasicMeshMaterialInitParam& initParam)
-		: m_createDescriptorHeapId(initParam.createDescriptorHeapId)
+		: m_usePipeLineStateId(initParam.usePipeLineStateId)
+		, m_useDescriptorHeapId(initParam.useDescriptorHeapId)
 		, m_materialAmbient(initParam.materialAmbient)
 		, m_materialDiffuse(initParam.materialDiffuse)
 		, m_materialSpecular(initParam.materialSpecular)
 		, m_materialEmissive(initParam.materialEmissive)
 		, m_materialShiniess(initParam.materialShiniess)
 	{
-		// ディスクリプタヒープを作る
-		BasicDescriptorHeapInitParam descriptorHeapInitParam{};
-		descriptorHeapInitParam.shaderVisible = true;
-		descriptorHeapInitParam.descriptorTableParamArray.resize(3U);
-
-		{ /* シェーダーリソースビューのディスクリプタの情報 */
-			auto& srvDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(0U);
-			srvDescriptorParam.type = BasicDescriptorType::textureBuffer;
-
-			// アルベドマップとシャドウマップの２種類
-			srvDescriptorParam.descriptorParamArray = {
-				{ BufferType::texture,		initParam.useAlbedoMapTextureId											},
-				{ BufferType::depthStencil, DX12GameManager::getSystemId(SystemDsBufferType::ShadowMap)	}
-			};
-		}
-
-		{ /* 頂点シェーダー用のコンスタントバッファービューのディスクリプタの情報 */
-			auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(1U);
-			cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
-
-			// 
-			cbufferViewDescriptorParam.descriptorParamArray = {
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::MeshTransform)		},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BoneMatCbuffer)		},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::Light)		},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BasicMeshMaterial)	},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::MeshShadowMap)		}
-			};
-		}
-
-		{ /* ピクセルシェーダー用のコンスタントバッファービューのディスクリプタの情報 */
-			auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(2U);
-			cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
-
-			// 
-			cbufferViewDescriptorParam.descriptorParamArray = {
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::Light)		},
-				{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BasicMeshMaterial)	}
-			};
-		}
-		DX12GameManager::createBasicDescriptorHeap(m_createDescriptorHeapId, descriptorHeapInitParam);
 	}
 
 	void BasicMeshMaterialData::setMaterialData() const
 	{
+		// マテリアルが使用するパイプラインステートを設定する
+		DX12GameManager::setPipeLineState(m_usePipeLineStateId);
+
 		// マテリアルの情報を定数バッファに書き込む
 		{
 			BasicMeshMaterialCbuffer materialBufferData{};
@@ -71,7 +34,26 @@ namespace tktk
 			DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::BasicMeshMaterial), materialBufferData);
 		}
 
-		// 通常メッシュ用のディスクリプタヒープを設定する
-		DX12GameManager::setDescriptorHeap({ { DescriptorHeapType::basic, m_createDescriptorHeapId } });
+		for (const auto& pair : m_appendParamMap)
+		{
+			pair.second.updateCbuffer();
+		}
+
+		// 指定のディスクリプタヒープを設定する
+		DX12GameManager::setDescriptorHeap({ { DescriptorHeapType::basic, m_useDescriptorHeapId } });
+	}
+
+	void BasicMeshMaterialData::addAppendParam(unsigned int cbufferId, unsigned int dataSize, void* dataTopPos)
+	{
+		m_appendParamMap.emplace(
+			std::piecewise_construct,
+			std::forward_as_tuple(cbufferId),
+			std::forward_as_tuple(cbufferId, dataSize, dataTopPos)
+		);
+	}
+
+	void BasicMeshMaterialData::updateAppendParam(unsigned int cbufferId, unsigned int dataSize, const void* dataTopPos)
+	{
+		m_appendParamMap.at(cbufferId).updateParam(dataSize, dataTopPos);
 	}
 }

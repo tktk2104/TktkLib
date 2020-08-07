@@ -8,6 +8,7 @@ namespace tktk
 		: m_useVertexBufferId(initParam.useVertexBufferId)
 		, m_useIndexBufferId(initParam.useIndexBufferId)
 		, m_indexNum(initParam.indexNum)
+		, m_primitiveTopology(initParam.primitiveTopology)
 		, m_materialSlots(initParam.materialSlots)
 	{
 	}
@@ -29,8 +30,8 @@ namespace tktk
 		// 通常メッシュ版シャドウマップ描画用のディスクリプタヒープを設定する
 		DX12GameManager::setDescriptorHeap({ { DescriptorHeapType::basic, DX12GameManager::getSystemId(SystemBasicDescriptorHeapType::BasicMeshShadowMap) } });
 
-		// トライアングルリストで描画を行う
-		DX12GameManager::setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		// 指定のトポロジーで描画を行う
+		DX12GameManager::setPrimitiveTopology(static_cast<D3D_PRIMITIVE_TOPOLOGY>(m_primitiveTopology));
 
 		// 描画で使用する頂点バッファを設定する
 		DX12GameManager::setVertexBuffer(m_useVertexBufferId);
@@ -59,8 +60,8 @@ namespace tktk
 		// 通常メッシュ用のパイプラインステートを設定する
 		DX12GameManager::setPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMesh));
 
-		// トライアングルリストで描画を行う
-		DX12GameManager::setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		// 指定のトポロジーで描画を行う
+		DX12GameManager::setPrimitiveTopology(static_cast<D3D_PRIMITIVE_TOPOLOGY>(m_primitiveTopology));
 
 		// 描画で使用する頂点バッファを設定する
 		DX12GameManager::setVertexBuffer(m_useVertexBufferId);

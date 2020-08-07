@@ -4,12 +4,13 @@
 namespace tktk
 {
 	// システムで使用しているインデックスバッファの数
-	constexpr unsigned int SystemIndexBufferNum = 1U;
+	constexpr unsigned int SystemIndexBufferNum = 2U;
 
 	// システムで使用しているインデックスバッファの種類
 	enum class SystemIndexBufferType
 	{
-		Sprite = 0U
+		Sprite = 0U,
+		Sphere
 	};
 }
 #endif // !SYSTEM_INDEX_BUFFER_TYPE_H_

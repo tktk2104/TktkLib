@@ -90,7 +90,7 @@ namespace tktk
 		initParam.rasterizerDesc.MultisampleEnable = false;
 		initParam.rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
 		initParam.rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
-		initParam.rasterizerDesc.DepthClipEnable = true;
+		initParam.rasterizerDesc.DepthClipEnable = false;
 		initParam.sampleMask = 0xffffffff;
 		initParam.blendDesc.AlphaToCoverageEnable = false;
 		initParam.blendDesc.IndependentBlendEnable = true;

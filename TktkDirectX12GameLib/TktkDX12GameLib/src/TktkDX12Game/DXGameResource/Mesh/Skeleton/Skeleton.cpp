@@ -25,4 +25,15 @@ namespace tktk
     {
         m_skeletonArray.at(id)->updateBoneMatrixCbuffer();
     }
+
+    void Skeleton::resetBoneMatrixCbuffer() const
+    {
+        BoneMatrixCbufferData boneMatBuf;
+
+        for (unsigned int i = 0; i < 128U; i++)
+        {
+            boneMatBuf.boneMatrix[i] = tktkMath::mat4Identity;
+        }
+        DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::BoneMatCbuffer), boneMatBuf);
+    }
 }

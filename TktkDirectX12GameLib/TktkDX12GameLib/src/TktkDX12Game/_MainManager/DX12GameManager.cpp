@@ -5,21 +5,22 @@
 #include "TktkDX12Game/GameObject/GameObjectManager.h"
 #include "TktkDX12Game/GameObject/GameObject.h"
 #include "TktkDX12Game/DXGameResource/DXGameResource.h"
+#include "TktkDX12Game/DXGameResource/_SystemDXGameResourceIdGetter/SystemDXGameResourceIdGetter.h"
 #include "TktkDX12Game/Input/Mouse/Mouse.h"
 #include "TktkDX12Game/Input/DirectInputWrapper/DirectInputWrapper.h"
 #include "TktkDX12Game/Time/ElapsedTimer.h"
-#include "..\..\..\inc\TktkDX12Game\_MainManager\DX12GameManager.h"
 
 namespace tktk
 {
-	std::unique_ptr<GameObjectManager>		DX12GameManager::m_gameObjectManager;
-	std::unique_ptr<ComponentManager>		DX12GameManager::m_componentManager;
-	std::unique_ptr<Window>					DX12GameManager::m_window;
-	std::unique_ptr<DX3DBaseObjects>		DX12GameManager::m_dx3dBaseObjects;
-	std::unique_ptr<DXGameResource>			DX12GameManager::m_dxGameResource;
-	std::unique_ptr<DirectInputWrapper>		DX12GameManager::m_directInputWrapper;
-	std::unique_ptr<Mouse>					DX12GameManager::m_mouse;
-	std::unique_ptr<ElapsedTimer>			DX12GameManager::m_elapsedTimer;
+	std::unique_ptr<GameObjectManager>				DX12GameManager::m_gameObjectManager;
+	std::unique_ptr<ComponentManager>				DX12GameManager::m_componentManager;
+	std::unique_ptr<Window>							DX12GameManager::m_window;
+	std::unique_ptr<DX3DBaseObjects>				DX12GameManager::m_dx3dBaseObjects;
+	std::unique_ptr<DXGameResource>					DX12GameManager::m_dxGameResource;
+	std::unique_ptr<SystemDXGameResourceIdGetter>	DX12GameManager::m_systemDXGameResourceIdGetter;
+	std::unique_ptr<DirectInputWrapper>				DX12GameManager::m_directInputWrapper;
+	std::unique_ptr<Mouse>							DX12GameManager::m_mouse;
+	std::unique_ptr<ElapsedTimer>					DX12GameManager::m_elapsedTimer;
 
 	void DX12GameManager::initialize(const DX12GameManagerInitParam& gameManagerInitParam)
 	{
@@ -29,6 +30,11 @@ namespace tktk
 		m_dx3dBaseObjects		= std::make_unique<DX3DBaseObjects>(gameManagerInitParam.dx3dResParam, m_window->getHWND(), gameManagerInitParam.windowParam.windowSize, tktkMath::colorBlue);
 		
 		{
+			DXGameResourceNum dxGameResourceNum = gameManagerInitParam.dxGameResourceNum;
+
+			// コンストラクタ内で「DXGameResourceNum」の値を書き換える
+			m_systemDXGameResourceIdGetter = std::make_unique<SystemDXGameResourceIdGetter>(&dxGameResourceNum);
+
 			DXGameBaseShaderFilePaths dxGameBaseShaderFilePaths{};
 			dxGameBaseShaderFilePaths.spriteShaderFilePaths.vsFilePath					= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/SpriteVertexShader.cso";
 			dxGameBaseShaderFilePaths.spriteShaderFilePaths.psFilePath					= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/SpritePixelShader.cso";
@@ -36,11 +42,12 @@ namespace tktk
 			dxGameBaseShaderFilePaths.line2DShaderFilePaths.psFilePath					= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/Line2DPixelShader.cso";
 			dxGameBaseShaderFilePaths.basicMeshShaderFilePaths.vsFilePath				= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshVertexShader.cso";
 			dxGameBaseShaderFilePaths.basicMeshShaderFilePaths.psFilePath				= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshPixelShader.cso";
+			dxGameBaseShaderFilePaths.monoColorShaderPsFilePath							= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMonoColorMeshPixelShader.cso";
 			dxGameBaseShaderFilePaths.writeShadowMapVsFilePath							= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/BasicMeshShadowVertexShader.cso";
 			dxGameBaseShaderFilePaths.postEffectShaderFilePaths.postEffectVSFilePath	= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/PostEffectVertexShader.cso";
 			dxGameBaseShaderFilePaths.postEffectShaderFilePaths.monochromePSFilePath	= gameManagerInitParam.tktkLibResFolderPath + "TktkLibRes/shader/MonochromePixelShader.cso";
 
-			m_dxGameResource = std::make_unique<DXGameResource>(gameManagerInitParam.dxGameResourceNum, dxGameBaseShaderFilePaths);
+			m_dxGameResource = std::make_unique<DXGameResource>(dxGameResourceNum, dxGameBaseShaderFilePaths);
 		}
 		m_mouse					= std::make_unique<Mouse>();
 		m_directInputWrapper	= std::make_unique<DirectInputWrapper>(gameManagerInitParam.windowParam.hInstance, m_window->getHWND());
@@ -63,6 +70,9 @@ namespace tktk
 
 			createDsvDescriptorHeap(getSystemId(SystemDsvDescriptorHeapType::ShadowMap), initParam);
 		}
+
+		// 球体メッシュを作る
+		SphereMeshMaker::make();
 	}
 
 	void DX12GameManager::run()
@@ -419,6 +429,11 @@ namespace tktk
 		m_dxGameResource->updateBoneMatrixCbuffer(id);
 	}
 
+	void DX12GameManager::resetBoneMatrixCbuffer()
+	{
+		m_dxGameResource->resetBoneMatrixCbuffer();
+	}
+
 	void DX12GameManager::loadMotion(unsigned int id, const std::string& motionFileName)
 	{
 		m_dxGameResource->loadMotion(id, motionFileName);
@@ -674,6 +689,21 @@ namespace tktk
 		return m_dx3dBaseObjects->getSystemId(type);
 	}
 
+	unsigned int DX12GameManager::getSystemId(SystemBasicMeshType type)
+	{
+		return m_systemDXGameResourceIdGetter->getSystemId(type);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemBasicMeshMaterialType type)
+	{
+		return m_systemDXGameResourceIdGetter->getSystemId(type);
+	}
+
+	unsigned int DX12GameManager::getSystemId(SystemPostEffectMaterialType type)
+	{
+		return m_systemDXGameResourceIdGetter->getSystemId(type);
+	}
+
 	void DX12GameManager::createSceneImpl(unsigned int id, const std::shared_ptr<SceneBase>& scenePtr, SceneVTable* vtablePtr)
 	{
 		m_dxGameResource->createScene(id, scenePtr, vtablePtr);
@@ -684,13 +714,23 @@ namespace tktk
 		m_dx3dBaseObjects->createVertexBuffer(id, vertexTypeSize, vertexDataCount, vertexDataTopPos);
 	}
 
-	void DX12GameManager::createConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	void DX12GameManager::createCbufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_dx3dBaseObjects->createCBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 
-	void DX12GameManager::updateConstantBufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
+	void DX12GameManager::updateCbufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_dx3dBaseObjects->updateCBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
+	}
+
+	void DX12GameManager::addMaterialAppendParamImpl(unsigned int id, unsigned int cbufferId, unsigned int dataSize, void* dataTopPos)
+	{
+		m_dxGameResource->addMaterialAppendParam(id, cbufferId, dataSize, dataTopPos);
+	}
+
+	void DX12GameManager::updateMaterialAppendParamImpl(unsigned int id, unsigned int cbufferId, unsigned int dataSize, const void* dataTopPos)
+	{
+		m_dxGameResource->updateMaterialAppendParam(id, cbufferId, dataSize, dataTopPos);
 	}
 }

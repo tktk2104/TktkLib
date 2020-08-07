@@ -4,6 +4,7 @@
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
 #include <TktkDX12BaseComponents/3D/Transform3D/Transform3DMaker.h>
 #include <TktkDX12BaseComponents/3D/Camera/BasicCameraControllerMaker.h>
+#include <TktkDX12BaseComponents/3D/Camera/FirstPersonModuleMaker.h>
 
 #include <TktkDX12BaseComponents/3D/Camera/OrthographicCameraControllerMaker.h>
 
@@ -15,6 +16,9 @@ struct CameraObject
 
 		tktk::Transform3DMaker::makeStart(gameObject)
 			.initPosition(position)
+			.create();
+
+		tktk::FirstPersonModuleMaker::makeStart(gameObject)
 			.create();
 
 		tktk::BasicCameraControllerMaker::makeStart(gameObject)

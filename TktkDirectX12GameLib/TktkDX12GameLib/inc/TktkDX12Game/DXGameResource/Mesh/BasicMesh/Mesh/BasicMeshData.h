@@ -5,6 +5,7 @@
 #include "BasicMeshInitParam.h"
 #include "../Subset.h"
 #include "../../MeshDrawFuncBaseArgs.h"
+#include "../../MeshPrimitiveTopology.h"
 
 namespace tktk
 {
@@ -29,6 +30,8 @@ namespace tktk
 		unsigned int m_useIndexBufferId;
 
 		unsigned int m_indexNum;
+
+		MeshPrimitiveTopology m_primitiveTopology;
 
 		std::vector<Subset> m_materialSlots;
 	};

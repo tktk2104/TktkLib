@@ -28,6 +28,7 @@ namespace tktk
 		meshInitParam.useVertexBufferId = args.createVertexBufferId;
 		meshInitParam.useIndexBufferId = args.createIndexBufferId;
 		meshInitParam.indexNum = outData.indexData.size();
+		meshInitParam.primitiveTopology = MeshPrimitiveTopology::TriangleList;
 		meshInitParam.materialSlots.reserve(outData.materialData.size());
 
 		// 連番のIDで作成するリソースの次に使用するIDの値
@@ -44,7 +45,8 @@ namespace tktk
 			// マテリアルの作成に必要な情報
 			BasicMeshMaterialInitParam materialParam{};
 
-			materialParam.createDescriptorHeapId = curDescriptorHeapId;
+			// デフォルトのパイプラインステートを使う
+			materialParam.usePipeLineStateId = DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMesh);
 
 			// マテリアルにテクスチャが設定されていたら
 			if (outData.materialData.at(i).textureFilePath != "")
@@ -81,13 +83,58 @@ namespace tktk
 				// テクスチャが小さすぎるのでコマンドリスト
 				DX12GameManager::cpuPriorityCreateTextureBuffer(curTextureId, formatParam, dataParam);
 			}
-			materialParam.useNormalMapTextureId = DX12GameManager::getSystemId(SystemTextureBufferType::White);
+
 			materialParam.materialAmbient	= { 0.3f, 1.0f }; // ※マテリアルの環境光の値は定数値を設定する
 			materialParam.materialDiffuse	= outData.materialData.at(i).diffuse;
 			materialParam.materialSpecular	= outData.materialData.at(i).speqular;
 			materialParam.materialEmissive	= outData.materialData.at(i).emissive;
 			materialParam.materialShiniess	= outData.materialData.at(i).shiniess;
-			materialParam.useAlbedoMapTextureId = curTextureId;
+
+			materialParam.useDescriptorHeapId = curDescriptorHeapId;
+
+			// ディスクリプタヒープを作る
+			{
+				BasicDescriptorHeapInitParam descriptorHeapInitParam{};
+				descriptorHeapInitParam.shaderVisible = true;
+				descriptorHeapInitParam.descriptorTableParamArray.resize(3U);
+
+				{ /* シェーダーリソースビューのディスクリプタの情報 */
+					auto& srvDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(0U);
+					srvDescriptorParam.type = BasicDescriptorType::textureBuffer;
+
+					// アルベドマップとシャドウマップの２種類
+					srvDescriptorParam.descriptorParamArray = {
+						{ BufferType::texture,		curTextureId												},
+						{ BufferType::depthStencil, DX12GameManager::getSystemId(SystemDsBufferType::ShadowMap)	}
+					};
+				}
+
+				{ /* 頂点シェーダー用のコンスタントバッファービューのディスクリプタの情報 */
+					auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(1U);
+					cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
+
+					// 
+					cbufferViewDescriptorParam.descriptorParamArray = {
+						{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::MeshTransform)		},
+						{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BoneMatCbuffer)		},
+						{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::Light)				},
+						{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BasicMeshMaterial)	},
+						{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::MeshShadowMap)		}
+					};
+				}
+
+				{ /* ピクセルシェーダー用のコンスタントバッファービューのディスクリプタの情報 */
+					auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(2U);
+					cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
+
+					// 
+					cbufferViewDescriptorParam.descriptorParamArray = {
+						{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::Light)		},
+						{ BufferType::constant,		DX12GameManager::getSystemId(SystemCBufferType::BasicMeshMaterial)	}
+					};
+				}
+				DX12GameManager::createBasicDescriptorHeap(materialParam.useDescriptorHeapId, descriptorHeapInitParam);
+			}
 
 			// 通常メッシュのマテリアルを作る
 			DX12GameManager::createBasicMeshMaterial(curMaterialId, materialParam);

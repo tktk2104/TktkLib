@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "../Subset.h"
+#include "../../MeshPrimitiveTopology.h"
 
 namespace tktk
 {
@@ -17,6 +18,8 @@ namespace tktk
 
 		// メッシュが持つインデックスの総数
 		unsigned int indexNum;
+
+		MeshPrimitiveTopology primitiveTopology;
 
 		// サブセット（使用するマテリアル情報）
 		std::vector<Subset> materialSlots;

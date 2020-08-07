@@ -93,6 +93,12 @@ namespace tktk
 		// 指定の通常メッシュのマテリアル情報をグラフィックパイプラインに設定する
 		void setMaterialData(unsigned int id) const;
 
+		// 指定の通常メッシュのマテリアルで追加で管理する定数バッファのIDと値を設定する
+		void addMaterialAppendParam(unsigned int id, unsigned int cbufferId, unsigned int dataSize, void* dataTopPos);
+
+		// 指定の通常メッシュのマテリアルで追加で管理する定数バッファのIDと値を更新する
+		void updateMaterialAppendParam(unsigned int id, unsigned int cbufferId, unsigned int dataSize, const void* dataTopPos);
+
 		// 指定の通常メッシュを描画する
 		void drawBasicMesh(unsigned int id, const MeshDrawFuncBaseArgs& baseArgs) const;
 
@@ -106,6 +112,9 @@ namespace tktk
 
 		// 指定のスケルトンを使って骨情報を管理する定数バッファを更新する
 		void updateBoneMatrixCbuffer(unsigned int id) const;
+
+		// 骨情報を管理する定数バッファに単位行列を設定する
+		void resetBoneMatrixCbuffer() const;
 
 	public: /* モーション関係の処理 */
 

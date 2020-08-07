@@ -24,6 +24,9 @@ namespace tktk
 		// 指定のスケルトンを使って骨情報を管理する定数バッファを更新する
 		void updateBoneMatrixCbuffer(unsigned int id) const;
 
+		// 骨情報を管理する定数バッファに単位行列を設定する
+		void resetBoneMatrixCbuffer() const;
+
 	private:
 
 		HeapArray<SkeletonData> m_skeletonArray;

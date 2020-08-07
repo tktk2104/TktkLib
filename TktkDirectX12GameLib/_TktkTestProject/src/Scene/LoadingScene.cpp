@@ -15,10 +15,10 @@ void LoadingScene::start()
 	{
 		tktk::SpriteMaterialInitParam initParam{};
 		initParam.createDescriptorHeapId = 1U;
-		/*initParam.srvBufferType = tktk::BufferType::texture;
-		initParam.useBufferId = 0U;*/
-		initParam.srvBufferType = tktk::BufferType::depthStencil;
-		initParam.useBufferId = tktk::DX12GameManager::getSystemId(tktk::SystemDsBufferType::ShadowMap);
+		initParam.srvBufferType = tktk::BufferType::texture;
+		initParam.useBufferId = 0U;
+		/*initParam.srvBufferType = tktk::BufferType::depthStencil;
+		initParam.useBufferId = tktk::DX12GameManager::getSystemId(tktk::SystemDsBufferType::ShadowMap);*/
 
 		tktk::DX12GameManager::createSpriteMaterial(0U, initParam);
 	}

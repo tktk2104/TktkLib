@@ -162,6 +162,7 @@
     <ClInclude Include="src\GameObject\Miku\Miku.h" />
     <ClInclude Include="src\GameObject\Miku\MikuScript.h" />
     <ClInclude Include="src\GameObject\PostEffectObject\PostEffectObject.h" />
+    <ClInclude Include="src\GameObject\SphereTest\SphereTest.h" />
     <ClInclude Include="src\Scene\LoadingScene.h" />
     <ClInclude Include="src\Scene\MainScene.h" />
   </ItemGroup>

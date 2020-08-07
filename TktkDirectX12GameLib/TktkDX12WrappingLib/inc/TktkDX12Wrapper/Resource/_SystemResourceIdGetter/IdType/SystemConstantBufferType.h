@@ -4,7 +4,7 @@
 namespace tktk
 {
 	// システムで使用している定数バッファの数
-	constexpr unsigned int SystemCBufferNum = 7U;
+	constexpr unsigned int SystemCBufferNum = 8U;
 
 	// システムで使用している定数バッファの種類
 	enum class SystemCBufferType
@@ -15,7 +15,8 @@ namespace tktk
 		MeshShadowMap,
 		BoneMatCbuffer,
 		Light,
-		BasicMeshMaterial
+		BasicMeshMaterial,
+		BasicMonoColorMeshCbuffer
 	};
 }
 #endif // !SYSTEM_CBUFFER_TYPE_H_
