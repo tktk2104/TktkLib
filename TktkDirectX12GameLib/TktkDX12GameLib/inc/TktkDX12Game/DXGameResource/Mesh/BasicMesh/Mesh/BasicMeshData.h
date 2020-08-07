@@ -15,8 +15,12 @@ namespace tktk
 	public:
 
 		BasicMeshData(const BasicMeshInitParam& initParam);
+		BasicMeshData(const BasicMeshData* other);
 
 	public:
+
+		// 使用しているマテリアルを更新する
+		void setMaterialId(unsigned int materialSlot, unsigned int materialId);
 
 		// シャドウマップを書き込む
 		void writeShadowMap() const;

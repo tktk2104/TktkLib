@@ -25,6 +25,11 @@ namespace tktk
 		m_basicMeshMaterialArray.emplaceAt(id, initParam);
 	}
 
+	void BasicMeshMaterial::copy(unsigned int id, unsigned int originalId)
+	{
+		m_basicMeshMaterialArray.emplaceAt(id, m_basicMeshMaterialArray.at(originalId));
+	}
+
 	void BasicMeshMaterial::setMaterialData(unsigned int id) const
 	{
 		auto basicMeshPtr = m_basicMeshMaterialArray.at(id);

@@ -95,9 +95,24 @@ namespace tktk
 		m_basicMesh.craete(id, initParam);
 	}
 
+	void DXGameResource::copyBasicMesh(unsigned int id, unsigned int originalId)
+	{
+		m_basicMesh.copy(id, originalId);
+	}
+
 	void DXGameResource::createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam)
 	{
 		m_basicMeshMaterial.create(id, initParam);
+	}
+
+	void DXGameResource::copyBasicMeshMaterial(unsigned int id, unsigned int originalId)
+	{
+		m_basicMeshMaterial.copy(id, originalId);
+	}
+
+	void DXGameResource::setMaterialId(unsigned int id, unsigned int materialSlot, unsigned int materialId)
+	{
+		m_basicMesh.setMaterialId(id, materialSlot, materialId);
 	}
 
 	void DXGameResource::writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData) const

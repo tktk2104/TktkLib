@@ -1,6 +1,7 @@
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Mesh/BasicMesh.h"
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
+#include "..\..\..\..\..\..\inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMesh.h"
 
 namespace tktk
 {
@@ -39,6 +40,16 @@ namespace tktk
 	void BasicMesh::craete(unsigned int id, const BasicMeshInitParam& initParam)
 	{
 		m_basicMeshArray.emplaceAt(id, initParam);
+	}
+
+	void BasicMesh::copy(unsigned int id, unsigned int originalId)
+	{
+		m_basicMeshArray.emplaceAt(id, m_basicMeshArray.at(originalId));
+	}
+
+	void BasicMesh::setMaterialId(unsigned int id, unsigned int materialSlot, unsigned int materialId)
+	{
+		m_basicMeshArray.at(id)->setMaterialId(materialSlot, materialId);
 	}
 
 	void BasicMesh::writeShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData) const

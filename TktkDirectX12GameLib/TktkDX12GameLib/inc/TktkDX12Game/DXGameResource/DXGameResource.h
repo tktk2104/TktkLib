@@ -84,8 +84,17 @@ namespace tktk
 		// 通常メッシュを作る
 		void createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam);
 
+		// 通常メッシュのコピーを作る
+		void copyBasicMesh(unsigned int id, unsigned int originalId);
+
 		// 通常メッシュマテリアルを作る
 		void createBasicMeshMaterial(unsigned int id, const BasicMeshMaterialInitParam& initParam);
+
+		// 通常メッシュマテリアルのコピーを作る
+		void copyBasicMeshMaterial(unsigned int id, unsigned int originalId);
+
+		// 通常メッシュが使用しているマテリアルを更新する
+		void setMaterialId(unsigned int id, unsigned int materialSlot, unsigned int materialId);
 
 		// 指定の通常メッシュでシャドウマップを書き込む
 		void writeBasicMeshShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData) const;

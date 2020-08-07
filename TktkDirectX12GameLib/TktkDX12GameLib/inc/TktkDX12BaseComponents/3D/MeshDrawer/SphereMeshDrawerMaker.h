@@ -30,6 +30,9 @@ namespace tktk
 		// 描画優先度を設定する
 		SphereMeshDrawerMaker& drawPriority(float value);
 
+		// 描画色を設定する
+		SphereMeshDrawerMaker& albedoColor(const tktkMath::Color&  value);
+
 		// 使用するレンダーターゲットのディスクリプタヒープIDを設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
 		template<class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
 		SphereMeshDrawerMaker& useRtvDescriptorHeapId(IdType value);
@@ -61,6 +64,7 @@ namespace tktk
 
 		GameObjectPtr	m_user{  };
 		float			m_drawPriority{ 0.0f };
+		tktkMath::Color	m_albedoColor{ tktkMath::colorWhite };
 		unsigned int	m_useRtvDescriptorHeapId{  };		// ※初期パラメータはバックバッファー
 		unsigned int	m_cameraId{ 0U };
 		unsigned int	m_shadowMapCameraId{ 0U };

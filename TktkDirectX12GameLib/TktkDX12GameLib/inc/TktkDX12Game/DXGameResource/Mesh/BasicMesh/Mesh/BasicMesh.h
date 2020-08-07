@@ -19,6 +19,12 @@ namespace tktk
 		// 「BasicMeshData」のインスタンスを作る
 		void craete(unsigned int id, const BasicMeshInitParam& initParam);
 
+		// 指定の「BasicMeshData」のインスタンスのコピーを作る
+		void copy(unsigned int id, unsigned int originalId);
+
+		// 使用しているマテリアルを更新する
+		void setMaterialId(unsigned int id, unsigned int materialSlot, unsigned int materialId);
+
 		// 指定の通常メッシュでシャドウマップを書き込む
 		void writeShadowMap(unsigned int id, const MeshTransformCbuffer& transformBufferData) const;
 

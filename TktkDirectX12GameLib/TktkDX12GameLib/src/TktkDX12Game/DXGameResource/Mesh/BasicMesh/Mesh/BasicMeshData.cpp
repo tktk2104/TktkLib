@@ -13,6 +13,20 @@ namespace tktk
 	{
 	}
 
+	BasicMeshData::BasicMeshData(const BasicMeshData* other)
+		: m_useVertexBufferId(other->m_useVertexBufferId)
+		, m_useIndexBufferId(other->m_useIndexBufferId)
+		, m_indexNum(other->m_indexNum)
+		, m_primitiveTopology(other->m_primitiveTopology)
+		, m_materialSlots(other->m_materialSlots)
+	{
+	}
+
+	void BasicMeshData::setMaterialId(unsigned int materialSlot, unsigned int materialId)
+	{
+		m_materialSlots.at(materialSlot).useMaterialId = materialId;
+	}
+
 	void BasicMeshData::writeShadowMap() const
 	{
 		// シャドウマップ描画用の深度バッファー“のみ”を設定する

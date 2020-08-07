@@ -1,9 +1,12 @@
 #include "TktkDX12BaseComponents/3D/MeshDrawer/SphereMeshDrawer.h"
 
+#include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/BasicMonoColorMeshCbuffer.h"
+
 namespace tktk
 {
-	SphereMeshDrawer::SphereMeshDrawer(float drawPriority, unsigned int cameraId, unsigned int shadowMapCameraId, unsigned int lightId, unsigned int useRtvDescriptorHeapId)
+	SphereMeshDrawer::SphereMeshDrawer(float drawPriority, const tktkMath::Color& albedoColor, unsigned int cameraId, unsigned int shadowMapCameraId, unsigned int lightId, unsigned int useRtvDescriptorHeapId)
 		: ComponentBase(drawPriority)
+		, m_albedoColor(albedoColor)
 		, m_cameraId(cameraId)
 		, m_shadowMapCameraId(shadowMapCameraId)
 		, m_lightId(lightId)
@@ -23,7 +26,13 @@ namespace tktk
 
 	void SphereMeshDrawer::draw() const
 	{
+		// ボーン情報の定数バッファを単位行列で初期化
 		DX12GameManager::resetBoneMatrixCbuffer();
+
+		// 単色塗りつぶし色の定数バッファを更新する
+		BasicMonoColorMeshCbuffer tempCbufferData{};
+		tempCbufferData.albedoColor = m_albedoColor;
+		DX12GameManager::updateMaterialAppendParam(DX12GameManager::getSystemId(SystemBasicMeshMaterialType::Sphere), DX12GameManager::getSystemId(SystemCBufferType::BasicMonoColorMeshCbuffer), tempCbufferData);
 
 		// メッシュ描画に必要な値
 		MeshDrawFuncBaseArgs baseArgs{};

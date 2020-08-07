@@ -16,6 +16,18 @@ namespace tktk
 	{
 	}
 
+	BasicMeshMaterialData::BasicMeshMaterialData(const BasicMeshMaterialData* other)
+		: m_usePipeLineStateId(other->m_usePipeLineStateId)
+		, m_useDescriptorHeapId(other->m_useDescriptorHeapId)
+		, m_materialAmbient(other->m_materialAmbient)
+		, m_materialDiffuse(other->m_materialDiffuse)
+		, m_materialSpecular(other->m_materialSpecular)
+		, m_materialEmissive(other->m_materialEmissive)
+		, m_materialShiniess(other->m_materialShiniess)
+		, m_appendParamMap(other->m_appendParamMap)
+	{
+	}
+
 	void BasicMeshMaterialData::setMaterialData() const
 	{
 		// マテリアルが使用するパイプラインステートを設定する

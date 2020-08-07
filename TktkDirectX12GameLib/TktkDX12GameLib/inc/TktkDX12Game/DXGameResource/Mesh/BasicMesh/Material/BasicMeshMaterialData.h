@@ -14,6 +14,7 @@ namespace tktk
 	public:
 
 		BasicMeshMaterialData(const BasicMeshMaterialInitParam& initParam);
+		BasicMeshMaterialData(const BasicMeshMaterialData* other);
 		~BasicMeshMaterialData() = default;
 
 	public:

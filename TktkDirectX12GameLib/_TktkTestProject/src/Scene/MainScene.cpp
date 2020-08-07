@@ -8,6 +8,9 @@
 #include "../GameObject/Light/PointLightObject.h"
 #include "../GameObject/PostEffectObject/PostEffectObject.h"
 
+
+#include "../TutorialCode/GameObject/Player/Player.h"
+
 void MainScene::start()
 {
 	/*tktk::DX12GameManager::playSound(0U, false);
@@ -15,9 +18,10 @@ void MainScene::start()
 
 	Cursor::create();
 
-	CameraObject::create({ 0.0f, 16.0f, -20.0f });
+	//CameraObject::create({ 0.0f, 16.0f, -20.0f });
+	//PointLightObject::create({ 60.0f, 10.0f, -60.0f });
 
-	PointLightObject::create({ 60.0f, 10.0f, -60.0f });
+	Player::create(tktkMath::vec3Zero);
 
 	Miku::create(tktkMath::vec3Zero);
 

@@ -20,6 +20,9 @@ namespace tktk
 		// 「BasicMeshMaterialData」のインスタンスを作る
 		void create(unsigned int id, const BasicMeshMaterialInitParam& initParam);
 
+		// 指定の「BasicMeshMaterialData」のインスタンスのコピーを作る
+		void copy(unsigned int id, unsigned int originalId);
+
 		// 指定の通常メッシュのマテリアル情報をグラフィックパイプラインに設定する
 		void setMaterialData(unsigned int id)  const;
 

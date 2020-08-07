@@ -24,6 +24,7 @@ namespace tktk
 		// コンポーネントを作成してそのポインタを返す
 		return m_user->createComponent<SphereMeshDrawer>(
 			m_drawPriority,
+			m_albedoColor,
 			m_cameraId,
 			m_shadowMapCameraId,
 			m_lightId,
@@ -35,6 +36,13 @@ namespace tktk
 	{
 		// 値を設定して自身の参照を返す
 		m_drawPriority = value;
+		return *this;
+	}
+
+	SphereMeshDrawerMaker& SphereMeshDrawerMaker::albedoColor(const tktkMath::Color& value)
+	{
+		// 値を設定して自身の参照を返す
+		m_albedoColor = value;
 		return *this;
 	}
 
