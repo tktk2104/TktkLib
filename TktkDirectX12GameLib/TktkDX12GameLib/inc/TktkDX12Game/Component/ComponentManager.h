@@ -52,12 +52,12 @@ namespace tktk
 
 	private:
 
-		ComponentUpdatePriorityList									m_priorityList;
-		std::multimap<float, std::shared_ptr<ComponentMainList>>	m_mainMap;
-		std::unordered_map<int, std::weak_ptr<ComponentMainList>>	m_addComponentMap;
-		ComponentSatrtList											m_startList;
-		ComponentCollisionList										m_collisionList;
-		ComponentDrawList											m_drawList;
+		ComponentUpdatePriorityList									m_priorityList;		// コンポーネントの更新処理の呼び出し順を管理するリスト
+		std::multimap<float, std::shared_ptr<ComponentMainList>>	m_mainMap;			// コンポーネントを巡回するためのマップ
+		std::unordered_map<int, std::weak_ptr<ComponentMainList>>	m_addComponentMap;	// コンポーネントを追加するためのマップ
+		ComponentSatrtList											m_startList;		// start()を呼ぶためのリスト
+		ComponentCollisionList										m_collisionList;	// 衝突判定処理を呼ぶためのリスト
+		ComponentDrawList											m_drawList;			// draw()を呼ぶためのリスト
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -75,23 +75,32 @@ namespace tktk
 	template<class ComponentType, class ...Args>
 	inline std::weak_ptr<ComponentType> ComponentManager::createComponent(Args&&... args)
 	{
+		// テンプレート引数のコンポーネントが以前に追加された事があるか調べる
 		auto findNode = m_addComponentMap.find(ClassTypeChecker::getClassId<ComponentType>());
 		
+		// もし、今回が初めて追加される種類のコンポーネントだった場合、
 		if (findNode == std::end(m_addComponentMap))
 		{
+			// 新たな１種類のコンポーネントを管理するリストを作り、
 			createList<ComponentType>();
+
+			// 追加したリストを取得する
 			findNode = m_addComponentMap.find(ClassTypeChecker::getClassId<ComponentType>());
 		}
+
+		// 取得した対応する「１種類のコンポーネントを管理するリスト」の中にコンポーネントを作り、そのweak_ptrを返す
 		auto createdComponent = (*findNode).second.lock()->createComponent<ComponentType>(std::forward<Args>(args)...);
 		
+		// 各種関数呼び出し処理リストにそのweak_ptrを渡す
 		m_startList.addComponent(createdComponent);
 		m_collisionList.addComponent(createdComponent);
 		m_drawList.addComponent(createdComponent);
 
+		// 作ったコンポーネントのweak_ptrを返して終了
 		return createdComponent;
 	}
 
-	// コンポーネントの更新処理
+	// １種類のコンポーネントを管理するリストを新たに作る
 	template<class ComponentType>
 	inline void ComponentManager::createList()
 	{

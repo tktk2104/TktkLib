@@ -31,6 +31,15 @@ namespace tktk
 		m_vtablePtr->runAfterCollide(m_mainList);
 	}
 
+	void ComponentMainList::moveNewComponent()
+	{
+		for (const auto& node : m_newComponentList)
+		{
+			m_mainList.push_front(node);
+		}
+		m_newComponentList.clear();
+	}
+
 	void ComponentMainList::removeDeadComponent()
 	{
 		m_mainList.remove_if([this](const auto& node)

@@ -24,6 +24,16 @@ namespace tktk
 		}
 	}
 
+	void ComponentCollisionList::moveNewComponent()
+	{
+		for (auto& node : m_newComponentList)
+		{
+			m_collisionList.insert(node);
+		}
+
+		m_newComponentList.clear();
+	}
+
 	void ComponentCollisionList::removeDeadComponent()
 	{
 		for (auto itr = std::begin(m_collisionList); itr != std::end(m_collisionList);)

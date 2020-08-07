@@ -10,6 +10,16 @@ namespace tktk
 		}
 	}
 
+	void ComponentDrawList::moveNewComponent()
+	{
+		for (auto& node : m_newComponentList)
+		{
+			m_drawList.insert(node);
+		}
+
+		m_newComponentList.clear();
+	}
+
 	void ComponentDrawList::removeDeadComponent()
 	{
 		for (auto itr = std::begin(m_drawList); itr != std::end(m_drawList);)

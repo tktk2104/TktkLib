@@ -6,6 +6,15 @@ namespace tktk
 {
 	void ComponentManager::update()
 	{
+		// 前フレームに追加されたコンポーネントをメインリストに追加する
+		for (const auto& node : m_mainMap)
+		{
+			node.second->moveNewComponent();
+		}
+		m_startList.moveNewComponent();
+		m_collisionList.moveNewComponent();
+		m_drawList.moveNewComponent();
+
 		// アクティブフラグの判定とフラグ変更時の関数呼び出し処理
 		for (const auto& node : m_mainMap)
 		{

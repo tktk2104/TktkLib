@@ -6,7 +6,6 @@
 #include "TktkDX12Game/Component/DefaultComponents/ParentChildManager/ParentChildManager.h"
 #include "TktkDX12Game/Component/DefaultComponents/StateMachine/StateMachine.h"
 #include "TktkDX12Game/Component/DefaultComponents/StateMachine/CurStateTypeList.h"
-#include "..\..\..\inc\TktkDX12Game\GameObject\GameObject.h"
 
 namespace tktk
 {

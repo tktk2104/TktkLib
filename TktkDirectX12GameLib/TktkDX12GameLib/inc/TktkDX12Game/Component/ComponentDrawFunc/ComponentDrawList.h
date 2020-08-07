@@ -26,12 +26,16 @@ namespace tktk
 		// 描画優先度順で「draw()」関数を呼ぶ
 		void runDraw();
 
+		// 前フレームに追加されたコンポーネントをメインリストに追加する
+		void moveNewComponent();
+
 		// 死亡フラグが立っているコンポーネントを削除する
 		void removeDeadComponent();
 
 	private:
 
 		std::multimap<float, ComponentDrawRunner> m_drawList;
+		std::multimap<float, ComponentDrawRunner> m_newComponentList;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -41,7 +45,7 @@ namespace tktk
 	template<class ComponentType, std::enable_if_t<has_draw_checker<ComponentType*, void>::value>*>
 	inline void ComponentDrawList::addComponent(const std::weak_ptr<ComponentType>& componentPtr)
 	{
-		m_drawList.emplace(componentPtr.lock()->getDrawPriority(), componentPtr);
+		m_newComponentList.emplace(componentPtr.lock()->getDrawPriority(), componentPtr);
 	}
 	template<class ComponentType, std::enable_if_t<!has_draw_checker<ComponentType*, void>::value>*>
 	inline void ComponentDrawList::addComponent(const std::weak_ptr<ComponentType>& componentPtr) {}

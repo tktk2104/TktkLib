@@ -26,12 +26,16 @@ namespace tktk
 		// 「start()」関数を呼ぶ
 		void runStart();
 
+		// 前フレームに追加されたコンポーネントをメインリストに追加する
+		void moveNewComponent();
+
 		// 既に「start()」関数が呼ばれたか、死亡フラグが立っているコンポーネントを削除する
 		void removeDeadComponent();
 
 	private:
 
 		std::forward_list<ComponentStartRunner> m_startList;
+		std::forward_list<ComponentStartRunner> m_newComponentList;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -41,7 +45,7 @@ namespace tktk
 	template<class ComponentType, std::enable_if_t<has_start_checker<ComponentType*, void>::value>*>
 	inline void ComponentSatrtList::addComponent(const std::weak_ptr<ComponentType>& componentPtr)
 	{
-		m_startList.emplace_front(componentPtr);
+		m_newComponentList.emplace_front(componentPtr);
 	}
 	template<class ComponentType, std::enable_if_t<!has_start_checker<ComponentType*, void>::value>*>
 	inline void ComponentSatrtList::addComponent(const std::weak_ptr<ComponentType>& componentPtr) {}

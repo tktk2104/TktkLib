@@ -20,6 +20,9 @@ namespace tktk
 		// 衝突判定関数を実行する
 		void runCollisionFunc();
 
+		// 前フレームに追加されたコンポーネントをメインリストに追加する
+		void moveNewComponent();
+
 		// 死亡フラグが立っているコンポーネントを削除する
 		void removeDeadComponent();
 
@@ -38,6 +41,7 @@ namespace tktk
 
 		std::vector<std::pair<int, int>>							m_collisionGroupPairArray;
 		std::unordered_multimap<int, ComponentCollisionFuncRunner>	m_collisionList;
+		std::unordered_multimap<int, ComponentCollisionFuncRunner>	m_newComponentList;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -47,7 +51,7 @@ namespace tktk
 	template<class ComponentType, std::enable_if_t<has_isCollide_checker<ComponentType*, bool, const tktk::ComponentBasePtr&>::value>*>
 	inline void ComponentCollisionList::addComponent(const std::weak_ptr<ComponentType>& componentPtr)
 	{
-		m_collisionList.emplace(componentPtr.lock()->getCollisionGroup(), componentPtr);
+		m_newComponentList.emplace(componentPtr.lock()->getCollisionGroup(), componentPtr);
 	}
 	template<class ComponentType, std::enable_if_t<!has_isCollide_checker<ComponentType*, bool, const tktk::ComponentBasePtr&>::value>*>
 	inline void ComponentCollisionList::addComponent(const std::weak_ptr<ComponentType>& componentPtr) {}

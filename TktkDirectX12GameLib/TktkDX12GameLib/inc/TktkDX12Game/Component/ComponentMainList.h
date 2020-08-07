@@ -41,6 +41,9 @@ namespace tktk
 		// 自身が管理するコンポーネントの型が「afterCollide」関数を持っていたらそれらを全て実行する
 		void runAfterCollide();
 
+		// 前フレームに追加されたコンポーネントをメインリストに追加する
+		void moveNewComponent();
+
 		// 死亡フラグが立っているコンポーネントを削除する
 		void removeDeadComponent();
 
@@ -90,6 +93,7 @@ namespace tktk
 
 		VTable*												m_vtablePtr;
 		std::forward_list<std::shared_ptr<ComponentBase>>	m_mainList;
+		std::forward_list<std::shared_ptr<ComponentBase>>	m_newComponentList;
 	};
 //┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //┃ここから下は関数の実装
@@ -110,7 +114,7 @@ namespace tktk
 	{
 		auto createdComponent = std::make_shared<ComponentType>(std::forward<Args>(args)...);
 		awake_runner<void>::checkAndRun(createdComponent);
-		m_mainList.push_front(createdComponent);
+		m_newComponentList.push_front(createdComponent);
 		return createdComponent;
 	}
 
