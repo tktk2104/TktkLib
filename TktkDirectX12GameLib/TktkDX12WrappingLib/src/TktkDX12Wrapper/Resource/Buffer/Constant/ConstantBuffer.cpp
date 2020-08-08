@@ -9,6 +9,7 @@ namespace tktk
 
 	void ConstantBuffer::create(unsigned int id, ID3D12Device* device, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
+		if (m_constantBufferDataArray.at(id) != nullptr) m_constantBufferDataArray.eraseAt(id);
 		m_constantBufferDataArray.emplaceAt(id, device, constantBufferTypeSize, constantBufferDataTopPos);
 	}
 

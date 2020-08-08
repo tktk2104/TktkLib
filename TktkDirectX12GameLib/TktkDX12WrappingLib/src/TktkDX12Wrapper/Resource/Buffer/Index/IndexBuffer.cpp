@@ -9,6 +9,7 @@ namespace tktk
 
 	void IndexBuffer::create(unsigned int id, ID3D12Device* device, const std::vector<unsigned short>& indexDataArray)
 	{
+		if (m_indexBufferDataArray.at(id) != nullptr) m_indexBufferDataArray.eraseAt(id);
 		m_indexBufferDataArray.emplaceAt(id, device, indexDataArray);
 	}
 

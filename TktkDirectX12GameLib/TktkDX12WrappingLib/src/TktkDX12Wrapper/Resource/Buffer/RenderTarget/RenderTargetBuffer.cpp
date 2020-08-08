@@ -9,11 +9,13 @@ namespace tktk
 
 	void RenderTargetBuffer::create(unsigned int id, ID3D12Device* device, const tktkMath::Vector2& renderTargetSize, const tktkMath::Color& clearColor)
 	{
+		if (m_renderTargetBufferDataArray.at(id) != nullptr) m_renderTargetBufferDataArray.eraseAt(id);
 		m_renderTargetBufferDataArray.emplaceAt(id, device, renderTargetSize, clearColor);
 	}
 
 	void RenderTargetBuffer::create(unsigned int id, IDXGISwapChain1* swapChain, unsigned int backBufferIndex)
 	{
+		if (m_renderTargetBufferDataArray.at(id) != nullptr) m_renderTargetBufferDataArray.eraseAt(id);
 		m_renderTargetBufferDataArray.emplaceAt(id, swapChain, backBufferIndex);
 	}
 

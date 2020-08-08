@@ -9,6 +9,7 @@ namespace tktk
 
 	void VertexBuffer::create(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
 	{
+		if (m_vertexBufferDataArray.at(id) != nullptr) m_vertexBufferDataArray.eraseAt(id);
 		m_vertexBufferDataArray.emplaceAt(id, device, vertexTypeSize, vertexDataCount, vertexDataTopPos);
 	}
 

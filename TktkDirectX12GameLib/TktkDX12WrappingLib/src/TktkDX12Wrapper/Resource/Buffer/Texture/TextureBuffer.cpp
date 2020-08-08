@@ -16,11 +16,13 @@ namespace tktk
 
 	void TextureBuffer::cpuPriorityCreate(unsigned int id, ID3D12Device* device, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
 	{
+		if (m_textureBufferDataArray.at(id) != nullptr) m_textureBufferDataArray.eraseAt(id);
 		m_textureBufferDataArray.emplaceAt(id, device, formatParam, dataParam);
 	}
 
 	void TextureBuffer::gpuPriorityCreate(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const TexBufFormatParam& formatParam, const TexBuffData& dataParam)
 	{
+		if (m_textureBufferDataArray.at(id) != nullptr) m_textureBufferDataArray.eraseAt(id);
 		m_textureBufferDataArray.emplaceAt(id, device, commandList, formatParam, dataParam);
 	}
 

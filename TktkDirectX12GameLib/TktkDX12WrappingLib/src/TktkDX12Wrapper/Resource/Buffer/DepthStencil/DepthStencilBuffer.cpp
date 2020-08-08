@@ -9,6 +9,7 @@ namespace tktk
 
 	void DepthStencilBuffer::create(unsigned int id, ID3D12Device* device, const DepthStencilBufferInitParam& initParam)
 	{
+		if (m_depthStencilBufferDataArray.at(id) != nullptr) m_depthStencilBufferDataArray.eraseAt(id);
 		m_depthStencilBufferDataArray.emplaceAt(id, device, initParam);
 	}
 
