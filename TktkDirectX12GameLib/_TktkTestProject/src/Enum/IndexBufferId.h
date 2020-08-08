@@ -6,6 +6,7 @@
 enum class IndexBufferId
 {
 	Miku = 0U,
+	VertexColorPolygon,
 
 	Count
 };

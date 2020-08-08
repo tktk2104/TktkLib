@@ -1,10 +1,10 @@
 #pragma once
 
-#include <TktkMath/Color.h>
-#include <TktkMath/Vector2.h>
+#include <TktkMath/Structs/Color.h>
+#include <TktkMath/Structs/Vector2.h>
 
-struct VertexColor2DPolygonVertexData
+struct ElementShapeVertexData
 {
-	Vector2 position;
-	Color vertexColor;
+	tktkMath::Vector2 position;
+	tktkMath::Color vertexColor;
 };

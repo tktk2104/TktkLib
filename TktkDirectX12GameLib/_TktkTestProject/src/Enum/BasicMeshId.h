@@ -7,7 +7,7 @@ enum class BasicMeshId
 {
 	Miku = 0U,
 	ElementSphereStart,
-	ElementSphereEnd = ElementSphereStart + 10U,
+	ElementSphereEnd = ElementSphereStart + 7U,
 
 	Count
 };

@@ -3,9 +3,9 @@
 #include <TktkDX12BaseComponents/3D/Transform3D/Transform3DMaker.h>
 #include <TktkDX12BaseComponents/3D/MeshDrawer/SphereMeshDrawerMaker.h>
 
-#include "Script/ElementColorChanger.h"
+#include "../../../Enum/_ResourceIds/ResourceIds.h"
 
-tktk::GameObjectPtr ElementSphere::create(const tktkMath::Vector3 & position, const tktkMath::Color & color, unsigned int id)
+tktk::GameObjectPtr ElementSphere::create(const tktkMath::Vector3 & position, const tktkMath::Color & color)
 {
 	tktk::GameObjectPtr gameObject = tktk::DX12GameManager::createGameObject();
 
@@ -16,12 +16,11 @@ tktk::GameObjectPtr ElementSphere::create(const tktkMath::Vector3 & position, co
 
 	tktk::SphereMeshDrawerMaker::makeStart(gameObject)
 		.drawPriority(0.0f)
-		.cameraId(0)
-		.shadowMapCameraId(1)
-		.lightId(0)
+		.albedoColor(color)
+		.cameraId(CameraId::Basic)
+		.shadowMapCameraId(CameraId::ShadowMap)
+		.lightId(LightId::Basic)
 		.create();
-
-	gameObject->createComponent<ElementColorChanger>(color, id);
 
 	return gameObject;
 }

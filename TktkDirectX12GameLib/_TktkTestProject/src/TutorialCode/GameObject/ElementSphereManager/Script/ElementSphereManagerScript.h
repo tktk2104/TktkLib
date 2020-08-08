@@ -1,18 +1,9 @@
 #pragma once
 
-#include <array>
 #include <forward_list>
-#include <TktkMath/Structs/Color.h>
 #include <TktkMath/Structs/Vector2.h>
-#include <TktkMath/Structs/Vector3.h>
-#include <TktkDX12Game/_MainManager/DX12GameManager.h>
 #include <TktkDX12Game/Component/ComponentBase.h>
 #include "../../ElementShape/VertexColor2DPolygonVertexData.h"
-
-constexpr int countId(MaterialId first, MaterialId last)
-{
-	return static_cast<int>(last) - static_cast<int>(first) + 1;
-}
 
 class ElementSphereManagerScript
 	: public tktk::ComponentBase
@@ -27,34 +18,32 @@ public:
 
 	void update();
 
-public:
-
-	void createElementSphere(const tktkMath::Vector3& position, const tktkMath::Color& color);
-
 private:
 
-	void addElementShapeVertexArray(
-		std::vector<tktkMath::Vector2>* elementShapeGuideVertexArrayPtr,
-		std::vector<VertexColor2DPolygonVertexData>* elementShapeVertexArrayPtr,
-		std::forward_list<unsigned int>* notMaxOrMinIndexListPtr,
+	// 球体の頂点をゲームカメラから見た時の２次元座標で作れる最も大きな多角形を計算する
+	void calculateElementShape(
+		const std::vector<ElementShapeVertexData>& elementSpherePointArray,
+		unsigned int maxXPosIndex,
+		unsigned int minXPosIndex,
+		unsigned int maxYPosIndex,
+		unsigned int minYPosIndex
+	);
+
+	// 引数の２頂点を結ぶ線分を分割する時の頂点のインデックスを取得する
+	std::forward_list<unsigned int> getSplitLineVertexIndexArray(
+		const std::vector<ElementShapeVertexData>& elementSpherePointArray,
+		std::forward_list<unsigned int>& notUseIndexList,
 		const tktkMath::Vector2& previousPos,
-		const tktkMath::Vector2& nextPos,
-		const std::vector<VertexColor2DPolygonVertexData>& elementSpherePointArray
+		const tktkMath::Vector2& nextPos
 	);
 
 private:
 
-	static constexpr unsigned int m_firstElementMaterialId{ static_cast<unsigned int>(MaterialId::Sphere_1) };
-
-	static constexpr unsigned int m_lastElementMaterialId{ static_cast<unsigned int>(MaterialId::Sphere_10) };
-
-	static constexpr unsigned int m_useMatArraySize{ m_lastElementMaterialId - m_firstElementMaterialId + 1U };
+	// 画面に表示する球体の上限数
+	static constexpr unsigned int m_sphereMaxNum{ 8U };
 
 private:
 
-	std::array<bool, m_useMatArraySize> m_useMatArray;
-
-	std::forward_list<tktk::GameObjectPtr> m_elementSphereObjectList;
-
-	tktk::GameObjectPtr m_elementShapeGuide;
+	// 球体を描画するオブジェクトのリスト
+	std::forward_list<tktk::GameObjectPtr> m_sphereObjectList;
 };

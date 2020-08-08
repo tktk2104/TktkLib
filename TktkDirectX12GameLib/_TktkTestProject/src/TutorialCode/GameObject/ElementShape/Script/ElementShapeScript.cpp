@@ -3,14 +3,14 @@
 #include <cmath>
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
 
-ElementShapeScript::ElementShapeScript(const std::vector<VertexColor2DPolygonVertexData>& lineVertexArray)
+ElementShapeScript::ElementShapeScript(const std::vector<ElementShapeVertexData>& lineVertexArray)
 	: m_lineVertexArray(lineVertexArray)
 {
 }
 
 void ElementShapeScript::start()
 {
-	VertexColor2DPolygonVertexData center;
+	ElementShapeVertexData center;
 	for (const auto& node : m_lineVertexArray)
 	{
 		center.position += node.position;
@@ -27,13 +27,13 @@ void ElementShapeScript::start()
 
 	for (unsigned int i = 0; i < m_lineVertexArray.size(); i++)
 	{
-		const VertexColor2DPolygonVertexData& firstVertex = m_lineVertexArray.at(i);
-		const VertexColor2DPolygonVertexData& secondVertex = m_lineVertexArray.at((i + 1) % (m_lineVertexArray.size() - 1));
+		const ElementShapeVertexData& firstVertex = m_lineVertexArray.at(i);
+		const ElementShapeVertexData& secondVertex = m_lineVertexArray.at((i + 1) % (m_lineVertexArray.size() - 1));
 
 		float a = (center.position			- firstVertex.position	).length();
 		float b = (firstVertex.position		- secondVertex.position	).length();
 		float c = (secondVertex.position	- center.position		).length();
-		float s = (a + b + c) / 2.0;
+		float s = (a + b + c) / 2.0f;
 
 		float triangleSize = std::sqrt(s*(s - a)*(s - b)*(s - c));
 

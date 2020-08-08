@@ -5,5 +5,5 @@
 
 struct ElementSphere
 {
-	static tktk::GameObjectPtr create(const tktkMath::Vector3& position, const tktkMath::Color& color, unsigned int id);
+	static tktk::GameObjectPtr create(const tktkMath::Vector3& position, const tktkMath::Color& color);
 };

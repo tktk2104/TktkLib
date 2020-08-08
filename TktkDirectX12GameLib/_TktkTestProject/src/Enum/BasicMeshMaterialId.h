@@ -6,9 +6,9 @@
 enum class BasicMeshMaterialId
 {
 	MikuMatStart		= 0U,
-	MikuMatEnd			= MikuMatStart			+ 15U,
+	MikuMatEnd			= MikuMatStart			+ 17U,
 	ElementSphereStart,
-	ElementSphereEnd	= ElementSphereStart	+ 10U,
+	ElementSphereEnd	= ElementSphereStart	+ 7U,
 
 	Count
 };

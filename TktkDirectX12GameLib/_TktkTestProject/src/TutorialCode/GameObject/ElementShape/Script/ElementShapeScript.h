@@ -11,7 +11,7 @@ class ElementShapeScript
 public:
 
 	ElementShapeScript(
-		const std::vector<VertexColor2DPolygonVertexData>& lineVertexArray
+		const std::vector<ElementShapeVertexData>& lineVertexArray
 	);
 
 public:
@@ -21,5 +21,5 @@ public:
 
 private:
 
-	std::vector<VertexColor2DPolygonVertexData> m_lineVertexArray;
+	std::vector<ElementShapeVertexData> m_lineVertexArray;
 };

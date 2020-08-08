@@ -2,8 +2,11 @@
 #define RESOURCE_IDS_H_
 
 #include "../SceneId.h"
+#include "../RootSignatureId.h"
+#include "../PipeLineStateId.h"
 #include "../VertexBufferId.h"
 #include "../IndexBufferId.h"
+#include "../CbufferId.h"
 #include "../TextureBufferId.h"
 #include "../RenderTargetBufferId.h"
 #include "../BasicDescriptorHeapId.h"

@@ -8,7 +8,8 @@ enum class BasicDescriptorHeapId
 	PostEffectTest = 0U,
 	TestTexture,
 	MikuMatStart,
-	MikuMatEnd = MikuMatStart + 15U,
+	MikuMatEnd = MikuMatStart + 17U,
+	VertexColorPolygon,
 
 	Count
 };

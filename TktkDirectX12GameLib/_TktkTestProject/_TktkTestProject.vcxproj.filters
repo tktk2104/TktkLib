@@ -42,6 +42,24 @@
     <ClCompile Include="src\TutorialCode\GameObject\Enemy\Enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\TutorialCode\GameObject\ElementSphere\ElementSphere.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TutorialCode\GameObject\ElementSphereManager\Script\ElementSphereManagerScript.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TutorialCode\GameObject\ElementSphereManager\ElementSphereManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TutorialCode\GameObject\ElementShape\ElementShape.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TutorialCode\GameObject\ElementShape\Script\VertexColor2DPolygonDrawer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TutorialCode\GameObject\ElementShape\Script\ElementShapeScript.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Scene\LoadingScene.h">
@@ -138,6 +156,42 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\TutorialCode\GameObject\Enemy\Enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TutorialCode\GameObject\ElementSphere\ElementSphere.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TutorialCode\GameObject\ElementSphereManager\ElementSphereManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TutorialCode\GameObject\ElementSphereManager\Script\ElementSphereManagerScript.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\GameObjectTag.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TutorialCode\GameObject\ElementShape\ElementShape.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TutorialCode\GameObject\ElementShape\VertexColor2DPolygonVertexData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TutorialCode\GameObject\ElementShape\Script\VertexColor2DPolygonDrawer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TutorialCode\GameObject\ElementShape\Script\ElementShapeScript.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TutorialCode\GameObject\ElementShape\VertexColor2DPolygonConstantBufferData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Enum\CbufferId.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Enum\RootSignatureId.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Enum\PipeLineStateId.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

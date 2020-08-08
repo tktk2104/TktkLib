@@ -6,5 +6,5 @@
 
 struct ElementShape
 {
-	static tktk::GameObjectPtr create(const std::vector<VertexColor2DPolygonVertexData>& lineVertexArray);
+	static tktk::GameObjectPtr create(const std::vector<ElementShapeVertexData>& lineVertexArray);
 };

@@ -8,26 +8,26 @@
 #include "../GameObject/Light/PointLightObject.h"
 #include "../GameObject/PostEffectObject/PostEffectObject.h"
 
-
 #include "../TutorialCode/GameObject/Player/Player.h"
+#include "../TutorialCode/GameObject/Enemy/Enemy.h"
+#include "../TutorialCode/GameObject/ElementSphereManager/ElementSphereManager.h"
 
 void MainScene::start()
 {
-	/*tktk::DX12GameManager::playSound(0U, false);
-	tktk::DX12GameManager::playSound(1U, true);*/
-
+	/*x
+	tktk::DX12GameManager::playSound(0U, false);
+	tktk::DX12GameManager::playSound(1U, true);
 	Cursor::create();
-
-	//CameraObject::create({ 0.0f, 16.0f, -20.0f });
-	//PointLightObject::create({ 60.0f, 10.0f, -60.0f });
+	CameraObject::create({ 0.0f, 16.0f, -20.0f });
+	PointLightObject::create({ 60.0f, 10.0f, -60.0f });
+	Miku::create(tktkMath::vec3Zero);
+	SphereTest::create(tktkMath::vec3Zero);
+	PostEffectObject::create();
+	*/
 
 	Player::create(tktkMath::vec3Zero);
-
-	Miku::create(tktkMath::vec3Zero);
-
-	SphereTest::create(tktkMath::vec3Zero);
-
-	PostEffectObject::create();
+	Enemy::create(tktkMath::vec3Zero);
+	ElementSphereManager::create();
 }
 
 void MainScene::end()

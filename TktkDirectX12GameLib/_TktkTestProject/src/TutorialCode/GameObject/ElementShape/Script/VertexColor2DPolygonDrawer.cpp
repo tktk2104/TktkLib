@@ -1,86 +1,52 @@
 #include "VertexColor2DPolygonDrawer.h"
 
 #include <stdexcept>
-#include <array>
-#include <d3d11.h>
-#include <TktkDirectX11Wrapper/Graphics/Window/Window.h>
-#include <TktkDirectX11Wrapper/Graphics/Screen/Screen.h>
-#include <TktkDirectX11Wrapper/Graphics/ConstantBuffer/ConstantBuffer.h>
-#include <TktkDirectX11Wrapper/Graphics/BlendState/BlendState.h>
-#include <TktkDirectX11Wrapper/Graphics/DepthStencilState/DepthStencilState.h>
-#include <TktkDirectX11Wrapper/Graphics/Mesh/Mesh.h>
-#include <TktkDirectX11Wrapper/Graphics/RasterizerState/RasterizerState.h>
-#include <TktkDirectX11Wrapper/Graphics/VertexShader/VertexShader.h>
-#include <TktkDirectX11Wrapper/Graphics/PixelShader/PixelShader.h>
+#include <TktkDX12Game/_MainManager/DX12GameManager.h>
 #include "../VertexColor2DPolygonConstantBufferData.h"
-
-#include "../../../Ids/VertexShaderId.h"
-#include "../../../Ids/PixelShaderId.h"
-#include "../../../Ids/ConstantBufferId.h"
-#include "../../../Ids/MeshId.h"
+#include "../../../../Enum/_ResourceIds/ResourceIds.h"
 
 VertexColor2DPolygonDrawer::VertexColor2DPolygonDrawer(
 	float drawPriority,
-	int blendStateId,
-	int depthStencilStateId,
-	int rasterizerStateId,
-	const std::vector<VertexColor2DPolygonVertexData>& vertexArray,
-	const Color & blendRate
+	const std::vector<ElementShapeVertexData>& vertexArray
 )
 	: ComponentBase(drawPriority)
-	, m_blendStateId(blendStateId)
-	, m_depthStencilStateId(depthStencilStateId)
-	, m_rasterizerStateId(rasterizerStateId)
 	, m_vertexArray(vertexArray)
-	, m_blendRate(blendRate)
 {
 }
 
 void VertexColor2DPolygonDrawer::start()
 {
-	VertexColor2DPolygonVertexData center;
+	ElementShapeVertexData center;
 
 	for (const auto& node : m_vertexArray)
 	{
 		center.position += node.position;
 		center.vertexColor += node.vertexColor;
 	}
-
-	center.position /= m_vertexArray.size();
-	center.vertexColor /= m_vertexArray.size();
+	center.position		/= m_vertexArray.size();
+	center.vertexColor	/= m_vertexArray.size();
 
 	m_vertexArray.push_back(center);
 
-	tktk::VertexBufferInitParams vertexBufferParams;
-	vertexBufferParams.stride = sizeof(VertexColor2DPolygonVertexData);
-	vertexBufferParams.offset = 0U;
-	vertexBufferParams.bufferSize = sizeof(VertexColor2DPolygonVertexData) * m_vertexArray.size();
-	vertexBufferParams.bufferData = m_vertexArray.data();
-
-	tktk::IndexBufferInitParams indexBufferParams;
-	indexBufferParams.indices;
-
-	for (unsigned int i = 0; i < (m_vertexArray.size() - 1); i++)
+	tktk::DX12GameManager::createVertexBuffer(toInt(VertexBufferId::VertexColorPolygon), m_vertexArray);
 	{
-		indexBufferParams.indices.push_back(m_vertexArray.size() - 1);
-		indexBufferParams.indices.push_back((i + 0));
-		indexBufferParams.indices.push_back((i + 1) % (m_vertexArray.size() - 1));
+		std::vector<unsigned short> indexArray;
+
+		for (unsigned int i = 0; i < (m_vertexArray.size() - 1); i++)
+		{
+			indexArray.push_back(m_vertexArray.size() - 1);
+			indexArray.push_back((i + 0));
+			indexArray.push_back((i + 1) % (m_vertexArray.size() - 1));
+		}
+
+		tktk::DX12GameManager::createIndexBuffer(toInt(IndexBufferId::VertexColorPolygon), indexArray);
+
+		m_indexCount = indexArray.size();
 	}
-
-	tktk::MaterialSlotsInitParams materialSlotsParams;
-	materialSlotsParams.subsets.push_back({ 0, static_cast<int>((m_vertexArray.size() - 1) * 3) });
-
-	tktk::Mesh::create(
-		MeshId::ElementShape,
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
-		vertexBufferParams,
-		indexBufferParams,
-		materialSlotsParams
-	);
 
 	m_transform = getComponent<tktk::Transform2D>();
 
-	if (m_transform.isNull())
+	if (m_transform.expired())
 	{
 		throw std::runtime_error("SpriteDrawer not found Transform2D");
 	}
@@ -88,95 +54,51 @@ void VertexColor2DPolygonDrawer::start()
 
 void VertexColor2DPolygonDrawer::draw() const
 {
-	std::array<float, 4> factor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	tktk::Screen::getDeviceContextPtr()->OMSetBlendState(tktk::BlendState::getDataPtr(m_blendStateId)->getStatePtr(), factor.data(), 0xffffffff);
-	tktk::Screen::getDeviceContextPtr()->OMSetDepthStencilState(tktk::DepthStencilState::getDataPtr(m_depthStencilStateId)->getStatePtr(), 0);
-
-	// 定数バッファに値を詰め詰めする
-	tktk::ConstantBufferData* constantBufferData = tktk::ConstantBuffer::getDataPtr(ConstantBufferId::VertexColor2DPolygon);
-
-	VertexColor2DPolygonConstantBufferData vertexColor2DPolygonConstantBufferData;
-
-	Matrix3 worldMat = m_transform->calculateWorldMatrix();
-
-	for (unsigned int i = 0; i < 12; i++)
 	{
-		if (i % 4U == 3) continue;
+		VertexColor2DPolygonConstantBufferData vertexColor2DPolygonConstantBufferData;
 
-		vertexColor2DPolygonConstantBufferData.worldMatrix[i] = worldMat.m[i / 4U][i % 4U];
+		tktkMath::Matrix3 worldMat = m_transform->calculateWorldMatrix();
+
+		for (unsigned int i = 0; i < 12; i++)
+		{
+			if (i % 4U == 3) continue;
+
+			vertexColor2DPolygonConstantBufferData.worldMatrix[i] = worldMat.m[i / 4U][i % 4U];
+		}
+
+		vertexColor2DPolygonConstantBufferData.blendRate = { 1.0f, 1.0f, 1.0f, 0.8f };
+		vertexColor2DPolygonConstantBufferData.screenSize = tktk::DX12GameManager::getWindowSize();
+
+		tktk::DX12GameManager::updateCBuffer(toInt(CbufferId::VertexColorPolygon), vertexColor2DPolygonConstantBufferData);
 	}
 
-	vertexColor2DPolygonConstantBufferData.blendRate = m_blendRate;
-	vertexColor2DPolygonConstantBufferData.screenSize = tktk::Window::getWindowSize();
-	constantBufferData->setBufferData(std::move(vertexColor2DPolygonConstantBufferData));
-	constantBufferData->updateBuffer();
+	// ビューポートを設定する
+	tktk::DX12GameManager::setViewport(tktk::DX12GameManager::getSystemId(tktk::SystemViewportType::Basic));
 
-	// ラスタライザステートをセット
-	tktk::RasterizerState::getData(m_rasterizerStateId).setState();
+	// シザー矩形を設定する
+	tktk::DX12GameManager::setScissorRect(tktk::DX12GameManager::getSystemId(tktk::SystemScissorRectType::Basic));
 
-	// シェーダーをセット
-	tktk::VertexShader::getData(VertexShaderId::VertexColor2DPolygon).beginVertexShader();
-	tktk::PixelShader::getData(PixelShaderId::VertexColor2DPolygon).beginShader();
+	// レンダーターゲットを設定する
+	tktk::DX12GameManager::setBackBufferView();
 
-	tktk::MeshData* meshDataPtr = tktk::Mesh::getDataPtr(MeshId::ElementShape);
+	// 専用のパイプラインステートを設定する
+	tktk::DX12GameManager::setPipeLineState(toInt(PipeLineStateId::VertexColorPolygon));
 
-	// 頂点バッファとインデックスバッファをレンダリングパイプラインに設定する
-	meshDataPtr->setVertexAndIndexBuffer();
+	// 専用のディスクリプタヒープを設定する
+	tktk::DX12GameManager::setDescriptorHeap({ { tktk::DescriptorHeapType::basic, toInt(BasicDescriptorHeapId::VertexColorPolygon)} });
 
-	meshDataPtr->setPrimitiveTopology();
+	// トライアングルリストで描画を行う
+	tktk::DX12GameManager::setPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	// 専用の頂点バッファを設定する
+	tktk::DX12GameManager::setVertexBuffer(toInt(VertexBufferId::VertexColorPolygon));
+
+	// 専用のインデックスバッファを設定する
+	tktk::DX12GameManager::setIndexBuffer(toInt(IndexBufferId::VertexColorPolygon));
 
 	// ドローコール
-	tktk::Screen::getDeviceContextPtr()->DrawIndexed(meshDataPtr->getSubset(0).indexBufferUseCount, meshDataPtr->getSubset(0).indexBufferStartPos, 0);
-}
+	tktk::DX12GameManager::drawIndexedInstanced(m_indexCount, 1U, 0U, 0U, 0U);
 
-void VertexColor2DPolygonDrawer::setVertexArray(const std::vector<VertexColor2DPolygonVertexData>& vertexArray)
-{
-	m_vertexArray = vertexArray;
-
-	tktk::VertexBufferInitParams vertexBufferParams;
-	vertexBufferParams.stride = sizeof(VertexColor2DPolygonVertexData);
-	vertexBufferParams.offset = 0U;
-	vertexBufferParams.bufferSize = sizeof(VertexColor2DPolygonVertexData) * m_vertexArray.size();
-	vertexBufferParams.bufferData = m_vertexArray.data();
-
-	tktk::IndexBufferInitParams indexBufferParams;
-	indexBufferParams.indices;
-
-	for (unsigned int i = 0; i < (m_vertexArray.size() - 2); i++)
-	{
-		indexBufferParams.indices.push_back(0);
-		indexBufferParams.indices.push_back(i + 1);
-		indexBufferParams.indices.push_back(i + 2);
-	}
-
-	tktk::MaterialSlotsInitParams materialSlotsParams;
-	materialSlotsParams.subsets.push_back({ 0, 4 });
-
-	tktk::Mesh::create(
-		MeshId::ElementShape,
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
-		vertexBufferParams,
-		indexBufferParams,
-		materialSlotsParams
-	);
-}
-
-void VertexColor2DPolygonDrawer::setBlendRate(const Color & blendRate)
-{
-	m_blendRate = blendRate;
-}
-
-void VertexColor2DPolygonDrawer::setBlendStateIdImpl(int id)
-{
-	m_blendStateId = id;
-}
-
-void VertexColor2DPolygonDrawer::setDepthStencilStateIdImpl(int id)
-{
-	m_depthStencilStateId = id;
-}
-
-void VertexColor2DPolygonDrawer::setRasterizerStateIdImpl(int id)
-{
-	m_rasterizerStateId = id;
+	// コマンドリストを実行する
+	tktk::DX12GameManager::executeCommandList();
 }

@@ -7,7 +7,7 @@ enum class TextureBufferId
 {
 	Test = 0U,
 	MikuTexStart,
-	MikuTexEnd = MikuTexStart + 15U,
+	MikuTexEnd = MikuTexStart + 17U,
 
 	Count
 };

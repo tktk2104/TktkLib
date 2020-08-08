@@ -28,8 +28,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 
 			resourceInitParam.viewPortNum		= 0U;
 			resourceInitParam.scissorRectNum	= 0U;
-			resourceInitParam.pipeLineStateNum	= 0U;
-			resourceInitParam.rootSignatureNum	= 0U;
+			resourceInitParam.pipeLineStateNum	= PipeLineStateNum;
+			resourceInitParam.rootSignatureNum	= RootSignatureNum;
 
 			{
 				auto& descriptorHeapInitParam = resourceInitParam.descriptorHeapInitParam;
@@ -44,7 +44,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 
 				bufferResourceInitParam.vertexBufferNum			= VertexBufferNum;
 				bufferResourceInitParam.indexBufferNum			= IndexBufferNum;
-				bufferResourceInitParam.constantBufferNum		= 0U;
+				bufferResourceInitParam.constantBufferNum		= CbufferNum;
 				bufferResourceInitParam.textureBufferNum		= TextureBufferNum;
 				bufferResourceInitParam.depthStencilBufferNum	= 0U;
 				bufferResourceInitParam.renderTargetBufferNum	= RenderTargetBufferNum;

@@ -13,11 +13,7 @@ public:
 
 	VertexColor2DPolygonDrawer(
 		float drawPriority,
-		int blendStateId,
-		int depthStencilStateId,
-		int rasterizerStateId,
-		const std::vector<VertexColor2DPolygonVertexData>& vertexArray,
-		const tktkMath::Color& blendRate
+		const std::vector<ElementShapeVertexData>& vertexArray
 	);
 
 public:
@@ -25,55 +21,11 @@ public:
 	void start();
 	void draw() const;
 
-public:
-
-	// ブレンドステートIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
-	template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
-	void setBlendStateId(IdType id)
-	{
-		setBlendStateIdImpl(static_cast<int>(id));
-	}
-	template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
-	void setBlendStateId(IdType id) { static_assert(false, "BlendStateId Fraud Type"); }
-
-	// 深度ステンシルステートIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
-	template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
-	void setDepthStencilStateId(IdType id)
-	{
-		setDepthStencilStateIdImpl(static_cast<int>(id));
-	}
-	template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
-	void setDepthStencilStateId(IdType id) { static_assert(false, "DepthStencilStateId Fraud Type"); }
-
-	// ラスタライザステートIDを再設定する（列挙型を含む整数型のidが渡された場合のみビルド可）
-	template <class IdType, std::enable_if_t<is_idType_v<IdType>>* = nullptr>
-	void setRasterizerStateId(IdType id)
-	{
-		setRasterizerStateIdImpl(static_cast<int>(id));
-	}
-	template <class IdType, std::enable_if_t<!is_idType_v<IdType>>* = nullptr>
-	void setRasterizerStateId(IdType id) { static_assert(false, "RasterizerStateId Fraud Type"); }
-
-	// 頂点情報を再設定する（時計回りに頂点を指定してください）
-	void setVertexArray(const std::vector<VertexColor2DPolygonVertexData>& vertexArray);
-
-	// ブレンドレートを再設定する
-	void setBlendRate(const tktkMath::Color& blendRate);
-
 private:
 
-	// 各種id指定系の関数の実装
-	void setBlendStateIdImpl(int id);
-	void setDepthStencilStateIdImpl(int id);
-	void setRasterizerStateIdImpl(int id);
+	std::vector<ElementShapeVertexData> m_vertexArray{};
 
-private:
-
-	int m_blendStateId{ -1 };
-	int m_depthStencilStateId{ -1 };
-	int m_rasterizerStateId{ -1 };
-	std::vector<VertexColor2DPolygonVertexData> m_vertexArray{};
-	tktkMath::Color m_blendRate{ 1.0f, 1.0f, 1.0f, 1.0f };
+	unsigned int m_indexCount{ 0U };
 
 	tktk::ComponentPtr<tktk::Transform2D> m_transform{  };
 };
