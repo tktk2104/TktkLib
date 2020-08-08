@@ -20,6 +20,10 @@ namespace tktk
 		void start();
 		void draw() const;
 
+	public:
+
+		const tktkMath::Color& getAlbedoColor() const;
+
 	private:
 
 		tktkMath::Color				m_albedoColor;

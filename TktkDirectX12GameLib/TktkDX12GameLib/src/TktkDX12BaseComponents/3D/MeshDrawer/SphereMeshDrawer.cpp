@@ -68,4 +68,9 @@ namespace tktk
 		// ƒƒbƒVƒ…‚ğ•`‰æ‚·‚é
 		DX12GameManager::drawBasicMesh(DX12GameManager::getSystemId(SystemBasicMeshType::Sphere), baseArgs);
 	}
+
+	const tktkMath::Color& SphereMeshDrawer::getAlbedoColor() const
+	{
+		return m_albedoColor;
+	}
 }
