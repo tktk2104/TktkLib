@@ -6,6 +6,9 @@ namespace tktk
 {
 	void GameObjectManager::update()
 	{
+		// 死亡フラグの立ったオブジェクトを削除する
+		m_gameObjectList.remove_if([](const auto& node) { return node->isDead(); });
+
 		for (const auto& node : m_gameObjectList)
 		{
 			node->update();

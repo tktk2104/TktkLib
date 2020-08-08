@@ -38,6 +38,8 @@ namespace tktk
 	void GameObject::destroy()
 	{
 		m_isDead = true;
+
+		m_componentList.destroyAll();
 	}
 
 	bool GameObject::isActive() const
