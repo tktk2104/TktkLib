@@ -1,5 +1,7 @@
 #include "TktkDX12BaseComponents/3D/Transform3D/Transform3D.h"
 
+#include <algorithm>
+
 namespace tktk
 {
 	Transform3D::Transform3D(const tktkMath::Vector3& initPosition, const tktkMath::Vector3& initScaleRate, const tktkMath::Quaternion& initRotation, TraceParentType traceType)
