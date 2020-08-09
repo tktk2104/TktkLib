@@ -89,7 +89,7 @@ namespace tktk
 	template<class ComponentType>
 	inline std::forward_list<ComponentPtr<ComponentType>> GameObjectComponentList::findAll() const
 	{
-		std::forward_list<ComponentBasePtr> result;
+		std::forward_list<ComponentPtr<ComponentType>> result;
 
 		for (const auto& node : m_componentList)
 		{
