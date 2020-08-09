@@ -12,6 +12,7 @@
 #include "../BasicDescriptorHeapId.h"
 #include "../RtvDescriptorHeapId.h"
 #include "../PostEffectMaterialId.h"
+#include "../Line2DMaterialId.h"
 #include "../SpriteMaterialId.h"
 #include "../BasicMeshId.h"
 #include "../BasicMeshMaterialId.h"

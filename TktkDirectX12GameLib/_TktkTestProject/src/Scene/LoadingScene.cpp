@@ -213,6 +213,19 @@ void LoadingScene::start()
 		tktk::DX12GameManager::createPipeLineState(toInt(PipeLineStateId::VertexColorPolygon), initParam, shaderFilePaths);
 	}
 
+	// 2Dラインマテリアルを作る
+	{
+		tktk::Line2DMaterialDataInitParam initParam;
+		initParam.createVertexBufferId = toInt(VertexBufferId::ElementShapeGuide);
+		tktk::DX12GameManager::createLine(toInt(Line2DMaterialId::ElementShapeGuide), initParam);
+
+		initParam.createVertexBufferId = toInt(VertexBufferId::CollideDebug1);
+		tktk::DX12GameManager::createLine(toInt(Line2DMaterialId::CollideDebug1), initParam);
+
+		initParam.createVertexBufferId = toInt(VertexBufferId::CollideDebug2);
+		tktk::DX12GameManager::createLine(toInt(Line2DMaterialId::CollideDebug2), initParam);
+	}
+
 	//// 球体メッシュマテリアルをコピーする
 	//for (unsigned int i = toInt(BasicMeshMaterialId::ElementSphereStart); i <= toInt(BasicMeshMaterialId::ElementSphereEnd); i++)
 	//{

@@ -8,6 +8,10 @@ enum class VertexBufferId
 	Miku = 0U,
 	VertexColorPolygon,
 
+	ElementShapeGuide,
+	CollideDebug1,
+	CollideDebug2,
+
 	Count
 };
 

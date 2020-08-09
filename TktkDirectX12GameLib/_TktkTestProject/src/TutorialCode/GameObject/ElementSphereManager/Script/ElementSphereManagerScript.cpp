@@ -10,6 +10,7 @@
 #include <TktkDX12BaseComponents/2D/Line2dDrawer/Line2DDrawer.h>
 
 #include "../../ElementSphere/ElementSphere.h"
+#include "../../ElementShapeGuide/ElementShapeGuide.h"
 #include "../../../../Enum/_ResourceIds/ResourceIds.h"
 
 #include "../../ElementShape/ElementShape.h"
@@ -42,6 +43,8 @@ void ElementSphereManagerScript::start()
 		// 球体を出現させて管理リストに追加する
 		m_sphereObjectList.push_front(ElementSphere::create(pos, sphereColor));
 	}
+
+	m_elementShapeGuide = ElementShapeGuide::create();
 }
 
 void ElementSphereManagerScript::update()
@@ -244,7 +247,7 @@ void ElementSphereManagerScript::calculateElementShape(
 	}
 
 	// 線描画コンポーネントの頂点を更新
-	//m_elementShapeGuide->getComponent<tktk::Line2DDrawer>()->setLineVertexArray(elementShapeGuideVertexArray);
+	m_elementShapeGuide->getComponent<tktk::Line2DDrawer>()->setLineVertexArray(shapeGuideVertexArray);
 
 	if (tktk::DX12GameManager::isTrigger(tktk::KeybordKeyType::key_Space) && elementShapeVertexArray.size() >= 3U)
 	{

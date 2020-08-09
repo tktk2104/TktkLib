@@ -46,4 +46,7 @@ private:
 
 	// 球体を描画するオブジェクトのリスト
 	std::forward_list<tktk::GameObjectPtr> m_sphereObjectList;
+
+	// 作られる多角形の大まかな形を示すガイド
+	tktk::GameObjectPtr m_elementShapeGuide;
 };

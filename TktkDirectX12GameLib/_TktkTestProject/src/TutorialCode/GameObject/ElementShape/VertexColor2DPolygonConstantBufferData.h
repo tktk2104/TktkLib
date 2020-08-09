@@ -5,7 +5,12 @@
 
 struct VertexColor2DPolygonConstantBufferData
 {
-	float worldMatrix[12];
+	float worldMatrix[12] 
+	{ 
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f
+	};
 	tktkMath::Vector2 screenSize;
 	float pad2[2];
 	tktkMath::Color blendRate;

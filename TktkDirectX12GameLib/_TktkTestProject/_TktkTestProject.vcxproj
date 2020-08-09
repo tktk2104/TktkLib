@@ -148,11 +148,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameObject\CollideTest\CollideTestScript.cpp" />
     <ClCompile Include="src\GameObject\Cursor\CursorScript.cpp" />
     <ClCompile Include="src\GameObject\Miku\MikuScript.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Scene\LoadingScene.cpp" />
     <ClCompile Include="src\Scene\MainScene.cpp" />
+    <ClCompile Include="src\TutorialCode\GameObject\ElementShapeGuide\ElementShapeGuide.cpp" />
     <ClCompile Include="src\TutorialCode\GameObject\ElementShape\ElementShape.cpp" />
     <ClCompile Include="src\TutorialCode\GameObject\ElementShape\Script\ElementShapeScript.cpp" />
     <ClCompile Include="src\TutorialCode\GameObject\ElementShape\Script\VertexColor2DPolygonDrawer.cpp" />
@@ -172,6 +174,7 @@
     <ClInclude Include="src\Enum\CbufferId.h" />
     <ClInclude Include="src\Enum\IndexBufferId.h" />
     <ClInclude Include="src\Enum\LightId.h" />
+    <ClInclude Include="src\Enum\Line2DMaterialId.h" />
     <ClInclude Include="src\Enum\MotionId.h" />
     <ClInclude Include="src\Enum\PipeLineStateId.h" />
     <ClInclude Include="src\Enum\PostEffectMaterialId.h" />
@@ -187,6 +190,8 @@
     <ClInclude Include="src\Enum\VertexBufferId.h" />
     <ClInclude Include="src\Enum\_ResourceIds\ResourceIds.h" />
     <ClInclude Include="src\GameObject\Camera\CameraObject.h" />
+    <ClInclude Include="src\GameObject\CollideTest\CollideTest.h" />
+    <ClInclude Include="src\GameObject\CollideTest\CollideTestScript.h" />
     <ClInclude Include="src\GameObject\Cursor\Cursor.h" />
     <ClInclude Include="src\GameObject\Cursor\CursorScript.h" />
     <ClInclude Include="src\GameObject\GameObjectTag.h" />
@@ -197,6 +202,7 @@
     <ClInclude Include="src\GameObject\SphereTest\SphereTest.h" />
     <ClInclude Include="src\Scene\LoadingScene.h" />
     <ClInclude Include="src\Scene\MainScene.h" />
+    <ClInclude Include="src\TutorialCode\GameObject\ElementShapeGuide\ElementShapeGuide.h" />
     <ClInclude Include="src\TutorialCode\GameObject\ElementShape\ElementShape.h" />
     <ClInclude Include="src\TutorialCode\GameObject\ElementShape\Script\ElementShapeScript.h" />
     <ClInclude Include="src\TutorialCode\GameObject\ElementShape\Script\VertexColor2DPolygonDrawer.h" />

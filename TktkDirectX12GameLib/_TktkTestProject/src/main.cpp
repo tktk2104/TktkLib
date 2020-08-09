@@ -65,7 +65,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 
 			dxGameResourceNum.sceneNum				= SceneNum;
 			dxGameResourceNum.soundNum				= SoundNum;
-			dxGameResourceNum.spriteNum				= SpriteMaterialNum;
+			dxGameResourceNum.spriteMaterialNum		= SpriteMaterialNum;
+			dxGameResourceNum.line2DMaterialNum		= line2DMaterialNum;
 			dxGameResourceNum.basicMeshNum			= BasicMeshNum;
 			dxGameResourceNum.basicMeshMaterialNum	= BasicMeshMaterialNum;
 			dxGameResourceNum.skeletonNum			= SkeletonNum;
