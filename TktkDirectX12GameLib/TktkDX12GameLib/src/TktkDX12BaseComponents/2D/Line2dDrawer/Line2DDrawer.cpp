@@ -8,12 +8,14 @@ namespace tktk
 {
 	Line2DDrawer::Line2DDrawer(
 		float drawPriority,
+		unsigned int useLine2DMaterialId,
 		const std::vector<tktkMath::Vector2>& lineVertexArray,
 		const tktkMath::Color& lineColor,
 		const tktkMath::Color& blendRate,
 		unsigned int useRtvDescriptorHeapId
 	)
 		: ComponentBase(drawPriority)
+		, m_useLine2DMaterialId(useLine2DMaterialId)
 		, m_useRtvDescriptorHeapId(useRtvDescriptorHeapId)
 		, m_lineVertexArray(lineVertexArray)
 		, m_lineColor(lineColor)
@@ -33,7 +35,7 @@ namespace tktk
 
 	void Line2DDrawer::draw() const
 	{
-		Line2DDrawFuncArgs drawFuncArgs;
+		Line2DMaterialDrawFuncArgs drawFuncArgs;
 		drawFuncArgs.viewportId				= DX12GameManager::getSystemId(SystemViewportType::Basic);
 		drawFuncArgs.scissorRectId			= DX12GameManager::getSystemId(SystemScissorRectType::Basic);
 		drawFuncArgs.rtvDescriptorHeapId = m_useRtvDescriptorHeapId;
@@ -41,7 +43,7 @@ namespace tktk
 		drawFuncArgs.lineColor				= m_lineColor;
 		drawFuncArgs.lineVertexArray		= m_lineVertexArray;
 
-		DX12GameManager::drawLine(drawFuncArgs);
+		DX12GameManager::drawLine(m_useLine2DMaterialId, drawFuncArgs);
 	}
 
 	const std::vector<tktkMath::Vector2>& Line2DDrawer::getLineVertexArray() const

@@ -8,7 +8,7 @@
 
 namespace tktk
 {
-	struct Line2DDrawFuncArgs
+	struct Line2DMaterialDrawFuncArgs
 	{
 		// 使用するビューポートID
 		unsigned int		viewportId;

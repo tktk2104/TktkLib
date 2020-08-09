@@ -417,15 +417,6 @@
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\Line2dDrawer\Line2DDrawerMaker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DDrawFuncArgs.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DConstantBufferData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -457,6 +448,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterialAppendParam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DMaterialData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DMaterial.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DMaterialDrawFuncArgs.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DMaterialInitParam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -755,12 +764,6 @@
     <ClCompile Include="src\TktkDX12BaseComponents\2D\Line2dDrawer\Line2DDrawerMaker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2DData.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\TktkDX12BaseComponents\3D\MeshDrawer\SphereMeshDrawer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -774,6 +777,18 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterialAppendParam.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2DMaterial.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2DMaterialData.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

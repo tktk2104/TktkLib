@@ -8,8 +8,8 @@ namespace tktk
 	DXGameResource::DXGameResource(const DXGameResourceNum& resourceNum, const DXGameBaseShaderFilePaths& filePaths)
 		: m_sceneManager(resourceNum.sceneNum)
 		, m_sound(resourceNum.soundNum)
-		, m_spriteMaterial(filePaths.spriteShaderFilePaths, resourceNum.spriteNum)
-		, m_line2D(filePaths.line2DShaderFilePaths)
+		, m_spriteMaterial(filePaths.spriteShaderFilePaths, resourceNum.spriteMaterialNum)
+		, m_line2DMaterial(filePaths.line2DShaderFilePaths, resourceNum.line2DMaterialNum)
 		, m_skeleton(resourceNum.skeletonNum) // ※メッシュクラスの初期化にボーン行列定数バッファが必要なので先にコンストラクトする必要がある
 		, m_basicMesh(filePaths.writeShadowMapVsFilePath, resourceNum.basicMeshNum)
 		, m_basicMeshMaterial(filePaths.basicMeshShaderFilePaths, filePaths.monoColorShaderPsFilePath, resourceNum.basicMeshMaterialNum)
@@ -85,9 +85,14 @@ namespace tktk
 		m_spriteMaterial.drawSprite(id, drawFuncArgs);
 	}
 
-	void DXGameResource::drawLine(const Line2DDrawFuncArgs& drawFuncArgs) const
+	void DXGameResource::createLine(unsigned int id, const Line2DMaterialDataInitParam& initParam)
 	{
-		m_line2D.drawLine(drawFuncArgs);
+		m_line2DMaterial.create(id, initParam);
+	}
+
+	void DXGameResource::drawLine(unsigned int id, const Line2DMaterialDrawFuncArgs& drawFuncArgs) const
+	{
+		m_line2DMaterial.drawLine(id, drawFuncArgs);
 	}
 
 	void DXGameResource::createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam)

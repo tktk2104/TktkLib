@@ -13,7 +13,10 @@ namespace tktk
 		unsigned int soundNum				{};
 
 		// スプライトマテリアル数
-		unsigned int spriteNum				{};
+		unsigned int spriteMaterialNum		{};
+
+		// ライン２Dマテリアル数
+		unsigned int line2DMaterialNum		{};
 
 		// 通常メッシュ数
 		unsigned int basicMeshNum			{};

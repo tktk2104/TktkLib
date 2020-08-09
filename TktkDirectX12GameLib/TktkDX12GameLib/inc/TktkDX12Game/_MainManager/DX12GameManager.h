@@ -211,6 +211,13 @@ namespace tktk
 		
 	public: /* 直接DX12のリソースを設定、取得する */
 
+		// 指定の頂点バッファを更新する
+		template <class VertexData>
+		static void updateVertexBuffer(unsigned int id, const std::vector<VertexData>& vertexDataArray);
+
+		// 指定のインデックスバッファを更新する
+		static void updateIndexBuffer(unsigned int id, const std::vector<unsigned short>& indexDataArray);
+
 		// 指定の定数バッファを更新する
 		template <class ConstantBufferDataType>
 		static void updateCBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData);
@@ -233,8 +240,11 @@ namespace tktk
 
 	public: /* 2Dライン関係の処理 */
 
+		// ２Ｄラインを作る
+		static void createLine(unsigned int id, const Line2DMaterialDataInitParam& initParam);
+
 		// 線を描画する
-		static void drawLine(const Line2DDrawFuncArgs& drawFuncArgs);
+		static void drawLine(unsigned int id, const Line2DMaterialDrawFuncArgs& drawFuncArgs);
 
 	public: /* メッシュ関係の処理 */
 
@@ -449,6 +459,7 @@ namespace tktk
 		static void createSceneImpl(unsigned int id, const std::shared_ptr<SceneBase>& scenePtr, SceneVTable* vtablePtr);
 		static void createVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
 		static void createCbufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
+		static void updateVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
 		static void updateCbufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 		static void addMaterialAppendParamImpl(unsigned int id, unsigned int cbufferId, unsigned int dataSize, void* dataTopPos);
 		static void updateMaterialAppendParamImpl(unsigned int id, unsigned int cbufferId, unsigned int dataSize, const void* dataTopPos);
@@ -503,6 +514,13 @@ namespace tktk
 	inline void DX12GameManager::createCBuffer(unsigned int id, const ConstantBufferDataType& rawConstantBufferData)
 	{
 		createCbufferImpl(id, sizeof(ConstantBufferDataType), &rawConstantBufferData);
+	}
+
+	// 指定の頂点バッファを更新する
+	template<class VertexData>
+	inline void DX12GameManager::updateVertexBuffer(unsigned int id, const std::vector<VertexData>& vertexDataArray)
+	{
+		updateVertexBufferImpl(id, sizeof(VertexData), vertexDataArray.size(), vertexDataArray.data());
 	}
 
 	// 指定の定数バッファを更新する

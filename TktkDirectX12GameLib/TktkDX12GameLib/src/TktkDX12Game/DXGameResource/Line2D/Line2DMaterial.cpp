@@ -1,13 +1,14 @@
-#include "TktkDX12Game/DXGameResource/Line2D/Line2D.h"
+#include "TktkDX12Game/DXGameResource/Line2D/Line2DMaterial.h"
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
 #include "TktkDX12Game/DXGameResource/Line2D/Line2DConstantBufferData.h"
 
 namespace tktk
 {
-	Line2D::Line2D(const ShaderFilePaths& shaderFilePaths)
+	Line2DMaterial::Line2DMaterial(const ShaderFilePaths& shaderFilePaths, unsigned int line2DMaterialNum)
+		: m_line2DMaterialArray(line2DMaterialNum)
 	{
-		// ２Ｄライン描画用のルートシグネチャを作る
+		// 2Dライン描画用のルートシグネチャを作る
 		createRootSignature();
 
 		// 2Dライン用のグラフィックパイプラインステートを作る
@@ -16,17 +17,21 @@ namespace tktk
 		// ライン用の定数バッファを作る
 		DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemCBufferType::Line2D), Line2DConstantBufferData());
 
-		// ２Ｄライン描画用のディスクリプタヒープを作る
-		craeteDescriptorHeap();
+		// 2Dライン用のディスクリプタヒープを作る
+		createBasicDescriptorHeap();
 	}
 
-	void Line2D::drawLine(const Line2DDrawFuncArgs& drawFuncArgs) const
+	void Line2DMaterial::create(unsigned int id, const Line2DMaterialDataInitParam& initParam)
 	{
-		m_line2DData->drawLine(drawFuncArgs);
+		m_line2DMaterialArray.emplaceAt(id, initParam);
 	}
 
-	// ２Ｄライン描画用のディスクリプタヒープを作る
-	void Line2D::craeteDescriptorHeap() const
+	void Line2DMaterial::drawLine(unsigned int id, const Line2DMaterialDrawFuncArgs& drawFuncArgs) const
+	{
+		m_line2DMaterialArray.at(id)->drawLine(drawFuncArgs);
+	}
+
+	void Line2DMaterial::createBasicDescriptorHeap() const
 	{
 		// ディスクリプタヒープを作る
 		BasicDescriptorHeapInitParam descriptorHeapInitParam{};
@@ -47,7 +52,7 @@ namespace tktk
 	}
 
 	// ２Ｄライン描画用のルートシグネチャを作る
-	void Line2D::createRootSignature() const
+	void Line2DMaterial::createRootSignature() const
 	{
 		RootSignatureInitParam initParam{};
 		initParam.flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -76,7 +81,7 @@ namespace tktk
 	}
 
 	// ２Ｄライン描画用のパイプラインステートを作る
-	void Line2D::createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths) const
+	void Line2DMaterial::createGraphicsPipeLineState(const ShaderFilePaths& shaderFilePaths) const
 	{
 		D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
 		renderTargetBlendDesc.BlendEnable		= true;

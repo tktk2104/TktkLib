@@ -154,6 +154,8 @@
   <ItemGroup>
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\CircleCollider\CircleCollider.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\CircleCollider\CircleColliderMaker.h" />
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.h" />
+    <ClInclude Include="inc\TktkDX12BaseComponents\2D\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\InertialMovement2D\InertialMovement2D.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\InertialMovement2D\InertialMovement2DMaker.h" />
     <ClInclude Include="inc\TktkDX12BaseComponents\2D\InertialRotatement2D\InertialRotatement2D.h" />
@@ -230,10 +232,11 @@
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Light\Light.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Light\LightCBuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Light\LightData.h" />
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2D.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DMaterial.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DConstantBufferData.h" />
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DData.h" />
-    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DDrawFuncArgs.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DMaterialData.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DMaterialInitParam.h" />
+    <ClInclude Include="inc\TktkDX12Game\DXGameResource\Line2D\Line2DMaterialDrawFuncArgs.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMeshMaterialCbuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\BasicMonoColorMeshCbuffer.h" />
     <ClInclude Include="inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshLoadPmdReturnValue.h" />
@@ -304,6 +307,8 @@
   <ItemGroup>
     <ClCompile Include="src\TktkDX12BaseComponents\2D\CircleCollider\CircleCollider.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\2D\CircleCollider\CircleColliderMaker.cpp" />
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2D.cpp" />
+    <ClCompile Include="src\TktkDX12BaseComponents\2D\ColliderWireFrameDrawer2D\ColliderWireFrameDrawer2DMaker.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\2D\InertialMovement2D\InertialMovement2D.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\2D\InertialMovement2D\InertialMovement2DMaker.cpp" />
     <ClCompile Include="src\TktkDX12BaseComponents\2D\InertialRotatement2D\InertialRotatement2D.cpp" />
@@ -373,8 +378,8 @@
     <ClCompile Include="src\TktkDX12Game\DXGameResource\DXGameResource.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Light\Light.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Light\LightData.cpp" />
-    <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2D.cpp" />
-    <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2DData.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2DMaterial.cpp" />
+    <ClCompile Include="src\TktkDX12Game\DXGameResource\Line2D\Line2DMaterialData.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Loader\BasicMeshPmdLoader.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Maker\SphereMeshMaker.cpp" />
     <ClCompile Include="src\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Material\BasicMeshMaterialAppendParam.cpp" />

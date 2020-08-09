@@ -8,10 +8,14 @@ namespace tktk
 {
 	struct Line2DConstantBufferData
 	{
-		float				worldMatrix[12];
+		float				worldMatrix[12]{
+			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f
+		};
 		tktkMath::Color		lineColor;
 		tktkMath::Vector2	screenSize;
-		float				pad[2];
+		float				pad[2]{ 0.0f, 0.0f };
 	};
 }
 #endif // !LINE_2D_CONSTANT_BUFFER_DATA_H_

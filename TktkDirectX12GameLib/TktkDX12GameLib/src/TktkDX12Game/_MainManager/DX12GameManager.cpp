@@ -27,7 +27,7 @@ namespace tktk
 		m_gameObjectManager		= std::make_unique<GameObjectManager>();
 		m_componentManager		= std::make_unique<ComponentManager>();
 		m_window				= std::make_unique<Window>(gameManagerInitParam.windowParam);
-		m_dx3dBaseObjects		= std::make_unique<DX3DBaseObjects>(gameManagerInitParam.dx3dResParam, m_window->getHWND(), gameManagerInitParam.windowParam.windowSize, tktkMath::colorBlue);
+		m_dx3dBaseObjects		= std::make_unique<DX3DBaseObjects>(gameManagerInitParam.dx3dResParam, m_window->getHWND(), gameManagerInitParam.windowParam.windowSize, tktkMath::colorBlack);
 		
 		{
 			DXGameResourceNum dxGameResourceNum = gameManagerInitParam.dxGameResourceNum;
@@ -354,6 +354,11 @@ namespace tktk
 		m_dx3dBaseObjects->gpuPriorityLoadTextureBuffer(id, texDataPath);
 	}
 
+	void DX12GameManager::updateIndexBuffer(unsigned int id, const std::vector<unsigned short>& indexDataArray)
+	{
+		m_dx3dBaseObjects->updateIndexBuffer(id, indexDataArray);
+	}
+
 	void DX12GameManager::clearRtv(unsigned int id, unsigned int rtvLocationIndex, const tktkMath::Color& color)
 	{
 		m_dx3dBaseObjects->clearRtv(id, rtvLocationIndex, color);
@@ -384,9 +389,14 @@ namespace tktk
 		m_dxGameResource->drawSprite(id, drawFuncArgs);
 	}
 
-	void DX12GameManager::drawLine(const Line2DDrawFuncArgs& drawFuncArgs)
+	void DX12GameManager::createLine(unsigned int id, const Line2DMaterialDataInitParam& initParam)
 	{
-		m_dxGameResource->drawLine(drawFuncArgs);
+		m_dxGameResource->createLine(id, initParam);
+	}
+
+	void DX12GameManager::drawLine(unsigned int id, const Line2DMaterialDrawFuncArgs& drawFuncArgs)
+	{
+		m_dxGameResource->drawLine(id, drawFuncArgs);
 	}
 
 	void DX12GameManager::createBasicMesh(unsigned int id, const BasicMeshInitParam& initParam)
@@ -732,6 +742,11 @@ namespace tktk
 	void DX12GameManager::createCbufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_dx3dBaseObjects->createCBuffer(id, constantBufferTypeSize, constantBufferDataTopPos);
+	}
+
+	void DX12GameManager::updateVertexBufferImpl(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
+	{
+		m_dx3dBaseObjects->updateVertexBuffer(id, vertexTypeSize, vertexDataCount, vertexDataTopPos);
 	}
 
 	void DX12GameManager::updateCbufferImpl(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)

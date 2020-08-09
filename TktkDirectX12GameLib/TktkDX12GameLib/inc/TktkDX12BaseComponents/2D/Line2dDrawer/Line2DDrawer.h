@@ -19,6 +19,7 @@ namespace tktk
 
 		Line2DDrawer(
 			float drawPriority,
+			unsigned int useLine2DMaterialId,
 			const std::vector<tktkMath::Vector2>& lineVertexArray,
 			const tktkMath::Color& lineColor,
 			const tktkMath::Color& blendRate,
@@ -49,6 +50,7 @@ namespace tktk
 
 	private:
 
+		unsigned int					m_useLine2DMaterialId;
 		unsigned int					m_useRtvDescriptorHeapId;
 		std::vector<tktkMath::Vector2>	m_lineVertexArray;
 		tktkMath::Color					m_lineColor{ tktkMath::colorWhite };

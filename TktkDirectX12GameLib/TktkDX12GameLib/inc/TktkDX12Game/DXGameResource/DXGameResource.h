@@ -8,7 +8,7 @@
 #include "Sound/Sound.h"
 #include "PostEffect/PostEffectMaterial.h"
 #include "Sprite/SpriteMaterial.h"
-#include "Line2D/Line2D.h"
+#include "Line2D/Line2DMaterial.h"
 #include "Mesh/BasicMesh/Mesh/BasicMesh.h"
 #include "Mesh/BasicMesh/Material/BasicMeshMaterial.h"
 #include "Mesh/BasicMesh/Loader/BasicMeshLoadPmdArgs.h"
@@ -76,8 +76,11 @@ namespace tktk
 
 	public: /* 2Dƒ‰ƒCƒ“ŠÖŒW‚Ìˆ— */
 
+		// ‚Q‚cƒ‰ƒCƒ“‚ğì‚é
+		void createLine(unsigned int id, const Line2DMaterialDataInitParam& initParam);
+
 		// ü‚ğ•`‰æ‚·‚é
-		void drawLine(const Line2DDrawFuncArgs& drawFuncArgs) const;
+		void drawLine(unsigned int id, const Line2DMaterialDrawFuncArgs& drawFuncArgs) const;
 
 	public: /* ƒƒbƒVƒ…ŠÖŒW‚Ìˆ— */
 
@@ -190,7 +193,7 @@ namespace tktk
 		SceneManager		m_sceneManager;
 		Sound				m_sound;
 		SpriteMaterial		m_spriteMaterial;
-		Line2D				m_line2D;
+		Line2DMaterial		m_line2DMaterial;
 		Skeleton			m_skeleton;
 		BasicMesh			m_basicMesh;
 		BasicMeshMaterial	m_basicMeshMaterial;
