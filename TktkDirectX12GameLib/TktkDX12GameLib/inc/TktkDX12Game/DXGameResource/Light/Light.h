@@ -11,7 +11,7 @@ namespace tktk
 	{
 	public:
 
-		Light(unsigned int lightNum);
+		explicit Light(unsigned int lightNum);
 		~Light() = default;
 
 	public:
