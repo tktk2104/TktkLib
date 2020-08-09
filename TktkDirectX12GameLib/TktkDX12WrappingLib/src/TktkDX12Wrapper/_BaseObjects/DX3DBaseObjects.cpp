@@ -272,6 +272,16 @@ namespace tktk
 		m_backGroundColor = backGroundColor;
 	}
 
+	void DX3DBaseObjects::updateVertexBuffer(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
+	{
+		m_dX3DResource.updateVertexBuffer(id, m_device, m_commandList, vertexTypeSize, vertexDataCount, vertexDataTopPos);
+	}
+
+	void DX3DBaseObjects::updateIndexBuffer(unsigned int id, const std::vector<unsigned short>& indexDataArray)
+	{
+		m_dX3DResource.updateIndexBuffer(id, m_device, m_commandList, indexDataArray);
+	}
+
 	void DX3DBaseObjects::updateCBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_dX3DResource.updateCBuffer(id, m_device, m_commandList, constantBufferTypeSize, constantBufferDataTopPos);

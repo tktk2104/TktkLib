@@ -14,12 +14,19 @@ namespace tktk
 
 	void BufferResource::deleteUploadBufferAll()
 	{
+		m_vertexBuffer.deleteUploadBufferAll();
+		m_indexBuffer.deleteUploadBufferAll();
 		m_constantBuffer.deleteUploadBufferAll();
 	}
 
 	void BufferResource::createVertexBuffer(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
 	{
 		m_vertexBuffer.create(id, device, vertexTypeSize, vertexDataCount, vertexDataTopPos);
+	}
+
+	void BufferResource::updateVertexBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
+	{
+		m_vertexBuffer.updateBuffer(id, device, commandList, vertexTypeSize, vertexDataCount, vertexDataTopPos);
 	}
 
 	void BufferResource::setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const
@@ -30,6 +37,11 @@ namespace tktk
 	void BufferResource::createIndexBuffer(unsigned int id, ID3D12Device* device, const std::vector<unsigned short>& indexDataArray)
 	{
 		m_indexBuffer.create(id, device, indexDataArray);
+	}
+
+	void BufferResource::updateIndexBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<unsigned short>& indexDataArray)
+	{
+		m_indexBuffer.updateBuffer(id, device, commandList, indexDataArray);
 	}
 
 	void BufferResource::setIndexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const

@@ -1,6 +1,9 @@
 #include "TktkDX12Wrapper/Resource/Buffer/Constant/ConstantBufferData.h"
 
 #include <algorithm>
+#ifdef _DEBUG
+#include <stdexcept>
+#endif // _DEBUG
 
 namespace tktk
 {
@@ -103,7 +106,7 @@ namespace tktk
 		memcpy(mappedBuffer, constantBufferDataTopPos, constantBufferTypeSize);
 		uploadBuff->Unmap(0, nullptr);
 
-		// テクスチャバッファーのバリアを「読み取り」状態から「コピー先」状態に変更する
+		// 定数バッファーのバリアを「読み取り」状態から「コピー先」状態に変更する
 		D3D12_RESOURCE_BARRIER barrierDesc{};
 		barrierDesc.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 		barrierDesc.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
@@ -113,10 +116,21 @@ namespace tktk
 		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_COPY_DEST;
 		commandList->ResourceBarrier(1, &barrierDesc);
 
+		if (uploadBuff == nullptr)
+		{
+#ifdef _DEBUG
+			throw std::runtime_error("uploadBuff create error");
+			return;
+#else
+			return;
+#endif // _DEBUG
+
+		}
+
 		// GPU間のメモリのコピーを行う
 		commandList->CopyBufferRegion(m_constantBuffer, 0, uploadBuff, 0, constantBufferTypeSize);
 
-		// テクスチャバッファーのバリアを「コピー先」状態から「読み取り」状態に変更する
+		// 定数バッファーのバリアを「コピー先」状態から「読み取り」状態に変更する
 		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
 		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
 		commandList->ResourceBarrier(1, &barrierDesc);

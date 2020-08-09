@@ -80,6 +80,12 @@ namespace tktk
 		// 背景色を設定する
 		void setBackGroundColor(const tktkMath::Color& backGroundColor);
 
+		// 指定の頂点バッファを更新する
+		void updateVertexBuffer(unsigned int id, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
+
+		// 指定のインデックスバッファを更新する
+		void updateIndexBuffer(unsigned int id, const std::vector<unsigned short>& indexDataArray);
+
 		// 指定の定数バッファを更新する
 		void updateCBuffer(unsigned int id, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 

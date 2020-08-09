@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <d3d12.h>
+#include <forward_list>
 
 namespace tktk
 {
@@ -19,10 +20,18 @@ namespace tktk
 		// コマンドリストにインデックスバッファを登録する
 		void set(ID3D12GraphicsCommandList* commandList) const;
 
+		// インデックスバッファを更新する
+		// ※アップロードバッファを新規に作成し、そのバッファから自身にコピーする命令をコマンドリストに登録する
+		void updateBuffer(ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<unsigned short>& indexDataArray);
+
+		// 全てのアップロード用のバッファを削除する
+		void deleteUploadBufferAll();
+
 	private:
 
 		ID3D12Resource*				m_indexBuffer{ nullptr };
 		D3D12_INDEX_BUFFER_VIEW		m_indexBufferView{};
+		std::forward_list<ID3D12Resource*> m_uploadBufferList{};
 	};
 }
 #endif // !INDEX_BUFFER_DATA_H_

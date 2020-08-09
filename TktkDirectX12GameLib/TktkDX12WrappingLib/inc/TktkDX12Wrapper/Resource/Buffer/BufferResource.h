@@ -29,6 +29,10 @@ namespace tktk
 		// 頂点バッファを作る
 		void createVertexBuffer(unsigned int id, ID3D12Device* device, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
 
+		// 指定の頂点バッファを更新する
+		// ※アップロードバッファを新規に作成し、そのバッファから自身にコピーする命令をコマンドリストに登録する
+		void updateVertexBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
+
 		// コマンドリストに指定の頂点バッファを登録する
 		void setVertexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;
 
@@ -36,6 +40,10 @@ namespace tktk
 
 		// インデックスバッファを作る
 		void createIndexBuffer(unsigned int id, ID3D12Device* device, const std::vector<unsigned short>& indexDataArray);
+
+		// 指定のインデックスバッファを更新する
+		// ※アップロードバッファを新規に作成し、そのバッファから自身にコピーする命令をコマンドリストに登録する
+		void updateIndexBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<unsigned short>& indexDataArray);
 
 		// コマンドリストに指定のインデックスバッファを登録する
 		void setIndexBuffer(unsigned int id, ID3D12GraphicsCommandList* commandList) const;

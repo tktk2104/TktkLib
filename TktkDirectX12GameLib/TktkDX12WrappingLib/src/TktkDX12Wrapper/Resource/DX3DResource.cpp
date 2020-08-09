@@ -157,6 +157,16 @@ namespace tktk
 		}
 	}
 
+	void DX3DResource::updateVertexBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
+	{
+		m_bufferResource.updateVertexBuffer(id, device, commandList, vertexTypeSize, vertexDataCount, vertexDataTopPos);
+	}
+
+	void DX3DResource::updateIndexBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<unsigned short>& indexDataArray)
+	{
+		m_bufferResource.updateIndexBuffer(id, device, commandList, indexDataArray);
+	}
+
 	void DX3DResource::updateCBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos)
 	{
 		m_bufferResource.updateCBuffer(id, device, commandList, constantBufferTypeSize, constantBufferDataTopPos);

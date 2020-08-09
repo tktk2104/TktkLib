@@ -17,4 +17,19 @@ namespace tktk
 	{
 		m_indexBufferDataArray.at(id)->set(commandList);
 	}
+
+	void IndexBuffer::updateBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<unsigned short>& indexDataArray)
+	{
+		m_indexBufferDataArray.at(id)->updateBuffer(device, commandList, indexDataArray);
+	}
+
+	void IndexBuffer::deleteUploadBufferAll()
+	{
+		for (unsigned int i = 0; i < m_indexBufferDataArray.arrayMaxSize(); i++)
+		{
+			auto ptr = m_indexBufferDataArray.at(i);
+
+			if (ptr != nullptr) ptr->deleteUploadBufferAll();
+		}
+	}
 }

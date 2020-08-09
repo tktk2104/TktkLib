@@ -74,6 +74,12 @@ namespace tktk
 
 	public: /* リソース更新系処理 */
 
+		// 指定の頂点バッファを更新する
+		void updateVertexBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos);
+
+		// 指定のインデックスバッファを更新する
+		void updateIndexBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, const std::vector<unsigned short>& indexDataArray);
+
 		// 指定の定数バッファを更新する
 		void updateCBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int constantBufferTypeSize, const void* constantBufferDataTopPos);
 

@@ -17,4 +17,19 @@ namespace tktk
 	{
 		m_vertexBufferDataArray.at(id)->set(commandList);
 	}
+
+	void VertexBuffer::updateBuffer(unsigned int id, ID3D12Device* device, ID3D12GraphicsCommandList* commandList, unsigned int vertexTypeSize, unsigned int vertexDataCount, const void* vertexDataTopPos)
+	{
+		m_vertexBufferDataArray.at(id)->updateBuffer(device, commandList, vertexTypeSize, vertexDataCount, vertexDataTopPos);
+	}
+
+	void VertexBuffer::deleteUploadBufferAll()
+	{
+		for (unsigned int i = 0; i < m_vertexBufferDataArray.arrayMaxSize(); i++)
+		{
+			auto ptr = m_vertexBufferDataArray.at(i);
+
+			if (ptr != nullptr) ptr->deleteUploadBufferAll();
+		}
+	}
 }
