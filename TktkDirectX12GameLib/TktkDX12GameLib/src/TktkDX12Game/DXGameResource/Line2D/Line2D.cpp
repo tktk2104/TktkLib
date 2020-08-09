@@ -10,11 +10,14 @@ namespace tktk
 		// ２Ｄライン描画用のルートシグネチャを作る
 		createRootSignature();
 
-		// ライン用のグラフィックパイプラインステートを作る
+		// 2Dライン用のグラフィックパイプラインステートを作る
 		createGraphicsPipeLineState(shaderFilePaths);
 
 		// ライン用の定数バッファを作る
 		DX12GameManager::createCBuffer(DX12GameManager::getSystemId(SystemCBufferType::Line2D), Line2DConstantBufferData());
+
+		// ２Ｄライン描画用のディスクリプタヒープを作る
+		craeteDescriptorHeap();
 	}
 
 	void Line2D::drawLine(const Line2DDrawFuncArgs& drawFuncArgs) const
@@ -31,7 +34,7 @@ namespace tktk
 		descriptorHeapInitParam.descriptorTableParamArray.resize(1U);
 
 		{ /* コンスタントバッファービューのディスクリプタの情報 */
-			auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(1U);
+			auto& cbufferViewDescriptorParam = descriptorHeapInitParam.descriptorTableParamArray.at(0U);
 			cbufferViewDescriptorParam.type = BasicDescriptorType::constantBuffer;
 
 			// ２Ｄライン定数バッファの１種類
@@ -98,7 +101,7 @@ namespace tktk
 		initParam.inputLayoutArray = {
 			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
 		};
-		initParam.primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+		initParam.primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
 		initParam.renderTargetFormatArray = { DXGI_FORMAT_R8G8B8A8_UNORM };
 		initParam.rootSignatureId = DX12GameManager::getSystemId(SystemRootSignatureType::Line2D);
 

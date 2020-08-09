@@ -34,9 +34,9 @@ namespace tktk
 	void Line2DDrawer::draw() const
 	{
 		Line2DDrawFuncArgs drawFuncArgs;
-		drawFuncArgs.viewportId				= DX12GameManager::getSystemId(SystemViewportType::Basic);;
-		drawFuncArgs.scissorRectId			= DX12GameManager::getSystemId(SystemScissorRectType::Basic);;
-		drawFuncArgs.rtvDescriptorHeapId	= m_useRtvDescriptorHeapId;
+		drawFuncArgs.viewportId				= DX12GameManager::getSystemId(SystemViewportType::Basic);
+		drawFuncArgs.scissorRectId			= DX12GameManager::getSystemId(SystemScissorRectType::Basic);
+		drawFuncArgs.rtvDescriptorHeapId = m_useRtvDescriptorHeapId;
 		drawFuncArgs.worldMatrix			= m_transform->calculateWorldMatrix();
 		drawFuncArgs.lineColor				= m_lineColor;
 		drawFuncArgs.lineVertexArray		= m_lineVertexArray;
