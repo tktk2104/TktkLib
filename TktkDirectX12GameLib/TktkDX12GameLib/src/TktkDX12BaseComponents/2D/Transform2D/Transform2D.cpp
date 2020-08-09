@@ -1,5 +1,7 @@
 #include "TktkDX12BaseComponents/2D/Transform2D/Transform2D.h"
 
+#include <algorithm>
+
 namespace tktk
 {
 	Transform2D::Transform2D(const tktkMath::Vector2& initPosition, const tktkMath::Vector2& initScaleRate, float initRotationDeg, TraceParentType traceType)
