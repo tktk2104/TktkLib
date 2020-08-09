@@ -58,9 +58,6 @@ namespace tktk
 
 		// 深度ステンシルバッファーをシェーダーで使える状態にする
 		DX12GameManager::unSetDsv(DX12GameManager::getSystemId(SystemDsvDescriptorHeapType::ShadowMap));
-
-		// コマンドリストを実行する
-		DX12GameManager::executeCommandList();
 	}
 
 	void BasicMeshData::drawMesh(const MeshDrawFuncBaseArgs& baseArgs) const
@@ -111,8 +108,5 @@ namespace tktk
 
 		// 深度ステンシルバッファーをシェーダーで使える状態にする
 		DX12GameManager::unSetDsv(baseArgs.dsvDescriptorHeapId);
-
-		// コマンドリストを実行する
-		DX12GameManager::executeCommandList();
 	}
 }

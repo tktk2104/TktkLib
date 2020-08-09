@@ -98,7 +98,4 @@ void VertexColor2DPolygonDrawer::draw() const
 
 	// ドローコール
 	tktk::DX12GameManager::drawIndexedInstanced(m_indexCount, 1U, 0U, 0U, 0U);
-
-	// コマンドリストを実行する
-	tktk::DX12GameManager::executeCommandList();
 }

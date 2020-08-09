@@ -51,8 +51,5 @@ namespace tktk
 		{
 			DX12GameManager::unSetRtv(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
 		}
-
-		// コマンドリストを実行する
-		DX12GameManager::executeCommandList();
 	}
 }

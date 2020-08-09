@@ -37,7 +37,7 @@ namespace tktk
 			};
 		}
 
-		auto textureBufferSize = tktkMath::vec3Zero;
+		tktkMath::Vector3 textureBufferSize = tktkMath::vec3Zero;
 
 		switch (initParam.srvBufferType)
 		{
@@ -108,9 +108,6 @@ namespace tktk
 		{
 			DX12GameManager::unSetRtv(drawFuncArgs.rtvDescriptorHeapId, 0U, 1U);
 		}
-
-		// コマンドリストを実行する
-		DX12GameManager::executeCommandList();
 	}
 
 	// スプライト用の定数バッファを更新する
