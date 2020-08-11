@@ -234,17 +234,19 @@ void ElementSphereManagerScript::calculateElementShape(
 			elementShapeVertexArray.push_back(elementSpherePointArray.at(index));
 		}
 
-		// 「ｘ座標が最小の座標」を図形の頂点情報配列に追加する
-		elementShapeVertexArray.push_back(elementSpherePointArray.at(minXPosIndex));
+		//// 「ｘ座標が最小の座標」を図形の頂点情報配列に追加する
+		//elementShapeVertexArray.push_back(elementSpherePointArray.at(minXPosIndex));
 	}
 
 	// 線描画コンポーネント用の頂点を作る
 	std::vector<tktkMath::Vector2> shapeGuideVertexArray;
-	shapeGuideVertexArray.reserve(elementShapeVertexArray.size());
+	shapeGuideVertexArray.reserve(elementShapeVertexArray.size() + 1U);
 	for (const auto& node : elementShapeVertexArray)
 	{
 		shapeGuideVertexArray.push_back(node.position);
 	}
+	//+
+	shapeGuideVertexArray.push_back(elementShapeVertexArray.at(0).position);
 
 	// 線描画コンポーネントの頂点を更新
 	m_elementShapeGuide->getComponent<tktk::Line2DDrawer>()->setLineVertexArray(shapeGuideVertexArray);

@@ -12,6 +12,6 @@ struct VertexColor2DPolygonConstantBufferData
 		0.0f, 0.0f, 1.0f, 0.0f
 	};
 	tktkMath::Vector2 screenSize;
-	float pad2[2];
+	float pad2[2] { 0.0f, 0.0f };
 	tktkMath::Color blendRate;
 };

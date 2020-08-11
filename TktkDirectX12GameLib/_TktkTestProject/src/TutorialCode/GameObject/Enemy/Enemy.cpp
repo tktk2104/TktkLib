@@ -2,6 +2,7 @@
 
 #include <TktkDX12BaseComponents/3D/Transform3D/Transform3DMaker.h>
 #include <TktkDX12BaseComponents/3D/MeshDrawer/SphereMeshDrawerMaker.h>
+#include <TktkDX12BaseComponents/3D/MeshDrawer/SphereMeshWireFrameDrawerMaker.h>
 
 #include "../../../Enum/_ResourceIds/ResourceIds.h"
 
@@ -13,7 +14,7 @@ tktk::GameObjectPtr Enemy::create(const tktkMath::Vector3 & position)
 		.initPosition(position)
 		.create();
 
-	tktk::SphereMeshDrawerMaker::makeStart(gameObject)
+	tktk::SphereMeshWireFrameDrawerMaker::makeStart(gameObject)
 		.drawPriority(0.0f)
 		.albedoColor(tktkMath::colorWhite)
 		.cameraId(CameraId::Basic)

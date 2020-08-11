@@ -2,6 +2,7 @@
 
 #include <TktkDX12BaseComponents/3D/Transform3D/Transform3DMaker.h>
 #include <TktkDX12BaseComponents/3D/MeshDrawer/SphereMeshDrawerMaker.h>
+#include <TktkDX12BaseComponents/3D/MeshDrawer/SphereMeshWireFrameDrawerMaker.h>
 
 #include "../../../Enum/_ResourceIds/ResourceIds.h"
 

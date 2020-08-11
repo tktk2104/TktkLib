@@ -2,6 +2,7 @@
 
 #include <TktkDX12Game/_MainManager/DX12GameManager.h>
 #include "../GameObject/CollideTest/CollideTest.h"
+#include "../GameObject/Collide3DTest/Collide3DTest.h"
 #include "../GameObject/Cursor/Cursor.h"
 #include "../GameObject/Miku/Miku.h"
 #include "../GameObject/SphereTest/SphereTest.h"
@@ -26,9 +27,12 @@ void MainScene::start()
 	PostEffectObject::create();
 	*/
 
-	CollideTest::create({ 0.0f, 0.0f }, 10.0f, 1, Line2DMaterialId::CollideDebug1);
+	Collide3DTest::create({ 0.0f, 0.0f, -2.0f }, 1.0f, 1);
+	Collide3DTest::create({ 0.0f, 0.0f, 2.0f }, 3.0f, 2);
 
-	CollideTest::create({ 300.0f, 300.0f }, 3.0f, 2, Line2DMaterialId::CollideDebug2);
+	/*CollideTest::create({ 0.0f, 0.0f }, 10.0f, 1, Line2DMaterialId::CollideDebug1);
+
+	CollideTest::create({ 300.0f, 300.0f }, 3.0f, 2, Line2DMaterialId::CollideDebug2);*/
 
 	Player::create(tktkMath::vec3Zero);
 	Enemy::create(tktkMath::vec3Zero);
