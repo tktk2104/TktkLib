@@ -30,6 +30,9 @@ namespace tktk
 		// 描画優先度を設定する
 		SphereMeshDrawerMaker& drawPriority(float value);
 
+		// 半径を設定する
+		SphereMeshDrawerMaker& radius(float value);
+
 		// 描画色を設定する
 		SphereMeshDrawerMaker& albedoColor(const tktkMath::Color&  value);
 
@@ -64,6 +67,7 @@ namespace tktk
 
 		GameObjectPtr	m_user{  };
 		float			m_drawPriority{ 0.0f };
+		float			m_radius{ 0.5f };
 		tktkMath::Color	m_albedoColor{ tktkMath::colorWhite };
 		unsigned int	m_useRtvDescriptorHeapId{  };		// ※初期パラメータはバックバッファー
 		unsigned int	m_cameraId{ 0U };
