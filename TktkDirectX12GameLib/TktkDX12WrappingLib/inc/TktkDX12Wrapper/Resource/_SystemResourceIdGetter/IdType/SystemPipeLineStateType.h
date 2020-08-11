@@ -4,7 +4,7 @@
 namespace tktk
 {
 	// システムで使用しているパイプラインステートの数
-	constexpr unsigned int SystemPipeLineStateNum = 11U;
+	constexpr unsigned int SystemPipeLineStateNum = 13U;
 
 	// システムで使用しているパイプラインステートの種類
 	enum class SystemPipeLineStateType
@@ -19,7 +19,9 @@ namespace tktk
 		Sprite,
 		Line2D,
 		BasicMesh,
+		BasicMeshWireFrame,
 		BasicMonoColorMesh,
+		BasicMonoColorMeshWireFrame
 	};
 }
 #endif // !SYSTEM_PIPELINE_STATE_TYPE_H_

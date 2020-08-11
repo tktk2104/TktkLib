@@ -4,12 +4,13 @@
 namespace tktk
 {
 	// システムで使用している通常のメッシュの数
-	constexpr unsigned int SystemBasicMeshNum = 1U;
+	constexpr unsigned int SystemBasicMeshNum = 2U;
 
 	// システムで使用している通常のメッシュの種類
 	enum class SystemBasicMeshType
 	{
-		Sphere = 0U
+		Sphere = 0U,
+		SphereWireFrame
 	};
 }
 #endif // !SYSTEM_BASIC_MESH_TYPE_H_

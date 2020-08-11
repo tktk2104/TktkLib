@@ -95,13 +95,12 @@ namespace tktk
 		// インデックスバッファを作る
 		DX12GameManager::createIndexBuffer(DX12GameManager::getSystemId(SystemIndexBufferType::Sphere), indices);
 
-		// 通常メッシュの作成に必要な情報
+		// 球体メッシュの作成に必要な情報
 		BasicMeshInitParam meshInitParam{};
 		meshInitParam.useVertexBufferId = DX12GameManager::getSystemId(SystemVertexBufferType::Sphere);
 		meshInitParam.useIndexBufferId	= DX12GameManager::getSystemId(SystemIndexBufferType::Sphere);
 		meshInitParam.indexNum			= indices.size();
 		meshInitParam.primitiveTopology = MeshPrimitiveTopology::TriangleStrip;
-		meshInitParam.materialSlots.reserve(1U);
 
 		{
 			// マテリアルの作成に必要な情報
@@ -159,18 +158,30 @@ namespace tktk
 					};
 				}
 				DX12GameManager::createBasicDescriptorHeap(materialParam.useDescriptorHeapId, descriptorHeapInitParam);
-
-				
 			}
 
-			// 通常メッシュのマテリアルを作る
+			// 球体メッシュのマテリアルを作る
 			DX12GameManager::createBasicMeshMaterial(DX12GameManager::getSystemId(SystemBasicMeshMaterialType::Sphere), materialParam);
 
 			// 球体メッシュのマテリアルにアルベドカラーのパラメータを追加する
 			DX12GameManager::addMaterialAppendParam(DX12GameManager::getSystemId(SystemBasicMeshMaterialType::Sphere), DX12GameManager::getSystemId(SystemCBufferType::BasicMonoColorMeshCbuffer), BasicMonoColorMeshCbuffer());
+		
+			// 単色ワイヤーフレーム用のパイプラインステートを取得する
+			materialParam.usePipeLineStateId = DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMonoColorMeshWireFrame);
 
-			meshInitParam.materialSlots.push_back({ DX12GameManager::getSystemId(SystemBasicMeshMaterialType::Sphere), 0, indices.size() });
+			// 球体メッシュワイヤーフレームのマテリアルを作る
+			DX12GameManager::createBasicMeshMaterial(DX12GameManager::getSystemId(SystemBasicMeshMaterialType::SphereWireFrame), materialParam);
+
+			// 球体メッシュワイヤーフレームのマテリアルにアルベドカラーのパラメータを追加する
+			DX12GameManager::addMaterialAppendParam(DX12GameManager::getSystemId(SystemBasicMeshMaterialType::SphereWireFrame), DX12GameManager::getSystemId(SystemCBufferType::BasicMonoColorMeshCbuffer), BasicMonoColorMeshCbuffer());
 		}
+
+		// 球体メッシュを作る
+		meshInitParam.materialSlots = { { DX12GameManager::getSystemId(SystemBasicMeshMaterialType::Sphere), 0, indices.size() } };
 		DX12GameManager::createBasicMesh(DX12GameManager::getSystemId(SystemBasicMeshType::Sphere), meshInitParam);
+
+		// 球体メッシュワイヤーフレームを作る
+		meshInitParam.materialSlots = { { DX12GameManager::getSystemId(SystemBasicMeshMaterialType::SphereWireFrame), 0, indices.size() } };
+		DX12GameManager::createBasicMesh(DX12GameManager::getSystemId(SystemBasicMeshType::SphereWireFrame), meshInitParam);
 	}
 }

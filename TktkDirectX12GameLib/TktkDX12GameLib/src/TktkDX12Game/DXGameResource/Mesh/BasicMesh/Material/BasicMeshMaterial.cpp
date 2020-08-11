@@ -210,6 +210,41 @@ namespace tktk
 			DX12GameManager::createPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMesh), initParam, shaderFilePaths);
 		}
 		
+		// ワイヤーフレームのパイプラインステートを作る
+		{
+			D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
+			renderTargetBlendDesc.BlendEnable = false;
+			renderTargetBlendDesc.LogicOpEnable = false;
+			renderTargetBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+
+			PipeLineStateInitParam initParam{};
+			initParam.rasterizerDesc.MultisampleEnable = false;
+			initParam.rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
+			initParam.rasterizerDesc.FillMode = D3D12_FILL_MODE_WIREFRAME;
+			initParam.rasterizerDesc.DepthClipEnable = true;
+			initParam.blendDesc.AlphaToCoverageEnable = false;
+			initParam.blendDesc.IndependentBlendEnable = false;
+			initParam.blendDesc.RenderTarget[0] = renderTargetBlendDesc;
+			initParam.inputLayoutArray = {
+				{ "POSITION",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "NORMAL",			0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "TEXCOORD",		0, DXGI_FORMAT_R32G32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "BLENDINDICES",	0, DXGI_FORMAT_R8G8B8A8_SINT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "BLENDWEIGHT",	0, DXGI_FORMAT_R32G32B32A32_FLOAT,	0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "TANGENT",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "BINORMAL",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
+			};
+			initParam.primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+			initParam.renderTargetFormatArray = { DXGI_FORMAT_R8G8B8A8_UNORM };
+
+			initParam.useDepth = true;
+			initParam.writeDepth = true;
+			initParam.depthFunc = D3D12_COMPARISON_FUNC_LESS;
+			initParam.rootSignatureId = DX12GameManager::getSystemId(SystemRootSignatureType::BasicMesh);
+
+			DX12GameManager::createPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMeshWireFrame), initParam, shaderFilePaths);
+		}
+
 		// 単色のパイプラインステートを作る
 		{
 			D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
@@ -247,6 +282,45 @@ namespace tktk
 			monoColorShaderFilePaths.psFilePath = monoColorShaderPsFilePath;
 
 			DX12GameManager::createPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMonoColorMesh), initParam, monoColorShaderFilePaths);
+		}
+
+		// 単色ワイヤーフレームのパイプラインステートを作る
+		{
+			D3D12_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc{};
+			renderTargetBlendDesc.BlendEnable = false;
+			renderTargetBlendDesc.LogicOpEnable = false;
+			renderTargetBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+
+			PipeLineStateInitParam initParam{};
+			initParam.rasterizerDesc.MultisampleEnable = false;
+			initParam.rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
+			initParam.rasterizerDesc.FillMode = D3D12_FILL_MODE_WIREFRAME;
+			initParam.rasterizerDesc.DepthClipEnable = true;
+			initParam.blendDesc.AlphaToCoverageEnable = false;
+			initParam.blendDesc.IndependentBlendEnable = false;
+			initParam.blendDesc.RenderTarget[0] = renderTargetBlendDesc;
+			initParam.inputLayoutArray = {
+				{ "POSITION",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "NORMAL",			0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "TEXCOORD",		0, DXGI_FORMAT_R32G32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "BLENDINDICES",	0, DXGI_FORMAT_R8G8B8A8_SINT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "BLENDWEIGHT",	0, DXGI_FORMAT_R32G32B32A32_FLOAT,	0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "TANGENT",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+				{ "BINORMAL",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
+			};
+			initParam.primitiveTopology = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+			initParam.renderTargetFormatArray = { DXGI_FORMAT_R8G8B8A8_UNORM };
+
+			initParam.useDepth = true;
+			initParam.writeDepth = true;
+			initParam.depthFunc = D3D12_COMPARISON_FUNC_LESS;
+			initParam.rootSignatureId = DX12GameManager::getSystemId(SystemRootSignatureType::BasicMonoColorMesh);
+
+			ShaderFilePaths monoColorShaderFilePaths{};
+			monoColorShaderFilePaths.vsFilePath = shaderFilePaths.vsFilePath;
+			monoColorShaderFilePaths.psFilePath = monoColorShaderPsFilePath;
+
+			DX12GameManager::createPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMonoColorMeshWireFrame), initParam, monoColorShaderFilePaths);
 		}
 	}
 }

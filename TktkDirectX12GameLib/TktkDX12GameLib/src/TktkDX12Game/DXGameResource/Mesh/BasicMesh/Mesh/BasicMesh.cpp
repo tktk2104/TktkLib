@@ -1,7 +1,6 @@
 #include "TktkDX12Game/DXGameResource/Mesh/BasicMesh/Mesh/BasicMesh.h"
 
 #include "TktkDX12Game/_MainManager/DX12GameManager.h"
-#include "..\..\..\..\..\..\inc\TktkDX12Game\DXGameResource\Mesh\BasicMesh\Mesh\BasicMesh.h"
 
 namespace tktk
 {

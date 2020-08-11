@@ -68,9 +68,6 @@ namespace tktk
 		// シザー矩形を設定する
 		DX12GameManager::setScissorRect(baseArgs.scissorRectId);
 
-		// 通常メッシュ用のパイプラインステートを設定する
-		DX12GameManager::setPipeLineState(DX12GameManager::getSystemId(SystemPipeLineStateType::BasicMesh));
-
 		// 指定のトポロジーで描画を行う
 		DX12GameManager::setPrimitiveTopology(static_cast<D3D_PRIMITIVE_TOPOLOGY>(m_primitiveTopology));
 
