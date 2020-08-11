@@ -17,7 +17,7 @@ namespace tktk
 
 	void SphereCollider::start()
 	{
-		auto m_transform3D = getComponent<Transform3D>();
+		m_transform3D = getComponent<Transform3D>();
 
 		if (m_transform3D.expired())
 		{
