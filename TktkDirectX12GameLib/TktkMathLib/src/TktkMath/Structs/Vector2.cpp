@@ -234,7 +234,7 @@ namespace tktkMath
 		{
 			return Vector2(x / len, y / len);
 		}
-		return vec2Zero;
+		return Vector2_v::zero;
 	}
 
 	bool Vector2::equals(const Vector2& other)

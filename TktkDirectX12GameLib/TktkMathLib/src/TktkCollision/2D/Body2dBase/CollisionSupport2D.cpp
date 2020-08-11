@@ -77,10 +77,10 @@ bool CollisionSupport2D::collidePolygonToPolygon(const Body2dBase & self, const 
 	std::vector<tktkMath::Vector2> selfVertexs = selfPolygon.calculateVertexs();
 	std::vector<tktkMath::Vector2> otherVertexs = otherPolygon.calculateVertexs();
 
-	tktkMath::Vector2 selfMinPos = tktkMath::vec2PositiveInfinity;
-	tktkMath::Vector2 selfMaxPos = tktkMath::vec2NegativeInfinity;
-	tktkMath::Vector2 otherMinPos = tktkMath::vec2PositiveInfinity;
-	tktkMath::Vector2 otherMaxPos = tktkMath::vec2NegativeInfinity;
+	tktkMath::Vector2 selfMinPos	= tktkMath::Vector2_v::positiveInfinity;
+	tktkMath::Vector2 selfMaxPos	= tktkMath::Vector2_v::negativeInfinity;
+	tktkMath::Vector2 otherMinPos	= tktkMath::Vector2_v::positiveInfinity;
+	tktkMath::Vector2 otherMaxPos	= tktkMath::Vector2_v::negativeInfinity;
 
 	std::for_each(
 		std::begin(selfVertexs),

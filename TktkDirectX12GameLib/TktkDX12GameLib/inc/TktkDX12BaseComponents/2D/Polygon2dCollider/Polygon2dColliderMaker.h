@@ -44,7 +44,7 @@ namespace tktk
 		GameObjectPtr					m_user					{ };
 		int								m_collisionGroupType	{ 0 };
 		std::vector<tktkMath::Vector2>	m_vertexs				{};
-		tktkMath::Vector2				m_localPosition			{ tktkMath::vec2Zero };
+		tktkMath::Vector2				m_localPosition			{ tktkMath::Vector2_v::zero };
 	};
 }
 #endif // !POLYGON_2D_COLLIDER_MAKER_H_

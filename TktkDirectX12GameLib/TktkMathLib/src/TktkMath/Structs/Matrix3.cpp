@@ -172,7 +172,7 @@ namespace tktkMath
 
 	Matrix3& operator*=(Matrix3& m1, const Matrix3& m2)
 	{
-		Matrix3 result = mat3Zero;
+		Matrix3 result = Matrix3_v::zero;
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)

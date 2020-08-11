@@ -55,7 +55,7 @@ void LoadingScene::start()
 
 	// レンダーターゲットバッファを作る
 	{
-		tktk::DX12GameManager::createRtBuffer(toInt(RenderTargetBufferId::PostEffectTest), tktk::DX12GameManager::getWindowSize(), tktkMath::colorRed);
+		tktk::DX12GameManager::createRtBuffer(toInt(RenderTargetBufferId::PostEffectTest), tktk::DX12GameManager::getWindowSize(), tktkMath::Color_v::red);
 	}
 
 	// レンダーターゲットビューを作る

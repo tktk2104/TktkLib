@@ -40,7 +40,7 @@ namespace tktk
 		// ì¬—p•Ï”’B
 		GameObjectPtr		m_user				{ };
 		float				m_decelerationPerSec{ 64.0f };
-		tktkMath::Vector3	m_initVelocity		{ tktkMath::vec3Zero };
+		tktkMath::Vector3	m_initVelocity		{ tktkMath::Vector3_v::zero };
 	};
 }
 #endif // !INERTIAL_MOVEMENT_3D_MAKER_H_

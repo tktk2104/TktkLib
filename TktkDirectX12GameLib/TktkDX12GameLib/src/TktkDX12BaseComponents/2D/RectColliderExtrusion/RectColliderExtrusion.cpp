@@ -13,12 +13,12 @@ namespace tktk
 		if (otherTransform.expired() || otherCollider.expired()) return;
 
 		// player->enemyのベクトルとplayerから最も近いのenemyの衝突判定の辺の交差点
-		tktkMath::Vector2 crossLinePos_1 = tktkMath::vec2Zero;
+		tktkMath::Vector2 crossLinePos_1 = tktkMath::Vector2_v::zero;
 		// m_crossLinePos_1が存在するenemyの衝突判定の辺を作る頂点の番号の小さい方
 		size_t lineFirstVertexId_1 = 0u;
 
 		// m_crossLinePos_1が交わる辺からenemy方向へ直角な線から最も近いのplayerの衝突判定の辺の交差点
-		tktkMath::Vector2 crossLinePos_2 = tktkMath::vec2Zero;
+		tktkMath::Vector2 crossLinePos_2 = tktkMath::Vector2_v::zero;
 		// m_crossLinePos_2が存在するplayerの衝突判定の辺を作る頂点の番号の小さい方
 		size_t lineFirstVertexId_2 = 0u;
 
@@ -38,7 +38,7 @@ namespace tktk
 		{
 			float dR = 0;
 			float dS = 0;
-			tktkMath::Vector2 crossPos = tktkMath::vec2Zero;
+			tktkMath::Vector2 crossPos = tktkMath::Vector2_v::zero;
 
 			bool notParallel = lineCrossCheck(
 				selfPos - (enemyPos - selfPos).normalized() * 10000.0f,
@@ -73,7 +73,7 @@ namespace tktk
 		{
 			float dR = 0;
 			float dS = 0;
-			tktkMath::Vector2 crossPos = tktkMath::vec2Zero;
+			tktkMath::Vector2 crossPos = tktkMath::Vector2_v::zero;
 
 			bool notParallel = lineCrossCheck(
 				crossLinePos_1 + (crossLineVec_1 * tktkMath::MathHelper::kEpsilon),
@@ -97,16 +97,16 @@ namespace tktk
 			}
 		}
 
-		float angle = tktkMath::Vector2::signedAngle(enemyVertexs.at((lineFirstVertexId_1 + 1u) % enemyVertexs.size()) - enemyVertexs.at(lineFirstVertexId_1), tktkMath::vec2Down);
+		float angle = tktkMath::Vector2::signedAngle(enemyVertexs.at((lineFirstVertexId_1 + 1u) % enemyVertexs.size()) - enemyVertexs.at(lineFirstVertexId_1), tktkMath::Vector2_v::down);
 		angle = 360.0f - angle - 90.0f;
 
 		auto vec = (tktkMath::Vector2(tktkMath::MathHelper::sin(angle), -tktkMath::MathHelper::cos(angle)).normalized() * 10000.0f);
-		auto resultVel = tktkMath::vec2Zero;
+		auto resultVel = tktkMath::Vector2_v::zero;
 
 		{
 			float dR = 0;
 			float dS = 0;
-			tktkMath::Vector2 crossPos = tktkMath::vec2Zero;
+			tktkMath::Vector2 crossPos = tktkMath::Vector2_v::zero;
 
 			bool notParallel = lineCrossCheck(
 				selfVertexs.at(lineFirstVertexId_2),
@@ -129,7 +129,7 @@ namespace tktk
 		{
 			float dR = 0;
 			float dS = 0;
-			tktkMath::Vector2 crossPos = tktkMath::vec2Zero;
+			tktkMath::Vector2 crossPos = tktkMath::Vector2_v::zero;
 
 			bool notParallel = lineCrossCheck(
 				selfVertexs.at((lineFirstVertexId_2 + 1u) % selfVertexs.size()),

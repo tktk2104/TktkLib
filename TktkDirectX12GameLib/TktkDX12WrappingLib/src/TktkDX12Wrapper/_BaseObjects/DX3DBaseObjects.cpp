@@ -60,10 +60,10 @@ namespace tktk
 		m_commandList->Reset(m_commandAllocator, nullptr);
 
 		// ビューポートを作る
-		m_dX3DResource.createViewport(getSystemId(SystemViewportType::Basic), { { windowSize, tktkMath::vec2Zero, 1.0f, 0.0f } });
+		m_dX3DResource.createViewport(getSystemId(SystemViewportType::Basic), { { windowSize, tktkMath::Vector2_v::zero, 1.0f, 0.0f } });
 
 		// シザー矩形を作る
-		m_dX3DResource.createScissorRect(getSystemId(SystemScissorRectType::Basic), { { tktkMath::vec2Zero, windowSize } });
+		m_dX3DResource.createScissorRect(getSystemId(SystemScissorRectType::Basic), { { tktkMath::Vector2_v::zero, windowSize } });
 
 		// スワップチェーンのバックバッファーをディスクリプタヒープで使うための準備
 		m_dX3DResource.createRtBuffer(getSystemId(SystemRtBufferType::BackBuffer_1), m_swapChain.getPtr(), 0U);

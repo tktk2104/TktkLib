@@ -16,7 +16,7 @@ namespace tktk
 		createGraphicsPipeLineState(shaderFilePaths);
 
 		// スプライト用の頂点バッファを作る
-		DX12GameManager::createVertexBuffer<tktkMath::Vector2>(DX12GameManager::getSystemId(SystemVertexBufferType::Sprite), { tktkMath::vec2Zero, tktkMath::vec2Right, tktkMath::vec2Up, tktkMath::vec2One });
+		DX12GameManager::createVertexBuffer<tktkMath::Vector2>(DX12GameManager::getSystemId(SystemVertexBufferType::Sprite), { tktkMath::Vector2_v::zero, tktkMath::Vector2_v::right, tktkMath::Vector2_v::up, tktkMath::Vector2_v::one });
 
 		// スプライト用のインデックスバッファを作る
 		DX12GameManager::createIndexBuffer(DX12GameManager::getSystemId(SystemIndexBufferType::Sprite), { 0U, 1U, 2U, 3U });

@@ -43,8 +43,8 @@ namespace tktk
 		// çÏê¨ópïœêîíB
 		GameObjectPtr		m_user				{ };
 		int					m_collisionGroupType{ 0 };
-		tktkMath::Vector3	m_boxSize			{ tktkMath::vec3One };
-		tktkMath::Vector3	m_localPosition		{ tktkMath::vec3Zero };
+		tktkMath::Vector3	m_boxSize			{ tktkMath::Vector3_v::one };
+		tktkMath::Vector3	m_localPosition		{ tktkMath::Vector3_v::zero };
 	};
 }
 #endif // !BOX_COLLIDER_MAKER_H_

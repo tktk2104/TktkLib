@@ -6,7 +6,7 @@
 
 void InputToRotate::update()
 {
-	tktkMath::Vector3 rotete = tktkMath::vec3Zero;
+	tktkMath::Vector3 rotete = tktkMath::Vector3_v::zero;
 
 	if (tktk::DX12GameManager::isPush(tktk::KeybordKeyType::key_A))	rotete.y =  100.0f;
 	if (tktk::DX12GameManager::isPush(tktk::KeybordKeyType::key_D))	rotete.y = -100.0f;

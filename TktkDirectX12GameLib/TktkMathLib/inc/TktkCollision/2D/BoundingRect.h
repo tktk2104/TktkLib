@@ -10,7 +10,7 @@ public:
 
 	BoundingRect(
 		const tktkMath::Vector2& rectSize,
-		const tktkMath::Vector2& localPosition = tktkMath::vec2Zero
+		const tktkMath::Vector2& localPosition = tktkMath::Vector2_v::zero
 	);
 
 	bool isCollide(const Body2dBase& other, HitInfo2D* hitinfo) const override;

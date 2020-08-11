@@ -37,7 +37,7 @@ namespace tktk
 			};
 		}
 
-		tktkMath::Vector3 textureBufferSize = tktkMath::vec3Zero;
+		tktkMath::Vector3 textureBufferSize = tktkMath::Vector3_v::zero;
 
 		switch (initParam.srvBufferType)
 		{

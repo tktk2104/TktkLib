@@ -28,9 +28,9 @@ void ElementSphereManagerScript::start()
 
 		switch (tktkMath::Random::getRandI(1, 3))
 		{
-		case 1: sphereColor = tktkMath::colorRed;	break;
-		case 2: sphereColor = tktkMath::colorGreen; break;
-		case 3: sphereColor = tktkMath::colorBlue;	break;
+		case 1: sphereColor = tktkMath::Color_v::red;	break;
+		case 2: sphereColor = tktkMath::Color_v::green; break;
+		case 3: sphereColor = tktkMath::Color_v::blue;	break;
 		}
 
 		// oŒ»À•W‚à—”‚ğg‚¤

@@ -154,7 +154,7 @@ namespace tktkMath
 	{
 		// ‰ñ“]s—ñ‚Ì‹ts—ñ‚ğì¬
 		Matrix4 useRotationMat = matrix;
-		useRotationMat.setTranslation(vec3Zero);
+		useRotationMat.setTranslation(Vector3_v::zero);
 		Matrix4 inv_rotation = Matrix4::calculateTranspose(useRotationMat);
 
 		// •½sˆÚ“®¬•ª‚Ì‹t•ÏŠ·
@@ -417,7 +417,7 @@ namespace tktkMath
 
 	Matrix4& operator *= (Matrix4& m1, const Matrix4& m2)
 	{
-		Matrix4 result = mat4Zero;
+		Matrix4 result = Matrix4_v::zero;
 		for (int i = 0; i < 4; ++i)
 		{
 			for (int j = 0; j < 4; ++j)

@@ -113,7 +113,25 @@ namespace tktkMath
 		};
 	};
 
-	// 定数達
+	// Matrix4構造体の定数達
+	struct Matrix4_v
+	{
+		static constexpr Matrix4 zero {
+			0.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f
+		};
+
+		static constexpr Matrix4 identity {
+			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		};
+	};
+
+	// 定数達（非推奨：「Matrix4_v::」を使ってください）
 	constexpr Matrix4 mat4Zero		{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 	constexpr Matrix4 mat4Identity	{ 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
 

@@ -22,7 +22,7 @@ namespace tktk
 		tktkMath::Vector2	textureUvMulRate	{ 0.0f, 0.0f };
 
 		// テクスチャのサイズ（ピクセル）
-		tktkMath::Vector2	textureSize			{ tktkMath::vec2One };
+		tktkMath::Vector2	textureSize			{ tktkMath::Vector2_v::one };
 
 		// スプライトの中心点（割合）
 		tktkMath::Vector2	spriteCenterRate	{ 0.0f, 0.0f };

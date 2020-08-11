@@ -44,19 +44,19 @@ namespace tktkMath
 
 		if (normal->lengthSquared() <= (MathHelper::kEpsilon * MathHelper::kEpsilon))
 		{
-			*normal = vec3Right;
+			*normal = Vector3_v::right;
 		}
 
 		Vector3 bn = Vector3::cross(*normal, *tangent);
 
 		if (bn.lengthSquared() <= (MathHelper::kEpsilon * MathHelper::kEpsilon))
 		{
-			*tangent = Vector3::cross(vec3ForwardLH, *normal);
+			*tangent = Vector3::cross(Vector3_v::forwardLH, *normal);
 		}
 
 		if (tangent->lengthSquared() <= (MathHelper::kEpsilon * MathHelper::kEpsilon))
 		{
-			*tangent = Vector3::cross(vec3Right, *normal);
+			*tangent = Vector3::cross(Vector3_v::right, *normal);
 		}
 
 		bn = Vector3::cross(*normal, *tangent);
@@ -70,7 +70,7 @@ namespace tktkMath
 	{
 		float sqrLen = onNormal.lengthSquared();
 
-		if (sqrLen < MathHelper::kEpsilon) return vec3Zero;
+		if (sqrLen < MathHelper::kEpsilon) return Vector3_v::zero;
 
 		float dotValue = dot(vector, onNormal);
 
@@ -255,11 +255,11 @@ namespace tktkMath
 
 		if (axis.lengthSquared() < (MathHelper::kEpsilon * MathHelper::kEpsilon))
 		{
-			axis = Vector3::cross(vec3ForwardLH, afterNormalizeCurrent);
+			axis = Vector3::cross(Vector3_v::forwardLH, afterNormalizeCurrent);
 
 			if (axis.lengthSquared() < (MathHelper::kEpsilon * MathHelper::kEpsilon))
 			{
-				axis = Vector3::cross(vec3Right, afterNormalizeCurrent);
+				axis = Vector3::cross(Vector3_v::right, afterNormalizeCurrent);
 			}
 		}
 
@@ -290,7 +290,7 @@ namespace tktkMath
 
 		if (axis.lengthSquared() < (MathHelper::kEpsilon * MathHelper::kEpsilon))
 		{
-			axis = Vector3::cross(vec3Right, afterNormalizeValue1);
+			axis = Vector3::cross(Vector3_v::right, afterNormalizeValue1);
 		}
 
 		return Quaternion::createFromAxisAngle(axis, angle * amount) * afterNormalizeValue1 * MathHelper::lerp(value1Length, value2Length, amount);
@@ -315,7 +315,7 @@ namespace tktkMath
 
 		if (axis.lengthSquared() < (MathHelper::kEpsilon * MathHelper::kEpsilon))
 		{
-			axis = Vector3::cross(vec3Right, afterNormalizeValue1);
+			axis = Vector3::cross(Vector3_v::right, afterNormalizeValue1);
 		}
 
 		return Quaternion::createFromAxisAngle(axis, angle * amount) * afterNormalizeValue1 * MathHelper::lerpUnclamped(value1Length, value2Length, amount);
@@ -436,7 +436,7 @@ namespace tktkMath
 	Vector3 Vector3::normalized() const
 	{
 		const float len = length();
-		if (len < MathHelper::kEpsilon) return vec3Zero;
+		if (len < MathHelper::kEpsilon) return Vector3_v::zero;
 		return Vector3(x / len, y / len, z / len);
 	}
 

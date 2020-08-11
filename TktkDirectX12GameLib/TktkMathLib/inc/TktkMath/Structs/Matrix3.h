@@ -68,7 +68,23 @@ namespace tktkMath
 		};
 	};
 
-	// 定数達
+	// Matrix3構造体の定数達
+	struct Matrix3_v
+	{
+		static constexpr Matrix3 zero {
+			0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f
+		};
+
+		static constexpr Matrix3 identity {
+			1.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 1.0f
+		};
+	};
+
+	// 定数達（非推奨：「Matrix3_v::」を使ってください）
 	constexpr Matrix3 mat3Zero{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
 	constexpr Matrix3 mat3Identity{ 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f };
 

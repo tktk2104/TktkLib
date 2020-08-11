@@ -93,7 +93,7 @@ namespace tktk
 
 	void FirstPersonModule::moveHorizontal()
 	{
-		tktkMath::Matrix4 worldMat = tktkMath::mat4Identity;
+		tktkMath::Matrix4 worldMat = tktkMath::Matrix4_v::identity;
 
 		if (m_alwaysMoveForward)
 		{
@@ -109,7 +109,7 @@ namespace tktk
 				m_transform->getWorldScaleRate()
 			);
 		}
-		tktkMath::Vector3 moveVel = tktkMath::vec3Zero;
+		tktkMath::Vector3 moveVel = tktkMath::Vector3_v::zero;
 
 		if (DX12GameManager::isPush(KeybordKeyType::key_W))	moveVel =  worldMat.calculateForwardLH();
 		if (DX12GameManager::isPush(KeybordKeyType::key_S))	moveVel = -worldMat.calculateForwardLH();

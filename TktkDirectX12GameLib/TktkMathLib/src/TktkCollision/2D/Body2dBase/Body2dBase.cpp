@@ -5,7 +5,7 @@ Body2dBase::Body2dBase(
 	const tktkMath::Matrix3 & localMatrix
 )
 	: m_shapeType(shapeType)
-	, m_worldMatrix(tktkMath::mat3Identity)
+	, m_worldMatrix(tktkMath::Matrix3_v::identity)
 	, m_localMatrix(localMatrix)
 {
 }

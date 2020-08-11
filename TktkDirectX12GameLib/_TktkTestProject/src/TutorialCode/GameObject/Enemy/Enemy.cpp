@@ -16,7 +16,7 @@ tktk::GameObjectPtr Enemy::create(const tktkMath::Vector3 & position)
 
 	tktk::SphereMeshWireFrameDrawerMaker::makeStart(gameObject)
 		.drawPriority(0.0f)
-		.albedoColor(tktkMath::colorWhite)
+		.albedoColor(tktkMath::Color_v::white)
 		.cameraId(CameraId::Basic)
 		.shadowMapCameraId(CameraId::ShadowMap)
 		.lightId(LightId::Basic)

@@ -24,7 +24,7 @@ namespace tktk
 
 		// TODO : レンダーターゲットのクリア処理は仮
 		DX12GameManager::setRtv(0U, 0U, 1U);
-		DX12GameManager::clearRtv(0U, 0U, tktkMath::colorRed);
+		DX12GameManager::clearRtv(0U, 0U, tktkMath::Color_v::red);
 		DX12GameManager::unSetRtv(0U, 0U, 1U);
 	}
 }

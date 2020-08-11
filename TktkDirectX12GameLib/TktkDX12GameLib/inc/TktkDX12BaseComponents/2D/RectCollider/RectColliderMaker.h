@@ -44,8 +44,8 @@ namespace tktk
 		// çÏê¨ópïœêîíB
 		GameObjectPtr		m_user				{ };
 		int					m_collisionGroupType{ 0 };
-		tktkMath::Vector2	m_rectSize			{ tktkMath::vec2One };
-		tktkMath::Vector2	m_localPosition		{ tktkMath::vec2Zero };
+		tktkMath::Vector2	m_rectSize			{ tktkMath::Vector2_v::one };
+		tktkMath::Vector2	m_localPosition		{ tktkMath::Vector2_v::zero };
 	};
 }
 #endif // !RECT_COLLIDER_MAKER_H_

@@ -38,7 +38,17 @@ namespace tktkMath
 		float a{ 1.0f };
 	};
 
-	// 定数達
+	// Color構造体の定数達
+	struct Color_v
+	{
+		static constexpr Color black	{ 0.0f, 1.0f };
+		static constexpr Color white	{ 1.0f, 1.0f };
+		static constexpr Color red		{ 1.0f, 0.0f, 0.0f, 1.0f };
+		static constexpr Color green	{ 0.0f, 1.0f, 0.0f, 1.0f };
+		static constexpr Color blue		{ 0.0f, 0.0f, 1.0f, 1.0f };
+	};
+
+	// 定数達（非推奨：「Color_v::」を使ってください）
 	constexpr Color colorBlack	{ 0.0f, 1.0f };
 	constexpr Color colorWhite	{ 1.0f, 1.0f };
 	constexpr Color colorRed	{ 1.0f, 0.0f, 0.0f, 1.0f };

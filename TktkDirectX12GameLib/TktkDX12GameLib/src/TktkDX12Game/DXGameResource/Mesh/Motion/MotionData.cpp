@@ -13,7 +13,7 @@ namespace tktk
 
         for (const auto& node : outData.motionData)
         {
-            m_boneKeyFrames[node.boneName].push_back({ node.frameNo, node.location, tktkMath::vec3One, node.rotation });
+            m_boneKeyFrames[node.boneName].push_back({ node.frameNo, node.location, tktkMath::Vector3_v::one, node.rotation });
         }
 
         // キーフレームの順番を整理する

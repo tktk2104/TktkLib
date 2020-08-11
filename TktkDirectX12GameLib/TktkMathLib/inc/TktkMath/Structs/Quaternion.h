@@ -79,7 +79,13 @@ namespace tktkMath
 		float w{ 0.0f };
 	};
 
-	// 定数達
+	// Quaternion構造体の定数達
+	struct Quaternion_v
+	{
+		static constexpr Quaternion identity { 0.0f, 0.0f, 0.0f, 1.0f };
+	};
+
+	// 定数達（非推奨：「Quaternion_v::」を使ってください）
 	constexpr Quaternion quaternionIdentity = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	// 演算子オーバーロード達

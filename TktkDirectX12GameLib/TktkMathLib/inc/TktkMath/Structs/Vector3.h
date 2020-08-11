@@ -106,7 +106,24 @@ namespace tktkMath
 		float z{ 0.0f };
 	};
 
-	// 定数達
+	// Vector3構造体の定数達
+	struct Vector3_v
+	{
+		static constexpr Vector3 zero				{  0.0f };
+		static constexpr Vector3 one				{  1.0f };
+		static constexpr Vector3 up					{  0.0f,  1.0f,  0.0f };
+		static constexpr Vector3 down				{  0.0f, -1.0f,  0.0f };
+		static constexpr Vector3 left				{ -1.0f,  0.0f,  0.0f };
+		static constexpr Vector3 right				{  1.0f,  0.0f,  0.0f };
+		static constexpr Vector3 forwardLH			{  0.0f,  0.0f,  1.0f };	//（DirectX等）
+		static constexpr Vector3 backwardLH			{  0.0f,  0.0f, -1.0f };	//（DirectX等）
+		static constexpr Vector3 forwardRH			{  0.0f,  0.0f, -1.0f };	//（OpenGL等）
+		static constexpr Vector3 backwardRH			{  0.0f,  0.0f,  1.0f };	//（OpenGL等）
+		static constexpr Vector3 negativeInfinity	{ -std::numeric_limits<float>::infinity() };
+		static constexpr Vector3 positiveInfinity	{  std::numeric_limits<float>::infinity() };
+	};
+
+	// 定数達（非推奨：「Vector3_v::」を使ってください）
 	constexpr Vector3 vec3Zero = { 0.0f };
 	constexpr Vector3 vec3One = { 1.0f };
 	constexpr Vector3 vec3Up = { 0.0f,  1.0f,  0.0f };

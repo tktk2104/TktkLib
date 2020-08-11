@@ -120,18 +120,18 @@ namespace tktkMath
 
 		if (angle < MathHelper::kEpsilon)
 		{
-			return quaternionIdentity;
+			return Quaternion_v::identity;
 		}
 
 		Vector3 axis = Vector3::cross(fromDirection, toDirection);
 
 		if (axis.lengthSquared() < (MathHelper::kEpsilon * MathHelper::kEpsilon))
 		{
-			axis = Vector3::cross(vec3ForwardLH, fromDirection);
+			axis = Vector3::cross(Vector3_v::forwardLH, fromDirection);
 
 			if (axis.lengthSquared() < (MathHelper::kEpsilon * MathHelper::kEpsilon))
 			{
-				axis = Vector3::cross(vec3Right, fromDirection);
+				axis = Vector3::cross(Vector3_v::right, fromDirection);
 			}
 		}
 		return createFromAxisAngle(axis, angle);
@@ -143,14 +143,14 @@ namespace tktkMath
 
 		if (forward.lengthSquared() < (MathHelper::kEpsilon * MathHelper::kEpsilon))
 		{
-			forward = vec3ForwardLH;
+			forward = Vector3_v::forwardLH;
 		}
 
 		Vector3 right = Vector3::cross(up, forward);
 
 		if (right.lengthSquared() < (MathHelper::kEpsilon * MathHelper::kEpsilon))
 		{
-			right = vec3Right;
+			right = Vector3_v::right;
 		}
 
 		Vector3 upward = Vector3::cross(forward, right);

@@ -32,7 +32,7 @@ namespace tktk
 
         for (unsigned int i = 0; i < 128U; i++)
         {
-            boneMatBuf.boneMatrix[i] = tktkMath::mat4Identity;
+            boneMatBuf.boneMatrix[i] = tktkMath::Matrix4_v::identity;
         }
         DX12GameManager::updateCBuffer(DX12GameManager::getSystemId(SystemCBufferType::BoneMatCbuffer), boneMatBuf);
     }

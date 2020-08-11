@@ -29,8 +29,8 @@ namespace tktk
 
 	private:
 
-		tktkMath::Matrix4 m_viewMatrix			{ tktkMath::mat4Identity };
-		tktkMath::Matrix4 m_projectionMatrix	{ tktkMath::mat4Identity };
+		tktkMath::Matrix4 m_viewMatrix			{ tktkMath::Matrix4_v::identity };
+		tktkMath::Matrix4 m_projectionMatrix	{ tktkMath::Matrix4_v::identity };
 	};
 }
 #endif // !CAMERA_DATA_H_

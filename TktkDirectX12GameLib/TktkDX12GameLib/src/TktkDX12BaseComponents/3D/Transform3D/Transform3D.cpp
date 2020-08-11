@@ -239,12 +239,12 @@ namespace tktk
 
 	void Transform3D::setWorldRight(const tktkMath::Vector3& right)
 	{
-		setWorldRotation(tktkMath::Quaternion::createFromToRotation(tktkMath::vec3Right, right));
+		setWorldRotation(tktkMath::Quaternion::createFromToRotation(tktkMath::Vector3_v::right, right));
 	}
 
 	void Transform3D::setWorldUp(const tktkMath::Vector3& up)
 	{
-		setWorldRotation(tktkMath::Quaternion::createFromToRotation(tktkMath::vec3Up, up));
+		setWorldRotation(tktkMath::Quaternion::createFromToRotation(tktkMath::Vector3_v::zero, up));
 	}
 
 	void Transform3D::setLocalForwardLH(const tktkMath::Vector3& forward)
@@ -259,12 +259,12 @@ namespace tktk
 
 	void Transform3D::setLocalRight(const tktkMath::Vector3& right)
 	{
-		setLocalRotation(tktkMath::Quaternion::createFromToRotation(tktkMath::vec3Right, right));
+		setLocalRotation(tktkMath::Quaternion::createFromToRotation(tktkMath::Vector3_v::right, right));
 	}
 
 	void Transform3D::setLocalUp(const tktkMath::Vector3& up)
 	{
-		setLocalRotation(tktkMath::Quaternion::createFromToRotation(tktkMath::vec3Up, up));
+		setLocalRotation(tktkMath::Quaternion::createFromToRotation(tktkMath::Vector3_v::zero, up));
 	}
 
 	void Transform3D::lookAt(const ComponentPtr<Transform3D>& target, const tktkMath::Vector3& worldUp)
@@ -304,9 +304,9 @@ namespace tktk
 
 	tktkMath::Matrix4 Transform3D::calculateTraceUseMat(const ComponentPtr<Transform3D>& target, TraceParentType traceType)
 	{
-		if (target.expired()) return tktkMath::mat4Identity;
+		if (target.expired()) return tktkMath::Matrix4_v::identity;
 
-		tktkMath::Matrix4 traceUseMatrix = tktkMath::mat4Identity;
+		tktkMath::Matrix4 traceUseMatrix = tktkMath::Matrix4_v::identity;
 
 		if ((static_cast<unsigned int>(traceType) & static_cast<unsigned int>(TraceParentType::traceScale)) != 0)
 		{
@@ -327,9 +327,9 @@ namespace tktk
 
 	tktkMath::Vector3 Transform3D::calculateTraceUseScale(const ComponentPtr<Transform3D>& target, TraceParentType traceType)
 	{
-		if (target.expired()) return tktkMath::vec3One;
+		if (target.expired()) return tktkMath::Vector3_v::one;
 
-		tktkMath::Vector3 traceUseScale = tktkMath::vec3One;
+		tktkMath::Vector3 traceUseScale = tktkMath::Vector3_v::one;
 
 		if ((static_cast<unsigned int>(traceType) & static_cast<unsigned int>(TraceParentType::traceScale)) != 0)
 		{

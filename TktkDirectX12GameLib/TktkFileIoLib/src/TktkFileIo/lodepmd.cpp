@@ -143,7 +143,7 @@ namespace tktk
 				tempMaterialData.at(i).speqular[2],
 				1.0f
 			};
-			out->materialData.at(i).emissive = tktkMath::colorWhite;
+			out->materialData.at(i).emissive = tktkMath::Color_v::white;
 			out->materialData.at(i).shiniess = 1.0f;
 			out->materialData.at(i).textureFilePath = (std::string(tempMaterialData.at(i).textureFilePath) == "") ? "" : baseTexturePath + tempMaterialData.at(i).textureFilePath;
 		}

@@ -41,7 +41,7 @@ namespace tktk
 		auto viewMat = tktkMath::Matrix4::createLookAtLH(
 			m_transform->getWorldPosition(),
 			m_transform->getWorldPosition() + cameraWorldMat.calculateForwardLH(),
-			cameraWorldMat.calculateUp()//tktkMath::vec3Up
+			cameraWorldMat.calculateUp()
 		);
 		DX12GameManager::setViewMatrix(m_cameraId, viewMat);
 

@@ -16,7 +16,7 @@ namespace tktk
 		{
 			const auto& bonedata = initParam.boneDataArray.at(i);
 
-			m_boneMatrixArray.push_back(tktkMath::mat4Identity);
+			m_boneMatrixArray.push_back(tktkMath::Matrix4_v::identity);
 			boneNameArray.push_back(bonedata.boneName);
 
 			m_boneNodeMap[bonedata.boneName].boneIndex = i;
@@ -35,7 +35,7 @@ namespace tktk
 
 	void SkeletonData::transform(const std::vector<MotionBoneParam>& transformMatrices)
 	{
-		std::fill(std::begin(m_boneMatrixArray), std::end(m_boneMatrixArray), tktkMath::mat4Identity);
+		std::fill(std::begin(m_boneMatrixArray), std::end(m_boneMatrixArray), tktkMath::Matrix4_v::identity);
 
 		for (const auto& node : transformMatrices)
 		{
@@ -48,7 +48,7 @@ namespace tktk
 		}
 
 		// ボーンの親子間での座標変換を行う
-		transform(&m_boneNodeMap.at("センター"), tktkMath::mat4Identity);
+		transform(&m_boneNodeMap.at("センター"), tktkMath::Matrix4_v::identity);
 	}
 
 	void SkeletonData::updateBoneMatrixCbuffer() const

@@ -87,7 +87,20 @@ namespace tktkMath
 		float y{ 0.0f };
 	};
 
-	// 定数達
+	// Vector2構造体の定数達
+	struct Vector2_v
+	{
+		static constexpr Vector2 zero				{  0.0f };
+		static constexpr Vector2 one				{  1.0f };
+		static constexpr Vector2 up					{  0.0f,  1.0f };
+		static constexpr Vector2 down				{  0.0f, -1.0f };
+		static constexpr Vector2 left				{ -1.0f,  0.0f };
+		static constexpr Vector2 right				{  1.0f,  0.0f };
+		static constexpr Vector2 negativeInfinity	{ -std::numeric_limits<float>::infinity() };
+		static constexpr Vector2 positiveInfinity	{  std::numeric_limits<float>::infinity() };
+	};
+
+	// 定数達（非推奨：「Vector2_v::」を使ってください）
 	constexpr Vector2 vec2Zero = { 0.0f };
 	constexpr Vector2 vec2One = { 1.0f };
 	constexpr Vector2 vec2Up = { 0.0f,  1.0f };

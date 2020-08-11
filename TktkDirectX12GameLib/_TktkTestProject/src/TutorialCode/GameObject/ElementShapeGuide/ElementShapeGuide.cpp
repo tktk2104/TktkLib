@@ -14,7 +14,7 @@ tktk::GameObjectPtr ElementShapeGuide::create()
 
 	tktk::Line2DDrawerMaker::makeStart(gameObject)
 		.drawPriority(100.0f)
-		.lineColor(tktkMath::colorWhite)
+		.lineColor(tktkMath::Color_v::white)
 		.useLine2DMaterialId(Line2DMaterialId::ElementShapeGuide)
 		.create();
 

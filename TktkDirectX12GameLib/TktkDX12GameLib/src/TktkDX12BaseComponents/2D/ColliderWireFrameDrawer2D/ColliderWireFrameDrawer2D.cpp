@@ -45,7 +45,7 @@ namespace tktk
 					m_useLine2DMaterialIdArray.at(curIndex),
 					vertexArray,
 					m_lineColor,
-					tktkMath::colorWhite,
+					tktkMath::Color_v::white,
 					DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer)
 					)
 			);
@@ -68,7 +68,7 @@ namespace tktk
 					m_useLine2DMaterialIdArray.at(curIndex),
 					vertexArray,
 					m_lineColor,
-					tktkMath::colorWhite,
+					tktkMath::Color_v::white,
 					DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer)
 					)
 			);
@@ -91,7 +91,7 @@ namespace tktk
 					m_useLine2DMaterialIdArray.at(curIndex),
 					vertexArray,
 					m_lineColor,
-					tktkMath::colorWhite,
+					tktkMath::Color_v::white,
 					DX12GameManager::getSystemId(SystemRtvDescriptorHeapType::BackBuffer)
 					)
 			);

@@ -22,8 +22,8 @@ void MainScene::start()
 	Cursor::create();
 	CameraObject::create({ 0.0f, 16.0f, -20.0f });
 	PointLightObject::create({ 60.0f, 10.0f, -60.0f });
-	Miku::create(tktkMath::vec3Zero);
-	SphereTest::create(tktkMath::vec3Zero);
+	Miku::create(tktkMath::Vector3_v::zero);
+	SphereTest::create(tktkMath::Vector3_v::zero);
 	PostEffectObject::create();
 	*/
 
@@ -34,8 +34,8 @@ void MainScene::start()
 
 	CollideTest::create({ 300.0f, 300.0f }, 3.0f, 2, Line2DMaterialId::CollideDebug2);*/
 
-	Player::create(tktkMath::vec3Zero);
-	Enemy::create(tktkMath::vec3Zero);
+	Player::create(tktkMath::Vector3_v::zero);
+	Enemy::create(tktkMath::Vector3_v::zero);
 	ElementSphereManager::create();
 }
 

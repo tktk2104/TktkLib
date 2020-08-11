@@ -111,9 +111,9 @@ namespace tktk
 
 			materialParam.useDescriptorHeapId = DX12GameManager::getSystemId(SystemBasicDescriptorHeapType::Sphere);
 			materialParam.materialAmbient = { 0.3f, 1.0f }; // ※マテリアルの環境光の値は定数値を設定する
-			materialParam.materialDiffuse = tktkMath::colorWhite;
-			materialParam.materialSpecular = tktkMath::colorWhite;
-			materialParam.materialEmissive = tktkMath::colorWhite;
+			materialParam.materialDiffuse  = tktkMath::Color_v::white;
+			materialParam.materialSpecular = tktkMath::Color_v::white;
+			materialParam.materialEmissive = tktkMath::Color_v::white;
 			materialParam.materialShiniess = 10.0f;
 
 			// ディスクリプタヒープを作る

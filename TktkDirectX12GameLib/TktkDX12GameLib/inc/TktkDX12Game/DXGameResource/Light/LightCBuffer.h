@@ -19,7 +19,7 @@ namespace tktk
 		tktkMath::Color		lightSpeqular	{ 0.25f, 1.0f };
 
 		// ライトの座標
-		tktkMath::Vector3	lightPosition	{ tktkMath::vec3Zero };
+		tktkMath::Vector3	lightPosition	{ tktkMath::Vector3_v::zero };
 
 		// パディング
 		float				lightDataPad	{ 0.0f };

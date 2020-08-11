@@ -29,7 +29,7 @@ struct Collide3DTest
 
 		tktk::ColliderWireFrameDrawer3DMaker::makeStart(gameObject)
 			.drawPriority(0.0f)
-			.lineColor(tktkMath::colorWhite)
+			.lineColor(tktkMath::Color_v::white)
 			.cameraId(CameraId::Basic)
 			.shadowMapCameraId(CameraId::ShadowMap)
 			.lightId(LightId::Basic)

@@ -35,7 +35,7 @@ struct CollideTest
 		tktk::ColliderWireFrameDrawer2DMaker::makeStart(gameObject)
 			.drawPriority(0.0f)
 			.useLine2DMaterialIdArray({ toInt(id) })
-			.lineColor(tktkMath::colorRed)
+			.lineColor(tktkMath::Color_v::red)
 			.create();
 
 		gameObject->createComponent<CollideTestScript>(

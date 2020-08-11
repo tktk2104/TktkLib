@@ -163,9 +163,9 @@ namespace tktk
 	{
 		auto parentTransform2D = findParentTransform2D();
 
-		if (!isTransformParentCheck(parentTransform2D)) return tktkMath::mat3Identity;
+		if (!isTransformParentCheck(parentTransform2D)) return tktkMath::Matrix3_v::identity;
 
-		tktkMath::Matrix3 traceUseMatrix = tktkMath::mat3Identity;
+		tktkMath::Matrix3 traceUseMatrix = tktkMath::Matrix3_v::identity;
 
 		if ((static_cast<unsigned int>(m_traceType) & static_cast<unsigned int>(TraceParentType::traceScale)) != 0)
 		{
